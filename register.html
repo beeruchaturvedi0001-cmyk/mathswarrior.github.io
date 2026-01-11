@@ -2,64 +2,82 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Student Registration | Math's Warrior</title>
+<title>Student Registration</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <style>
-body{margin:0;font-family:Arial;background:#f2f4f8}
-header{background:#0B1C3D;color:#fff;text-align:center;padding:15px}
-.container{padding:15px}
-form{background:#fff;padding:15px;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.15)}
-input,button{width:100%;padding:10px;margin-top:8px}
-button{background:#0B1C3D;color:#fff;border:none}
-button:hover{background:#163a7a}
+body{
+  font-family:Arial, sans-serif;
+  background:#f5f7fb;
+  margin:0;
+}
+header{
+  background:#0b3c91;
+  color:white;
+  text-align:center;
+  padding:15px;
+}
+form{
+  background:white;
+  margin:20px;
+  padding:20px;
+  border-radius:10px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+input,select{
+  width:100%;
+  padding:10px;
+  margin:10px 0;
+}
+button{
+  background:#0b3c91;
+  color:white;
+  border:none;
+  padding:12px;
+  width:100%;
+  border-radius:5px;
+  font-size:16px;
+}
 </style>
 </head>
 
 <body>
 
 <header>
-<h2>Student Registration</h2>
+  <h2>Student Registration</h2>
 </header>
 
-<div class="container">
+<form onsubmit="sendWhatsApp(event)">
+  <input type="text" id="name" placeholder="Student Name" required>
+  <input type="tel" id="mobile" placeholder="Mobile Number" required>
 
-<form id="regForm" onsubmit="submitForm(); return false;">
+  <input type="text" id="course" readonly>
 
-<label>Course Name</label>
-<input type="text" id="course" readonly>
-
-<label>Student Name</label>
-<input type="text" id="name" required>
-
-<label>Mobile Number</label>
-<input type="tel" id="mobile" required>
-
-<label>Email (Optional)</label>
-<input type="email" id="email">
-
-<button type="submit">Register</button>
+  <button type="submit">Submit & Send WhatsApp</button>
 </form>
 
-</div>
-
 <script>
+// auto course fill
 const params = new URLSearchParams(window.location.search);
-document.getElementById("course").value = params.get("course") || "Not Selected";
+document.getElementById("course").value =
+  params.get("course") || "Not Selected";
 
-function submitForm(){
- const name=document.getElementById("name").value;
- const mobile=document.getElementById("mobile").value;
- const email=document.getElementById("email").value;
- const course=document.getElementById("course").value;
+function sendWhatsApp(e){
+  e.preventDefault();
 
- // Save student in localStorage
- let students = JSON.parse(localStorage.getItem("students")) || [];
- students.push({name, mobile, email, course});
- localStorage.setItem("students", JSON.stringify(students));
+  let name = document.getElementById("name").value;
+  let mobile = document.getElementById("mobile").value;
+  let course = document.getElementById("course").value;
 
- alert("✅ Registration Successful for " + course);
- document.getElementById("regForm").reset();
+  let message =
+`New Student Registration
+Name: ${name}
+Mobile: ${mobile}
+Course: ${course}`;
+
+  let whatsappNumber = "919670078465"; // 👈 अपना नंबर डालो (91 ke sath)
+
+  let url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+  window.location.href = url;
 }
 </script>
 
