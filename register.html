@@ -1,128 +1,66 @@
- <!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
 <meta charset="UTF-8">
-<title>Student Registration | Math’s Warrior</title>
+<title>Student Registration</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
 <style>
-body{
-  margin:0;
-  font-family:Arial, sans-serif;
-  background:#f4f9ff;
-}
-
-header{
-  background:#0b5ed7;
-  color:#fff;
-  padding:15px;
-  text-align:center;
-}
-
-form{
-  background:#fff;
-  max-width:480px;
-  margin:20px auto;
-  padding:20px;
-  border-radius:12px;
-  box-shadow:0 0 10px rgba(0,0,0,.1);
-}
-
-h2{
-  text-align:center;
-  margin-top:0;
-}
-
-input{
-  width:100%;
-  padding:12px;
-  margin:10px 0;
-  border:1px solid #ccc;
-  border-radius:6px;
-  font-size:15px;
-}
-
-input[readonly]{
-  background:#f0f0f0;
-}
-
-button{
-  width:100%;
-  padding:12px;
-  background:#0b5ed7;
-  color:#fff;
-  border:none;
-  border-radius:8px;
-  font-size:16px;
-  font-weight:bold;
-  cursor:pointer;
-}
-
-button:hover{
-  background:#084298;
-}
-
-.note{
-  font-size:13px;
-  color:#555;
-  margin-top:10px;
-  text-align:center;
-}
+body{font-family:Arial;background:#f2f4f8;margin:0}
+header{background:#0B1C3D;color:#fff;text-align:center;padding:15px}
+.box{background:#fff;margin:15px;padding:15px;border-radius:8px}
+input,button{width:100%;padding:10px;margin-top:8px}
+button{background:#0B1C3D;color:#fff;border:none}
 </style>
 </head>
 
 <body>
 
 <header>
-  <h2>Math’s Warrior Education</h2>
-  <p>Student Registration Form</p>
+<h3>Student Registration</h3>
 </header>
 
-<form id="regForm">
-
-  <h2>Join Course</h2>
-
-  <input type="text" id="name" placeholder="Student Name" required>
-
-  <input type="tel" id="mobile" placeholder="Mobile Number" required>
-
-  <input type="tel" id="whatsapp" placeholder="WhatsApp Number" required>
-
-  <input type="text" id="course" readonly>
-
-  <input type="file" id="screenshot" accept="image/*" required>
-
-  <button type="submit">Submit & Upload</button>
-
-  <p class="note">
-    📌 Payment UPI: <b>mathswarrior@upi</b><br>
-    Submit करने के बाद receipt WhatsApp पर भेजी जाएगी
-  </p>
-
+<div class="box">
+<b>UPI ID:</b> 9670078464@ibl
+<br><br>
+<form onsubmit="submitForm();return false;">
+<input id="course" readonly>
+<input id="name" placeholder="Student Name" required>
+<input id="mobile" placeholder="Mobile Number" required>
+<input id="email" placeholder="Email (optional)">
+<button>Submit & Generate ID</button>
 </form>
+</div>
 
 <script>
-// ===== COURSE AUTO FILL =====
-const params = new URLSearchParams(window.location.search);
-document.getElementById("course").value = params.get("course") || "";
+const params=new URLSearchParams(window.location.search);
+course.value=params.get("course")||"Not Selected";
 
-// ===== FORM SUBMIT =====
-document.getElementById("regForm").addEventListener("submit", function(e){
-  e.preventDefault();
+function submitForm(){
+ const name=nameInput=name.value;
+ const mobile=document.getElementById("mobile").value;
+ const course=document.getElementById("course").value;
 
-  let file = document.getElementById("screenshot").files[0];
-  if(!file){
-    alert("Please upload payment screenshot");
-    return;
-  }
+ const userId="MW"+mobile.slice(-4);
+ const password=Math.floor(100000+Math.random()*900000);
 
-  let reader = new FileReader();
+ const {jsPDF}=window.jspdf;
+ const pdf=new jsPDF();
+ pdf.text("Math's Warrior Education",20,20);
+ pdf.text("Student Login Details",20,35);
+ pdf.text("Name: "+name,20,50);
+ pdf.text("Course: "+course,20,60);
+ pdf.text("User ID: "+userId,20,70);
+ pdf.text("Password: "+password,20,80);
+ pdf.save("Student_Login_Details.pdf");
 
-  reader.onloadend = function(){
-    fetch("YOUR_APPS_SCRIPT_URL",{
-      method:"POST",
-      body: JSON.stringify({
-        name: document.getElementById("name").value,
-        mobile: document.getElementById("mobile").value,
-        whatsapp: document.getElementById("whatsapp").value,
-        course
+ const admin="919670078465";
+ const msg=`New Student%0AName:${name}%0AUserID:${userId}%0APassword:${password}`;
+ window.open(`https://wa.me/${admin}?text=${msg}`,"_blank");
+}
+</script>
+
+</body>
+</html>
