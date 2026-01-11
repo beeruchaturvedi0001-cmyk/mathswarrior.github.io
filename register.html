@@ -1,294 +1,128 @@
-<!DOCTYPE html>
-<html>
+ <!DOCTYPE html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Student Registration</title>
+<title>Student Registration | Math’s Warrior</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-body{font-family:Arial;background:#f4f9ff;padding:20px}
-form{background:#fff;padding:20px;border-radius:10px;max-width:450px;margin:auto}
-input,button{width:100%;padding:10px;margin:10px 0}
-button{background:#0b5ed7;color:#fff;border:none;border-radius:6px}
-</style>
-</head>
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:#f4f9ff;
+}
 
-<body>
+header{
+  background:#0b5ed7;
+  color:#fff;
+  padding:15px;
+  text-align:center;
+}
 
-<h2 align="center">Student Registration</h2>
-
-<form id="regForm">
-<input type="text" id="name" placeholder="Student Name" required>
-<input type="tel" id="mobile" placeholder="Mobile Number" required>
-<input type="text" id="course" readonly>
-<input type="file" id="screenshot" accept="image/*" required>
-<button type="submit">Submit & Upload</button>
-</form>
-
-<script>
-const params = new URLSearchParams(window.location.search);
-document.getElementById("course").value = params.get("course");
-
-document.getElementById("regForm").addEventListener("submit", function(e){
-e.preventDefault();
-
-let file = screenshot.files[0];
-let reader = new FileReader();
-
-reader.onloadend = function(){
-fetch("YOUR_APPS_SCRIPT_URL",{
-method:"POST",
-body: JSON.stringify({
-name: name.value,
-mobile: mobile.value,
-course: course.value,
-image: reader.result
-})
-})
-.then(()=>alert("Submitted Successfully! Receipt WhatsApp par milegi."));
-};
-reader.readAsDataURL(file);
-});
-</script>
-
-</body>
-</html>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Student Registration</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<style>
-body{font-family:Arial;background:#f4f9ff;padding:20px}
 form{
   background:#fff;
+  max-width:480px;
+  margin:20px auto;
   padding:20px;
-  border-radius:10px;
-  max-width:450px;
-  margin:auto
+  border-radius:12px;
+  box-shadow:0 0 10px rgba(0,0,0,.1);
 }
-input,button{
+
+h2{
+  text-align:center;
+  margin-top:0;
+}
+
+input{
   width:100%;
-  padding:10px;
-  margin:10px 0
+  padding:12px;
+  margin:10px 0;
+  border:1px solid #ccc;
+  border-radius:6px;
+  font-size:15px;
 }
+
+input[readonly]{
+  background:#f0f0f0;
+}
+
 button{
+  width:100%;
+  padding:12px;
   background:#0b5ed7;
   color:#fff;
   border:none;
-  border-radius:6px
+  border-radius:8px;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+button:hover{
+  background:#084298;
+}
+
+.note{
+  font-size:13px;
+  color:#555;
+  margin-top:10px;
+  text-align:center;
 }
 </style>
 </head>
 
 <body>
 
-<h2 align="center">Student Registration</h2>
+<header>
+  <h2>Math’s Warrior Education</h2>
+  <p>Student Registration Form</p>
+</header>
 
 <form id="regForm">
 
-<input type="text" id="name" placeholder="Student Name" required>
+  <h2>Join Course</h2>
 
-<input type="tel" id="mobile" placeholder="Mobile Number" required>
+  <input type="text" id="name" placeholder="Student Name" required>
 
-<input type="tel" id="whatsapp" placeholder="WhatsApp Number" required>
+  <input type="tel" id="mobile" placeholder="Mobile Number" required>
 
-<input type="text" id="course" readonly>
+  <input type="tel" id="whatsapp" placeholder="WhatsApp Number" required>
 
-<input type="file" id="screenshot" accept="image/*" required>
+  <input type="text" id="course" readonly>
 
-<button type="submit">Submit & Upload</button>
+  <input type="file" id="screenshot" accept="image/*" required>
+
+  <button type="submit">Submit & Upload</button>
+
+  <p class="note">
+    📌 Payment UPI: <b>mathswarrior@upi</b><br>
+    Submit करने के बाद receipt WhatsApp पर भेजी जाएगी
+  </p>
 
 </form>
 
 <script>
+// ===== COURSE AUTO FILL =====
 const params = new URLSearchParams(window.location.search);
-document.getElementById("course").value = params.get("course");
+document.getElementById("course").value = params.get("course") || "";
 
+// ===== FORM SUBMIT =====
 document.getElementById("regForm").addEventListener("submit", function(e){
   e.preventDefault();
 
-  let file = screenshot.files[0];
+  let file = document.getElementById("screenshot").files[0];
+  if(!file){
+    alert("Please upload payment screenshot");
+    return;
+  }
+
   let reader = new FileReader();
 
   reader.onloadend = function(){
     fetch("YOUR_APPS_SCRIPT_URL",{
       method:"POST",
       body: JSON.stringify({
-        name: name.value,
-        mobile: mobile.value,
-        whatsapp: whatsapp.value,
-        course: course.value,
-        image: reader.result
-      })
-    })
-    .then(()=>alert("Form submitted successfully! Receipt WhatsApp par milegi."));
-  };
-
-  reader.readAsDataURL(file);
-});
-</script>
-
-</body>
-</html>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Student Registration</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<style>
-body{font-family:Arial;background:#f4f9ff;padding:20px}
-form{
-  background:#fff;
-  padding:20px;
-  border-radius:10px;
-  max-width:450px;
-  margin:auto
-}
-input,button{
-  width:100%;
-  padding:10px;
-  margin:10px 0
-}
-button{
-  background:#0b5ed7;
-  color:#fff;
-  border:none;
-  border-radius:6px
-}
-</style>
-</head>
-
-<body>
-
-<h2 align="center">Student Registration</h2>
-
-<form id="regForm">
-
-<input type="text" id="name" placeholder="Student Name" required>
-
-<input type="tel" id="mobile" placeholder="Mobile Number" required>
-
-<input type="tel" id="whatsapp" placeholder="WhatsApp Number" required>
-
-<input type="text" id="course" readonly>
-
-<input type="file" id="screenshot" accept="image/*" required>
-
-<button type="submit">Submit & Upload</button>
-
-</form>
-
-<script>
-const params = new URLSearchParams(window.location.search);
-document.getElementById("course").value = params.get("course");
-
-document.getElementById("regForm").addEventListener("submit", function(e){
-  e.preventDefault();
-
-  let file = screenshot.files[0];
-  let reader = new FileReader();
-
-  reader.onloadend = function(){
-    fetch("YOUR_APPS_SCRIPT_URL",{
-      method:"POST",
-      body: JSON.stringify({
-        name: name.value,
-        mobile: mobile.value,
-        whatsapp: whatsapp.value,
-        course: course.value,
-        image: reader.result
-      })
-    })
-    .then(()=>alert("Form submitted successfully! Receipt WhatsApp par milegi."));
-  };
-
-  reader.readAsDataURL(file);
-});
-</script>
-
-</body>
-</html><!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Student Registration</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<style>
-body{font-family:Arial;background:#f4f9ff;padding:20px}
-form{
-  background:#fff;
-  padding:20px;
-  border-radius:10px;
-  max-width:450px;
-  margin:auto
-}
-input,button{
-  width:100%;
-  padding:10px;
-  margin:10px 0
-}
-button{
-  background:#0b5ed7;
-  color:#fff;
-  border:none;
-  border-radius:6px
-}
-</style>
-</head>
-
-<body>
-
-<h2 align="center">Student Registration</h2>
-
-<form id="regForm">
-
-<input type="text" id="name" placeholder="Student Name" required>
-
-<input type="tel" id="mobile" placeholder="Mobile Number" required>
-
-<input type="tel" id="whatsapp" placeholder="WhatsApp Number" required>
-
-<input type="text" id="course" readonly>
-
-<input type="file" id="screenshot" accept="image/*" required>
-
-<button type="submit">Submit & Upload</button>
-
-</form>
-
-<script>
-const params = new URLSearchParams(window.location.search);
-document.getElementById("course").value = params.get("course");
-
-document.getElementById("regForm").addEventListener("submit", function(e){
-  e.preventDefault();
-
-  let file = screenshot.files[0];
-  let reader = new FileReader();
-
-  reader.onloadend = function(){
-    fetch("YOUR_APPS_SCRIPT_URL",{
-      method:"POST",
-      body: JSON.stringify({
-        name: name.value,
-        mobile: mobile.value,
-        whatsapp: whatsapp.value,
-        course: course.value,
-        image: reader.result
-      })
-    })
-    .then(()=>alert("Form submitted successfully! Receipt WhatsApp par milegi."));
-  };
-
-  reader.readAsDataURL(file);
-});
-</script>
-
-</body>
-</html>
+        name: document.getElementById("name").value,
+        mobile: document.getElementById("mobile").value,
+        whatsapp: document.getElementById("whatsapp").value,
+        course
