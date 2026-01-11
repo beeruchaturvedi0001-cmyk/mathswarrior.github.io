@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Math’s Warrior Education</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f9ff;
+      color: #333;
+    }
+    header {
+      background: #0b5ed7;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    section {
+      padding: 20px;
+    }
+    .card {
+      background: white;
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    footer {
+      background: #0b5ed7;
+      color: white;
+      text-align: center;
+      padding: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Math’s Warrior Education</h1>
+  <p>The Path of Selection</p>
+</header>
+
+<section>
+  <h2>About Us</h2>
+  <div class="card">
+    <p>
+      Math’s Warrior Education ek online education platform hai,
+      jahan SSC aur competitive exams ke liye Maths padhaya jata hai.
+    </p>
+  </div>
+</section>
+
+<section>
+  <h2>Our Courses</h2>
+  <div class="card">Maths Special 2.0</div>
+  <div class="card">Free Demo Classes</div>
+  <div class="card">PDF Notes & Practice Sets</div>
+</section>
+
+<section>
+  <h2>Contact</h2>
+  <div class="card">
+    <p>📞 WhatsApp: 9670078465</p>
+    <p>📢 Telegram: Coming Soon</p>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Math’s Warrior Education</p>
+</footer>
+
+</body>
+</html>
