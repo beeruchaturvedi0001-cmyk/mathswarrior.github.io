@@ -1,0 +1,50 @@
+function doPost(e){
+  var data = JSON.parse(e.postData.contents);
+  var sheet = SpreadsheetApp.openById("SHEET_ID").getSheetByName("Sheet1");
+
+  var receiptId = "MW" + new Date().getTime();
+
+  // Save screenshot
+  var imageData = data.image.split(",")[1];
+  var blob = Utilities.newBlob(
+    Utilities.base64Decode(imageData),
+    "image/png",
+    receiptId + ".png"
+  );
+  var imgFile = DriveApp.createFile(blob);
+
+  // Save in sheet
+  sheet.appendRow([
+    receiptId,
+    data.name,
+    data.mobile,
+    data.course,
+    imgFile.getUrl(),
+    new Date()
+  ]);
+
+  // Create receipt PDF
+  var doc = DocumentApp.create(receiptId);
+  var body = doc.getBody();
+
+  body.setText(
+    "Math’s Warrior Education\n\n" +
+    "Receipt No: " + receiptId + "\n" +
+    "Student Name: " + data.name + "\n" +
+    "Mobile: " + data.mobile + "\n" +
+    "Course: " + data.course + "\n" +
+    "Payment Mode: UPI\n" +
+    "Status: Received\n\n" +
+    "Thank You"
+  );
+
+  doc.saveAndClose();
+
+  var pdfBlob = DriveApp.getFileById(doc.getId()).getAs("application/pdf");
+  var pdfFile = DriveApp.createFile(pdfBlob);
+
+  // WhatsApp API connect here (future)
+  // sendWhatsApp(data.mobile, pdfFile.getUrl());
+
+  return ContentService.createTextOutput("success");
+}
