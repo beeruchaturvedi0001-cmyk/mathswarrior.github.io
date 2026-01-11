@@ -1,90 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Math’s Warrior Education</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>Math's Warrior Education</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-body{
-  margin:0;
-  font-family:Arial, sans-serif;
-  background:#f4f9ff;
-}
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+    }
 
-/* ===== HEADER ===== */
-header{
-  background:#0b5ed7;
-  color:#fff;
-  padding:15px;
-  text-align:center;
-}
-header h2{margin:0}
-header p{margin:5px 0 0}
+    header {
+      background: #0B1C3D;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
 
-/* ===== SLIDER ===== */
-.slider{
-  width:100%;
-  height:220px;
-  overflow:hidden;
-}
-.slides{
-  display:flex;
-  width:300%;
-  height:100%;
-  animation: slide 12s infinite;
-}
-.slides img{
-  width:100%;
-  height:220px;
-  object-fit:cover;
-}
+    header h1 {
+      margin: 0;
+      font-size: 26px;
+    }
 
-@keyframes slide{
-  0%{transform:translateX(0)}
-  33%{transform:translateX(-100%)}
-  66%{transform:translateX(-200%)}
-  100%{transform:translateX(0)}
-}
+    header p {
+      margin: 5px 0 0;
+      font-size: 14px;
+      color: #F4C430;
+    }
 
-/* ===== COURSE SECTION ===== */
-section{
-  padding:20px;
-}
-.card{
-  background:#fff;
-  padding:20px;
-  border-radius:12px;
-  margin-bottom:20px;
-  box-shadow:0 0 10px rgba(0,0,0,.1);
-}
-.btn{
-  display:block;
-  text-align:center;
-  padding:12px;
-  background:#0b5ed7;
-  color:#fff;
-  text-decoration:none;
-  border-radius:8px;
-  font-weight:bold;
-  margin-top:10px;
-}
+    .container {
+      padding: 15px;
+    }
 
-/* ===== FOOTER ===== */
-footer{
-  background:#0b5ed7;
-  color:#fff;
-  text-align:center;
-  padding:10px;
-}
+    .course {
+      background: white;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 15px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
 
-/* ===== MOBILE ===== */
-@media(max-width:600px){
-  .slider,.slides img{height:180px}
-}
-</style>
+    .course h2 {
+      margin-top: 0;
+      color: #0B1C3D;
+    }
+
+    .course p {
+      font-size: 14px;
+      color: #333;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 10px 15px;
+      background: #0B1C3D;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+
+    .btn:hover {
+      background: #163a7a;
+    }
+
+    footer {
+      background: #0B1C3D;
+      color: white;
+      text-align: center;
+      padding: 10px;
+      font-size: 13px;
+    }
+  </style>
 </head>
 
 <body>
 
-<!-- ===== HEADER ===== -->
+<header>
+  <h1>MATH'S WARRIOR EDUCATION</h1>
+  <p>The Path of Selection</p>
+</header>
+
+<div class="container">
+
+  <div class="course">
+    <h2>Maths Special 2.0</h2>
+    <p>
+      For all SSC, Railway & State Exams<br>
+      Duration: 6 Months | Validity: 2 Years
+    </p>
+    <a href="register.html?course=Maths%20Special%202.0" class="btn">
+      Join Now
+    </a>
+  </div>
+
+  <div class="course">
+    <h2>Lakshya Foundation Batch</h2>
+    <p>
+      For Academic Students (Class 5th – 10th)<br>
+      NVS / KVS / School Exams
+    </p>
+    <a href="register.html?course=Lakshya%20Foundation%20Batch" class="btn">
+      Join Now
+    </a>
+  </div>
+
+</div>
+
+<footer>
+  © 2026 Math's Warrior Education
+</footer>
+
+</body>
+</html>
