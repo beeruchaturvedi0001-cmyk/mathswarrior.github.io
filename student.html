@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Registered Students</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{font-family:Arial;background:#f2f4f8;margin:0}
+header{background:#0B1C3D;color:#fff;text-align:center;padding:15px}
+.box{margin:15px;background:#fff;padding:15px;border-radius:8px}
+table{width:100%;border-collapse:collapse}
+th,td{border:1px solid #ccc;padding:8px;font-size:13px;text-align:center}
+th{background:#0B1C3D;color:white}
+</style>
+</head>
+
+<body>
+
+<header>
+<h3>Registered Students</h3>
+<p id="count"></p>
+</header>
+
+<div class="box">
+<table>
+<tr>
+<th>#</th>
+<th>Name</th>
+<th>Mobile</th>
+<th>Course</th>
+<th>User ID</th>
+</tr>
+<tbody id="data"></tbody>
+</table>
+</div>
+
+<script>
+let students=JSON.parse(localStorage.getItem("students")) || [];
+document.getElementById("count").innerText =
+"Total Students: "+students.length;
+
+let html="";
+students.forEach((s,i)=>{
+ html+=`<tr>
+ <td>${i+1}</td>
+ <td>${s.name}</td>
+ <td>${s.mobile}</td>
+ <td>${s.course}</td>
+ <td>${s.userId}</td>
+ </tr>`;
+});
+document.getElementById("data").innerHTML=html;
+</script>
+
+</body>
+</html>
