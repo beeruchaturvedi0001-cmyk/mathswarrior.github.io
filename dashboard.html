@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Student Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{font-family:Arial;background:#f2f2f2;}
+.box{
+  max-width:400px;
+  margin:50px auto;
+  background:white;
+  padding:20px;
+  border-radius:10px;
+}
+button{
+  background:red;
+  color:white;
+  padding:10px;
+  border:none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+<h2>Student Dashboard</h2>
+<p id="data"></p>
+
+<button onclick="logout()">Logout</button>
+</div>
+
+<script>
+let uid = localStorage.getItem("loginUser");
+if(!uid){
+  window.location.href="login.html";
+}
+
+let students = JSON.parse(localStorage.getItem("students")) || [];
+let s = students.find(x => x.id === uid);
+
+document.getElementById("data").innerHTML = `
+<b>ID:</b> ${s.id}<br>
+<b>Name:</b> ${s.name}<br>
+<b>Course:</b> ${s.course}<br>
+<b>Mobile:</b> ${s.mobile}
+`;
+
+function logout(){
+  localStorage.removeItem("loginUser");
+  window.location.href="login.html";
+}
+</script>
+
+</body>
+</html>
