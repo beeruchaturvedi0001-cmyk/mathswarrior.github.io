@@ -2,100 +2,105 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Student Registration | Math's Warrior</title>
+<title>Student Registration</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
 body{
   font-family: Arial, sans-serif;
-  background:#f5f7fb;
-  margin:0;
+  background:#f2f2f2;
 }
-header{
-  background:#0b3c91;
-  color:white;
-  text-align:center;
-  padding:15px;
-}
-form{
-  background:white;
-  margin:20px;
+.container{
+  max-width:420px;
+  margin:25px auto;
+  background:#fff;
   padding:20px;
   border-radius:10px;
-  box-shadow:0 4px 10px rgba(0,0,0,0.1);
+  box-shadow:0 0 10px rgba(0,0,0,0.1);
 }
-input, textarea{
+h2{
+  text-align:center;
+  color:#0b3c91;
+}
+input, textarea, select{
   width:100%;
   padding:10px;
   margin:8px 0;
-  border-radius:5px;
   border:1px solid #ccc;
+  border-radius:5px;
 }
 button{
+  width:100%;
+  padding:12px;
   background:#0b3c91;
   color:white;
   border:none;
-  padding:12px;
-  width:100%;
   border-radius:5px;
   font-size:16px;
-  cursor:pointer;
 }
 button:hover{
-  background:#163a7a;
-}
-.msg{
-  margin-top:10px;
-  color:green;
-  font-weight:bold;
-  text-align:center;
+  background:#062c6f;
 }
 </style>
 </head>
 
 <body>
 
-<header>
-  <h2>Student Registration</h2>
-</header>
+<div class="container">
+<h2>Student Registration</h2>
 
-<form onsubmit="submitForm(event)">
-  <input type="text" id="name" placeholder="Student Name" required>
-  <input type="date" id="dob" required>
-  <input type="text" id="aadhar" placeholder="Aadhar Card Number" required>
-  <textarea id="address" placeholder="Full Address" rows="3" required></textarea>
-  <input type="text" id="pin" placeholder="PIN Code" required>
-  <input type="tel" id="mobile" placeholder="Mobile Number" required>
-  <input type="tel" id="whatsapp" placeholder="WhatsApp Number" required>
-  <input type="text" id="course" placeholder="Course Name" required>
+<form onsubmit="sendWhatsApp(event)">
+  
+  <input type="text" id="student" placeholder="Student Name" required>
+  <input type="text" id="father" placeholder="Father Name" required>
+  <input type="text" id="mother" placeholder="Mother Name" required>
+  <input type="text" id="school" placeholder="School Name" required>
 
-  <button type="submit">Register</button>
+  <textarea id="address" placeholder="Address" required></textarea>
 
-  <div class="msg" id="msg"></div>
+  <input type="text" id="pincode" placeholder="PIN Code" required>
+  <input type="text" id="aadhar" placeholder="Aadhar Number" required>
+
+  <select id="course" required>
+    <option value="">Select Course</option>
+    <option>LAKSHY FOUNDATION BATCH – CLASS 9</option>
+    <option>SARTHI TARGET BATCH – CLASS 10</option>
+    <option>ARJUNA FOUNDATION BATCH – CLASS 11</option>
+    <option>SANKALP TARGET BATCH – CLASS 12</option>
+  </select>
+
+  <button type="submit">Submit</button>
 </form>
+</div>
 
 <script>
-function submitForm(e){
+function sendWhatsApp(e){
   e.preventDefault();
 
-  const student = {
-    name: document.getElementById("name").value,
-    dob: document.getElementById("dob").value,
-    aadhar: document.getElementById("aadhar").value,
-    address: document.getElementById("address").value,
-    pin: document.getElementById("pin").value,
-    mobile: document.getElementById("mobile").value,
-    whatsapp: document.getElementById("whatsapp").value,
-    course: document.getElementById("course").value
-  };
+  // UPPERCASE conversion
+  const student = document.getElementById("student").value.toUpperCase();
+  const father = document.getElementById("father").value.toUpperCase();
+  const mother = document.getElementById("mother").value.toUpperCase();
+  const school = document.getElementById("school").value.toUpperCase();
+  const address = document.getElementById("address").value.toUpperCase();
+  const pincode = document.getElementById("pincode").value.toUpperCase();
+  const aadhar = document.getElementById("aadhar").value.toUpperCase();
+  const course = document.getElementById("course").value.toUpperCase();
 
-  let students = JSON.parse(localStorage.getItem("students")) || [];
-  students.push(student);
-  localStorage.setItem("students", JSON.stringify(students));
+  const msg =
+"NEW STUDENT REGISTRATION\n\n"+
+"STUDENT NAME: "+student+"\n"+
+"FATHER NAME: "+father+"\n"+
+"MOTHER NAME: "+mother+"\n"+
+"SCHOOL NAME: "+school+"\n"+
+"ADDRESS: "+address+"\n"+
+"PIN CODE: "+pincode+"\n"+
+"AADHAR NO: "+aadhar+"\n"+
+"COURSE: "+course;
 
-  document.getElementById("msg").innerText =
-    "✅ Registration Successful";
-
-  document.querySelector("form").reset();
+  const admin = "919670078465"; // admin WhatsApp number
+  const url = "https://wa.me/"+admin+"?text="+encodeURIComponent(msg);
+  window.open(url,"_blank");
 }
 </script>
 
