@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>STUDENT REGISTRATION</title>
+<title>Student Registration</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
@@ -38,8 +38,15 @@ button{
   border-radius:5px;
   font-size:16px;
 }
-button:hover{
-  background:#062c6f;
+button:disabled{
+  background:#999;
+}
+.success{
+  display:none;
+  text-align:center;
+  color:green;
+  font-weight:bold;
+  margin-top:15px;
 }
 </style>
 </head>
@@ -47,46 +54,73 @@ button:hover{
 <body>
 
 <div class="container">
-<h2>STUDENT REGISTRATION</h2>
+<h2>Student Registration</h2>
 
-<form onsubmit="sendWhatsApp(event)">
-  
-  <input type="text" id="student" placeholder="STUDENT NAME" required>
-  <input type="text" id="father" placeholder="FATHER NAME" required>
-  <input type="text" id="mother" placeholder="MOTHER NAME" required>
-  <input type="text" id="school" placeholder="SCHOOL NAME" required>
+<form id="regForm" onsubmit="sendWhatsApp(event)">
 
-  <textarea id="address" placeholder="ADDRESS" required></textarea>
+  <input type="text" id="student" placeholder="Student Name" required
+         oninput="this.value=this.value.toUpperCase()">
 
-  <input type="text" id="pincode" placeholder="PIN Code" required>
-  <input type="text" id="aadhar" placeholder="Aadhar Number" required>
+  <input type="text" id="father" placeholder="Father Name" required
+         oninput="this.value=this.value.toUpperCase()">
+
+  <input type="text" id="mother" placeholder="Mother Name" required
+         oninput="this.value=this.value.toUpperCase()">
+
+  <input type="text" id="school" placeholder="School Name" required
+         oninput="this.value=this.value.toUpperCase()">
+
+  <textarea id="address" placeholder="Address" required
+            oninput="this.value=this.value.toUpperCase()"></textarea>
+
+  <input type="text" id="pincode" placeholder="PIN Code" required
+         maxlength="6" pattern="[0-9]{6}">
+
+  <input type="text" id="aadhar" placeholder="Aadhar Number" required
+         maxlength="12" pattern="[0-9]{12}">
+
+  <input type="text" id="mobile" placeholder="Mobile Number" required
+         maxlength="10" pattern="[0-9]{10}">
 
   <select id="course" required>
     <option value="">Select Course</option>
-    <option>LAKSHY FOUNDATION BATCH – CLASS 9</option>
-    <option>SARTHI TARGET BATCH – CLASS 10</option>
-    <option>ARJUNA FOUNDATION BATCH – CLASS 11</option>
-    <option>SANKALP TARGET BATCH – CLASS 12</option>
-    <option>MATHS SPECIAL 2.0 SELECTION BATCH</option>
+    <option value="LAKSHY FOUNDATION BATCH CLASS 9">LAKSHY FOUNDATION – CLASS 9</option>
+    <option value="SARTHI TARGET BATCH CLASS 10">SARTHI TARGET – CLASS 10</option>
+    <option value="ARJUNA FOUNDATION BATCH CLASS 11">ARJUNA FOUNDATION – CLASS 11</option>
+    <option value="SANKALP TARGET BATCH CLASS 12">SANKALP TARGET – CLASS 12</option>
   </select>
 
-  <button type="submit">Submit</button>
+  <button id="submitBtn" type="submit">Submit</button>
 </form>
+
+<div class="success" id="successMsg">
+  ✅ Registration Submitted Successfully
+</div>
 </div>
 
 <script>
+// COURSE AUTO-SELECT FROM URL (?course=...)
+const params = new URLSearchParams(window.location.search);
+const courseParam = params.get("course");
+if(courseParam){
+  document.getElementById("course").value = courseParam.toUpperCase();
+}
+
 function sendWhatsApp(e){
   e.preventDefault();
 
-  // UPPERCASE conversion
-  const student = document.getElementById("student").value.toUpperCase();
-  const father = document.getElementById("father").value.toUpperCase();
-  const mother = document.getElementById("mother").value.toUpperCase();
-  const school = document.getElementById("school").value.toUpperCase();
-  const address = document.getElementById("address").value.toUpperCase();
-  const pincode = document.getElementById("pincode").value.toUpperCase();
-  const aadhar = document.getElementById("aadhar").value.toUpperCase();
-  const course = document.getElementById("course").value.toUpperCase();
+  // disable button (no duplicate submit)
+  document.getElementById("submitBtn").disabled = true;
+
+  const student = student.value.toUpperCase();
+  const father = father.value.toUpperCase();
+  const mother = mother.value.toUpperCase();
+  const school = school.value.toUpperCase();
+  const address = address.value.toUpperCase();
+  const pincode = pincode.value;
+  const aadhar = aadhar.value;
+  const mobile = mobile.value;
+  const course = course.value.toUpperCase();
 
   const msg =
 "NEW STUDENT REGISTRATION\n\n"+
@@ -97,11 +131,18 @@ function sendWhatsApp(e){
 "ADDRESS: "+address+"\n"+
 "PIN CODE: "+pincode+"\n"+
 "AADHAR NO: "+aadhar+"\n"+
+"MOBILE: "+mobile+"\n"+
 "COURSE: "+course;
 
   const admin = "919670078465"; // admin WhatsApp number
   const url = "https://wa.me/"+admin+"?text="+encodeURIComponent(msg);
   window.open(url,"_blank");
+
+  // success message
+  document.getElementById("successMsg").style.display="block";
+
+  // optional redirect after 3 sec
+  // setTimeout(()=>{ window.location.href="index.html"; },3000);
 }
 </script>
 
