@@ -1,56 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Student Login</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-body{font-family:Arial;background:#f2f2f2;}
-.box{
-  max-width:350px;
-  margin:100px auto;
-  background:white;
-  padding:20px;
-  border-radius:10px;
-}
-input,button{
-  width:100%;
-  padding:10px;
-  margin:10px 0;
-}
-button{
-  background:#0b3c91;
-  color:white;
-  border:none;
-}
-</style>
+    <title>Student Login</title>
 </head>
-
 <body>
 
-<div class="box">
-<h2 style="text-align:center;">Student Login</h2>
+<h2>Student Login</h2>
 
-<input id="uid" placeholder="Student ID">
-<input id="pass" type="password" placeholder="Password">
-
-<button onclick="login()">Login</button>
-<p id="msg" style="color:red;text-align:center;"></p>
-</div>
+<form onsubmit="loginStudent(); return false;">
+    <input type="text" id="studentId" placeholder="Student ID" required><br><br>
+    <input type="password" id="password" placeholder="Password" required><br><br>
+    <button type="submit">Login</button>
+</form>
 
 <script>
-function login(){
-  let uid = document.getElementById("uid").value;
-  let pass = document.getElementById("pass").value;
+function loginStudent() {
+    let id = document.getElementById("studentId").value;
+    let pass = document.getElementById("password").value;
 
-  let students = JSON.parse(localStorage.getItem("students")) || [];
-  let user = students.find(s => s.id === uid && s.password === pass);
+    let data = JSON.parse(localStorage.getItem(id));
 
-  if(user){
-    localStorage.setItem("loginUser", uid);
-    window.location.href="dashboard.html";
-  }else{
-    document.getElementById("msg").innerText="Wrong ID or Password";
-  }
+    if (data && data.password === pass) {
+        localStorage.setItem("loggedStudent", id);
+        window.location.href = "dashboard.html";
+    } else {
+        alert("Wrong Student ID or Password");
+    }
 }
 </script>
 
