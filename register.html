@@ -1,148 +1,96 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
 <title>Student Registration</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <style>
-body{
-  font-family: Arial, sans-serif;
-  background:#f2f2f2;
-}
-.container{
-  max-width:420px;
-  margin:25px auto;
+body{font-family:Arial;background:#f2f2f2;}
+.box{
+  max-width:400px;
+  margin:20px auto;
   background:#fff;
   padding:20px;
   border-radius:10px;
-  box-shadow:0 0 10px rgba(0,0,0,0.1);
 }
-h2{
-  text-align:center;
-  color:#0b3c91;
-}
-input, textarea, select{
+input,select,button{
   width:100%;
   padding:10px;
   margin:8px 0;
-  border:1px solid #ccc;
-  border-radius:5px;
 }
 button{
-  width:100%;
-  padding:12px;
   background:#0b3c91;
   color:white;
   border:none;
-  border-radius:5px;
-  font-size:16px;
-}
-button:disabled{
-  background:#999;
-}
-.success{
-  display:none;
-  text-align:center;
-  color:green;
-  font-weight:bold;
-  margin-top:15px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
-<h2>Student Registration</h2>
+<div class="box">
+<h2 style="text-align:center;">Student Registration</h2>
 
-<form id="regForm" onsubmit="sendWhatsApp(event)">
+<select id="course" required>
+<option value="">Select Course</option>
+<option>LAKSHY FOUNDATION BATCH CLASS 9</option>
+<option>SARTHI TARGET BATCH CLASS 10</option>
+<option>ARJUNA FOUNDATION BATCH CLASS 11</option>
+<option>SANKALP TARGET BATCH CLASS 12</option>
+</select>
 
-  <input type="text" id="student" placeholder="Student Name" required
-         oninput="this.value=this.value.toUpperCase()">
+<input id="name" placeholder="STUDENT NAME">
+<input id="father" placeholder="FATHER NAME">
+<input id="mother" placeholder="MOTHER NAME">
+<input id="school" placeholder="SCHOOL NAME">
+<input id="address" placeholder="ADDRESS">
+<input id="pincode" placeholder="PIN CODE">
+<input id="mobile" placeholder="MOBILE NUMBER">
+<input id="whatsapp" placeholder="WHATSAPP NUMBER">
+<input id="aadhar" placeholder="AADHAR NUMBER">
 
-  <input type="text" id="father" placeholder="Father Name" required
-         oninput="this.value=this.value.toUpperCase()">
-
-  <input type="text" id="mother" placeholder="Mother Name" required
-         oninput="this.value=this.value.toUpperCase()">
-
-  <input type="text" id="school" placeholder="School Name" required
-         oninput="this.value=this.value.toUpperCase()">
-
-  <textarea id="address" placeholder="Address" required
-            oninput="this.value=this.value.toUpperCase()"></textarea>
-
-  <input type="text" id="pincode" placeholder="PIN Code" required
-         maxlength="6" pattern="[0-9]{6}">
-
-  <input type="text" id="aadhar" placeholder="Aadhar Number" required
-         maxlength="12" pattern="[0-9]{12}">
-
-  <input type="text" id="mobile" placeholder="Mobile Number" required
-         maxlength="10" pattern="[0-9]{10}">
-
-  <select id="course" required>
-    <option value="">Select Course</option>
-    <option value="LAKSHY FOUNDATION BATCH CLASS 9">LAKSHY FOUNDATION – CLASS 9</option>
-    <option value="SARTHI TARGET BATCH CLASS 10">SARTHI TARGET – CLASS 10</option>
-    <option value="ARJUNA FOUNDATION BATCH CLASS 11">ARJUNA FOUNDATION – CLASS 11</option>
-    <option value="SANKALP TARGET BATCH CLASS 12">SANKALP TARGET – CLASS 12</option>
-  </select>
-
-  <button id="submitBtn" type="submit">Submit</button>
-</form>
-
-<div class="success" id="successMsg">
-  ✅ Registration Submitted Successfully
-</div>
+<button onclick="register()">Register</button>
 </div>
 
 <script>
-// COURSE AUTO-SELECT FROM URL (?course=...)
-const params = new URLSearchParams(window.location.search);
-const courseParam = params.get("course");
-if(courseParam){
-  document.getElementById("course").value = courseParam.toUpperCase();
+function generateStudentID(){
+  let last = localStorage.getItem("lastID");
+  last = last ? parseInt(last) : 1000;
+  last++;
+  localStorage.setItem("lastID", last);
+  return "MW" + last;
 }
 
-function sendWhatsApp(e){
-  e.preventDefault();
+function register(){
+  let studentID = generateStudentID();
+  let password = "12345";
 
-  // disable button (no duplicate submit)
-  document.getElementById("submitBtn").disabled = true;
+  let student = {
+    id: studentID,
+    password: password,
+    course: course.value,
+    name: name.value.toUpperCase(),
+    father: father.value.toUpperCase(),
+    mother: mother.value.toUpperCase(),
+    school: school.value.toUpperCase(),
+    address: address.value.toUpperCase(),
+    pincode: pincode.value,
+    mobile: mobile.value,
+    whatsapp: whatsapp.value,
+    aadhar: aadhar.value
+  };
 
-  const student = student.value.toUpperCase();
-  const father = father.value.toUpperCase();
-  const mother = mother.value.toUpperCase();
-  const school = school.value.toUpperCase();
-  const address = address.value.toUpperCase();
-  const pincode = pincode.value;
-  const aadhar = aadhar.value;
-  const mobile = mobile.value;
-  const course = course.value.toUpperCase();
+  let students = JSON.parse(localStorage.getItem("students")) || [];
+  students.push(student);
+  localStorage.setItem("students", JSON.stringify(students));
 
-  const msg =
-"NEW STUDENT REGISTRATION\n\n"+
-"STUDENT NAME: "+student+"\n"+
-"FATHER NAME: "+father+"\n"+
-"MOTHER NAME: "+mother+"\n"+
-"SCHOOL NAME: "+school+"\n"+
-"ADDRESS: "+address+"\n"+
-"PIN CODE: "+pincode+"\n"+
-"AADHAR NO: "+aadhar+"\n"+
-"MOBILE: "+mobile+"\n"+
-"COURSE: "+course;
+  let msg =
+`STUDENT REGISTERED
+ID: ${studentID}
+PASSWORD: ${password}
+COURSE: ${student.course}`;
 
-  const admin = "919670078465"; // admin WhatsApp number
-  const url = "https://wa.me/"+admin+"?text="+encodeURIComponent(msg);
-  window.open(url,"_blank");
-
-  // success message
-  document.getElementById("successMsg").style.display="block";
-
-  // optional redirect after 3 sec
-  // setTimeout(()=>{ window.location.href="index.html"; },3000);
+  window.location.href =
+"https://wa.me/91"+student.whatsapp+"?text="+encodeURIComponent(msg);
 }
 </script>
 
