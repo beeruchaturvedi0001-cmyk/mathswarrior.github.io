@@ -1,96 +1,109 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Student Registration</title>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Registration | Math's Warrior</title>
+
 <style>
-body{font-family:Arial;background:#f2f2f2;}
-.box{
-  max-width:400px;
-  margin:20px auto;
-  background:#fff;
-  padding:20px;
-  border-radius:10px;
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:#f4f6fb;
 }
-input,select,button{
-  width:100%;
-  padding:10px;
-  margin:8px 0;
+
+.header{
+    background:#0a2d7c;
+    color:#fff;
+    padding:15px;
+    text-align:center;
 }
+
+.form-box{
+    background:#fff;
+    margin:15px;
+    padding:15px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+input, select, button{
+    width:100%;
+    padding:10px;
+    margin-bottom:10px;
+    border-radius:6px;
+    border:1px solid #ccc;
+    font-size:14px;
+}
+
 button{
-  background:#0b3c91;
-  color:white;
-  border:none;
+    background:#0a2d7c;
+    color:#fff;
+    border:none;
+    font-size:16px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#06307a;
 }
 </style>
 </head>
 
 <body>
 
-<div class="box">
-<h2 style="text-align:center;">Student Registration</h2>
+<div class="header">
+    <h2>Student Registration</h2>
+</div>
 
-<select id="course" required>
-<option value="">Select Course</option>
-<option>LAKSHY FOUNDATION BATCH CLASS 9</option>
-<option>SARTHI TARGET BATCH CLASS 10</option>
-<option>ARJUNA FOUNDATION BATCH CLASS 11</option>
-<option>SANKALP TARGET BATCH CLASS 12</option>
-</select>
+<div class="form-box">
 
-<input id="name" placeholder="STUDENT NAME">
-<input id="father" placeholder="FATHER NAME">
-<input id="mother" placeholder="MOTHER NAME">
-<input id="school" placeholder="SCHOOL NAME">
-<input id="address" placeholder="ADDRESS">
-<input id="pincode" placeholder="PIN CODE">
-<input id="mobile" placeholder="MOBILE NUMBER">
-<input id="whatsapp" placeholder="WHATSAPP NUMBER">
-<input id="aadhar" placeholder="AADHAR NUMBER">
+    <input type="text" id="name" placeholder="STUDENT NAME" required>
+    <input type="text" id="father" placeholder="FATHER NAME" required>
+    <input type="text" id="school" placeholder="SCHOOL NAME" required>
 
-<button onclick="register()">Register</button>
+    <select id="course">
+        <option value="">SELECT COURSE</option>
+        <option>LAKSHAY FOUNDATION (CLASS 9)</option>
+        <option>SARTHI TARGET (CLASS 10)</option>
+        <option>SANKALP FOUNDATION (CLASS 11)</option>
+        <option>SANKHNAD TARGET (CLASS 12)</option>
+    </select>
+
+    <input type="number" id="mobile" placeholder="MOBILE NUMBER" required>
+    <input type="number" id="aadhar" placeholder="AADHAR NUMBER" required>
+
+    <button onclick="register()">Register Now</button>
+
 </div>
 
 <script>
-function generateStudentID(){
-  let last = localStorage.getItem("lastID");
-  last = last ? parseInt(last) : 1000;
-  last++;
-  localStorage.setItem("lastID", last);
-  return "MW" + last;
-}
-
 function register(){
-  let studentID = generateStudentID();
-  let password = "12345";
 
-  let student = {
-    id: studentID,
-    password: password,
-    course: course.value,
-    name: name.value.toUpperCase(),
-    father: father.value.toUpperCase(),
-    mother: mother.value.toUpperCase(),
-    school: school.value.toUpperCase(),
-    address: address.value.toUpperCase(),
-    pincode: pincode.value,
-    mobile: mobile.value,
-    whatsapp: whatsapp.value,
-    aadhar: aadhar.value
-  };
+    let name = document.getElementById("name").value.trim().toUpperCase();
+    let father = document.getElementById("father").value.trim().toUpperCase();
+    let school = document.getElementById("school").value.trim().toUpperCase();
+    let course = document.getElementById("course").value;
+    let mobile = document.getElementById("mobile").value;
+    let aadhar = document.getElementById("aadhar").value;
 
-  let students = JSON.parse(localStorage.getItem("students")) || [];
-  students.push(student);
-  localStorage.setItem("students", JSON.stringify(students));
+    if(name=="" || father=="" || school=="" || course=="" || mobile=="" || aadhar==""){
+        alert("Please fill all details");
+        return;
+    }
 
-  let msg =
-`STUDENT REGISTERED
-ID: ${studentID}
-PASSWORD: ${password}
-COURSE: ${student.course}`;
+    /* SAVE DATA */
+    localStorage.setItem("studentName", name);
+    localStorage.setItem("studentFather", father);
+    localStorage.setItem("studentSchool", school);
+    localStorage.setItem("studentCourse", course);
+    localStorage.setItem("studentMobile", mobile);
+    localStorage.setItem("studentAadhar", aadhar);
 
-  window.location.href =
-"https://wa.me/91"+student.whatsapp+"?text="+encodeURIComponent(msg);
+    alert("Registration Successful");
+
+    /* REDIRECT */
+    window.location.href = "dashboard.html";
 }
 </script>
 
