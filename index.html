@@ -1,130 +1,94 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
-<title>MATH'S WARRIOR EDUCATION</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Math's Warrior</title>
 
 <style>
-body {
-  <div style="text-align:center; margin-top:30px;">
-    <a href="register.html">
-        <button>Student Register</button>
-    </a>
+body{margin:0;font-family:Arial;background:#f4f6fb;padding-bottom:70px}
 
-    <a href="login.html">
-        <button>Student Login</button>
-    </a>
-</div>
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f4f6f8;
-}
+/* running text */
+.marquee{background:#0a2d7c;color:#fff;padding:10px;overflow:hidden}
+.marquee span{display:inline-block;padding-left:100%;animation:run 10s linear infinite}
+@keyframes run{100%{transform:translateX(-100%)}}
 
-header {
-  background: #0B1C3D;
-  color: white;
-  text-align: center;
-  padding: 20px;
-}
+/* slider */
+.slider{position:relative;overflow:hidden}
+.slides{display:flex;transition:.4s}
+.slide{min-width:100%}
+.slide img{width:100%;height:220px;object-fit:cover}
 
-header h1 {
-  margin: 0;
-  font-size: 26px;
-}
+/* top buttons */
+.top-btn{position:absolute;top:10px;right:10px;z-index:5}
+.top-btn a{background:#0a2d7c;color:#fff;padding:6px 10px;
+text-decoration:none;border-radius:5px;font-size:13px;margin-left:5px}
 
-.container {
-  padding: 15px;
-}
+/* arrows */
+.btn{position:absolute;top:50%;transform:translateY(-50%);
+background:rgba(0,0,0,.5);color:#fff;border:none;padding:10px}
+.prev{left:10px}.next{right:10px}
 
-.course {
-  background: white;
-  border-radius: 8px;
-  padding: 15px;
-  margin-bottom: 15px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-}
+/* box */
+.box{background:#fff;margin:15px;padding:15px;border-radius:10px}
 
-.course h2 {
-  margin-top: 0;
-  color: #0B1C3D;
-}
-
-.course p {
-  font-size: 14px;
-  color: #333;
-}
-
-.btn {
-  display: inline-block;
-  margin-top: 10px;
-  padding: 10px 15px;
-  background: #0B1C3D;
-  color: white;
-  text-decoration: none;
-  border-radius: 5px;
-  font-size: 14px;
-}
-
-.btn:hover {
-  background: #163a7a;
-}
-
-footer {
-  background: #0B1C3D;
-  color: white;
-  text-align: center;
-  padding: 10px;
-  font-size: 13px;
-}
+/* bottom nav */
+.bottom-nav{position:fixed;bottom:0;left:0;width:100%;
+background:#fff;display:flex;border-top:1px solid #ccc}
+.bottom-nav a{flex:1;text-align:center;padding:8px 0;
+text-decoration:none;color:#555;font-size:12px}
+.bottom-nav span{display:block;font-size:20px}
+.bottom-nav a.active{color:#0a2d7c;font-weight:bold}
 </style>
 </head>
 
 <body>
 
-<header>
-  <h1>MATH'S WARRIOR EDUCATION</h1>
-  <p>THE PATH OF SELECTION</p>
-  <P>FOR ALL COMPETITIVE EXAM PREPRATION VISIT NOW</P>
-  <p>ALL ACADEMIC CLASSES BATCH AVAILABLE ON MATH'S WARRIOR APPLICATION<p>
-  <P>LIKE SSC CGL, CHSL,MTS, CPO,GD AND RAILWAY EXAM LIKE ALP,GROUP D,NTPC AND UP COSTABLE AND HOMEGUARD</P>
-</header>
-
-<div class="container">
-
-  <div class="course">
-    <h2>LAKSHY FOUNDATION BATCH</h2>
-    <p>CLASS 9TH<br>Fee: 1999<br>BY ABHINAY CHAUBEY AND TEAM</p>
-    <a href="register.html?course=LAKSHY%20FOUNDATION%20BATCH" class="btn">REGISTER NOW</a>
-  </div>
-
-  <div class="course">
-    <h2>SARTHI TARGET BATCH</h2>
-    <p>CLASS 10TH<br>Fee: 2000<br>BY ABHINAY CHAUBEY SIR AND TEAM</p>
-    <a href="register.html?course=SARTHI%20TARGET%20BATCH" class="btn">REGISTER NOW</a>
-  </div>
-
-  <div class="course">
-    <h2>ARJUNA FOUNDATION BATCH</h2>
-    <p>CLASS 11TH<br>Fee: 2500<br>BY ABHINAY SIR AND TEAM</p>
-    <a href="register.html?course=ARJUNA%20FOUNDATION%20BATCH" class="btn">REGISTER NOW</a>
-  </div>
-
-  <div class="course">
-    <h2>SANKALP TARGET BATCH</h2>
-    <p>CLASS 12TH<br>Fee: 4000<br>BY ABHINAY SIR AND TEAM</p>
-    <a href="register.html?course=SANKALP%20TARGET%20BATCH" class="btn">REGISTER NOW</a>
-  </div>
-  <div class="course">
-    <h2>MATHS SPECIAL 2.0 SELECTION BATCH </h2>
-    <p>FOR ALL COMPETITIVE EXAM<br>FEE:1999<br>BY ABHINAY CHAUBEY SIR</p>
-    <a href="register.html?course=MATHS%20FOUNDATION%20BATCH" class="btn">REGISTER NOW</a>
+<div class="marquee">
+<span>WELCOME TO MATH'S WARRIOR | BEST ONLINE EDUCATION PLATFORM</span>
 </div>
 
-<footer>
-  © 2026 MATH'S WARRIOR EDUCATION 
-  © THE PATH OF SELECTION 
-</footer>
+<div class="slider" id="slider">
+<div class="top-btn">
+<a href="register.html">Register</a>
+<a href="login.html">Login</a>
+</div>
+
+<div class="slides" id="slides">
+<div class="slide"><img src="images/slide1.jpg"></div>
+<div class="slide"><img src="images/slide2.jpg"></div>
+<div class="slide"><img src="images/slide3.jpg"></div>
+</div>
+
+<button class="btn prev" onclick="prev()">❮</button>
+<button class="btn next" onclick="next()">❯</button>
+</div>
+
+<div class="box">
+<h3>Math's Warrior Education</h3>
+<p>Class 9th to 12th | UP Board & CBSE</p>
+</div>
+
+<!-- bottom nav -->
+<div class="bottom-nav">
+<a class="active" href="index.html"><span>🏠</span>Home</a>
+<a href="courses.html"><span>📚</span>Courses</a>
+<a href="dashboard.html"><span>📊</span>Dashboard</a>
+<a href="profile.html"><span>👤</span>Profile</a>
+</div>
+
+<script>
+let i=0,s=document.getElementById("slides"),t=s.children.length;
+function show(){s.style.transform="translateX("+(-i*100)+"%)"}
+function next(){if(i<t-1)i++;show()}
+function prev(){if(i>0)i--;show()}
+let sx=0,ex=0;
+slider.addEventListener("touchstart",e=>sx=e.touches[0].clientX);
+slider.addEventListener("touchend",e=>{
+ex=e.changedTouches[0].clientX;
+if(sx-ex>50)next(); if(ex-sx>50)prev();
+});
+</script>
 
 </body>
 </html>
