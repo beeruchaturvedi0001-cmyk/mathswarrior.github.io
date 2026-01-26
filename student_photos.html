@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Photos - Warrior Institute</title>
+<style>
+body{font-family:Segoe UI,sans-serif;background:linear-gradient(120deg,#f0f4ff,#f8fafc);margin:0;padding:0;}
+header{background:linear-gradient(90deg,#1e3a8a,#2563eb);color:white;text-align:center;padding:25px;font-size:1.8rem;}
+h2{color:#1e3a8a;text-align:center;margin-top:30px;}
+form{max-width:500px;margin:20px auto;background:white;padding:25px;border-radius:20px;box-shadow:0 10px 40px rgba(0,0,0,0.2);display:flex;flex-direction:column;}
+input,button{padding:12px;margin:10px 0;border-radius:10px;border:1px solid #ccc;font-size:1rem;}
+button{background:linear-gradient(90deg,#1e3a8a,#2563eb);color:white;font-weight:bold;border:none;cursor:pointer;transition:0.3s;}
+button:hover{opacity:0.9;}
+ul{max-width:500px;margin:20px auto;list-style:none;padding:0;}
+ul li{background:white;padding:15px;border-radius:15px;margin:10px 0;box-shadow:0 5px 20px rgba(0,0,0,0.1);display:flex;justify-content:space-between;align-items:center;}
+ul li img{width:50px;height:50px;border-radius:50%;margin-right:15px;object-fit:cover;}
+ul li span{flex:1;}
+.deleteBtn{background:red;padding:5px 10px;border:none;border-radius:5px;color:white;cursor:pointer;}
+</style>
+</head>
+<body>
+
+<header> MATH'S WARRIOR INSTITUTE - STUDENT PHOTOS</header>
+
+<h2>UPLOAD STUDENT PHOTO</h2>
+<form id="studentForm">
+  <input type="text" id="studentName" placeholder="Student Name" required>
+  <input type="file" id="studentPhoto" accept="image/*" required>
+  <button type="submit">UPLOAD PHOTO</button>
+</form>
+
+<h2>UPLOADED STUDENTS</h2>
+<ul id="studentList"></ul>
+
+<script>
+const studentForm = document.getElementById('studentForm');
+const studentList = document.getElementById('studentList');
+
+// Display students
+function displayStudents(){
+    studentList.innerHTML = "";
+    const students = JSON.parse(localStorage.getItem('students') || '[]');
+    if(students.length === 0){
+        const li = document.createElement('li');
+        li.textContent = "No students uploaded yet!";
+        studentList.appendChild(li);
+        return;
+    }
+    students.forEach((student,index)=>{
+        const li = document.createElement('li');
+        li.innerHTML = `
+            <img src="${student.photo}" alt="${student.name}">
+            <span>${student.name}</span>
+            <button class="deleteBtn" onclick="deleteStudent(${index})">Delete</button>`;
+        studentList.appendChild(li);
+    });
+}
+
+// Delete student
+function deleteStudent(index){
+    let students = JSON.parse(localStorage.getItem('students') || '[]');
+    if(confirm("Are you sure you want to delete this student?")){
+        students.splice(index,1);
+        localStorage.setItem('students',JSON.stringify(students));
+        displayStudents();
+    }
+}
+
+// Form submit
+studentForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    const name = document.getElementById('studentName').value;
+    const file = document.getElementById('studentPhoto').files[0];
+    if(!file) return alert("Please select a photo!");
+
+    const reader = new FileReader();
+    reader.onload = function(){
+        let students = JSON.parse(localStorage.getItem('students') || '[]');
+        students.push({name:name, photo:reader.result});
+        localStorage.setItem('students', JSON.stringify(students));
+        alert("Student uploaded successfully!");
+        studentForm.reset();
+        displayStudents();
+    }
+    reader.readAsDataURL(file);
+});
+
+// Initial display
+displayStudents();
+</script>
+
+</body>
+</html>

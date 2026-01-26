@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Admin Login</title>
+<style>
+body{font-family:impact;background:#e0e7ff;display:flex;justify-content:center;align-items:center;height:50vh;}
+.box{background: red;padding:30px;border-radius:15px;box-shadow:0 10px 30px rgba(0,0,0,0.2);width:350px;}
+input,button{width:100%;padding:12px;margin:10px 0;border-radius:8px;border:1px solid #aaa;}
+button{background:#2563eb;color:white;border:10;}
+</style>
+</head>
+<body>
+
+<div class="box">
+<h2>ADMIN LOGIN</h2>
+<input type="text" id="user" placeholder="USERNAME ID">
+<input type="password" id="pass" placeholder="PASSWORD">
+<button onclick="login()">LOGIN NOW</button>
+</div>
+
+<script>
+function login(){
+  if(user.value==="admin" && pass.value==="12345"){
+    window.location.href="index.html";
+  }else{
+    alert("login successfull✅");
+  }
+}
+</script>
+
+</body>
+</html>

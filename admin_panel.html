@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ADMIN PANEL | MATH'S WARRIOR INSTITUTE</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+    margin:0;
+    font-family:Segoe UI, sans-serif;
+    background:linear-gradient(120deg,#eef2ff,#f8fafc);
+}
+header{
+    background:linear-gradient(90deg,#1e3a8a,#2563eb);
+    color:#fff;
+    padding:10px;
+    text-align:center;
+}
+.main{
+    position:relative;
+    padding:30px 25px;
+}
+.shapeA,.shapeB{
+    position:absolute;
+    border-radius:50%;
+    opacity:0.3;
+}
+.shapeA{
+    width:w60px;height:260px;
+    background:linear-gradient(#2563eb,#60a5fa);
+    top:40px;left:30px;
+}
+.shapeB{
+    width:320px;height:320px;
+    background:linear-gradient(#1e3a8a,#93c5fd);
+    bottom:40px;right:40px;
+}
+.panel{
+    max-width:1000px;
+    margin:auto;
+    position:relative;
+    z-index:2;
+}
+.panel h2{
+    text-align:center;
+    color:#1e3a8a;
+    margin-bottom:25px;
+}
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+    gap:30px;
+}
+.card{
+    background:#fff;
+    border-radius:15px;
+    padding:20px;
+    text-align:center;
+    box-shadow:0 15px 20px rgba(0,0,0,0.8);
+}
+.card h3{color:#1e3a8a}
+.card a{
+    display:inline-block;
+    margin-top:10px;
+    padding:10px 16px;
+    border-radius:20px;
+    background:linear-gradient(90deg,#1e3a8a,#2563eb);
+    color:#fff;
+    text-decoration:none;
+}
+footer{
+    text-align:center;
+    padding:30px;
+    margin-top:10px;
+    background:#1e3a8a;
+    color:#fff;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>MATH'S WARRIOR INSTITUTE 🪪 ADMIN PANEL</h1>
+</header>
+
+<div class="main">
+    <div class="shapeA"></div>
+    <div class="shapeB"></div>
+
+    <div class="panel">
+        <h2>ADMIN CONTROLS</h2>
+
+        <div class="cards">
+            <div class="card">
+                <h3>STUDENT DATA</h3>
+                <p>✅VIEW & MANAGE 📈REGISTRATIONS</p>
+              
+                <a href="#">CLICK HERE</a>
+            </div>
+            <div class="card">
+                <h3>TEACHER'S FACULTIES</h3>
+                <p>👨🏻‍🏫🧑🏻‍🏫VIEW AND MANAGE TEACHER FACULTIES</p>
+                <a href="pdf_section.html">CLICK HERE</a>
+            </div>
+            <div class="card">
+                <h3>NOTES & PDF SECTION</h3>
+                <p>📓MANAGE NOTES</p>
+                <p>📄MANAGE PDF</p>
+                <a href="notes_section.html">CLICK HERE</a>
+            </div>
+            <div class="card">
+                <h3>CONTACT QUERIES</h3>
+                <p>🙋🏻CHECK STUDENT 💬MESSAGES</p>
+                <a href="contact.html">CLICK HERE</a>
+            </div>
+            </div>
+           
+        </div>
+    </div>
+</div>
+
+<footer>© MATH'S WARRIOR INSTITUTE2026</footer>
+<footer>▶️ ABHINAY_PRATAP_MATHEMATICS</footer>
+<footer>▶️ 🔗 @ABHINAYPRATAPMATHS</footer>
+
+</body>
+</html>

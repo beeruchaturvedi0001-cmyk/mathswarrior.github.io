@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>STUDENT REGISTRATION</title>
+<style>
+body{font-family:Arial;background:#fff7ff;padding:20px}
+.box{max-width:1500px;margin:auto;background: white;padding:25px;border-radius:20px}
+input,button{width:95%;padding:8px;margin:8px 0}
+button{background:#2563eb;color:white;border:none}
+</style>
+</head>
+<body>
+<div class="box">
+<h2>STUDENT REGISTRATION</h2>
+<input id="name" placeholder="STUDENT NAME">
+<input id="name" placeholder="FATHER'S NAME">
+<input id="name" placeholder="MOTHER'S NAME">
+<input id="name" placeholder="CATEGORY">
+<input id="Address" placeholder="ADDRESS">
+<input id="state" placeholder="STATE">
+<input id="dob" placeholder="DATE OF BIRTH">
+<input id="class" placeholder="CLASS">
+<input id="mobile" placeholder="MOBILE NUMBER">
+<input id="aadhar" placeholder="AADHAR NUMBER">
+
+<button onclick="save()">REGISTER NOW</button>
+</div>
+<script>
+let students=JSON.parse(localStorage.getItem('students'))||[];
+function save(){
+students.push({name:name.value,class:class.value,mobile:mobile.value});
+localStorage.setItem('students',JSON.stringify(students));
+alert('Registered');
+}
+</script>
+</body>
+</html>

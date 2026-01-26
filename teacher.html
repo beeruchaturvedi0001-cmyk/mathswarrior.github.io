@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>TEACHER MANAGEMENT</title>
+<style>
+body{
+  font-family:Arial;
+  background:#eef2ff;
+  padding:20px;
+}
+.box{
+  max-width:3000px;
+  margin:auto;
+  background:white;
+  padding:10px;
+  border-radius:10px;
+  box-shadow:0 10px 20px rgba(0,0,0,0.2);
+}
+input,button{
+  padding:10px;
+  width:90%;
+  margin:10px 0;
+}
+button{
+  background:#2563eb;
+  color: white;
+  border:none;
+  border-radius:55px;
+}
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:20px;
+}
+th,td{
+  border:10px solid #ccc;
+  padding:8px;
+  text-align:center;
+}
+th{
+  background:#2563eb;
+  color:white;
+}
+.del{
+  background:red;
+  color:white;
+  border:none;
+  padding:5px 5px;
+  border-radius:5px;
+}
+img{
+  width:60px;
+  border-radius:50%;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+<h2>TEACHER MANAGE</h2>
+
+<input type="text" id="name" placeholder="TEACHER NAME">
+<input type="text" id="subject" placeholder="SUBJECT NAME">
+<input type="file" id="photo" accept="IMAGE/*">
+
+<button onclick="addTeacher()">ADD TEACHER</button>
+
+<table>
+<thead>
+<tr>
+<th>PHOTO</th>
+<th>NAME</th>
+<th>SUBJECT</th>
+<th>DELETE</th>
+</tr>
+</thead>
+<tbody id="list"></tbody>
+</table>
+</div>
+
+<script>
+let teachers = JSON.parse(localStorage.getItem("teachers")) || [];
+
+function addTeacher(){
+  let name = document.getElementById("name").value;
+  let subject = document.getElementById("subject").value;
+  let photo = document.getElementById("photo").files[0];
+
+  if(!name || !subject || !photo){
+    alert("🚫fill missing box");
+    return;
+  }
+
+  let reader = new FileReader();
+  reader.onload = function(){
+    teachers.push({
+      name:name,
+      subject:subject,
+      photo:reader.result
+    });
+    localStorage.setItem("teachers",JSON.stringify(teachers));
+    name.value="";
+    subject.value="";
+    photo.value="";
+    show();
+  };
+  reader.readAsDataURL(photo);
+}
+
+function show(){
+  list.innerHTML="";
+  teachers.forEach((t,i)=>{
+    list.innerHTML += `
+    <tr>
+      <td><img src="${t.photo}"></td>
+      <td>${t.name}</td>
+      <td>${t.subject}</td>
+      <td><button class="del" onclick="del(${i})">Delete</button></td>
+    </tr>`;
+  });
+}
+
+function del(i){
+  if(confirm("Teacher delete kare?")){
+    teachers.splice(i,1);
+    localStorage.setItem("teachers",JSON.stringify(teachers));
+    show();
+  }
+}
+
+show();
+</script>
+
+</body>
+</html>

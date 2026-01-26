@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PDF & NOTES SECTION - MATH'S WARRIOR INSTITUTE</title>
+<style>
+body{font-family:Segoe UI,sans-serif;background:linear-gradient(120deg,#e0e7ff,#f8fafc);margin:0;padding:0;}
+header{background:linear-gradient(90deg,#1e3a8a,#2563eb);color:white;text-align:center;padding:25px;font-size:1.8rem;}
+h2{color:#1e3a8a;text-align:center;margin-top:20px;}
+form{max-width:350px;margin:10px auto;background: black;padding:15px;border-radius:10px;box-shadow:0 10px 40px rgba(0,0,0,0.2);display:flex;flex-direction:column;}
+input,button{padding:10px;margin:05px 0;border-radius:10px;border:1px solid #ccc;font-size:1rem;}
+button{background:linear-gradient(90deg,#1e3a8a,#2563eb);color: white;font-weight:bold;border:none;cursor:pointer;transition:0.3s;}
+button:hover{opacity:0.9;}
+ul{max-width:500px;margin:20px auto;list-style:none;padding:0;}
+ul li{background:pink;padding:15px;border-radius:15px;margin:10px 0;box-shadow:0 5px 20px rgba(0,0,0,0.1);display:flex;justify-content:space-between;align-items:center;}
+ul li a{color:#1e3a8a;text-decoration:none;font-weight:bold;}
+.deleteBtn{background:red;padding:5px 10px;border:none;border-radius:5px;color:white;cursor:pointer;}
+</style>
+</head>
+<body>
+
+<header> PDF & NOTES SECTION</header>
+
+<!-- PDF Upload Section -->
+<h2>UPLOAD PDF</h2>
+<form id="pdfForm">
+  <input type="text" id="pdfTitle" placeholder="PDF Title" required>
+  <input type="file" id="pdfFile" accept=".pdf" required>
+  <button type="submit">UPLOAD PDF</button>
+</form>
+
+<h2>👉🏻👉🏻📄CLICK ON PDF AND DOWNLOAD</h2>
+<ul id="pdfList"></ul>
+
+<!-- Notes Upload Section -->
+<h2>UPLOAD NOTES</h2>
+<form id="notesForm">
+  <input type="text" id="notesTitle" placeholder="Notes Title" required>
+  <input type="file" id="notesFile" accept=".pdf,.doc,.docx" required>
+  <button type="submit">UPLOAD NOTES</button>
+</form>
+
+<h2>👉🏻👉🏻📄CLICK ON PDF AND DOWNLOAD</h2>
+<ul id="notesList"></ul>
+
+<script>
+// ===== PDF LOGIC =====
+const pdfForm = document.getElementById('pdfForm');
+const pdfList = document.getElementById('pdfList');
+
+function displayPDFs(){
+    pdfList.innerHTML = "";
+    const pdfs = JSON.parse(localStorage.getItem('pdfs') || '[]');
+    pdfs.forEach((pdf,index)=>{
+        const li = document.createElement('li');
+        li.innerHTML = `
+            <a href="${pdf.data}" target="_blank">${pdf.title}</a>
+            <button class="deleteBtn" onclick="deletePDF(${index})">Remove PDF</button>`;
+        pdfList.appendChild(li);
+    });
+}
+
+function deletePDF(index){
+    let pdfs = JSON.parse(localStorage.getItem('pdfs') || '[]');
+    if(confirm("Are you sure you want to remove this PDF?")){
+        pdfs.splice(index,1);
+        localStorage.setItem('pdfs', JSON.stringify(pdfs));
+        displayPDFs();
+    }
+}
+
+pdfForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    const file = document.getElementById('pdfFile').files[0];
+    const title = document.getElementById('pdfTitle').value;
+
+    if(!file) return alert("Please select a PDF!");
+
+    const reader = new FileReader();
+    reader.onload = function(){
+        let pdfs = JSON.parse(localStorage.getItem('pdfs') || '[]');
+        pdfs.push({title: title, data: reader.result});
+        localStorage.setItem('pdfs', JSON.stringify(pdfs));
+        alert("PDF Uploaded Successfully!");
+        pdfForm.reset();
+        displayPDFs();
+    }
+    reader.readAsDataURL(file);
+});
+
+displayPDFs();
+
+// ===== NOTES LOGIC =====
+const notesForm = document.getElementById('notesForm');
+const notesList = document.getElementById('notesList');
+
+function displayNotes(){
+    notesList.innerHTML = "";
+    const notes = JSON.parse(localStorage.getItem('notes') || '[]');
+    notes.forEach((note,index)=>{
+        const li = document.createElement('li');
+        li.innerHTML = `
+            <a href="${note.data}" target="_blank">${note.title}</a>
+            <button class="deleteBtn" onclick="deleteNote(${index})">Remove Note</button>`;
+        notesList.appendChild(li);
+    });
+}
+
+function deleteNote(index){
+    let notes = JSON.parse(localStorage.getItem('notes') || '[]');
+    if(confirm("Are you sure you want to remove this note?")){
+        notes.splice(index,1);
+        localStorage.setItem('notes', JSON.stringify(notes));
+        displayNotes();
+    }
+}
+
+notesForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    const file = document.getElementById('notesFile').files[0];
+    const title = document.getElementById('notesTitle').value;
+
+    if(!file) return alert("Please select a Notes file!");
+
+    const reader = new FileReader();
+    reader.onload = function(){
+        let notes = JSON.parse(localStorage.getItem('notes') || '[]');
+        notes.push({title: title, data: reader.result});
+        localStorage.setItem('notes', JSON.stringify(notes));
+        alert("Notes Uploaded Successfully!");
+        notesForm.reset();
+        displayNotes();
+    }
+    reader.readAsDataURL(file);
+});
+
+displayNotes();
+</script>
+
+</body>
+</html>
