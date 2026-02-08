@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mock Test - MATH'S WARRIOR</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
+
+body{
+background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+color:white;
+padding:20px;
+}
+
+.container{
+max-width:900px;
+margin:auto;
+}
+
+.header{
+text-align:center;
+margin-bottom:20px;
+}
+
+.header h1{color:#ffcc00;}
+.header h3{font-weight:normal;}
+
+.card{
+background:rgba(255,255,255,0.1);
+padding:25px;
+border-radius:25px;
+backdrop-filter:blur(15px);
+box-shadow:0 15px 35px rgba(0,0,0,0.4);
+}
+
+.timer{
+font-size:18px;
+color:#00ffcc;
+font-weight:bold;
+margin-bottom:15px;
+}
+
+input[type="text"]{
+width:100%;
+padding:10px;
+border-radius:25px;
+border:none;
+margin-bottom:15px;
+}
+
+.question{margin-bottom:18px;}
+
+.options label{
+display:block;
+margin-bottom:5px;
+cursor:pointer;
+}
+
+button{
+padding:10px 25px;
+border:none;
+border-radius:30px;
+background:linear-gradient(45deg,#ff512f,#dd2476);
+color:white;
+cursor:pointer;
+font-weight:bold;
+margin-top:10px;
+}
+
+.result{
+margin-top:20px;
+font-size:18px;
+font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="header">
+<h1>MATH'S WARRIOR</h1>
+<h3>MATHS BY ABHINAY PRATAP</h3>
+</div>
+
+<div class="card">
+
+<div class="timer">Time Left: <span id="time">15:00</span></div>
+
+<input type="text" id="studentName" placeholder="Enter Student Name">
+
+<form id="quizForm">
+<div id="questions"></div>
+<button type="button" onclick="submitTest()">Submit Test</button>
+<div class="result" id="result"></div>
+</form>
+
+</div>
+</div>
+
+<script>
+let questionsData = [
+{q:"1) 25 × 4 = ?", options:["80","90","100","75"], answer:2},
+{q:"2) 15% of 200 = ?", options:["25","30","35","40"], answer:1},
+{q:"3) 9² = ?", options:["18","72","81","99"], answer:2},
+{q:"4) 144 ÷ 12 = ?", options:["10","11","12","14"], answer:2},
+{q:"5) 7 × 8 = ?", options:["54","56","64","48"], answer:1},
+{q:"6) 1000 - 457 = ?", options:["543","553","533","523"], answer:0},
+{q:"7) √121 = ?", options:["9","10","11","12"], answer:2},
+{q:"8) 3³ = ?", options:["6","9","27","18"], answer:2},
+{q:"9) 18% of 500 = ?", options:["80","85","90","95"], answer:2},
+{q:"10) 45 ÷ 5 = ?", options:["8","9","7","6"], answer:1},
+{q:"11) 11 × 11 = ?", options:["121","111","131","141"], answer:0},
+{q:"12) 250 + 375 = ?", options:["600","625","650","675"], answer:1},
+{q:"13) 64 ÷ 8 = ?", options:["6","7","8","9"], answer:2},
+{q:"14) 14 × 6 = ?", options:["84","74","94","64"], answer:0},
+{q:"15) 500 - 299 = ?", options:["201","199","301","209"], answer:0},
+{q:"16) √144 = ?", options:["10","11","12","14"], answer:2},
+{q:"17) 20% of 150 = ?", options:["25","30","35","40"], answer:1},
+{q:"18) 13 × 7 = ?", options:["91","81","101","111"], answer:0},
+{q:"19) 72 ÷ 9 = ?", options:["6","7","8","9"], answer:2},
+{q:"20) 5² = ?", options:["10","20","25","15"], answer:2}
+];
+
+let questionContainer = document.getElementById("questions");
+
+questionsData.forEach((item,index)=>{
+let div = document.createElement("div");
+div.classList.add("question");
+div.innerHTML = `<p>${item.q}</p>` +
+item.options.map((opt,i)=>
+`<label><input type="radio" name="q${index}" value="${i}"> ${opt}</label>`
+).join("");
+questionContainer.appendChild(div);
+});
+
+function submitTest(){
+let studentName = document.getElementById("studentName").value;
+if(studentName===""){ alert("Enter Student Name!"); return; }
+
+let correct=0, wrong=0;
+
+questionsData.forEach((item,index)=>{
+let selected = document.querySelector(`input[name="q${index}"]:checked`);
+if(selected){
+if(parseInt(selected.value)===item.answer){ correct++; }
+else{ wrong++; }
+}
+});
+
+let score = correct - (wrong * 0.5);
+let percentage = (score / 20) * 100;
+if(percentage<0) percentage=0;
+
+let rank="";
+if(percentage>=90) rank="Rank A+ (Excellent)";
+else if(percentage>=75) rank="Rank A";
+else if(percentage>=60) rank="Rank B";
+else if(percentage>=40) rank="Rank C";
+else rank="Rank D (Need Improvement)";
+
+/* Save Result */
+let resultData = {
+name:studentName,
+score:score,
+percentage:percentage.toFixed(2),
+rank:rank
+};
+
+localStorage.setItem("lastResult", JSON.stringify(resultData));
+
+document.getElementById("result").innerHTML =
+`Student: ${studentName}<br>
+Correct: ${correct}<br>
+Wrong: ${wrong}<br>
+Final Score: ${score}<br>
+Percentage: ${percentage.toFixed(2)}%<br>
+${rank}`;
+
+clearInterval(timerInterval);
+}
+
+/* TIMER 15 MIN */
+let totalTime=900;
+let timerDisplay=document.getElementById("time");
+
+let timerInterval=setInterval(function(){
+let minutes=Math.floor(totalTime/60);
+let seconds=totalTime%60;
+
+timerDisplay.innerHTML=
+(minutes<10?"0":"")+minutes+":"+
+(seconds<10?"0":"")+seconds;
+
+totalTime--;
+
+if(totalTime<0){
+clearInterval(timerInterval);
+submitTest();
+alert("Time's Up! Test Submitted Automatically.");
+}
+},1000);
+
+</script>
+
+</body>
+</html>

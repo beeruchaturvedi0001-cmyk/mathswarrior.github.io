@@ -1,0 +1,127 @@
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background: linear-gradient(135deg,#ff004c,#ff7b00,#ffffff);
+background-size:300% 300%;
+animation:bgMove 8s infinite alternate;
+min-height:100vh;
+}
+
+@keyframes bgMove{
+0%{background-position:0% 50%;}
+100%{background-position:100% 50%;}
+}
+
+/* App Bar */
+.appbar{
+height:65px;
+background:rgba(255,0,0,0.9);
+color:white;
+display:flex;
+align-items:center;
+padding:0 20px;
+font-size:22px;
+font-weight:bold;
+position:fixed;
+width:100%;
+top:0;
+z-index:1000;
+backdrop-filter:blur(10px);
+box-shadow:0 5px 20px rgba(0,0,0,0.3);
+}
+
+.menu-btn{
+font-size:28px;
+cursor:pointer;
+margin-right:15px;
+}
+
+/* Sidebar */
+.sidebar{
+position:fixed;
+left:-260px;
+top:0;
+width:260px;
+height:100%;
+background:rgba(255,255,255,0.95);
+box-shadow:5px 0 20px rgba(0,0,0,0.3);
+padding-top:70px;
+transition:0.4s;
+border-top-right-radius:20px;
+border-bottom-right-radius:20px;
+}
+
+.sidebar a{
+display:block;
+padding:15px 25px;
+text-decoration:none;
+color:black;
+font-weight:600;
+transition:0.3s;
+border-radius:30px;
+margin:5px 10px;
+}
+
+.sidebar a:hover{
+background:red;
+color:white;
+transform:translateX(10px);
+}
+
+/* Main Content */
+.main{
+margin-top:90px;
+padding:20px;
+}
+
+/* Cards */
+.card{
+background:rgba(255,255,255,0.8);
+backdrop-filter:blur(15px);
+border-radius:25px;
+padding:25px;
+margin-bottom:20px;
+box-shadow:0 10px 30px rgba(0,0,0,0.3);
+transition:0.3s;
+}
+
+.card:hover{
+transform:scale(1.05);
+}
+
+.card h3{
+color:#ff004c;
+margin-bottom:10px;
+}
+
+/* Buttons */
+button{
+padding:12px 30px;
+border:none;
+border-radius:50px;
+background:linear-gradient(45deg,#ff004c,#ff7b00);
+color:white;
+font-weight:bold;
+cursor:pointer;
+transition:0.3s;
+}
+
+button:hover{
+transform:scale(1.1);
+}
+
+/* Inputs */
+input, textarea{
+width:100%;
+padding:12px;
+margin:10px 0;
+border-radius:15px;
+border:none;
+outline:none;
+box-shadow:0 3px 10px rgba(0,0,0,0.2);
+}

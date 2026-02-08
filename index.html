@@ -1,98 +1,227 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0 ">
-    <title>MATH'S WARRIOR INSTITUTE</title>
-    <title>THE PATH OF SELECTION</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MATH'S WARRIOR</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+/* Background */
+body{
+background:linear-gradient(135deg,#ff416c,#ff4b2b);
+overflow-x:hidden;
+}
+
+/* App Bar */
+.appbar{
+height:60px;
+background:white;
+display:flex;
+align-items:center;
+padding:0 20px;
+box-shadow:0 5px 15px rgba(0,0,0,0.2);
+position:fixed;
+width:100%;
+top:0;
+z-index:1000;
+}
+
+.menu-btn{
+font-size:26px;
+cursor:pointer;
+margin-right:15px;
+}
+
+.title{
+font-size:18px;
+font-weight:700;
+color:#ff416c;
+}
+
+/* Sidebar */
+.sidebar{
+position:fixed;
+left:-260px;
+top:0;
+width:260px;
+height:100%;
+background:white;
+box-shadow:2px 0 20px rgba(0,0,0,0.3);
+padding-top:70px;
+transition:0.4s;
+z-index:999;
+overflow-y:auto;
+}
+
+.sidebar a{
+display:block;
+padding:14px 20px;
+text-decoration:none;
+color:#333;
+font-weight:500;
+transition:0.3s;
+border-radius:30px;
+margin:6px 10px;
+}
+
+.sidebar a:hover{
+background:linear-gradient(45deg,#ff416c,#ff4b2b);
+color:white;
+padding-left:30px;
+}
+
+/* Divider */
+.sidebar hr{
+margin:15px 15px;
+border:0.5px solid #ddd;
+}
+
+/* Main Content */
+.main{
+margin-top:80px;
+padding:20px;
+}
+
+/* Course Cards */
+.card{
+background:white;
+border-radius:25px;
+padding:25px;
+margin-bottom:20px;
+box-shadow:0 15px 30px rgba(0,0,0,0.3);
+transition:0.3s;
+}
+
+.card:hover{
+transform:translateY(-8px);
+}
+
+.card h3{
+color:#ff416c;
+margin-bottom:10px;
+}
+
+.card p{
+color:#555;
+margin-bottom:15px;
+}
+
+.enroll-btn{
+width:100%;
+padding:12px;
+border:none;
+border-radius:30px;
+background:linear-gradient(45deg,#ff416c,#ff4b2b);
+color:white;
+font-weight:600;
+cursor:pointer;
+transition:0.3s;
+}
+
+.enroll-btn:hover{
+transform:scale(1.05);
+box-shadow:0 10px 25px rgba(0,0,0,0.4);
+}
+
+/* Floating WhatsApp Button */
+.whatsapp-float{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#25D366;
+color:white;
+padding:15px;
+border-radius:50%;
+font-size:22px;
+box-shadow:0 5px 15px rgba(0,0,0,0.3);
+text-decoration:none;
+transition:0.3s;
+}
+
+.whatsapp-float:hover{
+transform:scale(1.1);
+}
+
+</style>
 </head>
+
 <body>
 
-<!-- HEADER -->
-<header>
-    <h1>MATH'S WARRIOR INSTITUTE</h1>
-    <nav>
-        <ul>
-            <li><a href="index.html">🏠HOME</a></li>
-            <li><a href="dashboard.html">📱DASHBOARD</a></li>
-            <li><a href="student_registration.html">REGISTRATION</a></li>
-            <li><a href="notes_section.html">📓NOTES SECTION</a></li>
-            <li><a href="contact.html">☎️CONTACT NOW </a></li>
-        </ul>
-    </nav>
-</header>
+<!-- App Bar -->
+<div class="appbar">
+<span class="menu-btn" onclick="toggleMenu()">☰</span>
+<div class="title">MATH'S WARRIOR</div>
+</div>
 
-<!-- WELCOME SECTION -->
-<section class="welcome">
-    <h2>FOR ALL ACADEMIC COURSE AND COMPTETIVE EXAM</h2>
-    <p>
-        A trusted institute for school students with structured batches,  
-        expert guidance, quality notes and focused academic preparation.
-    </p>
-</section>
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+<a href="index.html">🏠 Home</a>
+<a href="dashboard.html">📊 Dashboard</a>
+<a href="student-registration.html">📝 Student Registration</a>
+<a href="teacher-manage.html">👨‍🏫 Teacher Manage</a>
+<a href="mock-test.html">⏳ Mock Test</a>
+<a href="admin-panel.html">⚙ Admin Panel</a>
 
-<!-- COURSES SECTION -->
-<section class="courses">
+<hr>
 
-    <!-- COURSE 1 -->
-    <div class="course-card">
-        <h3>🎓🎓 लक्ष्य FOUNDATION BATCH</h3>
-        <p>➡️FOR CLASS 9TH STUDENTS</p>
-        <p>⚛️⚛️SUBJECT: MATHS SCIENCE ENGLISH, SOCIAL SCIENCE</p>
-        <p>🧑🏻‍🏫🧑🏻‍🏫FACULTIES: ABHINAY CHAUBEY AND TEAM</p>
-        <p>💶💵COURSE FEE: ONLY 2500/- </p>
-        
-        
-        
-        <a href="student_registration.html" class="join-btn">ENROLL NOW</a>
-    </div>
+<a href="tel:9670078465">📞 Call: 9670078465</a>
+<a href="https://wa.me/919670078465" target="_blank">💬 WhatsApp</a>
 
-    <!-- COURSE 2 -->
-    <div class="course-card">
-        <h3>🎯🎯 सारथी TARGET BATCH</h3>
-        <p>✅✅FOR CLASS 10TH STUDENTS</p>
-        <p>⚛️⚛️SUBJECT: MATHS SCIENCE ENGLISH, SOCIAL SCIENCE</p>
-        <p>🧑🏻‍🏫🧑🏻‍🏫FACULTIES: BHOLU CHAUBEY AND TEAM</p>
-        <p>💶💵COURSE FEE: ONLY 3000/- </p>
-        <a href="student_registration.html" class="join-btn">ENROLL NOW</a>
-    </div>
+</div>
 
-    <!-- COURSE 3 -->
-    <div class="course-card">
-        <h3>🎓🎓 संकल्प FOUNDATION BATCH</h3>
-        <p>✅✅FOR CLASS 11TH STUDENTS</p>
-        <p>⚛️⚛️SUBJECT: MATHS BIOLOGY PHYSICS CHEMISTRY ENGLISH</p>
-        <p>🧑🏻‍🏫🧑🏻‍🏫FACULTIES: BHOLU CHAUBEY AND TEAM</p>
-        <p>💵💵COURSE FEE: ONLY 4500/- </p>
-        <a href="student_registration.html" class=#FF0018>ENROLL NOW</a>
-    </div>
+<!-- Main Content -->
+<div class="main">
 
-    <!-- COURSE 4 -->
-    <div class="course-card">
-        <h3>🎖️🎖️संजीवनी विजेता बैच🎖️🎖️</h3>
-        <p>✅✅FOR CLASS 12TH STUDENTS</p>
-        <p>⚛️⚛️SUBJECT: MATHS BIOLOGY PHYSICS CHEMISTRY ENGLISH</p>
-        <p>🧑🏻‍🏫🧑🏻‍🏫FACULTIES: BHOLU CHAUBEY AND TEAM</p>
-        <p>💵💵COURSE FEE: ONLY 5000/- </p>
-        <a href="student_registration.html" class="join-btn">ENROLL NOW</a>
-    </div>
-    <!-- COURSE 5 -->
-    <div class="course-card">
-          <h3>MATHS SPECIAL 2.0♾️ </h3>
-          <p>FOR ALL COMPTETIVE EXAM</p>
-          <p>LIKE: SSC -🚂 RAILWAY AND ALL STATE EXAM</p>
-          <p>SUBJECT: ARITHMETIC AND ADVANCE MATHS</p>
-          <p>🧑🏻‍🏫🧑🏻‍🏫FACULTIES: ABHINAY CHAUBEY (MATHS EXPERT)</p>
-          <p>COURSE FEE: ONLY 1499/- </p>
-           <a href="student_registration.html" class="join-btn">ENROLL NOW</a>
-           </div>
-</section>
+<div class="card">
+<h3>SSC CGL Maths</h3>
+<p>Complete Maths Batch with Practice + Mock Test</p>
+<button class="enroll-btn" onclick="window.location.href='student-registration.html'">
+Enroll Now
+</button>
+</div>
 
-<!-- FOOTER -->
-<footer>
-    <p>MATH'S WARRIOR INSTITUTE 2026| Quality Education build Strong Foundation</p>
-</footer>
+<div class="card">
+<h3>SSC GD Special</h3>
+<p>Fast Track Maths Course with Shortcut Tricks</p>
+<button class="enroll-btn" onclick="window.location.href='student-registration.html'">
+Enroll Now
+</button>
+</div>
+
+<div class="card">
+<h3>Maths Special 2.0</h3>
+<p>Premium Notes + Test Series + Doubt Support</p>
+<button class="enroll-btn" onclick="window.location.href='student-registration.html'">
+Enroll Now
+</button>
+</div>
+
+</div>
+
+<!-- Floating WhatsApp -->
+<a href="https://wa.me/919670078465" class="whatsapp-float" target="_blank">
+💬
+</a>
+
+<script>
+function toggleMenu(){
+let sidebar = document.getElementById("sidebar");
+if(sidebar.style.left === "0px"){
+sidebar.style.left = "-260px";
+}else{
+sidebar.style.left = "0px";
+}
+}
+</script>
 
 </body>
 </html>

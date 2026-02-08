@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teacher Management | MATH'S WARRIOR</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:linear-gradient(135deg,#1d2671,#c33764);
+padding:20px;
+color:white;
+}
+
+/* Header */
+.header{
+text-align:center;
+margin-bottom:30px;
+}
+
+.header h1{
+font-size:26px;
+}
+
+/* Form Card */
+.form-box{
+background:white;
+color:#333;
+padding:25px;
+border-radius:25px;
+box-shadow:0 15px 30px rgba(0,0,0,0.3);
+max-width:500px;
+margin:auto;
+}
+
+.form-box input{
+width:100%;
+padding:12px;
+margin:10px 0;
+border:none;
+border-radius:30px;
+background:#f2f2f2;
+outline:none;
+}
+
+.form-box button{
+width:100%;
+padding:12px;
+border:none;
+border-radius:30px;
+background:linear-gradient(45deg,#1d2671,#c33764);
+color:white;
+font-weight:600;
+cursor:pointer;
+transition:0.3s;
+}
+
+.form-box button:hover{
+transform:scale(1.05);
+}
+
+/* Teacher List */
+.teacher-list{
+margin-top:40px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+}
+
+.teacher-card{
+background:white;
+color:#333;
+padding:20px;
+border-radius:25px;
+text-align:center;
+box-shadow:0 15px 30px rgba(0,0,0,0.3);
+transition:0.3s;
+}
+
+.teacher-card:hover{
+transform:translateY(-8px);
+}
+
+.teacher-card img{
+width:100px;
+height:100px;
+border-radius:50%;
+object-fit:cover;
+margin-bottom:10px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="header">
+<h1>👨‍🏫 Teacher Management</h1>
+</div>
+
+<div class="form-box">
+<input type="text" id="teacherName" placeholder="Enter Teacher Name">
+<input type="file" id="teacherImage" accept="image/*">
+<button onclick="addTeacher()">Add Teacher</button>
+</div>
+
+<div class="teacher-list" id="teacherList"></div>
+
+<script>
+
+function addTeacher(){
+
+let name = document.getElementById("teacherName").value;
+let file = document.getElementById("teacherImage").files[0];
+
+if(name === "" || !file){
+alert("Please fill all fields");
+return;
+}
+
+let reader = new FileReader();
+reader.onload = function(e){
+
+let teacherCard = `
+<div class="teacher-card">
+<img src="${e.target.result}">
+<h3>${name}</h3>
+</div>
+`;
+
+document.getElementById("teacherList").innerHTML += teacherCard;
+
+}
+
+reader.readAsDataURL(file);
+
+document.getElementById("teacherName").value="";
+document.getElementById("teacherImage").value="";
+
+}
+
+</script>
+
+</body>
+</html>

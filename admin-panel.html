@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel - MATH'S WARRIOR</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
+}
+
+body{
+background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+min-height:100vh;
+color:white;
+padding:25px;
+}
+
+.title{
+font-size:26px;
+margin-bottom:30px;
+font-weight:bold;
+}
+
+/* Card Style */
+.card{
+background:rgba(255,255,255,0.1);
+padding:25px;
+border-radius:25px;
+margin-bottom:25px;
+backdrop-filter:blur(15px);
+box-shadow:0 15px 35px rgba(0,0,0,0.4);
+}
+
+/* Students Table */
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:15px;
+background:white;
+color:#333;
+border-radius:15px;
+overflow:hidden;
+}
+
+th,td{
+padding:12px;
+text-align:left;
+border-bottom:1px solid #ddd;
+}
+
+th{
+background:#dd2476;
+color:white;
+}
+
+/* Teacher Card */
+.teacher{
+display:flex;
+align-items:center;
+gap:15px;
+background:white;
+color:#333;
+padding:15px;
+border-radius:20px;
+margin-bottom:15px;
+}
+
+.teacher img{
+width:60px;
+height:60px;
+border-radius:50%;
+object-fit:cover;
+}
+
+/* Upload Button */
+input[type="file"]{
+margin-top:15px;
+}
+
+button{
+margin-top:15px;
+padding:10px 25px;
+border:none;
+border-radius:30px;
+background:linear-gradient(45deg,#ff512f,#dd2476);
+color:white;
+cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="title">Admin Panel - MATH'S WARRIOR</div>
+
+<!-- Registered Students Section -->
+<div class="card">
+<h3>Registered Students</h3>
+
+<table>
+<tr>
+<th>Name</th>
+<th>Email</th>
+<th>Mobile</th>
+</tr>
+
+<tr>
+<td>Rahul Sharma</td>
+<td>rahul@gmail.com</td>
+<td>9876543210</td>
+</tr>
+
+<tr>
+<td>Priya Singh</td>
+<td>priya@gmail.com</td>
+<td>9123456780</td>
+</tr>
+
+<tr>
+<td>Amit Kumar</td>
+<td>amit@gmail.com</td>
+<td>9988776655</td>
+</tr>
+
+</table>
+</div>
+
+<!-- Teacher Management Section -->
+<div class="card">
+<h3>Teachers</h3>
+
+<div class="teacher">
+<img src="https://via.placeholder.com/60" alt="Teacher">
+<div>
+<h4>Abhinay Sir</h4>
+<p>Mathematics Expert</p>
+</div>
+</div>
+
+<div class="teacher">
+<img src="https://via.placeholder.com/60" alt="Teacher">
+<div>
+<h4>Rakesh Sir</h4>
+<p>Arithmetic Specialist</p>
+</div>
+</div>
+
+</div>
+
+<!-- Notes Upload Section -->
+<div class="card">
+<h3>Upload Notes (PDF)</h3>
+<input type="file" accept=".pdf">
+<br>
+<button>Upload Notes</button>
+</div>
+
+</body>
+</html>
