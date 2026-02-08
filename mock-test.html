@@ -3,207 +3,218 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MOCK TEST - MATH'S WARRIOR</title>
+<title>Mock Test | MATH'S WARRIOR</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
-
 body{
+margin:0;
+font-family:Arial, sans-serif;
 background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
 color:white;
-padding:20px;
-}
-
-.container{
-max-width:900px;
-margin:auto;
-}
-
-.header{
 text-align:center;
-margin-bottom:20px;
 }
 
-.header h1{color:#ffcc00;}
-.header h3{font-weight:normal;}
-
-.card{
+h1{color:gold;margin-top:20px;}
+.container{
 background:rgba(255,255,255,0.1);
-padding:25px;
-border-radius:25px;
-backdrop-filter:blur(15px);
-box-shadow:0 15px 35px rgba(0,0,0,0.4);
+padding:20px;
+margin:20px;
+border-radius:20px;
 }
 
-.timer{
-font-size:18px;
-color:#00ffcc;
-font-weight:bold;
-margin-bottom:15px;
-}
-
-input[type="text"]{
-width:100%;
+input{
 padding:10px;
-border-radius:25px;
+border-radius:20px;
 border:none;
+width:80%;
 margin-bottom:15px;
 }
 
-.question{margin-bottom:18px;}
-
-.options label{
-display:block;
-margin-bottom:5px;
-cursor:pointer;
+.question{
+text-align:left;
+margin:15px 0;
 }
 
 button{
-padding:10px 25px;
+padding:12px 25px;
 border:none;
-border-radius:30px;
-background:linear-gradient(45deg,#ff512f,#dd2476);
+border-radius:25px;
+background:linear-gradient(45deg,#ff416c,#ff4b2b);
 color:white;
-cursor:pointer;
 font-weight:bold;
+cursor:pointer;
 margin-top:10px;
 }
 
-.result{
+#result{
 margin-top:20px;
 font-size:18px;
 font-weight:bold;
+}
+
+#leaderboard{
+margin-top:15px;
+background:rgba(255,255,255,0.1);
+padding:10px;
+border-radius:15px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
-
-<div class="header">
 <h1>MATH'S WARRIOR</h1>
 <h3>THE PATH OF SELECTION</h3>
-<h3>MATHS BY ABHINAY PRATAP (B.Sc MATHS)</h3>
-</div>
+<p>Maths by Abhinay Pratap (B.Sc Maths)</p>
 
-<div class="card">
+<div class="container">
 
-<div class="timer">TIME LEFT: <span id="time">15:00</span></div>
+<h3 id="timer">Time Left: 15:00</h3>
 
-<input type="text" id="STUDENTNAME" placeholder="ENTER STUDENT NAME">
+<input type="text" id="studentName" placeholder="Enter Student Name">
 
-<form id="Quizform">
-<div id="QUESTIONS"></div>
-<button type="button" onclick="submitTest()">SUBMIT TEST</button>
-<div class="result" id="RESULT"></div>
-</form>
+<form id="quizForm"></form>
 
-</div>
+<button onclick="submitTest()">Submit Test</button>
+
+<div id="result"></div>
+
+<h3>🏆 Leaderboard (Top 10)</h3>
+<div id="leaderboard"></div>
+
 </div>
 
 <script>
-let QUESTIONSDATA = [
-{q:"1) 25 × 4 = ?", options:["80","90","100","75"], answer:2},
-{q:"2) 15% of 200 = ?", options:["25","30","35","40"], answer:1},
-{q:"3) 9² = ?", options:["18","72","81","99"], answer:2},
-{q:"4) 144 ÷ 12 = ?", options:["10","11","12","14"], answer:2},
-{q:"5) 7 × 8 = ?", options:["54","56","64","48"], answer:1},
-{q:"6) 1000 - 457 = ?", options:["543","553","533","523"], answer:0},
-{q:"7) √121 = ?", options:["9","10","11","12"], answer:2},
-{q:"8) 3³ = ?", options:["6","9","27","18"], answer:2},
-{q:"9) 18% of 500 = ?", options:["80","85","90","95"], answer:2},
-{q:"10) 45 ÷ 5 = ?", options:["8","9","7","6"], answer:1},
-{q:"11) 11 × 11 = ?", options:["121","111","131","141"], answer:0},
-{q:"12) 250 + 375 = ?", options:["600","625","650","675"], answer:1},
-{q:"13) 64 ÷ 8 = ?", options:["6","7","8","9"], answer:2},
-{q:"14) 14 × 6 = ?", options:["84","74","94","64"], answer:0},
-{q:"15) 500 - 299 = ?", options:["201","199","301","209"], answer:0},
-{q:"16) √144 = ?", options:["10","11","12","14"], answer:2},
-{q:"17) 20% of 150 = ?", options:["25","30","35","40"], answer:1},
-{q:"18) 13 × 7 = ?", options:["91","81","101","111"], answer:0},
-{q:"19) 72 ÷ 9 = ?", options:["6","7","8","9"], answer:2},
-{q:"20) 5² = ?", options:["10","20","25","15"], answer:2}
-];
 
-let questionContainer = document.getElementById("questions");
-
-questionsData.forEach((item,index)=>{
-let div = document.createElement("div");
-div.classList.add("question");
-div.innerHTML = `<p>${item.q}</p>` +
-item.options.map((opt,i)=>
-`<label><input type="radio" name="q${index}" value="${i}"> ${opt}</label>`
-).join("");
-questionContainer.appendChild(div);
-});
-
-function submitTest(){
-let studentName = document.getElementById("studentName").value;
-if(studentName===""){ alert("Enter Student Name!"); return; }
-
-let correct=0, wrong=0;
-
-questionsData.forEach((item,index)=>{
-let selected = document.querySelector(`input[name="q${index}"]:checked`);
-if(selected){
-if(parseInt(selected.value)===item.answer){ correct++; }
-else{ wrong++; }
-}
-});
-
-let score = correct - (wrong * 0.5);
-let percentage = (score / 20) * 100;
-if(percentage<0) percentage=0;
-
-let rank="";
-if(percentage>=90) rank="Rank A+ (Excellent)";
-else if(percentage>=75) rank="Rank A";
-else if(percentage>=60) rank="Rank B";
-else if(percentage>=40) rank="Rank C";
-else rank="Rank D (Need Improvement)";
-
-/* Save Result */
-let resultData = {
-name:studentName,
-score:score,
-percentage:percentage.toFixed(2),
-rank:rank
-};
-
-localStorage.setItem("lastResult", JSON.stringify(resultData));
-
-document.getElementById("result").innerHTML =
-`Student: ${studentName}<br>
-Correct: ${correct}<br>
-Wrong: ${wrong}<br>
-Final Score: ${score}<br>
-Percentage: ${percentage.toFixed(2)}%<br>
-${rank}`;
-
-clearInterval(timerInterval);
-}
-
-/* TIMER 15 MIN */
-let totalTime=900;
-let timerDisplay=document.getElementById("time");
-
-let timerInterval=setInterval(function(){
-let minutes=Math.floor(totalTime/60);
-let seconds=totalTime%60;
-
-timerDisplay.innerHTML=
-(minutes<10?"0":"")+minutes+":"+
-(seconds<10?"0":"")+seconds;
-
-totalTime--;
-
-if(totalTime<0){
-clearInterval(timerInterval);
+/* TIMER */
+let time = 900;
+let timer = setInterval(function(){
+let minutes = Math.floor(time/60);
+let seconds = time%60;
+document.getElementById("timer").innerHTML =
+"Time Left: "+minutes+":"+(seconds<10?"0":"")+seconds;
+time--;
+if(time<0){
+clearInterval(timer);
 submitTest();
-alert("Time's Up! Test Submitted Automatically.");
 }
 },1000);
+
+/* QUESTIONS */
+let questions = [
+["1) 12 + 15 = ?",["25","27","30","32"],"27"],
+["2) 45 ÷ 5 = ?",["8","9","10","7"],"9"],
+["3) 9 × 8 = ?",["72","64","81","70"],"72"],
+["4) √81 = ?",["7","8","9","6"],"9"],
+["5) 100 - 45 = ?",["45","55","65","35"],"55"],
+["6) 25% of 200 = ?",["40","50","60","30"],"50"],
+["7) LCM of 4 and 6 = ?",["12","24","6","18"],"12"],
+["8) HCF of 12 and 18 = ?",["6","3","9","12"],"6"],
+["9) 3² = ?",["6","9","12","3"],"9"],
+["10) 7 × 11 = ?",["77","66","88","99"],"77"],
+["11) 5/10 = ?",["1/2","1/3","2/5","3/4"],"1/2"],
+["12) 0.5 + 0.5 = ?",["1","0.5","2","1.5"],"1"],
+["13) 15% of 100 = ?",["10","15","20","5"],"15"],
+["14) 18 ÷ 3 = ?",["5","6","7","8"],"6"],
+["15) 14 + 6 = ?",["18","20","22","16"],"20"],
+["16) 10² = ?",["100","10","20","200"],"100"],
+["17) 50% of 80 = ?",["30","40","20","50"],"40"],
+["18) 121 ÷ 11 = ?",["10","11","9","12"],"11"],
+["19) 4³ = ?",["64","16","12","8"],"64"],
+["20) 60 - 25 = ?",["35","30","40","45"],"35"],
+["21) 2/4 = ?",["1/2","1/4","3/4","2/3"],"1/2"],
+["22) 9 + 6 = ?",["15","16","14","13"],"15"],
+["23) 8 × 7 = ?",["54","56","64","48"],"56"],
+["24) 100 ÷ 4 = ?",["20","30","25","40"],"25"],
+["25) 30% of 150 = ?",["45","30","60","50"],"45"]
+];
+
+/* LOAD QUESTIONS */
+let form = document.getElementById("quizForm");
+
+questions.forEach((q,index)=>{
+let div = document.createElement("div");
+div.classList.add("question");
+div.innerHTML = "<p>"+q[0]+"</p>";
+q[1].forEach(option=>{
+div.innerHTML +=
+`<label><input type="radio" name="q${index}" value="${option}"> ${option}</label><br>`;
+});
+form.appendChild(div);
+});
+
+/* SUBMIT TEST */
+function submitTest(){
+clearInterval(timer);
+
+let score = 0;
+let negative = 0;
+
+questions.forEach((q,index)=>{
+let selected = document.querySelector(`input[name="q${index}"]:checked`);
+if(selected){
+if(selected.value === q[2]){
+score++;
+}else{
+negative += 0.5;
+}
+}
+});
+
+let finalScore = score - negative;
+if(finalScore < 0) finalScore = 0;
+
+let percentage = (finalScore/25)*100;
+
+let rank="";
+if(percentage>=90) rank="🏆 Excellent";
+else if(percentage>=70) rank="🥇 Very Good";
+else if(percentage>=50) rank="👍 Good";
+else rank="📘 Needs Improvement";
+
+let name=document.getElementById("studentName").value;
+if(name=="") name="Unknown";
+
+document.getElementById("result").innerHTML =
+"Student: "+name+"<br>"+
+"Score: "+finalScore.toFixed(1)+" / 25<br>"+
+"Percentage: "+percentage.toFixed(2)+"%<br>"+
+"Rank: "+rank;
+
+/* SAVE LEADERBOARD */
+let leaderboard = JSON.parse(localStorage.getItem("leaderboard")) || [];
+
+leaderboard.push({
+name:name,
+score:finalScore,
+percentage:percentage
+});
+
+leaderboard.sort((a,b)=>b.score - a.score);
+leaderboard = leaderboard.slice(0,10);
+
+localStorage.setItem("leaderboard", JSON.stringify(leaderboard));
+
+displayLeaderboard();
+}
+
+/* DISPLAY LEADERBOARD */
+function displayLeaderboard(){
+
+let leaderboard = JSON.parse(localStorage.getItem("leaderboard")) || [];
+let html="";
+
+leaderboard.forEach((student,index)=>{
+html +=
+(index+1)+". "+student.name+
+" - "+student.score.toFixed(1)+
+" ("+student.percentage.toFixed(1)+"%)<br>";
+});
+
+document.getElementById("leaderboard").innerHTML = html;
+}
+
+displayLeaderboard();
 
 </script>
 
