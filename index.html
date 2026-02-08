@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MATH'S WARRIOR</title>
-
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
 body{background: linear-gradient(135deg,#ff0000,#ffffff); min-height:100vh; overflow-x:hidden;}
@@ -29,7 +28,7 @@ body{background: linear-gradient(135deg,#ff0000,#ffffff); min-height:100vh; over
   gap:25px;
 }
 
-/* Course Cards without Image */
+/* Cards */
 .card{
   position:relative;
   background:white;
@@ -58,7 +57,6 @@ body{background: linear-gradient(135deg,#ff0000,#ffffff); min-height:100vh; over
   transition:0.3s, transform 0.3s;
   box-shadow:0 5px 15px rgba(0,0,0,0.2);
 }
-
 .card button:hover{
   background:black;
   transform:scale(1.1);
@@ -72,60 +70,52 @@ body{background: linear-gradient(135deg,#ff0000,#ffffff); min-height:100vh; over
 @media(max-width:450px){.main{grid-template-columns:1fr;}}
 </style>
 </head>
-
 <body>
 
 <!-- App Bar -->
 <div class="appbar">
 <span class="menu-btn" onclick="openMenu()">☰</span>
-MATH'S WARRIOR
+MATH'S WARRIOR INSTITUTE 
 </div>
 
 <!-- Sidebar -->
 <div class="sidebar" id="sidebar">
-<a href="index.html">🏠 Home</a>
-<a href="dashboard.html">📊 Dashboard</a>
-<a href="student-registration.html">📝 Student Registration</a>
-<a href="teacher-management.html">👨‍🏫 Teacher Manage</a>
-<a href="notes.html">📚 Notes Section</a>
-<a href="mock-test.html">🧠 Mock Test</a>
-<a href="contact.html">📞 Contact Queries</a>
-<a href="admin.html">⚙ Admin Panel</a>
+<a href="index.html">🏠 HOME</a>
+<a href="dashboard.html">📊 DASHBOARD</a>
+<a href="student-registration.html">📝 STUDENT REGISTRATION</a>
+<a href="teacher-manage.html">👨‍🏫 TEACHER MANAGE</a>
+<a href="notes.html">📚 NOTES SECTION</a>
+<a href="mock-test.html">🧠 MOCK TEST</a>
+<a href="contact.html">📞 CONTACT QUERIES</a>
+<a href="admin.html">⚙ ADMIN PANEL</a>
 </div>
 
 <!-- Main Content -->
 <div class="main">
   <!-- Card 1 -->
   <div class="card">
-    <h3>SSC CGL Maths Batch</h3>
-    <p>Complete Arithmetic + Algebra + Advance</p>
-    <button onclick="window.location.href='payment.html?course=SSC CGL Maths Batch'">BUY NOW</button>
+    <h3>LAKSYA FOUNDATION BATCH🎖️🎖️</h3>
+    <p>➡️CLASS 9 | UP STATE BOARD & CBSE | FACULTY: ABHINAY PRATAP & TEAM</p>
+    <button onclick="registerCourse('LAKSYA FOUNDATION BATCH', 2199)">REGISTER NOW</button>
   </div>
 
   <!-- Card 2 -->
   <div class="card">
-    <h3>SSC GD Special Batch</h3>
-    <p>Fast Track Complete Maths Course</p>
-    <button onclick="window.location.href='payment.html?course=SSC GD Special Batch'">BUY NOW</button>
+    <h3>PRATHAM TARGET BATCH🎖️🎖️</h3>
+    <p>➡️CLASS 10 | UP STATE BOARD & CBSE | FACULTY: ABHINAY PRATAP & TEAM</p>
+    <button onclick="registerCourse('PRATHAM TARGET BATCH', 2499)">REGISTER NOW</button>
   </div>
 
   <!-- Card 3 -->
   <div class="card">
-    <h3>Maths Special 2.0</h3>
-    <p>Premium Practice + Test Series</p>
-    <button onclick="window.location.href='payment.html?course=Maths Special 2.0'">BUY NOW</button>
-  </div>
-
-  <!-- Card 4 -->
-  <div class="card">
-    <h3>Meme Maths Batch</h3>
-    <p>Funny Maths Concepts</p>
-    <button onclick="window.location.href='payment.html?course=Meme Maths Batch'">BUY NOW</button>
+    <h3>MATH SPECIAL 2.0</h3>
+    <p>✅FOR ALL KVS NVS ENTRENCE EXAMS | FACULTY: ABHINAY PRATAP</p>
+    <button onclick="registerCourse('MATH SPECIAL 2.0', 2099)">REGISTER NOW</button>
   </div>
 </div>
 
 <div class="footer">
-© 2026 MATH'S WARRIOR | Maths by Abhinay Pratap
+© 2026 MATH'S WARRIOR | ▶️ ABHINAY_PRATAP_MATHS
 </div>
 
 <script>
@@ -134,6 +124,14 @@ function openMenu(){
   if(sidebar.style.left==="0px"){sidebar.style.left="-260px";}
   else{sidebar.style.left="0px";}
 }
+
+/* Set course name + fees in localStorage and redirect */
+function registerCourse(courseName, fee){
+  localStorage.setItem('selectedCourse', courseName);
+  localStorage.setItem('selectedFee', fee);
+  window.location.href='student-registration.html';
+}
 </script>
+
 </body>
 </html>
