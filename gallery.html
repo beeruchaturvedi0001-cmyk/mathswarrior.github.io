@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>INSTITUTE GALLERY | MATH'S WARRIOR</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+body{
+  background:linear-gradient(135deg,#ff512f,#dd2476);
+  padding:20px;
+  color:white;
+}
+
+/* Header */
+.header{
+  text-align:center;
+  margin-bottom:30px;
+}
+
+.header h1{
+  font-size:28px;
+  font-weight:700;
+}
+
+.header p{
+  font-size:16px;
+  margin-top:5px;
+}
+
+/* Gallery Grid */
+.gallery{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap:20px;
+  max-width:1000px;
+  margin:auto;
+}
+
+.gallery img{
+  width:100%;
+  height:200px;
+  object-fit:cover;
+  border-radius:20px;
+  cursor:pointer;
+  transition:0.3s;
+  box-shadow:0 10px 20px rgba(0,0,0,0.3);
+}
+
+.gallery img:hover{
+  transform:scale(1.05);
+  box-shadow:0 15px 30px rgba(0,0,0,0.5);
+}
+
+/* Lightbox */
+#lightbox{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.8);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:1000;
+}
+
+#lightbox img{
+  max-width:90%;
+  max-height:90%;
+  border-radius:15px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+<h1>INSTITUTE GALLERY</h1>
+<p>MATH'S WARRIOR | BY ABHINAY PRATAP</p>
+</div>
+
+<div class="gallery" id="gallery"></div>
+
+<!-- Lightbox -->
+<div id="lightbox" onclick="this.style.display='none'">
+  <img id="lightbox-img" src="" alt="Full Image">
+</div>
+
+<script>
+// Array of images
+const images = [
+    {src:"images/institute1.jpg", alt:"Institute Image 1"},
+    {src:"images/institute2.jpg", alt:"Institute Image 2"},
+    {src:"images/institute3.jpg", alt:"Institute Image 3"}
+    // Add more images here
+];
+
+// Render images dynamically
+const gallery = document.getElementById('gallery');
+
+images.forEach(img => {
+    const imageElement = document.createElement('img');
+    imageElement.src = img.src;
+    imageElement.alt = img.alt;
+    gallery.appendChild(imageElement);
+});
+
+// Lightbox functionality
+const galleryImages = document.querySelectorAll('.gallery img');
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightbox-img');
+
+galleryImages.forEach(img => {
+    img.addEventListener('click', () => {
+        lightbox.style.display = 'flex';
+        lightboxImg.src = img.src;
+    });
+});
+</script>
+
+</body>
+</html>

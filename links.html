@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ALL LINKS | MATH'S WARRIOR</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+body{
+  background:linear-gradient(135deg,#ff512f,#dd2476);
+  padding:20px;
+  color:white;
+}
+
+/* Header */
+.header{
+  text-align:center;
+  margin-bottom:30px;
+}
+
+.header h1{
+  font-size:28px;
+  font-weight:700;
+}
+
+.header p{
+  font-size:16px;
+  margin-top:5px;
+}
+
+/* Links Container */
+.links-container{
+  max-width:500px;
+  margin:auto;
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+}
+
+/* Button Style */
+.link-btn{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  width:100%;
+  padding:15px 20px;
+  border:none;
+  border-radius:30px;
+  font-weight:600;
+  text-decoration:none;
+  text-align:center;
+  color:white;
+  font-size:16px;
+  transition:0.3s;
+  position:relative;
+}
+
+.link-btn:hover{
+  transform:scale(1.05);
+  box-shadow:0 10px 25px rgba(0,0,0,0.3);
+}
+
+/* Icon style */
+.link-btn .icon{
+  font-size:20px;
+  margin-right:10px;
+}
+
+/* Description below button */
+.link-btn span.description{
+  position:absolute;
+  bottom:-20px;
+  left:20px;
+  font-size:12px;
+  color:white;
+  opacity:0.8;
+}
+
+/* Specific button colors */
+.whatsapp{
+  background:linear-gradient(45deg,#25D366,#128C7E);
+}
+
+.youtube{
+  background:linear-gradient(45deg,#ff0000,#cc0000);
+}
+
+.email{
+  background:linear-gradient(45deg,#1e90ff,#0072ff);
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+<h1>ALL LINKS</h1>
+<p>MATH'S WARRIOR | BY ABHINAY PRATAP</p>
+</div>
+
+<div class="links-container">
+
+<a href="https://www.youtube.com/@ABHINAYPRATAPMATHS" target="_blank" class="link-btn youtube">
+  <div><span class="icon">📺</span> YouTube Channel</div>
+  Click here to Join
+  <span class="description">Watch Maths videos by Abhinay Pratap</span>
+</a>
+
+<a href="https://whatsapp.com/channel/0029Vb7UWz5LI8YXMCnfLF40" target="_blank" class="link-btn whatsapp">
+  <div><span class="icon">💬</span> WhatsApp Channel</div>
+  Click here to Join
+  <span class="description">Join WhatsApp channel for updates</span>
+</a>
+
+<a href="mailto:abhinaychaubey83@gmail.com" class="link-btn email">
+  <div><span class="icon">✉️</span> Email</div>
+  Click here to Join
+  <span class="description">Contact via email for queries</span>
+</a>
+
+</div>
+
+</body>
+</html>

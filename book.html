@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2 BOOKS | MATH'S WARRIOR</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+body{
+  background:linear-gradient(135deg,#ff512f,#dd2476);
+  padding:20px;
+  color:white;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  min-height:100vh;
+}
+
+/* Header */
+.header{
+  text-align:center;
+  margin-bottom:20px;
+}
+
+.header h1{
+  font-size:26px;
+  font-weight:700;
+}
+
+.header p{
+  font-size:14px;
+  margin-top:5px;
+}
+
+/* Book Cards Container */
+.books-container{
+  display:flex;
+  justify-content:center;
+  gap:20px;
+  flex-wrap:wrap;
+}
+
+/* Single Book Card */
+.book-card{
+  background:white;
+  color:#333;
+  border-radius:15px;
+  text-align:center;
+  padding:5px;
+  box-shadow:0 8px 15px rgba(0,0,0,0.3);
+  transition:0.3s;
+  max-width:180px;
+}
+
+.book-card:hover{
+  transform:scale(1.03);
+}
+
+.book-card img.book-cover{
+  width:100%;
+  height:280px;
+  object-fit:cover;
+  border-radius:10px;
+  margin-bottom:5px;
+}
+
+/* Buttons Container */
+.book-card .buy-buttons{
+  display:flex;
+  justify-content:space-around;
+  gap:5px;
+}
+
+.book-card .buy-buttons a{
+  display:inline-block;
+  padding:4px;
+  border-radius:8px;
+  transition:0.3s;
+  background:white;
+}
+
+.book-card .buy-buttons a img{
+  width:30px;
+  height:30px;
+  object-fit:contain;
+}
+
+.book-card .buy-buttons a:hover{
+  transform:scale(1.1);
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+<h1>BUY BOOKS</h1>
+<p>MATH'S WARRIOR | BY ABHINAY PRATAP</p>
+</div>
+
+<div class="books-container">
+  <!-- Book 1 -->
+  <div class="book-card">
+    <img class="book-cover" src="images/book1.jpg" alt="Book 1">
+    <div class="buy-buttons">
+      <a href="https://www.flipkart.com/example-book1" target="_blank">
+        <img src="images/flipkart-logo.png" alt="Flipkart">
+      </a>
+      <a href="https://www.amazon.in/example-book1" target="_blank">
+        <img src="images/amazon-logo.png" alt="Amazon">
+      </a>
+    </div>
+  </div>
+
+  <!-- Book 2 -->
+  <div class="book-card">
+    <img class="book-cover" src="images/book2.jpg" alt="Book 2">
+    <div class="buy-buttons">
+      <a href="https://www.flipkart.com/example-book2" target="_blank">
+        <img src="images/flipkart-logo.png" alt="Flipkart">
+      </a>
+      <a href="https://www.amazon.in/example-book2" target="_blank">
+        <img src="images/amazon-logo.png" alt="Amazon">
+      </a>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
