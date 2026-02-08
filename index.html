@@ -6,71 +6,18 @@
 <title>MATH'S WARRIOR</title>
 
 <style>
-/* Reset */
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
-
-/* Body */
-body{
-  background: linear-gradient(135deg,#ff0000,#ffffff);
-  min-height:100vh;
-  overflow-x:hidden;
-}
+body{background: linear-gradient(135deg,#ff0000,#ffffff); min-height:100vh; overflow-x:hidden;}
 
 /* App Bar */
-.appbar{
-  height:60px;
-  background:red;
-  color:white;
-  display:flex;
-  align-items:center;
-  padding:0 20px;
-  font-size:20px;
-  font-weight:bold;
-  position:fixed;
-  width:100%;
-  top:0;
-  z-index:1000;
-  box-shadow:0 3px 10px rgba(0,0,0,0.3);
-}
-
-.menu-btn{
-  font-size:28px;
-  cursor:pointer;
-  margin-right:15px;
-  transition:0.3s;
-}
-
+.appbar{height:60px; background:red; color:white; display:flex; align-items:center; padding:0 20px; font-size:20px; font-weight:bold; position:fixed; width:100%; top:0; z-index:1000; box-shadow:0 3px 10px rgba(0,0,0,0.3);}
+.menu-btn{font-size:28px; cursor:pointer; margin-right:15px; transition:0.3s;}
 .menu-btn:hover{transform:scale(1.2);}
 
 /* Sidebar */
-.sidebar{
-  position:fixed;
-  left:-260px;
-  top:0;
-  width:260px;
-  height:100%;
-  background:white;
-  box-shadow:3px 0 15px rgba(0,0,0,0.3);
-  padding-top:70px;
-  transition:0.4s;
-  z-index:999;
-}
-
-.sidebar a{
-  display:block;
-  padding:15px 25px;
-  text-decoration:none;
-  color:black;
-  font-weight:500;
-  border-bottom:1px solid #eee;
-  transition:0.3s;
-}
-
-.sidebar a:hover{
-  background:red;
-  color:white;
-  padding-left:35px;
-}
+.sidebar{position:fixed; left:-260px; top:0; width:260px; height:100%; background:white; box-shadow:3px 0 15px rgba(0,0,0,0.3); padding-top:70px; transition:0.4s; z-index:999;}
+.sidebar a{display:block; padding:15px 25px; text-decoration:none; color:black; font-weight:500; border-bottom:1px solid #eee; transition:0.3s;}
+.sidebar a:hover{background:red; color:white; padding-left:35px;}
 
 /* Main Grid */
 .main{
@@ -82,14 +29,15 @@ body{
   gap:25px;
 }
 
-/* Course Cards */
+/* Course Cards without Image */
 .card{
   position:relative;
   background:white;
   border-radius:20px;
-  overflow:hidden;
+  padding:25px;
   box-shadow:0 8px 25px rgba(0,0,0,0.3);
   transition:0.4s;
+  text-align:center;
 }
 
 .card:hover{
@@ -97,39 +45,9 @@ body{
   box-shadow:0 15px 40px rgba(0,0,0,0.5);
 }
 
-.card img{
-  width:100%;
-  height:180px;
-  object-fit:cover;
-  display:block;
-  transition:transform 0.5s;
-}
-
-.card:hover img{
-  transform:scale(1.08);
-}
-
-/* Card Content */
-.card-content{
-  padding:15px 20px;
-  text-align:center;
-  background:linear-gradient(to top, rgba(255,255,255,0.95), transparent);
-}
-
-.card-content h3{
-  margin-bottom:5px;
-  color:red;
-  font-size:18px;
-  font-weight:bold;
-}
-
-.card-content p{
-  font-size:14px;
-  margin-bottom:12px;
-  color:#333;
-}
-
-.card-content button{
+.card h3{color:red; margin-bottom:10px; font-size:18px; font-weight:bold;}
+.card p{margin-bottom:15px; color:#333; font-size:14px;}
+.card button{
   padding:10px 25px;
   border:none;
   border-radius:25px;
@@ -141,25 +59,17 @@ body{
   box-shadow:0 5px 15px rgba(0,0,0,0.2);
 }
 
-.card-content button:hover{
+.card button:hover{
   background:black;
   transform:scale(1.1);
   box-shadow:0 8px 25px rgba(0,0,0,0.35);
 }
 
 /* Footer */
-.footer{
-  text-align:center;
-  padding:20px;
-  font-weight:bold;
-  color:black;
-  margin-top:20px;
-}
+.footer{text-align:center; padding:20px; font-weight:bold; color:black; margin-top:20px;}
 
-/* Responsive Fixes */
-@media (max-width:450px){
-  .main{grid-template-columns:1fr;}
-}
+/* Responsive Fix */
+@media(max-width:450px){.main{grid-template-columns:1fr;}}
 </style>
 </head>
 
@@ -167,65 +77,51 @@ body{
 
 <!-- App Bar -->
 <div class="appbar">
-  <span class="menu-btn" onclick="openMenu()">☰</span>
-  MATH'S WARRIOR
+<span class="menu-btn" onclick="openMenu()">☰</span>
+MATH'S WARRIOR
 </div>
 
 <!-- Sidebar -->
 <div class="sidebar" id="sidebar">
-  <a href="index.html">🏠 Home</a>
-  <a href="dashboard.html">📊 Dashboard</a>
-  <a href="student-registration.html">📝 Student Registration</a>
-  <a href="teacher-manage.html">👨‍🏫 Teacher Manage</a>
-  <a href="notes.html">📚 Notes Section</a>
-  <a href="mock-test.html">🧠 Mock Test</a>
-  <a href="contact.html">📞 Contact Queries</a>
-  <a href="admin.html">⚙ Admin Panel</a>
+<a href="index.html">🏠 Home</a>
+<a href="dashboard.html">📊 Dashboard</a>
+<a href="student-registration.html">📝 Student Registration</a>
+<a href="teacher-management.html">👨‍🏫 Teacher Manage</a>
+<a href="notes.html">📚 Notes Section</a>
+<a href="mock-test.html">🧠 Mock Test</a>
+<a href="contact.html">📞 Contact Queries</a>
+<a href="admin.html">⚙ Admin Panel</a>
 </div>
 
 <!-- Main Content -->
 <div class="main">
-
   <!-- Card 1 -->
   <div class="card">
-    <img src="images/ssc-cgl.png" alt="SSC CGL Maths">
-    <div class="card-content">
-      <h3>SSC CGL Maths Batch</h3>
-      <p>Complete Arithmetic + Algebra + Advance</p>
-      <button onclick="window.location.href='payment.html?course=SSC CGL Maths Batch'">BUY NOW</button>
-    </div>
+    <h3>SSC CGL Maths Batch</h3>
+    <p>Complete Arithmetic + Algebra + Advance</p>
+    <button onclick="window.location.href='payment.html?course=SSC CGL Maths Batch'">BUY NOW</button>
   </div>
 
   <!-- Card 2 -->
   <div class="card">
-    <img src="images/ssc-gd.png" alt="SSC GD Special">
-    <div class="card-content">
-      <h3>SSC GD Special Batch</h3>
-      <p>Fast Track Complete Maths Course</p>
-      <button onclick="window.location.href='payment.html?course=SSC GD Special Batch'">BUY NOW</button>
-    </div>
+    <h3>SSC GD Special Batch</h3>
+    <p>Fast Track Complete Maths Course</p>
+    <button onclick="window.location.href='payment.html?course=SSC GD Special Batch'">BUY NOW</button>
   </div>
 
   <!-- Card 3 -->
   <div class="card">
-    <img src="images/maths-special.png" alt="Maths Special 2.0">
-    <div class="card-content">
-      <h3>Maths Special 2.0</h3>
-      <p>Premium Practice + Test Series</p>
-      <button onclick="window.location.href='payment.html?course=Maths Special 2.0'">BUY NOW</button>
-    </div>
+    <h3>Maths Special 2.0</h3>
+    <p>Premium Practice + Test Series</p>
+    <button onclick="window.location.href='payment.html?course=Maths Special 2.0'">BUY NOW</button>
   </div>
 
-  <!-- Card 4 (Meme Example) -->
+  <!-- Card 4 -->
   <div class="card">
-    <img src="images/meme.png" alt="Meme Maths">
-    <div class="card-content">
-      <h3>Meme Maths Batch</h3>
-      <p>Funny Maths Concepts</p>
-      <button onclick="window.location.href='payment.html?course=Meme Maths Batch'">BUY NOW</button>
-    </div>
+    <h3>Meme Maths Batch</h3>
+    <p>Funny Maths Concepts</p>
+    <button onclick="window.location.href='payment.html?course=Meme Maths Batch'">BUY NOW</button>
   </div>
-
 </div>
 
 <div class="footer">
@@ -235,10 +131,9 @@ body{
 <script>
 function openMenu(){
   let sidebar = document.getElementById("sidebar");
-  if(sidebar.style.left === "0px"){sidebar.style.left="-260px";}
+  if(sidebar.style.left==="0px"){sidebar.style.left="-260px";}
   else{sidebar.style.left="0px";}
 }
 </script>
-
 </body>
 </html>
