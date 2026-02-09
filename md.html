@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MD / Founder List | MATH'S WARRIOR</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+body{
+    font-family:'Poppins',sans-serif;
+    margin:0;
+    padding:0;
+    background: linear-gradient(135deg,#ff512f,#dd2476);
+    color:white;
+}
+.container{
+    padding:20px;
+}
+h1{
+    text-align:center; 
+    font-size:28px; 
+    margin-bottom:30px; 
+    letter-spacing:1px;
+    text-shadow: 2px 2px 5px #00000080;
+}
+
+/* MD Cards */
+.md-list{
+    display:flex;
+    flex-wrap:wrap;
+    gap:25px;
+    justify-content:center;
+}
+.md-card{
+    background:white;
+    color:#333;
+    border-radius:20px;
+    width:280px;       /* Bigger card */
+    padding:25px;      
+    text-align:center;
+    box-shadow:0 12px 25px rgba(0,0,0,0.3);
+    transition:0.3s;
+    position:relative;
+}
+.md-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 20px 40px rgba(0,0,0,0.4);
+}
+.md-card img{
+    width:130px;       /* Bigger photo */
+    height:130px;
+    border-radius:50%;
+    object-fit:cover;
+    margin-bottom:15px;
+    border:4px solid #ff512f;
+}
+.md-card b{
+    display:block;
+    font-size:20px;
+    margin-bottom:5px;
+}
+.md-card span{
+    display:block;
+    font-size:16px;
+    color:#ff512f;
+    margin-bottom:10px;
+}
+.md-card .contact-btn{
+    display:block;
+    width:100%;
+    margin:5px 0;
+    padding:8px 0;
+    border:none;
+    border-radius:12px;
+    background:linear-gradient(45deg,#00c6ff,#ff00ff);
+    color:white;
+    cursor:pointer;
+    font-weight:600;
+    font-size:14px;
+    text-decoration:none;
+    transition:0.3s;
+}
+.md-card .contact-btn:hover{
+    transform:scale(1.05);
+    opacity:0.9;
+}
+
+/* Modal */
+.modal{
+    display:none;
+    position:fixed;
+    z-index:1000;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    overflow:auto;
+    background:rgba(0,0,0,0.6);
+}
+.modal-content{
+    background:white;
+    margin:10% auto;
+    padding:20px;
+    border-radius:15px;
+    width:90%;
+    max-width:400px;
+    text-align:left;
+    box-shadow:0 10px 25px rgba(0,0,0,0.3);
+}
+.close{
+    float:right;
+    font-size:22px;
+    cursor:pointer;
+    font-weight:bold;
+    color:#ff512f;
+}
+.modal-content h3{
+    color:#ff512f;
+    margin-bottom:10px;
+}
+.modal-content p{
+    color:#333;
+    line-height:1.5;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+<h1>👑 MD / Founder | MATH'S WARRIOR</h1>
+<div class="md-list" id="mdList"></div>
+</div>
+
+<!-- Modal for Responsibility -->
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <h3>Responsibility / Dayitv</h3>
+    <p id="modalText"></p>
+  </div>
+</div>
+
+<script>
+function loadMDs(){
+    const mdListDiv = document.getElementById("mdList");
+    let mds = JSON.parse(localStorage.getItem("mdList"))||[];
+    mdListDiv.innerHTML = "";
+    if(mds.length===0){
+        mdListDiv.innerHTML = "<p style='color:white; font-size:16px;'>No MD / Founder added yet.</p>";
+        return;
+    }
+    mds.forEach((md,i)=>{
+        mdListDiv.innerHTML += `
+        <div class="md-card">
+            <img src="${md.photo}" alt="${md.name}">
+            <b>${md.name}</b>
+            <span>${md.role}</span>
+            <a href="tel:${md.phone}" class="contact-btn">📞 Call</a>
+            <a href="https://wa.me/${md.whatsapp}" target="_blank" class="contact-btn">📱 WhatsApp</a>
+            <p>✉️ ${md.email}</p>
+            <button class="contact-btn" onclick="showResponsibility(${i})">View Responsibility</button>
+        </div>`;
+    });
+}
+
+function showResponsibility(index){
+    let mds = JSON.parse(localStorage.getItem("mdList"))||[];
+    if(!mds[index]) return;
+    document.getElementById("modalText").innerText = mds[index].responsibility || "-";
+    document.getElementById("modal").style.display = "block";
+}
+
+function closeModal(){
+    document.getElementById("modal").style.display = "none";
+}
+
+// Load on page load
+window.onload = loadMDs;
+</script>
+
+</body>
+</html>

@@ -46,22 +46,29 @@ body{background: linear-gradient(135deg,#ff0000,#ffffff); min-height:100vh; over
 
 .card h3{color:red; margin-bottom:10px; font-size:18px; font-weight:bold;}
 .card p{margin-bottom:15px; color:#333; font-size:14px;}
+
+/* Button container */
+.btn-container{display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;}
 .card button{
-  padding:10px 25px;
+  flex:1;
+  padding:10px;
   border:none;
   border-radius:25px;
-  background:linear-gradient(45deg,#ff416c,#ff4b2b);
-  color:white;
   font-weight:bold;
   cursor:pointer;
   transition:0.3s, transform 0.3s;
   box-shadow:0 5px 15px rgba(0,0,0,0.2);
 }
-.card button:hover{
-  background:black;
-  transform:scale(1.1);
-  box-shadow:0 8px 25px rgba(0,0,0,0.35);
-}
+
+/* Button colors */
+.card button.register{background:linear-gradient(45deg,#ff416c,#ff4b2b); color:white;}
+.card button.register:hover{background:black; transform:scale(1.05);}
+
+.card button.buy{background:linear-gradient(45deg,#007bff,#00cfff); color:white;}
+.card button.buy:hover{background:#0056b3; transform:scale(1.05);}
+
+.card button.details{background:linear-gradient(45deg,#28a745,#20c997); color:white;}
+.card button.details:hover{background:#1e7e34; transform:scale(1.05);}
 
 /* Footer */
 .footer{text-align:center; padding:20px; font-weight:bold; color:black; margin-top:20px;}
@@ -82,12 +89,14 @@ MATH'S WARRIOR INSTITUTE
 <div class="sidebar" id="sidebar">
 <a href="index.html">🏠 HOME</a>
 <a href="dashboard.html">📊 DASHBOARD</a>
+<a href="payment.html">💶COURSE FEE PAYMENT</a>
 <a href="student-registration.html">📝 STUDENT REGISTRATION</a>
 <a href="teacher-manage.html">👨‍🏫 TEACHER MANAGE</a>
 <a href="my-course.html">📋MY COURSE</a>
 <a href="notes.html">📚 NOTES SECTION</a>
 <a href="mock-test.html">🧠 MOCK TEST</a>
 <a href="contact.html">📞 CONTACT QUERIES</a>
+<a href="md.html"> 💺FOUNDER AND DIRECTOR</a>
 <a href="admin-panel.html">⚙ ADMIN PANEL</a>
 <a href="links.html">🔗SOCIAL MEDIA LINKS</a>
 <a href="videos.html">▶️YOUTUBE VIDEO</a>
@@ -96,26 +105,40 @@ MATH'S WARRIOR INSTITUTE
 
 <!-- Main Content -->
 <div class="main">
+
   <!-- Card 1 -->
   <div class="card">
     <h3>LAKSYA FOUNDATION BATCH🎖️🎖️</h3>
     <p>➡️CLASS 9 | UP STATE BOARD & CBSE | FACULTY: ABHINAY PRATAP & TEAM</p>
-    <button onclick="registerCourse('LAKSYA FOUNDATION BATCH', 2199)">REGISTER NOW</button>
+    <div class="btn-container">
+      <button class="register" onclick="registerCourse('LAKSYA FOUNDATION BATCH', 2199)">REGISTER NOW</button>
+      <button class="buy" onclick="buyCourse('LAKSYA FOUNDATION BATCH', 2199)">BUY NOW</button>
+      <button class="details" onclick="courseDetails('LAKSYA FOUNDATION BATCH')">COURSE DETAILS</button>
+    </div>
   </div>
 
   <!-- Card 2 -->
   <div class="card">
     <h3>PRATHAM TARGET BATCH🎖️🎖️</h3>
     <p>➡️CLASS 10 | UP STATE BOARD & CBSE | FACULTY: ABHINAY PRATAP & TEAM</p>
-    <button onclick="registerCourse('PRATHAM TARGET BATCH', 2499)">REGISTER NOW</button>
+    <div class="btn-container">
+      <button class="register" onclick="registerCourse('PRATHAM TARGET BATCH', 2499)">REGISTER NOW</button>
+      <button class="buy" onclick="buyCourse('PRATHAM TARGET BATCH', 2499)">BUY NOW</button>
+      <button class="details" onclick="courseDetails('PRATHAM TARGET BATCH')">COURSE DETAILS</button>
+    </div>
   </div>
 
   <!-- Card 3 -->
   <div class="card">
     <h3>MATH SPECIAL 2.0</h3>
     <p>✅FOR ALL KVS NVS ENTRENCE EXAMS | FACULTY: ABHINAY PRATAP</p>
-    <button onclick="registerCourse('MATH SPECIAL 2.0', 2099)">REGISTER NOW</button>
+    <div class="btn-container">
+      <button class="register" onclick="registerCourse('MATH SPECIAL 2.0', 2099)">REGISTER NOW</button>
+      <button class="buy" onclick="buyCourse('MATH SPECIAL 2.0', 2099)">BUY NOW</button>
+      <button class="details" onclick="courseDetails('MATH SPECIAL 2.0')">COURSE DETAILS</button>
+    </div>
   </div>
+
 </div>
 
 <div class="footer">
@@ -130,11 +153,35 @@ function openMenu(){
   else{sidebar.style.left="0px";}
 }
 
-/* Set course name + fees in localStorage and redirect */
+/* Registration button */
 function registerCourse(courseName, fee){
   localStorage.setItem('selectedCourse', courseName);
   localStorage.setItem('selectedFee', fee);
   window.location.href='student-registration.html';
+}
+
+/* Buy Now button */
+function buyCourse(courseName, fee){
+  localStorage.setItem('selectedCourse', courseName);
+  localStorage.setItem('selectedFee', fee);
+  window.location.href='payment.html';
+}
+
+/* Course Details button */
+function courseDetails(courseName){
+  let details="";
+  switch(courseName){
+    case 'LAKSYA FOUNDATION BATCH':
+      details = "CLASS 9 | UP STATE & CBSE | Faculty: Abhinay Pratap & Team | Duration: 3 Months | Fee: ₹2199";
+      break;
+    case 'PRATHAM TARGET BATCH':
+      details = "CLASS 10 | UP STATE & CBSE | Faculty: Abhinay Pratap & Team | Duration: 4 Months | Fee: ₹2499";
+      break;
+    case 'MATH SPECIAL 2.0':
+      details = "All KVS/NVS Entrance Exams | Faculty: Abhinay Pratap | Duration: 2 Months | Fee: ₹2099";
+      break;
+  }
+  alert("Course Details:\n" + details);
 }
 </script>
 

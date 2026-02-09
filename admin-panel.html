@@ -12,30 +12,30 @@ body{
     background:linear-gradient(135deg,#ff512f,#dd2476);
     color:white;
 }
-.container{padding:20px;}
-h1{text-align:center;}
+.container{padding:15px;}
+h1{text-align:center;font-size:24px;}
 .login-box{
-    max-width:350px;
-    margin:120px auto;
+    max-width:320px;
+    margin:100px auto;
     background:white;
     color:#333;
-    padding:30px;
-    border-radius:20px;
-    box-shadow:0 10px 30px rgba(0,0,0,0.3);
+    padding:20px;
+    border-radius:15px;
+    box-shadow:0 8px 25px rgba(0,0,0,0.3);
     text-align:center;
 }
 input{
     width:100%;
-    padding:10px;
-    margin:8px 0;
+    padding:8px;
+    margin:6px 0;
     border:none;
-    border-radius:20px;
+    border-radius:15px;
     background:#f2f2f2;
 }
 button{
-    padding:8px 15px;
+    padding:6px 12px;
     border:none;
-    border-radius:20px;
+    border-radius:15px;
     background:red;
     color:white;
     cursor:pointer;
@@ -45,10 +45,11 @@ button:hover{background:black;}
 .section{
     background:white;
     color:#333;
-    padding:20px;
-    border-radius:20px;
-    margin-bottom:20px;
-    box-shadow:0 10px 25px rgba(0,0,0,0.3);
+    padding:15px;
+    border-radius:15px;
+    margin-bottom:15px;
+    box-shadow:0 8px 20px rgba(0,0,0,0.3);
+    font-size:14px;
 }
 table{
     width:100%;
@@ -56,9 +57,9 @@ table{
     margin-top:10px;
 }
 th,td{
-    padding:8px;
+    padding:6px;
     border-bottom:1px solid #ddd;
-    font-size:14px;
+    font-size:12px;
 }
 th{
     background:#dd2476;
@@ -66,17 +67,22 @@ th{
 }
 .delete-btn{
     background:red;
-    padding:4px 8px;
+    padding:3px 6px;
     border:none;
     color:white;
     border-radius:5px;
     cursor:pointer;
-    margin-left:10px;
+    margin-left:5px;
 }
 .logout{
     float:right;
     background:black;
 }
+
+/* MD Section */
+.md-section input{margin-bottom:5px;}
+.md-section img{width:50px; height:50px; border-radius:50%; margin-right:5px; vertical-align:middle;}
+.md-section div{display:inline-block; vertical-align:middle;}
 </style>
 </head>
 <body>
@@ -154,6 +160,19 @@ th{
 <div id="notificationList"></div>
 </div>
 
+<!-- MD / FOUNDER -->
+<div class="section md-section">
+<h3>👑 ADD FOUNDER / MD</h3>
+<input type="text" id="mdName" placeholder="FOUNDER / MD NAME">
+<input type="text" id="mdPhone" placeholder="PHONE NUMBER">
+<input type="text" id="mdWhatsapp" placeholder="WHATSAPP NUMBER">
+<input type="email" id="mdEmail" placeholder="EMAIL ID">
+<input type="file" id="mdPhoto" accept="image/*">
+<input type="text" id="mdResponsibility" placeholder="Responsibility / Dayitv">
+<button onclick="addMD()">Add Founder</button>
+
+<h4>📝 Founder / MD List:</h4>
+<div id="mdList" class="md-list"></div>
 </div>
 
 <script>
@@ -167,13 +186,8 @@ function login(){
     if(id===ADMIN_ID && pass===ADMIN_PASS){
         document.getElementById("loginSection").style.display="none";
         document.getElementById("adminSection").style.display="block";
-        loadStudents();
-        loadTeachers();
-        loadNotes();
-        loadNotifications();
-    } else {
-        alert("Wrong ID or Password");
-    }
+        loadStudents(); loadTeachers(); loadNotes(); loadNotifications(); loadMDs();
+    } else { alert("Wrong ID or Password"); }
 }
 
 function logout(){ location.reload(); }
@@ -212,10 +226,7 @@ function addTeacher(){
         email:tEmail.value.trim(),
         whatsapp:tWhatsapp.value.trim()
     };
-    if(!teacher.name || !teacher.subject || !teacher.mobile){
-        alert("Fill required fields");
-        return;
-    }
+    if(!teacher.name || !teacher.subject || !teacher.mobile){ alert("Fill required fields"); return;}
     let teachers=JSON.parse(localStorage.getItem("teachers"))||[];
     teachers.push(teacher);
     localStorage.setItem("teachers",JSON.stringify(teachers));
@@ -252,10 +263,7 @@ function uploadNote(){
     let className=noteClass.value.trim();
     let teacher=noteTeacher.value.trim();
     let fileInput=document.getElementById("noteFile");
-    if(!title||!subject||!chapter||!className||!teacher||fileInput.files.length===0){
-        alert("Fill all fields");
-        return;
-    }
+    if(!title||!subject||!chapter||!className||!teacher||fileInput.files.length===0){ alert("Fill all fields"); return;}
     let reader=new FileReader();
     reader.onload=function(e){
         let notes=JSON.parse(localStorage.getItem("notes"))||[];
@@ -296,10 +304,7 @@ function addNotification(){
     let start=startDate.value;
     let end=endDate.value;
     let link=examLink.value.trim();
-    if(!exam||!start||!end||!link){
-        alert("Fill all fields");
-        return;
-    }
+    if(!exam||!start||!end||!link){ alert("Fill all fields"); return;}
     let notifications=JSON.parse(localStorage.getItem("notifications"))||[];
     notifications.push({examName:exam,startDate:start,endDate:end,link});
     localStorage.setItem("notifications",JSON.stringify(notifications));
@@ -327,6 +332,55 @@ function deleteNotification(index){
     notifications.splice(index,1);
     localStorage.setItem("notifications",JSON.stringify(notifications));
     loadNotifications();
+}
+
+/* MD / FOUNDER */
+function addMD(){
+    let name = mdName.value.trim();
+    let phone = mdPhone.value.trim();
+    let whatsapp = mdWhatsapp.value.trim();
+    let email = mdEmail.value.trim();
+    let responsibility = mdResponsibility.value.trim();
+    let fileInput = document.getElementById("mdPhoto");
+    if(!name || !phone || !whatsapp || !email || !responsibility || fileInput.files.length===0){ 
+        alert("Fill all fields"); return;
+    }
+    let reader = new FileReader();
+    reader.onload = function(e){
+        let mds = JSON.parse(localStorage.getItem("mdList"))||[];
+        mds.push({name,phone,whatsapp,email,photo:e.target.result,responsibility});
+        localStorage.setItem("mdList",JSON.stringify(mds));
+        // Clear inputs
+        mdName.value=""; mdPhone.value=""; mdWhatsapp.value=""; mdEmail.value=""; mdPhoto.value=""; mdResponsibility.value="";
+        loadMDs();
+    }
+    reader.readAsDataURL(fileInput.files[0]);
+}
+
+function loadMDs(){
+    let mds = JSON.parse(localStorage.getItem("mdList"))||[];
+    let div = document.getElementById("mdList");
+    div.innerHTML="";
+    mds.forEach((md,i)=>{
+        div.innerHTML+=`
+        <p>
+        <img src="${md.photo}" alt="${md.name}">
+        <div>
+        <b>${md.name}</b><br>
+        📞 ${md.phone} | 📱 ${md.whatsapp} <br>
+        ✉️ ${md.email} <br>
+        📝 ${md.responsibility}
+        </div>
+        <button class="delete-btn" onclick="deleteMD(${i})">X</button>
+        </p><hr>`;
+    });
+}
+
+function deleteMD(index){
+    let mds = JSON.parse(localStorage.getItem("mdList"))||[];
+    mds.splice(index,1);
+    localStorage.setItem("mdList",JSON.stringify(mds));
+    loadMDs();
 }
 </script>
 
