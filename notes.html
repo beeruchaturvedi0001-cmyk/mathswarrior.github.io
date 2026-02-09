@@ -2,9 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Notes Section | MATH'S WARRIOR</title>
-
+<title>Notes Section</title>
 <style>
 body{
 margin:0;
@@ -13,43 +11,21 @@ background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
 color:white;
 text-align:center;
 }
-
-h1{color:gold;margin-top:20px;}
-
 .container{
 background:rgba(255,255,255,0.1);
 padding:20px;
 margin:20px;
 border-radius:20px;
 }
-
-input,button{
-padding:10px;
-margin:10px;
-border-radius:20px;
-border:none;
-}
-
-button{
-background:linear-gradient(45deg,#ff416c,#ff4b2b);
-color:white;
-font-weight:bold;
-cursor:pointer;
-}
-
 .note-item{
 background:rgba(255,255,255,0.15);
-margin:10px;
-padding:10px;
+margin:15px;
+padding:15px;
 border-radius:15px;
+text-align:left;
 }
-a{
-color:yellow;
-text-decoration:none;
-font-weight:bold;
-}
+a{color:yellow;text-decoration:none;font-weight:bold;}
 </style>
-
 </head>
 <body>
 
@@ -57,72 +33,30 @@ font-weight:bold;
 <h3>NOTES SECTION</h3>
 
 <div class="container">
-
-<h3>UPLOAD NOTES (PDF / IMAGE)</h3>
-
-<input type="text" id="noteTitle" placeholder="ENTER NOTE TITLE"><br>
-<input type="file" id="NOTEFILE"><br>
-<button onclick="uploadNote()">UPLOAD NOTE</button>
-
-<hr>
-
-<h3>AVAILABLE NOTES</h3>
 <div id="notesList"></div>
-
 </div>
 
 <script>
 
-function uploadNote(){
-
-let title = document.getElementById("noteTitle").value;
-let fileInput = document.getElementById("noteFile");
-
-if(title=="" || fileInput.files.length==0){
-alert("Please enter title and select file");
-return;
-}
-
-let file = fileInput.files[0];
-let reader = new FileReader();
-
-reader.onload = function(e){
-
-let notes = JSON.parse(localStorage.getItem("notes")) || [];
-
-notes.push({
-title: title,
-fileData: e.target.result
-});
-
-localStorage.setItem("notes", JSON.stringify(notes));
-
-displayNotes();
-
-document.getElementById("noteTitle").value="";
-document.getElementById("noteFile").value="";
-};
-
-reader.readAsDataURL(file);
-}
-
 function displayNotes(){
-
-let notes = JSON.parse(localStorage.getItem("notes")) || [];
+let notes=JSON.parse(localStorage.getItem("notes"))||[];
 let html="";
-
-notes.forEach((note,index)=>{
-html += `
+if(notes.length===0){
+html="<p>No Notes Available</p>";
+}
+notes.forEach(note=>{
+html+=`
 <div class="note-item">
 <b>${note.title}</b><br>
-<a href="${note.fileData}" target="_blank">📥 View / Download</a>
-</div>
-`;
+Subject: ${note.subject}<br>
+Chapter: ${note.chapter}<br>
+Class: ${note.className}<br>
+Teacher: ${note.teacher}<br><br>
+<a href="${note.file}" target="_blank"> View / Download</a>
+</div>`;
 });
-
-document.getElementById("notesList").innerHTML = html;
+document.getElementById("notesList").innerHTML=html;
 }
-
 displayNotes();
 
 </script>

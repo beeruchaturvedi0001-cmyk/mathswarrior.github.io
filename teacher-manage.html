@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Teacher Management | MATH'S WARRIOR</title>
+<title>Our Teachers | MATH'S WARRIOR</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
@@ -19,135 +19,116 @@ body{
 background:linear-gradient(135deg,#1d2671,#c33764);
 padding:20px;
 color:white;
+min-height:100vh;
 }
 
-/* Header */
 .header{
 text-align:center;
-margin-bottom:30px;
+margin-bottom:40px;
 }
 
 .header h1{
-font-size:26px;
+font-size:30px;
 }
 
-/* Form Card */
-.form-box{
-background:white;
-color:#333;
-padding:25px;
-border-radius:25px;
-box-shadow:0 15px 30px rgba(0,0,0,0.3);
-max-width:500px;
-margin:auto;
-}
-
-.form-box input{
-width:100%;
-padding:12px;
-margin:10px 0;
-border:none;
-border-radius:30px;
-background:#f2f2f2;
-outline:none;
-}
-
-.form-box button{
-width:100%;
-padding:12px;
-border:none;
-border-radius:30px;
-background:linear-gradient(45deg,#1d2671,#c33764);
-color:white;
-font-weight:600;
-cursor:pointer;
-transition:0.3s;
-}
-
-.form-box button:hover{
-transform:scale(1.05);
-}
-
-/* Teacher List */
-.teacher-list{
-margin-top:40px;
+.teacher-container{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:20px;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:25px;
 }
 
 .teacher-card{
 background:white;
 color:#333;
-padding:20px;
+padding:25px;
 border-radius:25px;
-text-align:center;
 box-shadow:0 15px 30px rgba(0,0,0,0.3);
-transition:0.3s;
+transition:0.4s;
 }
 
 .teacher-card:hover{
 transform:translateY(-8px);
+box-shadow:0 20px 40px rgba(0,0,0,0.4);
 }
 
-.teacher-card img{
-width:100px;
-height:100px;
-border-radius:50%;
-object-fit:cover;
+.teacher-card h3{
+color:#1d2671;
 margin-bottom:10px;
+font-size:20px;
 }
 
+.teacher-card p{
+font-size:14px;
+margin:6px 0;
+}
+
+.info-label{
+font-weight:600;
+color:#c33764;
+}
+
+.contact-btn{
+display:inline-block;
+margin-top:10px;
+padding:6px 12px;
+border-radius:20px;
+background:linear-gradient(45deg,#1d2671,#c33764);
+color:white;
+font-size:12px;
+text-decoration:none;
+}
+
+.no-teacher{
+text-align:center;
+font-size:18px;
+margin-top:50px;
+}
 </style>
 </head>
 
 <body>
 
 <div class="header">
-<h1>👨‍🏫 TEACHER MANAGEMENT</h1>
+<h1>👨‍🏫 OUR FACULTY TEAM</h1>
+<p>MATH'S WARRIOR INSTITUTE</p>
 </div>
 
-<div class="form-box">
-<input type="text" id="teacherName" placeholder="ENTER TEACHER NAME">
-<input type="text" id="subjectName" placeholder="ENTER SUBJECT NAME">
-<input type="file" id="teacherImage" accept="image/*">
-<button onclick="addTeacher()">ADD TEACHER</button>
-</div>
-
-<div class="teacher-list" id="teacherList"></div>
+<div class="teacher-container" id="teacherContainer"></div>
 
 <script>
 
-function addTeacher(){
+function loadTeachers(){
+let teachers = JSON.parse(localStorage.getItem("teachers")) || [];
+let container = document.getElementById("teacherContainer");
+container.innerHTML = "";
 
-let name = document.getElementById("teacherName").value;
-let file = document.getElementById("teacherImage").files[0];
-
-if(name === "" || !file){
-alert("Please fill all fields");
+if(teachers.length === 0){
+container.innerHTML = `<div class="no-teacher">No Teachers Added Yet</div>`;
 return;
 }
 
-let reader = new FileReader();
-reader.onload = function(e){
+teachers.forEach(teacher => {
 
-let teacherCard = `
-<div class="teacher-card">
-<img src="${e.target.result}">
-<h3>${name}</h3>
-</div>
+let card = document.createElement("div");
+card.className = "teacher-card";
+
+card.innerHTML = `
+<h3>${teacher.name}</h3>
+<p><span class="info-label">Subject:</span> ${teacher.subject}</p>
+<p><span class="info-label">Experience:</span> ${teacher.experience || "N/A"} Years</p>
+<p><span class="info-label">Mobile:</span> ${teacher.mobile}</p>
+<p><span class="info-label">Email:</span> ${teacher.email || "N/A"}</p>
+<p><span class="info-label">WhatsApp:</span> ${teacher.whatsapp || "N/A"}</p>
+<a class="contact-btn" href="https://wa.me/${teacher.whatsapp}" target="_blank">Chat on WhatsApp</a>
 `;
 
-document.getElementById("teacherList").innerHTML += teacherCard;
+container.appendChild(card);
+
+});
 
 }
 
-reader.readAsDataURL(file);
-
-document.getElementById("teacherName").value="";
-document.getElementById("teacherImage").value="";
-
-}
+loadTeachers();
 
 </script>
 
