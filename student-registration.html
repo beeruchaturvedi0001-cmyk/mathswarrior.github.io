@@ -3,126 +3,249 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Student Registration - MATH'S WARRIOR</title>
+<title>Student Registration | MATH'S WARRIOR</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
 <style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+
 body{
-    font-family:'Poppins',sans-serif;
-    background: linear-gradient(135deg,#ff0000,#ffffff);
-    padding:20px;
-    min-height:100vh;
+background:linear-gradient(135deg,#ff0000,#ffffff);
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:20px;
 }
+
 .container{
-    max-width:600px;
-    margin:40px auto;
-    background:white;
-    padding:30px;
-    border-radius:25px;
-    box-shadow:0 10px 25px rgba(0,0,0,0.2);
+width:100%;
+max-width:950px;
+background:white;
+padding:30px;
+border-radius:20px;
+box-shadow:0 15px 40px rgba(0,0,0,0.3);
 }
+
 h1{
-    text-align:center;
-    color:#b58900; /* Dark Yellow */
-    font-size:32px;
-    margin-bottom:10px;
-    font-weight:bold;
+text-align:center;
+color:red;
+margin-bottom:20px;
 }
-h3{
-    text-align:center;
-    color:#333;
-    font-size:20px;
-    margin-bottom:25px;
+
+.course-box{
+background:#ffe6e6;
+padding:12px;
+border-radius:10px;
+text-align:center;
+font-weight:600;
+color:#b30000;
+margin-bottom:20px;
 }
-form label{
-    display:block;
-    margin-bottom:5px;
-    font-weight:500;
-    color:#333;
+
+.form-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:15px;
 }
-form input, form select{
-    width:100%;
-    padding:12px 15px;
-    margin-bottom:20px;
-    border-radius:12px;
-    border:1px solid #ccc;
-    font-size:16px;
+
+input,select{
+width:100%;
+padding:12px;
+border-radius:10px;
+border:1px solid #ccc;
+outline:none;
 }
-form button{
-    width:100%;
-    padding:15px;
-    background:linear-gradient(45deg,#ff416c,#ff4b2b);
-    color:white;
-    font-weight:bold;
-    border:none;
-    border-radius:30px;
-    cursor:pointer;
-    transition:0.3s;
-    font-size:18px;
+
+input:focus,select:focus{
+border-color:red;
+box-shadow:0 0 5px rgba(255,0,0,0.4);
 }
-form button:hover{
-    background:black;
-    transform:scale(1.03);
+
+button{
+margin-top:20px;
+width:100%;
+padding:12px;
+border:none;
+border-radius:25px;
+background:linear-gradient(45deg,#ff0000,#ff4b2b);
+color:white;
+font-size:16px;
+font-weight:bold;
+cursor:pointer;
+transition:0.3s;
 }
-.price-box{
-    background:#fff7e6;
-    padding:10px 15px;
-    border-radius:12px;
-    font-weight:bold;
-    color:#e63946;
-    margin-bottom:20px;
-    text-align:center;
+
+button:hover{
+background:black;
+transform:scale(1.05);
+}
+
+.success{
+text-align:center;
+margin-top:10px;
+font-weight:600;
+color:green;
 }
 </style>
 </head>
+
 <body>
 
 <div class="container">
-<h1>MATH'S WARRIOR</h1>
-<h3>STUDENT REGISTRATION FORM</h3>
 
-<form id="registrationForm">
-<label for="name">FULL NAME</label>
-<input type="text" id="name" name="name" placeholder="ENTER YOUR FULL NAME" required>
+<h1>STUDENT REGISTRATION FORM</h1>
 
-<label for="email">EMAIL</label>
-<input type="email" id="email" name="email" placeholder="ENTER YOUR EMAIL" required>
+<div class="course-box">
+Selected Course: <span id="selectedCourse"></span>
+</div>
 
-<label for="mobile">MOBILE NUMBER</label>
-<input type="tel" id="mobile" name="mobile" placeholder="ENTER YOUR MOBILE NUMBER" required>
+<div class="form-grid">
 
-<label for="course">SELECT COURSE</label>
-<select id="course" name="course" required>
-    <option value="" disabled selected>SELECT COURSE</option>
-    <option value="TARGET FOUNDATION BATCH" data-price="2199">TARGET FOUNDATION BATCH - ₹2199</option>
-    <option value="PRATHAM TARGET BATCH" data-price="2499">PRATHAM TARGET BATCH - ₹2499</option>
-    <option value="MATH SPECIAL 2.0" data-price="2999">MATH SPECIAL 2.0 - ₹2999</option>
+<input type="text" id="studentName" placeholder="Student Full Name" required>
+<input type="text" id="fatherName" placeholder="Father's Name" required>
+<input type="text" id="motherName" placeholder="Mother's Name" required>
+<input type="email" id="email" placeholder="Email ID" required>
+
+<input type="text" id="aadhaar" placeholder="Aadhaar Number (12 digits)" maxlength="12" required>
+<input type="text" id="mobile" placeholder="Mobile Number (10 digits)" maxlength="10" required>
+<input type="text" id="whatsapp" placeholder="WhatsApp Number (10 digits)">
+
+<!-- All India States -->
+<select id="state" required>
+<option value="">Select State</option>
+<option>Andhra Pradesh</option>
+<option>Arunachal Pradesh</option>
+<option>Assam</option>
+<option>Bihar</option>
+<option>Chhattisgarh</option>
+<option>Goa</option>
+<option>Gujarat</option>
+<option>Haryana</option>
+<option>Himachal Pradesh</option>
+<option>Jharkhand</option>
+<option>Karnataka</option>
+<option>Kerala</option>
+<option>Madhya Pradesh</option>
+<option>Maharashtra</option>
+<option>Manipur</option>
+<option>Meghalaya</option>
+<option>Mizoram</option>
+<option>Nagaland</option>
+<option>Odisha</option>
+<option>Punjab</option>
+<option>Rajasthan</option>
+<option>Sikkim</option>
+<option>Tamil Nadu</option>
+<option>Telangana</option>
+<option>Tripura</option>
+<option>Uttar Pradesh</option>
+<option>Uttarakhand</option>
+<option>West Bengal</option>
+<option>Delhi</option>
+<option>Jammu & Kashmir</option>
+<option>Ladakh</option>
 </select>
 
-<div class="price-box" id="coursePrice">COURSE PRICE: ₹0</div>
+<!-- Sample District -->
+<select id="district" required>
+<option value="">Select District</option>
+<option>Lucknow</option>
+<option>Prayagraj</option>
+<option>Varanasi</option>
+<option>Kanpur Nagar</option>
+<option>Gorakhpur</option>
+<option>Agra</option>
+<option>Delhi</option>
+<option>Jaipur</option>
+<option>Patna</option>
+<option>Mumbai</option>
+<option>Bhopal</option>
+<option>Kolkata</option>
+</select>
 
-<button type="submit">REGISTER NOW</button>
-</form>
+<input type="text" id="village" placeholder="Village Name" required>
+<input type="text" id="postOffice" placeholder="Post Office Name" required>
+
+</div>
+
+<button onclick="registerStudent()">Submit Registration</button>
+
+<div class="success" id="msg"></div>
+
 </div>
 
 <script>
-const courseSelect = document.getElementById('course');
-const priceBox = document.getElementById('coursePrice');
 
-courseSelect.addEventListener('change', function(){
-    const selected = courseSelect.options[courseSelect.selectedIndex];
-    const price = selected.getAttribute('data-price');
-    priceBox.textContent = `Course Price: ₹${price}`;
-});
+// Selected Course Show
+let selectedCourse = localStorage.getItem("selectedCourse") || "Not Selected";
+document.getElementById("selectedCourse").innerText = selectedCourse;
 
-// Form submit
-document.getElementById('registrationForm').addEventListener('submit', function(e){
-    e.preventDefault();
-    const name = document.getElementById('name').value;
-    const course = courseSelect.value;
-    const price = courseSelect.options[courseSelect.selectedIndex].getAttribute('data-price');
-    alert(`Student: ${name}\nCourse: ${course}\nFee: ₹${price}\nRegistration Successful!`);
-    this.reset();
-    priceBox.textContent = "Course Price: ₹0";
-});
+function generateRegID(){
+return "MW" + Math.floor(100000 + Math.random() * 900000);
+}
+
+function registerStudent(){
+
+let inputs = document.querySelectorAll("input, select");
+for(let i=0;i<inputs.length;i++){
+if(inputs[i].hasAttribute("required") && inputs[i].value.trim()===""){
+alert("Please fill all required fields");
+return;
+}
+}
+
+let aadhaar = document.getElementById("aadhaar").value;
+let mobile = document.getElementById("mobile").value;
+let whatsapp = document.getElementById("whatsapp").value;
+
+if(aadhaar.length!=12 || isNaN(aadhaar)){
+alert("Invalid Aadhaar Number");
+return;
+}
+
+if(mobile.length!=10 || isNaN(mobile)){
+alert("Invalid Mobile Number");
+return;
+}
+
+if(whatsapp && (whatsapp.length!=10 || isNaN(whatsapp))){
+alert("Invalid WhatsApp Number");
+return;
+}
+
+let regID = generateRegID();
+
+let studentData = {
+regID,
+name: studentName.value,
+father: fatherName.value,
+mother: motherName.value,
+email: email.value,
+aadhaar,
+mobile,
+whatsapp,
+state: state.value,
+district: district.value,
+village: village.value,
+postOffice: postOffice.value,
+course: selectedCourse,
+date: new Date().toLocaleString()
+};
+
+let students = JSON.parse(localStorage.getItem("students")) || [];
+students.push(studentData);
+localStorage.setItem("students", JSON.stringify(students));
+
+document.getElementById("msg").innerText =
+"Registration Successful! Your ID: " + regID;
+
+document.querySelectorAll("input").forEach(input=>input.value="");
+document.getElementById("state").value="";
+document.getElementById("district").value="";
+}
+
 </script>
 
 </body>

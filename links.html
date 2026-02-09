@@ -17,7 +17,11 @@
 
 body{
   background:linear-gradient(135deg,#ff512f,#dd2476);
-  padding:20px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+  flex-direction:column;
   color:white;
 }
 
@@ -37,66 +41,52 @@ body{
   margin-top:5px;
 }
 
-/* Links Container */
-.links-container{
-  max-width:500px;
-  margin:auto;
+/* Circle Buttons Container */
+.circle-container{
   display:flex;
-  flex-direction:column;
+  flex-wrap:wrap;
+  justify-content:center;
   gap:20px;
 }
 
-/* Button Style */
-.link-btn{
+/* Circle Button */
+.circle-btn{
+  width:80px;
+  height:80px;
+  border-radius:50%;
   display:flex;
   align-items:center;
-  justify-content:space-between;
-  width:100%;
-  padding:15px 20px;
-  border:none;
-  border-radius:30px;
-  font-weight:600;
+  justify-content:center;
   text-decoration:none;
-  text-align:center;
   color:white;
-  font-size:16px;
+  font-size:30px;
+  font-weight:bold;
   transition:0.3s;
+  box-shadow:0 8px 15px rgba(0,0,0,0.3);
   position:relative;
 }
 
-.link-btn:hover{
-  transform:scale(1.05);
-  box-shadow:0 10px 25px rgba(0,0,0,0.3);
-}
-
-/* Icon style */
-.link-btn .icon{
-  font-size:20px;
-  margin-right:10px;
-}
-
-/* Description below button */
-.link-btn span.description{
+.circle-btn span.tooltip{
   position:absolute;
-  bottom:-20px;
-  left:20px;
+  bottom:-25px;
   font-size:12px;
-  color:white;
-  opacity:0.8;
+  white-space:nowrap;
+  opacity:0.9;
 }
 
-/* Specific button colors */
-.whatsapp{
-  background:linear-gradient(45deg,#25D366,#128C7E);
+/* Hover effect */
+.circle-btn:hover{
+  transform:scale(1.2);
+  box-shadow:0 12px 20px rgba(0,0,0,0.5);
 }
 
-.youtube{
-  background:linear-gradient(45deg,#ff0000,#cc0000);
-}
+/* Colors */
+.youtube{ background:linear-gradient(45deg,#ff0000,#cc0000); }
+.whatsapp{ background:linear-gradient(45deg,#25D366,#128C7E); }
+.email{ background:linear-gradient(45deg,#1e90ff,#0072ff); }
+.telegram{ background:linear-gradient(45deg,#0088cc,#005f99); }
+.aratt{ background:linear-gradient(45deg,#6a1b9a,#8e24aa); }
 
-.email{
-  background:linear-gradient(45deg,#1e90ff,#0072ff);
-}
 </style>
 </head>
 
@@ -107,24 +97,36 @@ body{
 <p>MATH'S WARRIOR | BY ABHINAY PRATAP</p>
 </div>
 
-<div class="links-container">
+<div class="circle-container">
 
-<a href="https://www.youtube.com/@ABHINAYPRATAPMATHS" target="_blank" class="link-btn youtube">
-  <div><span class="icon">📺</span> YouTube Channel</div>
-  Click here to Join
-  <span class="description">Watch Maths videos by Abhinay Pratap</span>
+<!-- YouTube -->
+<a href="https://www.youtube.com/@ABHINAYPRATAPMATHS" target="_blank" class="circle-btn youtube">
+  ▶️
+  <span class="tooltip">YouTube</span>
 </a>
 
-<a href="https://whatsapp.com/channel/0029Vb7UWz5LI8YXMCnfLF40" target="_blank" class="link-btn whatsapp">
-  <div><span class="icon">💬</span> WhatsApp Channel</div>
-  Click here to Join
-  <span class="description">Join WhatsApp channel for updates</span>
+<!-- WhatsApp -->
+<a href="https://whatsapp.com/channel/0029Vb7UWz5LI8YXMCnfLF40" target="_blank" class="circle-btn whatsapp">
+  💬
+  <span class="tooltip">WhatsApp</span>
 </a>
 
-<a href="mailto:abhinaychaubey83@gmail.com" class="link-btn email">
-  <div><span class="icon">✉️</span> Email</div>
-  Click here to Join
-  <span class="description">Contact via email for queries</span>
+<!-- Email -->
+<a href="mailto:abhinaychaubey83@gmail.com" class="circle-btn email">
+  ✉️
+  <span class="tooltip">Email</span>
+</a>
+
+<!-- Telegram -->
+<a href="https://t.me/TWA2025EDUCATION11" target="_blank" class="circle-btn telegram">
+  📲
+  <span class="tooltip">Telegram</span>
+</a>
+
+<!-- Aratt.ai -->
+<a href="https://aratt.ai/@math_s_warrior" target="_blank" class="circle-btn aratt">
+  🧠
+  <span class="tooltip">Aratt.ai</span>
 </a>
 
 </div>

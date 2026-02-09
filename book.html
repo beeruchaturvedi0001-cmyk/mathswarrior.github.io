@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>2 BOOKS | MATH'S WARRIOR</title>
+<title>Floating Books Click | MATH'S WARRIOR</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
@@ -17,18 +17,18 @@
 
 body{
   background:linear-gradient(135deg,#ff512f,#dd2476);
-  padding:20px;
-  color:white;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
   min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  color:white;
 }
 
 /* Header */
 .header{
   text-align:center;
-  margin-bottom:20px;
+  margin-bottom:50px;
 }
 
 .header h1{
@@ -41,65 +41,81 @@ body{
   margin-top:5px;
 }
 
-/* Book Cards Container */
-.books-container{
+/* Floating Books Container */
+.floating-books{
+  position:fixed;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
   display:flex;
-  justify-content:center;
-  gap:20px;
-  flex-wrap:wrap;
+  gap:25px;
+  z-index:1000;
 }
 
-/* Single Book Card */
-.book-card{
-  background:white;
-  color:#333;
-  border-radius:15px;
-  text-align:center;
-  padding:5px;
+/* Book Circle */
+.book-circle{
+  position:relative;
+  width:80px;
+  height:80px;
+  border-radius:50%;
+  overflow:hidden;
+  cursor:pointer;
+  transition:0.3s;
   box-shadow:0 8px 15px rgba(0,0,0,0.3);
-  transition:0.3s;
-  max-width:180px;
 }
 
-.book-card:hover{
-  transform:scale(1.03);
-}
-
-.book-card img.book-cover{
+.book-circle img{
   width:100%;
-  height:280px;
+  height:100%;
   object-fit:cover;
-  border-radius:10px;
-  margin-bottom:5px;
-}
-
-/* Buttons Container */
-.book-card .buy-buttons{
-  display:flex;
-  justify-content:space-around;
-  gap:5px;
-}
-
-.book-card .buy-buttons a{
-  display:inline-block;
-  padding:4px;
-  border-radius:8px;
   transition:0.3s;
-  background:white;
 }
 
-.book-card .buy-buttons a img{
+.book-circle:hover img{
+  transform:scale(1.1);
+}
+
+/* Buy Buttons Panel */
+.buy-buttons{
+  position:absolute;
+  bottom:100%;
+  left:50%;
+  transform:translateX(-50%) scale(0);
+  display:flex;
+  gap:8px;
+  transition:0.3s;
+  background:rgba(255,255,255,0.95);
+  padding:5px 10px;
+  border-radius:12px;
+  pointer-events:none;
+}
+
+.buy-buttons.show{
+  transform:translateX(-50%) scale(1);
+  pointer-events:auto;
+}
+
+/* Buy Buttons Style */
+.buy-buttons a{
+  display:inline-block;
   width:30px;
   height:30px;
+  border-radius:6px;
+  overflow:hidden;
+  transition:0.3s;
+}
+
+.buy-buttons a img{
+  width:100%;
+  height:100%;
   object-fit:contain;
 }
 
-.book-card .buy-buttons a:hover{
-  transform:scale(1.1);
+.buy-buttons a:hover{
+  transform:scale(1.2);
 }
 </style>
 </head>
-
 <body>
 
 <div class="header">
@@ -107,12 +123,13 @@ body{
 <p>MATH'S WARRIOR | BY ABHINAY PRATAP</p>
 </div>
 
-<div class="books-container">
+<div class="floating-books">
+
   <!-- Book 1 -->
-  <div class="book-card">
-    <img class="book-cover" src="images/book1.jpg" alt="Book 1">
+  <div class="book-circle" onclick="toggleBuy(this)">
+    <img src="images/book1.jpg" alt="Book 1">
     <div class="buy-buttons">
-      <a href="https://www.flipkart.com/example-book1" target="_blank">
+      <a href="https://dl.flipkart.com/s/cLJNhdNNNN" target="_blank">
         <img src="images/flipkart-logo.png" alt="Flipkart">
       </a>
       <a href="https://www.amazon.in/example-book1" target="_blank">
@@ -122,8 +139,8 @@ body{
   </div>
 
   <!-- Book 2 -->
-  <div class="book-card">
-    <img class="book-cover" src="images/book2.jpg" alt="Book 2">
+  <div class="book-circle" onclick="toggleBuy(this)">
+    <img src="images/book2.jpg" alt="Book 2">
     <div class="buy-buttons">
       <a href="https://www.flipkart.com/example-book2" target="_blank">
         <img src="images/flipkart-logo.png" alt="Flipkart">
@@ -133,7 +150,15 @@ body{
       </a>
     </div>
   </div>
+
 </div>
+
+<script>
+function toggleBuy(book){
+  const panel = book.querySelector('.buy-buttons');
+  panel.classList.toggle('show');
+}
+</script>
 
 </body>
 </html>
