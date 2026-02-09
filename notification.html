@@ -9,46 +9,59 @@
 body{
 margin:0;
 font-family:Arial;
-background:linear-gradient(135deg,#141e30,#243b55);
+background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
 color:white;
 text-align:center;
 }
 
-h1{color:gold;margin-top:20px;}
+h1{
+color:gold;
+margin-top:20px;
+}
 
 .container{
+background:rgba(255,255,255,0.1);
 padding:20px;
+margin:20px;
+border-radius:20px;
 }
 
 .notification-card{
-background:rgba(255,255,255,0.1);
-margin:15px auto;
-padding:20px;
+background:rgba(255,255,255,0.15);
+margin:15px;
+padding:15px;
 border-radius:15px;
-max-width:500px;
 text-align:left;
-box-shadow:0 5px 15px rgba(0,0,0,0.4);
 }
 
-.notification-card h3{
+.notification-card b{
 color:gold;
-margin-bottom:10px;
+font-size:16px;
+}
+
+.notification-details{
+margin-top:5px;
+font-size:14px;
+line-height:22px;
 }
 
 a{
-color:#00ffcc;
+color:yellow;
 text-decoration:none;
 font-weight:bold;
 }
 </style>
+
 </head>
 <body>
 
-<h1>📢 EXAM NOTIFICATIONS</h1>
-<h1>MATH'S WARRIOR INSTITUTE</h1>
+<h1>MATH'S WARRIOR</h1>
+<h3> EXAM NOTIFICATIONS</h3>
 
 <div class="container">
-<div id="notificationBox"></div>
+
+<div id="notificationList"></div>
+
 </div>
 
 <script>
@@ -56,27 +69,28 @@ font-weight:bold;
 function loadNotifications(){
 
 let notifications = JSON.parse(localStorage.getItem("notifications")) || [];
-let box = document.getElementById("notificationBox");
-box.innerHTML="";
+let html = "";
 
-if(notifications.length===0){
-box.innerHTML="<p>No Notifications Available</p>";
-return;
+if(notifications.length === 0){
+html = "<p>No Notifications Available</p>";
 }
 
-notifications.forEach(n=>{
+notifications.reverse().forEach((n)=>{
 
-box.innerHTML+=`
+html += `
 <div class="notification-card">
-<h3>${n.examName}</h3>
-<p>📅 Start Date: ${n.startDate}</p>
-<p>📅 End Date: ${n.endDate}</p>
-<a href="${n.link}" target="_blank">🔗 View Official Notification</a>
+<b>${n.examName}</b>
+<div class="notification-details">
+ Start Date: ${n.startDate}<br>
+ End Date: ${n.endDate}<br><br>
+<a href="${n.link}" target="_blank"> Official Notification</a>
+</div>
 </div>
 `;
 
 });
 
+document.getElementById("notificationList").innerHTML = html;
 }
 
 loadNotifications();

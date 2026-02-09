@@ -1,171 +1,139 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MY COURSES | MATH'S WARRIOR</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<title>My Courses | MATH'S WARRIOR</title>
 
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
-}
-
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
 body{
-background:linear-gradient(135deg,#ff512f,#dd2476);
-padding:20px;
-color:white;
-min-height:100vh;
+  background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+  color:white;
 }
 
-/* Header */
-.header{
-text-align:center;
-margin-bottom:25px;
+/* Container */
+.container{
+  background:white;
+  color:#333;
+  padding:30px 25px;
+  max-width:600px;
+  width:100%;
+  border-radius:20px;
+  box-shadow:0 15px 40px rgba(0,0,0,0.3);
 }
 
-.header h1{
-font-size:28px;
+/* Headings */
+h2{
+  text-align:center;
+  margin-bottom:25px;
+  color:#ff4b2b;
+  font-size:26px;
+  letter-spacing:1px;
 }
 
-/* Search Box */
-.search-box{
-max-width:500px;
-margin:auto;
-display:flex;
-gap:10px;
-margin-bottom:30px;
+/* Input & Button */
+input{
+  width:100%;
+  padding:12px;
+  margin:8px 0;
+  border-radius:12px;
+  border:1px solid #ccc;
+  font-size:14px;
+}
+input:focus{
+  border-color:#ff4b2b;
+  outline:none;
+  box-shadow:0 0 8px rgba(255,75,43,0.4);
 }
 
-.search-box input{
-flex:1;
-padding:12px;
-border:none;
-border-radius:25px;
-outline:none;
+button{
+  width:100%;
+  padding:14px;
+  background:linear-gradient(45deg,#ff416c,#ff4b2b);
+  color:white;
+  border:none;
+  border-radius:12px;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+  transition:0.3s;
+  margin-top:10px;
+}
+button:hover{
+  background:#d90429;
+  transform:scale(1.02);
+  box-shadow:0 8px 25px rgba(0,0,0,0.3);
 }
 
-.search-box button{
-padding:12px 20px;
-border:none;
-border-radius:25px;
-background:red;
-color:white;
-font-weight:bold;
-cursor:pointer;
-transition:0.3s;
+/* Courses List */
+.course-card{
+  background:#ffe6e6;
+  color:#d90429;
+  padding:15px;
+  border-radius:12px;
+  margin-bottom:15px;
+  font-weight:bold;
+  box-shadow:0 5px 15px rgba(0,0,0,0.2);
 }
 
-.search-box button:hover{
-background:black;
+/* Responsive */
+@media(max-width:520px){
+  .container{padding:25px 15px;}
+  input{padding:10px;}
+  button{padding:12px;}
 }
-
-/* Course Card */
-.course-box{
-background:white;
-color:#333;
-padding:25px;
-border-radius:25px;
-box-shadow:0 15px 30px rgba(0,0,0,0.3);
-max-width:500px;
-margin:20px auto;
-text-align:center;
-transition:0.3s;
-}
-
-.course-box:hover{
-transform:scale(1.05);
-}
-
-.course-box h2{
-color:red;
-margin-bottom:10px;
-}
-
-.price{
-font-weight:bold;
-background:#ffe6e6;
-color:red;
-padding:6px 15px;
-border-radius:20px;
-display:inline-block;
-margin:10px 0;
-}
-
-.status{
-display:inline-block;
-background:#27ae60;
-color:white;
-padding:6px 12px;
-border-radius:20px;
-font-size:14px;
-}
-
 </style>
 </head>
-
 <body>
 
-<div class="header">
-<h1>MY COURSES</h1>
-<p>MATH'S WARRIOR | BY ABHINAY_PRATAP_MATHS</p>
-</div>
+<div class="container">
+<h2>My Courses</h2>
 
-<div class="search-box">
-<input type="text" id="studentNameInput" placeholder="Enter Your Registered Name">
-<button onclick="showMyCourses()">SEARCH</button>
-</div>
+<input type="text" id="aadhaar" placeholder="Enter Aadhaar Number" required>
+<button onclick="showCourses()">Show My Courses</button>
 
-<div id="coursesContainer"></div>
+<div id="coursesList" style="margin-top:20px;"></div>
+</div>
 
 <script>
+// Show Courses Function
+function showCourses(){
+  const aadhaar = document.getElementById("aadhaar").value.trim();
+  if(aadhaar.length != 12 || isNaN(aadhaar)){
+    alert("Enter valid 12-digit Aadhaar Number!");
+    return;
+  }
 
-function showMyCourses(){
+  let students = JSON.parse(localStorage.getItem("students")) || [];
+  let student = students.find(s => s.aadhaar === aadhaar);
 
-let nameInput = document.getElementById("studentNameInput").value.trim();
+  let div = document.getElementById("coursesList");
+  div.innerHTML = "";
 
-if(nameInput===""){
-alert("Please enter your registered name");
-return;
+  if(!student){
+    div.innerHTML = `<p style="color:red;text-align:center;">No student found with this Aadhaar!</p>`;
+    return;
+  }
+
+  div.innerHTML = `<h3 style="text-align:center;margin-bottom:15px;">Welcome, ${student.name}</h3>`;
+
+  if(student.courses.length === 0){
+    div.innerHTML += `<p style="text-align:center;">You have not enrolled in any courses yet.</p>`;
+    return;
+  }
+
+  student.courses.forEach(c => {
+    div.innerHTML += `<div class="course-card">
+      Course: ${c.name} <br> Fee: ₹${c.fee}
+    </div>`;
+  });
 }
-
-let students = JSON.parse(localStorage.getItem("students")) || [];
-
-let myCourses = students.filter(student =>
-student.name.toLowerCase() === nameInput.toLowerCase()
-);
-
-let container = document.getElementById("coursesContainer");
-container.innerHTML="";
-
-if(myCourses.length === 0){
-container.innerHTML =
-"<p style='text-align:center;font-size:18px;'>No course found with this name.</p>";
-return;
-}
-
-myCourses.forEach(student=>{
-
-let div = document.createElement("div");
-div.className="course-box";
-div.innerHTML=`
-<h2>${student.course}</h2>
-<p><b>Student:</b> ${student.name}</p>
-<p><b>Registration ID:</b> ${student.regID}</p>
-<span class="price">Fee: ₹${localStorage.getItem("selectedFee") || "N/A"}</span><br><br>
-<span class="status">ENROLLED</span>
-`;
-
-container.appendChild(div);
-
-});
-
-}
-
 </script>
 
 </body>
