@@ -5,245 +5,211 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Student Registration | MATH'S WARRIOR</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial, sans-serif;
+}
 
 body{
-background:linear-gradient(135deg,#ff0000,#ffffff);
-min-height:100vh;
+background:linear-gradient(135deg,#ff512f,#dd2476);
 display:flex;
 justify-content:center;
 align-items:center;
+min-height:100vh;
 padding:20px;
 }
 
-.container{
-width:100%;
-max-width:950px;
+.form-container{
 background:white;
 padding:30px;
-border-radius:20px;
-box-shadow:0 15px 40px rgba(0,0,0,0.3);
-}
-
-h1{
-text-align:center;
-color:red;
-margin-bottom:20px;
-}
-
-.course-box{
-background:#ffe6e6;
-padding:12px;
-border-radius:10px;
-text-align:center;
-font-weight:600;
-color:#b30000;
-margin-bottom:20px;
-}
-
-.form-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:15px;
-}
-
-input,select{
 width:100%;
-padding:12px;
-border-radius:10px;
-border:1px solid #ccc;
-outline:none;
+max-width:500px;
+border-radius:20px;
+box-shadow:0 10px 25px rgba(0,0,0,0.3);
 }
 
-input:focus,select:focus{
-border-color:red;
-box-shadow:0 0 5px rgba(255,0,0,0.4);
+h2{
+text-align:center;
+margin-bottom:20px;
+color:red;
+}
+
+input, select{
+width:100%;
+padding:10px;
+margin:8px 0;
+border-radius:8px;
+border:1px solid #ccc;
+font-size:14px;
 }
 
 button{
-margin-top:20px;
 width:100%;
 padding:12px;
-border:none;
-border-radius:25px;
-background:linear-gradient(45deg,#ff0000,#ff4b2b);
+background:red;
 color:white;
+border:none;
+border-radius:10px;
 font-size:16px;
-font-weight:bold;
 cursor:pointer;
-transition:0.3s;
+margin-top:10px;
 }
 
 button:hover{
 background:black;
-transform:scale(1.05);
 }
 
-.success{
+.course-box{
+background:#ffe6e6;
+padding:10px;
+border-radius:8px;
+margin-bottom:10px;
+color:red;
+font-weight:bold;
 text-align:center;
-margin-top:10px;
-font-weight:600;
-color:green;
 }
+
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<div class="form-container">
 
-<h1>STUDENT REGISTRATION FORM</h1>
+<h2>Student Registration</h2>
 
 <div class="course-box">
 Selected Course: <span id="selectedCourse"></span>
 </div>
 
-<div class="form-grid">
+<form onsubmit="registerStudent(); return false;">
 
-<input type="text" id="studentName" placeholder="Student Full Name" required>
-<input type="text" id="fatherName" placeholder="Father's Name" required>
-<input type="text" id="motherName" placeholder="Mother's Name" required>
+<input type="text" id="name" placeholder="Full Name" required>
+<input type="text" id="father" placeholder="Father's Name" required>
+<input type="text" id="mother" placeholder="Mother's Name" required>
+
 <input type="email" id="email" placeholder="Email ID" required>
+<input type="text" id="aadhaar" placeholder="Aadhaar Number (12 Digit)" required>
+<input type="text" id="mobile" placeholder="Mobile Number (10 Digit)" required>
+<input type="text" id="whatsapp" placeholder="WhatsApp Number" required>
 
-<input type="text" id="aadhaar" placeholder="Aadhaar Number (12 digits)" maxlength="12" required>
-<input type="text" id="mobile" placeholder="Mobile Number (10 digits)" maxlength="10" required>
-<input type="text" id="whatsapp" placeholder="WhatsApp Number (10 digits)">
-
-<!-- All India States -->
 <select id="state" required>
 <option value="">Select State</option>
-<option>Andhra Pradesh</option>
-<option>Arunachal Pradesh</option>
-<option>Assam</option>
-<option>Bihar</option>
-<option>Chhattisgarh</option>
-<option>Goa</option>
-<option>Gujarat</option>
-<option>Haryana</option>
-<option>Himachal Pradesh</option>
-<option>Jharkhand</option>
-<option>Karnataka</option>
-<option>Kerala</option>
-<option>Madhya Pradesh</option>
-<option>Maharashtra</option>
-<option>Manipur</option>
-<option>Meghalaya</option>
-<option>Mizoram</option>
-<option>Nagaland</option>
-<option>Odisha</option>
-<option>Punjab</option>
-<option>Rajasthan</option>
-<option>Sikkim</option>
-<option>Tamil Nadu</option>
-<option>Telangana</option>
-<option>Tripura</option>
 <option>Uttar Pradesh</option>
-<option>Uttarakhand</option>
-<option>West Bengal</option>
+<option>Bihar</option>
+<option>Madhya Pradesh</option>
+<option>Rajasthan</option>
 <option>Delhi</option>
-<option>Jammu & Kashmir</option>
-<option>Ladakh</option>
 </select>
 
-<!-- Sample District -->
 <select id="district" required>
 <option value="">Select District</option>
 <option>Lucknow</option>
-<option>Prayagraj</option>
+<option>Kanpur</option>
 <option>Varanasi</option>
-<option>Kanpur Nagar</option>
+<option>Prayagraj</option>
 <option>Gorakhpur</option>
 <option>Agra</option>
-<option>Delhi</option>
-<option>Jaipur</option>
-<option>Patna</option>
-<option>Mumbai</option>
-<option>Bhopal</option>
-<option>Kolkata</option>
+<option>Noida</option>
+<option>Ghaziabad</option>
+<option>Meerut</option>
+<option>Ayodhya</option>
 </select>
 
-<input type="text" id="village" placeholder="Village Name" required>
-<input type="text" id="postOffice" placeholder="Post Office Name" required>
+<button type="submit">Register Now</button>
 
-</div>
-
-<button onclick="registerStudent()">Submit Registration</button>
-
-<div class="success" id="msg"></div>
+</form>
 
 </div>
 
 <script>
 
-// Selected Course Show
-let selectedCourse = localStorage.getItem("selectedCourse") || "Not Selected";
-document.getElementById("selectedCourse").innerText = selectedCourse;
+// Show Selected Course
+let courseName = localStorage.getItem("selectedCourse") || "Not Selected";
+let courseFee = localStorage.getItem("selectedFee") || "0";
 
+document.getElementById("selectedCourse").innerText = courseName + " (₹" + courseFee + ")";
+
+// Generate Registration ID
 function generateRegID(){
-return "MW" + Math.floor(100000 + Math.random() * 900000);
+return "MW" + Math.floor(Math.random()*1000000);
 }
 
 function registerStudent(){
 
-let inputs = document.querySelectorAll("input, select");
-for(let i=0;i<inputs.length;i++){
-if(inputs[i].hasAttribute("required") && inputs[i].value.trim()===""){
-alert("Please fill all required fields");
-return;
-}
-}
+let name = document.getElementById("name").value.trim();
+let father = document.getElementById("father").value.trim();
+let mother = document.getElementById("mother").value.trim();
+let email = document.getElementById("email").value.trim();
+let aadhaar = document.getElementById("aadhaar").value.trim();
+let mobile = document.getElementById("mobile").value.trim();
+let whatsapp = document.getElementById("whatsapp").value.trim();
+let state = document.getElementById("state").value;
+let district = document.getElementById("district").value;
 
-let aadhaar = document.getElementById("aadhaar").value;
-let mobile = document.getElementById("mobile").value;
-let whatsapp = document.getElementById("whatsapp").value;
-
-if(aadhaar.length!=12 || isNaN(aadhaar)){
-alert("Invalid Aadhaar Number");
-return;
-}
-
-if(mobile.length!=10 || isNaN(mobile)){
-alert("Invalid Mobile Number");
+if(!name || !father || !mother || !email || !aadhaar || !mobile || !whatsapp || !state || !district){
+alert("All fields are required!");
 return;
 }
 
-if(whatsapp && (whatsapp.length!=10 || isNaN(whatsapp))){
-alert("Invalid WhatsApp Number");
+if(aadhaar.length != 12 || isNaN(aadhaar)){
+alert("Invalid Aadhaar Number!");
 return;
 }
 
-let regID = generateRegID();
+if(mobile.length != 10 || isNaN(mobile)){
+alert("Invalid Mobile Number!");
+return;
+}
 
-let studentData = {
-regID,
-name: studentName.value,
-father: fatherName.value,
-mother: motherName.value,
-email: email.value,
+let students = JSON.parse(localStorage.getItem("students")) || [];
+
+let existing = students.find(s => s.aadhaar === aadhaar);
+
+if(existing){
+
+let already = existing.courses.find(c => c.name === courseName);
+
+if(already){
+alert("You already enrolled in this course!");
+return;
+}
+
+existing.courses.push({
+name: courseName,
+fee: courseFee
+});
+
+}else{
+
+let newStudent = {
+regID: generateRegID(),
+name,
+father,
+mother,
+email,
 aadhaar,
 mobile,
 whatsapp,
-state: state.value,
-district: district.value,
-village: village.value,
-postOffice: postOffice.value,
-course: selectedCourse,
-date: new Date().toLocaleString()
+state,
+district,
+courses: [{
+name: courseName,
+fee: courseFee
+}]
 };
 
-let students = JSON.parse(localStorage.getItem("students")) || [];
-students.push(studentData);
+students.push(newStudent);
+}
+
 localStorage.setItem("students", JSON.stringify(students));
 
-document.getElementById("msg").innerText =
-"Registration Successful! Your ID: " + regID;
+alert("Registration Successful!");
+window.location.href="mycourses.html";
 
-document.querySelectorAll("input").forEach(input=>input.value="");
-document.getElementById("state").value="";
-document.getElementById("district").value="";
 }
 
 </script>

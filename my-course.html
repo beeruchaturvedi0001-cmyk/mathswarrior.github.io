@@ -9,141 +9,102 @@
 
 <style>
 *{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:'Poppins',sans-serif;
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
 }
 
 body{
-  background:linear-gradient(135deg,#ff512f,#dd2476);
-  padding:20px;
-  color:white;
+background:linear-gradient(135deg,#ff512f,#dd2476);
+padding:20px;
+color:white;
+min-height:100vh;
 }
 
 /* Header */
 .header{
-  text-align:center;
-  margin-bottom:30px;
+text-align:center;
+margin-bottom:25px;
 }
 
 .header h1{
-  font-size:28px;
+font-size:28px;
 }
 
-.header p{
-  font-size:16px;
+/* Search Box */
+.search-box{
+max-width:500px;
+margin:auto;
+display:flex;
+gap:10px;
+margin-bottom:30px;
+}
+
+.search-box input{
+flex:1;
+padding:12px;
+border:none;
+border-radius:25px;
+outline:none;
+}
+
+.search-box button{
+padding:12px 20px;
+border:none;
+border-radius:25px;
+background:red;
+color:white;
+font-weight:bold;
+cursor:pointer;
+transition:0.3s;
+}
+
+.search-box button:hover{
+background:black;
 }
 
 /* Course Card */
 .course-box{
-  background:white;
-  color:#333;
-  padding:25px;
-  border-radius:25px;
-  box-shadow:0 15px 30px rgba(0,0,0,0.3);
-  max-width:500px;
-  margin:auto 0 25px auto;
-  text-align:center;
-  transition: transform 0.3s, box-shadow 0.3s;
-  position: relative;
+background:white;
+color:#333;
+padding:25px;
+border-radius:25px;
+box-shadow:0 15px 30px rgba(0,0,0,0.3);
+max-width:500px;
+margin:20px auto;
+text-align:center;
+transition:0.3s;
 }
 
 .course-box:hover{
-  transform:scale(1.05);
-  box-shadow:0 20px 35px rgba(0,0,0,0.4);
+transform:scale(1.05);
 }
 
 .course-box h2{
-  margin-bottom:10px;
-  color:red;
-  font-size:22px;
+color:red;
+margin-bottom:10px;
 }
 
-.course-box p{
-  margin-bottom:10px;
-  font-size:16px;
+.price{
+font-weight:bold;
+background:#ffe6e6;
+color:red;
+padding:6px 15px;
+border-radius:20px;
+display:inline-block;
+margin:10px 0;
 }
 
-.course-box .price{
-  font-weight:bold;
-  font-size:16px;
-  background:#ffe6e6;
-  color:red;
-  padding:8px 15px;
-  border-radius:20px;
-  display:inline-block;
-  margin-bottom:10px;
+.status{
+display:inline-block;
+background:#27ae60;
+color:white;
+padding:6px 12px;
+border-radius:20px;
+font-size:14px;
 }
 
-.course-box .status{
-  display:inline-block;
-  padding:6px 12px;
-  border-radius:20px;
-  font-size:14px;
-  font-weight:600;
-  margin-bottom:10px;
-}
-
-.status.not-started{
-  background:#ffdd57;
-  color:#333;
-}
-
-.status.in-progress{
-  background:#f39c12;
-  color:white;
-}
-
-.status.completed{
-  background:#27ae60;
-  color:white;
-}
-
-/* Progress Bar */
-.progress-container{
-  width:100%;
-  background:#f2f2f2;
-  border-radius:20px;
-  margin:10px 0;
-  height:20px;
-  overflow:hidden;
-}
-
-.progress-bar{
-  height:100%;
-  background:linear-gradient(90deg,#ff512f,#dd2476);
-  width:0%;
-  text-align:right;
-  color:white;
-  font-weight:bold;
-  padding-right:8px;
-  border-radius:20px;
-  line-height:20px;
-}
-
-/* Continue Button */
-.course-box button{
-  padding:10px 20px;
-  border:none;
-  border-radius:30px;
-  background:red;
-  color:white;
-  font-weight:600;
-  cursor:pointer;
-  transition:0.3s;
-}
-
-.course-box button:hover{
-  background:black;
-}
-
-/* Responsive */
-@media(max-width:600px){
-  .course-box{
-    padding:20px;
-  }
-}
 </style>
 </head>
 
@@ -151,55 +112,60 @@ body{
 
 <div class="header">
 <h1>MY COURSES</h1>
-<p>MATH'S WARRIOR | MATHS By ABHINAY PRATAP</p>
+<p>MATH'S WARRIOR | By Abhinay Pratap</p>
+</div>
+
+<div class="search-box">
+<input type="text" id="studentNameInput" placeholder="Enter Your Registered Name">
+<button onclick="showMyCourses()">SEARCH</button>
 </div>
 
 <div id="coursesContainer"></div>
 
 <script>
-// Display student-specific courses
-function displayMyCourses(){
-    let studentName = prompt("Enter your name to view your courses:");
-    if(!studentName){
-        alert("Name required!");
-        return;
-    }
 
-    let allCourses = JSON.parse(localStorage.getItem("myCourses")) || [];
-    let myCourses = allCourses.filter(c => c.student.toLowerCase() === studentName.toLowerCase());
+function showMyCourses(){
 
-    let container = document.getElementById("coursesContainer");
-    container.innerHTML = "";
+let nameInput = document.getElementById("studentNameInput").value.trim();
 
-    if(myCourses.length === 0){
-        container.innerHTML = `<p style="text-align:center;color:white;font-size:18px;">No courses enrolled yet.</p>`;
-        return;
-    }
-
-    myCourses.forEach(c => {
-        // Randomly assign progress for demo (0-100%)
-        let progress = Math.floor(Math.random() * 101); 
-        let statusClass = "not-started";
-        if(progress > 0 && progress < 100) statusClass = "in-progress";
-        if(progress === 100) statusClass = "completed";
-
-        let div = document.createElement("div");
-        div.className = "course-box";
-        div.innerHTML = `
-            <h2>${c.course}</h2>
-            <p>Faculty: Abhinay Pratap & Team</p>
-            <span class="price">Fee: ₹${c.fee}</span><br>
-            <span class="status ${statusClass}">${statusClass.replace("-"," ").toUpperCase()}</span>
-            <div class="progress-container">
-                <div class="progress-bar" style="width:${progress}%;">${progress}%</div>
-            </div>
-            <button onclick="alert('Continue ${c.course}');">CONTINUE COURSE</button>
-        `;
-        container.appendChild(div);
-    });
+if(nameInput===""){
+alert("Please enter your registered name");
+return;
 }
 
-window.onload = displayMyCourses;
+let students = JSON.parse(localStorage.getItem("students")) || [];
+
+let myCourses = students.filter(student =>
+student.name.toLowerCase() === nameInput.toLowerCase()
+);
+
+let container = document.getElementById("coursesContainer");
+container.innerHTML="";
+
+if(myCourses.length === 0){
+container.innerHTML =
+"<p style='text-align:center;font-size:18px;'>No course found with this name.</p>";
+return;
+}
+
+myCourses.forEach(student=>{
+
+let div = document.createElement("div");
+div.className="course-box";
+div.innerHTML=`
+<h2>${student.course}</h2>
+<p><b>Student:</b> ${student.name}</p>
+<p><b>Registration ID:</b> ${student.regID}</p>
+<span class="price">Fee: ₹${localStorage.getItem("selectedFee") || "N/A"}</span><br><br>
+<span class="status">ENROLLED</span>
+`;
+
+container.appendChild(div);
+
+});
+
+}
+
 </script>
 
 </body>

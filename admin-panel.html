@@ -3,61 +3,278 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Panel | MATH'S WARRIOR</title>
+<title>Admin Dashboard | MATH'S WARRIOR</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
 <style>
-body { font-family:'Poppins',sans-serif; background:linear-gradient(135deg,#ff512f,#dd2476); color:white; padding:20px; }
-h1{text-align:center; margin-bottom:20px;}
-table{width:100%; border-collapse:collapse; background:white; color:#333; border-radius:10px; overflow:hidden;}
-th, td{padding:12px; border-bottom:1px solid #ddd; text-align:left;}
-th{background:#dd2476; color:white;}
-button.delete-btn{padding:5px 10px; border:none; border-radius:5px; cursor:pointer; background:red; color:white;}
+body{
+font-family:'Poppins',sans-serif;
+background:linear-gradient(135deg,#ff512f,#dd2476);
+padding:20px;
+color:white;
+}
+
+/* Login */
+.login-box{
+max-width:350px;
+margin:120px auto;
+background:white;
+color:#333;
+padding:25px;
+border-radius:15px;
+text-align:center;
+}
+
+.login-box input{
+width:100%;
+padding:10px;
+margin:10px 0;
+border-radius:8px;
+border:1px solid #ccc;
+}
+
+.login-box button{
+width:100%;
+padding:10px;
+background:#dd2476;
+color:white;
+border:none;
+border-radius:8px;
+cursor:pointer;
+}
+
+/* Dashboard */
+.dashboard{
+display:none;
+}
+
+.top-bar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+}
+
+.logout-btn{
+background:black;
+color:white;
+padding:8px 15px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+}
+
+/* Cards */
+.cards{
+display:flex;
+gap:20px;
+flex-wrap:wrap;
+margin-bottom:20px;
+}
+
+.card{
+flex:1;
+min-width:200px;
+background:white;
+color:#333;
+padding:20px;
+border-radius:15px;
+text-align:center;
+}
+
+.card h2{
+color:#dd2476;
+}
+
+/* Table */
+table{
+width:100%;
+border-collapse:collapse;
+background:white;
+color:#333;
+border-radius:10px;
+overflow:hidden;
+}
+
+th, td{
+padding:10px;
+border-bottom:1px solid #ddd;
+font-size:13px;
+}
+
+th{
+background:#dd2476;
+color:white;
+}
+
+.delete-btn{
+background:red;
+color:white;
+border:none;
+padding:5px 10px;
+border-radius:5px;
+cursor:pointer;
+}
+
+.export-btn{
+background:green;
+color:white;
+padding:8px 15px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+margin-bottom:15px;
+}
+
 </style>
 </head>
+
 <body>
 
-<h1>Admin Panel - Registered Students</h1>
+<!-- LOGIN -->
+<div class="login-box" id="loginBox">
+<h2>Admin Login</h2>
+<input type="text" id="adminId" placeholder="Admin ID">
+<input type="password" id="adminPass" placeholder="Password">
+<button onclick="login()">Login</button>
+</div>
+
+<!-- DASHBOARD -->
+<div class="dashboard" id="dashboard">
+
+<div class="top-bar">
+<h1>Admin Dashboard</h1>
+<button class="logout-btn" onclick="logout()">Logout</button>
+</div>
+
+<div class="cards">
+<div class="card">
+<h3>Total Students</h3>
+<h2 id="totalStudents">0</h2>
+</div>
+
+<div class="card">
+<h3>Total Revenue</h3>
+<h2>₹ <span id="totalRevenue">0</span></h2>
+</div>
+</div>
+
+<button class="export-btn" onclick="exportCSV()">Export to Excel</button>
+
 <table>
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Course</th>
-            <th>Fee</th>
-            <th>Date</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody id="studentTableBody">
-        <!-- Filled by JS -->
-    </tbody>
+<thead>
+<tr>
+<th>Reg ID</th>
+<th>Name</th>
+<th>Email</th>
+<th>Mobile</th>
+<th>Courses</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody id="studentTableBody"></tbody>
 </table>
 
+</div>
+
 <script>
-function loadStudents(){
-    let students = JSON.parse(localStorage.getItem('students')) || [];
-    const tbody = document.getElementById('studentTableBody');
-    tbody.innerHTML = "";
-    students.forEach((s, i) => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `<td>${s.name}</td>
-                        <td>${s.email}</td>
-                        <td>${s.course}</td>
-                        <td>₹${s.fee}</td>
-                        <td>${s.date}</td>
-                        <td><button class="delete-btn" onclick="deleteStudent(${i})">Delete</button></td>`;
-        tbody.appendChild(tr);
-    });
-}
 
-function deleteStudent(index){
-    let students = JSON.parse(localStorage.getItem('students')) || [];
-    students.splice(index,1);
-    localStorage.setItem('students', JSON.stringify(students));
-    loadStudents();
-}
+const ADMIN_ID = "admin";
+const ADMIN_PASS = "12345";
 
+/* Session Check */
+window.onload = function(){
+if(localStorage.getItem("adminLoggedIn") === "true"){
+document.getElementById("loginBox").style.display="none";
+document.getElementById("dashboard").style.display="block";
 loadStudents();
+}
+}
+
+/* Login */
+function login(){
+let id = document.getElementById("adminId").value;
+let pass = document.getElementById("adminPass").value;
+
+if(id===ADMIN_ID && pass===ADMIN_PASS){
+localStorage.setItem("adminLoggedIn","true");
+document.getElementById("loginBox").style.display="none";
+document.getElementById("dashboard").style.display="block";
+loadStudents();
+}else{
+alert("Wrong ID or Password");
+}
+}
+
+/* Logout */
+function logout(){
+localStorage.removeItem("adminLoggedIn");
+location.reload();
+}
+
+/* Load Students */
+function loadStudents(){
+
+let students = JSON.parse(localStorage.getItem("students")) || [];
+let tbody = document.getElementById("studentTableBody");
+tbody.innerHTML="";
+
+let totalRevenue=0;
+
+students.forEach((s,index)=>{
+
+let coursesText="";
+s.courses.forEach(c=>{
+coursesText += c.name+" (₹"+c.fee+")<br>";
+totalRevenue += Number(c.fee);
+});
+
+let tr=document.createElement("tr");
+tr.innerHTML=`
+<td>${s.regID}</td>
+<td>${s.name}</td>
+<td>${s.email}</td>
+<td>${s.mobile}</td>
+<td>${coursesText}</td>
+<td><button class="delete-btn" onclick="deleteStudent(${index})">Delete</button></td>
+`;
+
+tbody.appendChild(tr);
+
+});
+
+document.getElementById("totalStudents").innerText=students.length;
+document.getElementById("totalRevenue").innerText=totalRevenue;
+
+}
+
+/* Delete */
+function deleteStudent(index){
+let students=JSON.parse(localStorage.getItem("students"))||[];
+students.splice(index,1);
+localStorage.setItem("students",JSON.stringify(students));
+loadStudents();
+}
+
+/* Export CSV */
+function exportCSV(){
+let students = JSON.parse(localStorage.getItem("students")) || [];
+
+let csv="RegID,Name,Email,Mobile,Courses\n";
+
+students.forEach(s=>{
+let courseNames=s.courses.map(c=>c.name+"-"+c.fee).join("|");
+csv+=`${s.regID},${s.name},${s.email},${s.mobile},${courseNames}\n`;
+});
+
+let blob=new Blob([csv],{type:"text/csv"});
+let url=URL.createObjectURL(blob);
+let a=document.createElement("a");
+a.href=url;
+a.download="students_data.csv";
+a.click();
+}
+
 </script>
 
 </body>
