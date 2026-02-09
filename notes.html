@@ -2,29 +2,58 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Notes Section</title>
+<title>Notes Section | MATH'S WARRIOR</title>
 <style>
 body{
-margin:0;
-font-family:Arial;
-background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
-color:white;
-text-align:center;
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+  color:white;
+  text-align:center;
+}
+h1,h3{
+  margin:15px 0;
 }
 .container{
-background:rgba(255,255,255,0.1);
-padding:20px;
-margin:20px;
-border-radius:20px;
+  background:rgba(255,255,255,0.1);
+  padding:20px;
+  margin:20px auto;
+  border-radius:20px;
+  max-width:800px;
 }
 .note-item{
-background:rgba(255,255,255,0.15);
-margin:15px;
-padding:15px;
-border-radius:15px;
-text-align:left;
+  background:rgba(255,255,255,0.15);
+  margin:15px 0;
+  padding:15px;
+  border-radius:15px;
+  text-align:left;
+  transition:0.3s;
 }
-a{color:yellow;text-decoration:none;font-weight:bold;}
+.note-item:hover{
+  background:rgba(255,255,255,0.25);
+}
+.note-item b{
+  color:#ffeb3b;
+  font-size:18px;
+}
+.note-item p{
+  margin:5px 0;
+}
+a.download-btn{
+  display:inline-block;
+  margin-top:10px;
+  padding:6px 12px;
+  border-radius:12px;
+  background:linear-gradient(45deg,#ff0000,#001f7f);
+  color:white;
+  text-decoration:none;
+  font-weight:bold;
+}
+.no-notes{
+  margin-top:30px;
+  font-size:18px;
+  color:#ffeb3b;
+}
 </style>
 </head>
 <body>
@@ -33,32 +62,34 @@ a{color:yellow;text-decoration:none;font-weight:bold;}
 <h3>NOTES SECTION</h3>
 
 <div class="container">
-<div id="notesList"></div>
+  <div id="notesList"></div>
 </div>
 
 <script>
-
 function displayNotes(){
-let notes=JSON.parse(localStorage.getItem("notes"))||[];
-let html="";
-if(notes.length===0){
-html="<p>NO NOTES AVAILABLE</p>";
-}
-notes.forEach(note=>{
-html+=`
-<div class="note-item">
-<b>${note.title}</b><br>
-Subject: ${note.subject}<br>
-Chapter: ${note.chapter}<br>
-Class: ${note.className}<br>
-Teacher: ${note.teacher}<br><br>
-<a href="${note.file}" target="_blank"> View / Download</a>
-</div>`;
-});
-document.getElementById("notesList").innerHTML=html;
-}
-displayNotes();
+  let notes = JSON.parse(localStorage.getItem("notes")) || [];
+  let container = document.getElementById("notesList");
+  container.innerHTML = "";
 
+  if(notes.length === 0){
+    container.innerHTML = `<div class="no-notes">NO NOTES AVAILABLE</div>`;
+    return;
+  }
+
+  notes.forEach(note => {
+    container.innerHTML += `
+      <div class="note-item">
+        <b>${note.title}</b><br>
+        ${note.subject ? `Subject: ${note.subject}<br>` : ""}
+        ${note.chapter ? `Chapter: ${note.chapter}<br>` : ""}
+        ${note.className ? `Class: ${note.className}<br>` : ""}
+        ${note.teacher ? `Teacher: ${note.teacher}<br>` : ""}
+        <a class="download-btn" href="${note.file}" download="${note.filename || 'note'}">📥 View / Download</a>
+      </div>`;
+  });
+}
+
+displayNotes();
 </script>
 
 </body>
