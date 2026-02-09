@@ -1,386 +1,279 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Panel | MATH'S WARRIOR</title>
+<title>MATH'S WARRIOR ADMIN PANEL</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-body{
-    font-family:'Poppins',sans-serif;
-    margin:0;
-    background:linear-gradient(135deg,#ff512f,#dd2476);
-    color:white;
-}
-.container{padding:15px;}
-h1{text-align:center;font-size:24px;}
-.login-box{
-    max-width:320px;
-    margin:100px auto;
-    background:white;
-    color:#333;
-    padding:20px;
-    border-radius:15px;
-    box-shadow:0 8px 25px rgba(0,0,0,0.3);
-    text-align:center;
-}
-input{
-    width:100%;
-    padding:8px;
-    margin:6px 0;
-    border:none;
-    border-radius:15px;
-    background:#f2f2f2;
-}
-button{
-    padding:6px 12px;
-    border:none;
-    border-radius:15px;
-    background:red;
-    color:white;
-    cursor:pointer;
-    margin-top:5px;
-}
-button:hover{background:black;}
-.section{
-    background:white;
-    color:#333;
-    padding:15px;
-    border-radius:15px;
-    margin-bottom:15px;
-    box-shadow:0 8px 20px rgba(0,0,0,0.3);
-    font-size:14px;
-}
-table{
-    width:100%;
-    border-collapse:collapse;
-    margin-top:10px;
-}
-th,td{
-    padding:6px;
-    border-bottom:1px solid #ddd;
-    font-size:12px;
-}
-th{
-    background:#dd2476;
-    color:white;
-}
-.delete-btn{
-    background:red;
-    padding:3px 6px;
-    border:none;
-    color:white;
-    border-radius:5px;
-    cursor:pointer;
-    margin-left:5px;
-}
-.logout{
-    float:right;
-    background:black;
-}
-
-/* MD Section */
-.md-section input{margin-bottom:5px;}
-.md-section img{width:50px; height:50px; border-radius:50%; margin-right:5px; vertical-align:middle;}
-.md-section div{display:inline-block; vertical-align:middle;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{background: linear-gradient(135deg,#ff0000,#001f7f); min-height:100vh; padding:20px; color:white;}
+.container{max-width:1200px;margin:auto;}
+h1,h2,h3{margin-bottom:15px;text-align:center;}
+.admin-login, .panel{background:rgba(255,255,255,0.95);color:#000;padding:20px;border-radius:20px;box-shadow:0 10px 25px rgba(0,0,0,0.3);margin-bottom:30px;}
+.admin-login input, .admin-login button, .panel input, .panel button{padding:10px 12px;border-radius:12px;border:1px solid #ccc;margin:5px 0;font-size:16px;}
+.admin-login button, .panel button{cursor:pointer;background:linear-gradient(45deg,#ff0000,#001f7f);color:white;font-weight:bold;}
+.admin-login button:hover, .panel button:hover{transform:scale(1.05);}
+.success-msg{color:green;font-weight:bold;margin-bottom:10px;text-align:center;}
+.tabs{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:20px;}
+.tabBtn{padding:10px 20px;border:none;border-radius:12px;background:#ffeb3b;color:black;font-weight:bold;cursor:pointer;transition:0.3s;}
+.tabBtn.activeTab{background:#001f7f;color:#ffeb3b;}
+.section{display:none;background:#f0f0f0;padding:15px;border-radius:15px;color:black;}
+.section h3{margin-bottom:10px;}
+.list-box{max-height:250px;overflow-y:auto;margin-bottom:15px;}
+.list-box div{padding:8px;border-bottom:1px solid #ccc;display:flex;justify-content:space-between;align-items:center;}
+.list-box div span{color:black;font-weight:bold;}
+.list-box div button{padding:5px 10px;border:none;border-radius:8px;background:#ff0000;color:white;cursor:pointer;}
+.list-box div button:hover{opacity:0.8;}
+input[type="file"]{padding:5px;}
 </style>
 </head>
 <body>
 
-<!-- LOGIN -->
-<div id="loginSection" class="login-box">
-<h2>🔐 ADMIN LOGIN</h2>
-<input type="text" id="adminId" placeholder="Enter ID">
-<input type="password" id="adminPass" placeholder="Enter Password">
-<button onclick="login()">LOGIN</button>
+<div class="container">
+
+<!-- Admin Login -->
+<div class="ADMIN-LOGIN" id="loginBox">
+  <h1>🧑🏻‍🏫ADMIN LOGIN</h1>
+  <input type="text" id="adminUser" placeholder="USER NAME"><br>
+  <input type="password" id="adminPass" placeholder="PASSWORD"><br>
+  <button onclick="adminLogin()">LOGIN</button>
+  <div class="success-msg" id="loginMsg"></div>
 </div>
 
-<!-- ADMIN PANEL -->
-<div id="adminSection" class="container" style="display:none;">
-<button class="logout" onclick="logout()">Logout</button>
-<h1>⚙ ADMIN PANEL</h1>
+<!-- Admin Panel -->
+<div class="panel" id="adminPanel" style="display:none;">
+  <h1>ADMIN PANEL</h1>
 
-<!-- STUDENTS -->
-<div class="section">
-<h3>📋 REGISTERED STUDENTS</h3>
-<table>
-<thead>
-<tr>
-<th>NAME</th>
-<th>EMAIL</th>
-<th>COURSE</th>
-<th>FEE</th>
-<th>ACTION</th>
-</tr>
-</thead>
-<tbody id="studentTable"></tbody>
-</table>
+  <div class="tabs">
+    <button class="tabBtn activeTab" onclick="openTab('students')">🙋🏻STUDENTS</button>
+    <button class="tabBtn" onclick="openTab('teachers')">🧑🏻‍🏫TEACHERS</button>
+    <button class="tabBtn" onclick="openTab('notes')">📚NOTES</button>
+    <button class="tabBtn" onclick="openTab('links')">🔗LINKS</button>
+    <button class="tabBtn" onclick="openTab('notifications')">💬NOTIFICATIONS</button>
+  </div>
+
+  <!-- Students Section -->
+  <div class="section" id="students" style="display:block;">
+    <h3>REGISTERED STUDENTS</h3>
+    <div class="list-box" id="studentList"></div>
+  </div>
+
+  <!-- Teachers Section -->
+  <div class="section" id="teachers">
+    <h3>MANAGE TEACHERS</h3>
+    <input type="text" id="teacherName" placeholder="TEACHER NAME">
+    <input type="text" id="teacherSubject" placeholder="SUBJECT">
+    <input type="text" id="teacherExp" placeholder="EXPERIENCE (YEARS)">
+    <input type="text" id="teacherMobile" placeholder="MOBILE NUMBER">
+    <input type="text" id="teacherWhatsapp" placeholder="WHATSAPP NUMBER">
+    <input type="email" id="teacherEmail" placeholder="EMAIL ID">
+    <button onclick="addTeacher()">Add Teacher</button>
+    <div class="list-box" id="teacherList"></div>
+  </div>
+
+  <!-- Notes Section -->
+  <div class="section" id="notes">
+    <h3>UPLOAD NOTES</h3>
+    <input type="text" id="noteTitle" placeholder="NOTE TITLE">
+    <input type="file" id="noteFile">
+    <button onclick="addNote()">UPLOAD NOTE</button>
+    <div class="list-box" id="noteList"></div>
+  </div>
+
+  <!-- Links Section -->
+  <div class="section" id="links">
+    <h3>MANAGE LINKS</h3>
+    <input type="text" id="linkTitle" placeholder="LINK TITLE">
+    <input type="text" id="linkURL" placeholder="PASTE LINK HERE">
+    <button onclick="addLink()">ADD LINK</button>
+    <div class="list-box" id="linkList"></div>
+  </div>
+
+  <!-- Notifications Section -->
+  <div class="section" id="notifications">
+    <h3>NOTIFICATIONS</h3>
+    <input type="text" id="notifyTitle" placeholder="NOTIFICATION TITLE">
+    <input type="text" id="notifyLink" placeholder="PASTE LINK HERE">
+    <button onclick="addNotification()">ADD NOTIFICATION</button>
+    <div class="list-box" id="notifyList"></div>
+  </div>
 </div>
 
-<!-- TEACHERS -->
-<div class="section">
-<h3>👨‍🏫 ADD TEACHER</h3>
-<input type="text" id="tName" placeholder="TEACHER NAME">
-<input type="text" id="tSubject" placeholder="SUBJECT">
-<input type="text" id="tExp" placeholder="EXPERIENCE">
-<input type="text" id="tMobile" placeholder="MOBILE">
-<input type="email" id="tEmail" placeholder="EMAIL">
-<input type="text" id="tWhatsapp" placeholder="WHATSAPP NUMBER">
-<button onclick="addTeacher()">Add Teacher</button>
-
-<h4>🧑🏻‍🏫 TEACHER LIST:</h4>
-<div id="teacherList"></div>
-</div>
-
-<!-- NOTES -->
-<div class="section">
-<h3>📚 UPLOAD NOTES</h3>
-<input type="text" id="noteTitle" placeholder="NOTES TITLE">
-<input type="text" id="noteSubject" placeholder="SUBJECT">
-<input type="text" id="noteChapter" placeholder="CHAPTER">
-<input type="text" id="noteClass" placeholder="CLASS">
-<input type="text" id="noteTeacher" placeholder="TEACHER NAME">
-<input type="file" id="noteFile">
-<button onclick="uploadNote()">UPLOAD NOTE</button>
-
-<h4>✅ Uploaded Notes:</h4>
-<div id="notesList"></div>
-</div>
-
-<!-- NOTIFICATIONS -->
-<div class="section">
-<h3>🔔 ADD EXAM NOTIFICATION</h3>
-<input type="text" id="examName" placeholder="EXAM NAME">
-<input type="date" id="startDate">
-<input type="date" id="endDate">
-<input type="text" id="examLink" placeholder="Official Link">
-<button onclick="addNotification()">Add Notification</button>
-
-<h4>✅ Uploaded Notifications:</h4>
-<div id="notificationList"></div>
-</div>
-
-<!-- MD / FOUNDER -->
-<div class="section md-section">
-<h3>👑 ADD FOUNDER / MD</h3>
-<input type="text" id="mdName" placeholder="FOUNDER / MD NAME">
-<input type="text" id="mdPhone" placeholder="PHONE NUMBER">
-<input type="text" id="mdWhatsapp" placeholder="WHATSAPP NUMBER">
-<input type="email" id="mdEmail" placeholder="EMAIL ID">
-<input type="file" id="mdPhoto" accept="image/*">
-<input type="text" id="mdResponsibility" placeholder="Responsibility / Dayitv">
-<button onclick="addMD()">Add Founder</button>
-
-<h4>📝 Founder / MD List:</h4>
-<div id="mdList" class="md-list"></div>
 </div>
 
 <script>
 // Admin Login
-const ADMIN_ID="WARRIOR";
-const ADMIN_PASS="ABHINAY";
-
-function login(){
-    let id=document.getElementById("adminId").value.trim();
-    let pass=document.getElementById("adminPass").value.trim();
-    if(id===ADMIN_ID && pass===ADMIN_PASS){
-        document.getElementById("loginSection").style.display="none";
-        document.getElementById("adminSection").style.display="block";
-        loadStudents(); loadTeachers(); loadNotes(); loadNotifications(); loadMDs();
-    } else { alert("Wrong ID or Password"); }
+function adminLogin(){
+  const user=document.getElementById("adminUser").value.trim();
+  const pass=document.getElementById("adminPass").value.trim();
+  const msg=document.getElementById("loginMsg");
+  if(user==="WARRIOR" && pass==="ABHINAYPRATAP"){
+    msg.innerText="Login Successful ✅";
+    setTimeout(()=>{
+      document.getElementById("loginBox").style.display="none";
+      document.getElementById("adminPanel").style.display="block";
+      loadAll();
+    },800);
+  } else {
+    msg.innerText="Invalid Credentials ❌";
+  }
 }
 
-function logout(){ location.reload(); }
+// Tabs
+function openTab(tab){
+  document.querySelectorAll(".section").forEach(s=>s.style.display="none");
+  document.getElementById(tab).style.display="block";
+  document.querySelectorAll(".tabBtn").forEach(b=>b.classList.remove("activeTab"));
+  document.querySelector(`.tabBtn[onclick="openTab('${tab}')"]`).classList.add("activeTab");
+}
 
-/* STUDENTS */
+// Students
 function loadStudents(){
-    let students=JSON.parse(localStorage.getItem("students"))||[];
-    let table=document.getElementById("studentTable");
-    table.innerHTML="";
-    students.forEach((s,i)=>{
-        table.innerHTML+=`
-        <tr>
-        <td>${s.name||""}</td>
-        <td>${s.email||""}</td>
-        <td>${s.course||""}</td>
-        <td>₹${s.fee||""}</td>
-        <td><button class="delete-btn" onclick="deleteStudent(${i})">Delete</button></td>
-        </tr>`;
-    });
+  let students=JSON.parse(localStorage.getItem("students"))||[];
+  const container=document.getElementById("studentList");
+  container.innerHTML="";
+  students.forEach(s=>{
+    container.innerHTML+=`<div><span>${s}</span></div>`;
+  });
 }
 
-function deleteStudent(index){
-    let students=JSON.parse(localStorage.getItem("students"))||[];
-    students.splice(index,1);
-    localStorage.setItem("students",JSON.stringify(students));
-    loadStudents();
-}
-
-/* TEACHERS */
-function addTeacher(){
-    let teacher={
-        name:tName.value.trim(),
-        subject:tSubject.value.trim(),
-        experience:tExp.value.trim(),
-        mobile:tMobile.value.trim(),
-        email:tEmail.value.trim(),
-        whatsapp:tWhatsapp.value.trim()
-    };
-    if(!teacher.name || !teacher.subject || !teacher.mobile){ alert("Fill required fields"); return;}
-    let teachers=JSON.parse(localStorage.getItem("teachers"))||[];
-    teachers.push(teacher);
-    localStorage.setItem("teachers",JSON.stringify(teachers));
-    document.querySelectorAll("#tName,#tSubject,#tExp,#tMobile,#tEmail,#tWhatsapp").forEach(i=>i.value="");
-    loadTeachers();
-}
-
+// Teachers
 function loadTeachers(){
-    let teachers=JSON.parse(localStorage.getItem("teachers"))||[];
-    let div=document.getElementById("teacherList");
-    div.innerHTML="";
-    teachers.forEach((t,i)=>{
-        div.innerHTML+=`
-        <p>
-        <b>${t.name}</b> (${t.subject})<br>
-        Exp: ${t.experience||"-"} | 📞 ${t.mobile}
-        <button class="delete-btn" onclick="deleteTeacher(${i})">X</button>
-        </p><hr>`;
-    });
+  let teachers=JSON.parse(localStorage.getItem("teachers"))||[];
+  const container=document.getElementById("teacherList");
+  container.innerHTML="";
+  teachers.forEach((t,i)=>{
+    container.innerHTML+=`
+    <div>
+      <span style="color:black;">
+        <strong>${t.name}</strong> | ${t.subject} | ${t.experience || "N/A"} yrs | Mobile: ${t.mobile} | WhatsApp: ${t.whatsapp || "N/A"} | Email: ${t.email || "N/A"}
+      </span>
+      <span>
+        <a href="https://wa.me/${t.whatsapp}" target="_blank"><button>Chat</button></a>
+        <button onclick="deleteTeacher(${i})">Delete</button>
+      </span>
+    </div>`;
+  });
+}
+
+function addTeacher(){
+  const name=document.getElementById("TEACHER NAME").value.trim();
+  const subject=document.getElementById("TEACHER SUBJECT").value.trim();
+  const experience=document.getElementById("TEACHER EXP").value.trim();
+  const mobile=document.getElementById("TEACHER MOBILE").value.trim();
+  const whatsapp=document.getElementById("TEACHER WHATSAPP").value.trim();
+  const email=document.getElementById("teacherEmail").value.trim();
+  
+  if(!name || !subject || !mobile){alert("Enter Name, Subject and Mobile"); return;}
+  
+  let teachers=JSON.parse(localStorage.getItem("teachers"))||[];
+  teachers.push({name,subject,experience,mobile,whatsapp,email});
+  localStorage.setItem("teachers",JSON.stringify(teachers));
+  
+  document.getElementById("teacherName").value="";
+  document.getElementById("teacherSubject").value="";
+  document.getElementById("teacherExp").value="";
+  document.getElementById("teacherMobile").value="";
+  document.getElementById("teacherWhatsapp").value="";
+  document.getElementById("teacherEmail").value="";
+  
+  loadTeachers();
 }
 
 function deleteTeacher(index){
-    let teachers=JSON.parse(localStorage.getItem("teachers"))||[];
-    teachers.splice(index,1);
-    localStorage.setItem("teachers",JSON.stringify(teachers));
-    loadTeachers();
+  let teachers=JSON.parse(localStorage.getItem("teachers"))||[];
+  teachers.splice(index,1);
+  localStorage.setItem("teachers",JSON.stringify(teachers));
+  loadTeachers();
 }
 
-/* NOTES */
-function uploadNote(){
-    let title=noteTitle.value.trim();
-    let subject=noteSubject.value.trim();
-    let chapter=noteChapter.value.trim();
-    let className=noteClass.value.trim();
-    let teacher=noteTeacher.value.trim();
-    let fileInput=document.getElementById("noteFile");
-    if(!title||!subject||!chapter||!className||!teacher||fileInput.files.length===0){ alert("Fill all fields"); return;}
-    let reader=new FileReader();
-    reader.onload=function(e){
-        let notes=JSON.parse(localStorage.getItem("notes"))||[];
-        notes.push({title,subject,chapter,className,teacher,file:e.target.result});
-        localStorage.setItem("notes",JSON.stringify(notes));
-        document.querySelectorAll("#noteTitle,#noteSubject,#noteChapter,#noteClass,#noteTeacher,#noteFile").forEach(i=>i.value="");
-        loadNotes();
-        alert("Note Uploaded Successfully");
-    }
-    reader.readAsDataURL(fileInput.files[0]);
-}
-
+// Notes
 function loadNotes(){
-    let notes=JSON.parse(localStorage.getItem("notes"))||[];
-    let div=document.getElementById("notesList");
-    div.innerHTML="";
-    notes.forEach((n,i)=>{
-        div.innerHTML+=`
-        <p>
-        <b>${n.title}</b> - ${n.subject} (${n.className})<br>
-        Chapter: ${n.chapter} | Teacher: ${n.teacher}
-        <br><a href="${n.file}" target="_blank">Download</a>
-        <button class="delete-btn" onclick="deleteNote(${i})">X</button>
-        </p><hr>`;
-    });
+  let notes=JSON.parse(localStorage.getItem("notes"))||[];
+  const container=document.getElementById("noteList");
+  container.innerHTML="";
+  notes.forEach((n,i)=>{
+    container.innerHTML+=`<div><span>${n.title}</span><button onclick="deleteNote(${i})">Delete</button></div>`;
+  });
 }
-
+function addNote(){
+  const title=document.getElementById("noteTitle").value.trim();
+  if(!title){alert("Enter Note Title"); return;}
+  let notes=JSON.parse(localStorage.getItem("notes"))||[];
+  notes.push({title});
+  localStorage.setItem("notes",JSON.stringify(notes));
+  document.getElementById("noteTitle").value="";
+  loadNotes();
+}
 function deleteNote(index){
-    let notes=JSON.parse(localStorage.getItem("notes"))||[];
-    notes.splice(index,1);
-    localStorage.setItem("notes",JSON.stringify(notes));
-    loadNotes();
+  let notes=JSON.parse(localStorage.getItem("notes"))||[];
+  notes.splice(index,1);
+  localStorage.setItem("notes",JSON.stringify(notes));
+  loadNotes();
 }
 
-/* NOTIFICATIONS */
-function addNotification(){
-    let exam=examName.value.trim();
-    let start=startDate.value;
-    let end=endDate.value;
-    let link=examLink.value.trim();
-    if(!exam||!start||!end||!link){ alert("Fill all fields"); return;}
-    let notifications=JSON.parse(localStorage.getItem("notifications"))||[];
-    notifications.push({examName:exam,startDate:start,endDate:end,link});
-    localStorage.setItem("notifications",JSON.stringify(notifications));
-    document.querySelectorAll("#examName,#startDate,#endDate,#examLink").forEach(i=>i.value="");
-    loadNotifications();
+// Links
+function loadLinks(){
+  let links=JSON.parse(localStorage.getItem("links"))||[];
+  const container=document.getElementById("linkList");
+  container.innerHTML="";
+  links.forEach((l,i)=>{
+    container.innerHTML+=`<div><span>${l.title}</span><button onclick="deleteLink(${i})">Delete</button></div>`;
+  });
+}
+function addLink(){
+  const title=document.getElementById("linkTitle").value.trim();
+  const url=document.getElementById("linkURL").value.trim();
+  if(!title || !url){alert("Enter title & URL"); return;}
+  let links=JSON.parse(localStorage.getItem("links"))||[];
+  links.push({title,url});
+  localStorage.setItem("links",JSON.stringify(links));
+  document.getElementById("linkTitle").value="";
+  document.getElementById("linkURL").value="";
+  loadLinks();
+}
+function deleteLink(index){
+  let links=JSON.parse(localStorage.getItem("links"))||[];
+  links.splice(index,1);
+  localStorage.setItem("links",JSON.stringify(links));
+  loadLinks();
 }
 
+// Notifications
 function loadNotifications(){
-    let notifications=JSON.parse(localStorage.getItem("notifications"))||[];
-    let div=document.getElementById("notificationList");
-    div.innerHTML="";
-    notifications.forEach((n,i)=>{
-        div.innerHTML+=`
-        <p>
-        <b>${n.examName}</b><br>
-        Start: ${n.startDate} | End: ${n.endDate}
-        <br><a href="${n.link}" target="_blank">Open</a>
-        <button class="delete-btn" onclick="deleteNotification(${i})">X</button>
-        </p><hr>`;
-    });
+  let notify=JSON.parse(localStorage.getItem("notifications"))||[];
+  const container=document.getElementById("notifyList");
+  container.innerHTML="";
+  notify.forEach((n,i)=>{
+    container.innerHTML+=`<div><span>${n.title}</span><button onclick="deleteNotification(${i})">Delete</button></div>`;
+  });
 }
-
+function addNotification(){
+  const title=document.getElementById("notifyTitle").value.trim();
+  const link=document.getElementById("notifyLink").value.trim();
+  if(!title || !link){alert("Enter title & link"); return;}
+  let notify=JSON.parse(localStorage.getItem("notifications"))||[];
+  notify.push({title,link});
+  localStorage.setItem("notifications",JSON.stringify(notify));
+  document.getElementById("notifyTitle").value="";
+  document.getElementById("notifyLink").value="";
+  loadNotifications();
+}
 function deleteNotification(index){
-    let notifications=JSON.parse(localStorage.getItem("notifications"))||[];
-    notifications.splice(index,1);
-    localStorage.setItem("notifications",JSON.stringify(notifications));
-    loadNotifications();
+  let notify=JSON.parse(localStorage.getItem("notifications"))||[];
+  notify.splice(index,1);
+  localStorage.setItem("notifications",JSON.stringify(notify));
+  loadNotifications();
 }
 
-/* MD / FOUNDER */
-function addMD(){
-    let name = mdName.value.trim();
-    let phone = mdPhone.value.trim();
-    let whatsapp = mdWhatsapp.value.trim();
-    let email = mdEmail.value.trim();
-    let responsibility = mdResponsibility.value.trim();
-    let fileInput = document.getElementById("mdPhoto");
-    if(!name || !phone || !whatsapp || !email || !responsibility || fileInput.files.length===0){ 
-        alert("Fill all fields"); return;
-    }
-    let reader = new FileReader();
-    reader.onload = function(e){
-        let mds = JSON.parse(localStorage.getItem("mdList"))||[];
-        mds.push({name,phone,whatsapp,email,photo:e.target.result,responsibility});
-        localStorage.setItem("mdList",JSON.stringify(mds));
-        // Clear inputs
-        mdName.value=""; mdPhone.value=""; mdWhatsapp.value=""; mdEmail.value=""; mdPhoto.value=""; mdResponsibility.value="";
-        loadMDs();
-    }
-    reader.readAsDataURL(fileInput.files[0]);
-}
-
-function loadMDs(){
-    let mds = JSON.parse(localStorage.getItem("mdList"))||[];
-    let div = document.getElementById("mdList");
-    div.innerHTML="";
-    mds.forEach((md,i)=>{
-        div.innerHTML+=`
-        <p>
-        <img src="${md.photo}" alt="${md.name}">
-        <div>
-        <b>${md.name}</b><br>
-        📞 ${md.phone} | 📱 ${md.whatsapp} <br>
-        ✉️ ${md.email} <br>
-        📝 ${md.responsibility}
-        </div>
-        <button class="delete-btn" onclick="deleteMD(${i})">X</button>
-        </p><hr>`;
-    });
-}
-
-function deleteMD(index){
-    let mds = JSON.parse(localStorage.getItem("mdList"))||[];
-    mds.splice(index,1);
-    localStorage.setItem("mdList",JSON.stringify(mds));
-    loadMDs();
+// Load all
+function loadAll(){
+  loadStudents();
+  loadTeachers();
+  loadNotes();
+  loadLinks();
+  loadNotifications();
 }
 </script>
 

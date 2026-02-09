@@ -44,11 +44,20 @@ padding:25px;
 border-radius:25px;
 box-shadow:0 15px 30px rgba(0,0,0,0.3);
 transition:0.4s;
+text-align:center;
 }
 
 .teacher-card:hover{
 transform:translateY(-8px);
 box-shadow:0 20px 40px rgba(0,0,0,0.4);
+}
+
+.teacher-card img{
+width:100px;
+height:100px;
+border-radius:50%;
+object-fit:cover;
+margin-bottom:15px;
 }
 
 .teacher-card h3{
@@ -93,43 +102,43 @@ margin-top:50px;
 <p>MATH'S WARRIOR INSTITUTE</p>
 </div>
 
+<!-- Teacher Container -->
 <div class="teacher-container" id="teacherContainer"></div>
 
 <script>
-
 function loadTeachers(){
-let teachers = JSON.parse(localStorage.getItem("teachers")) || [];
-let container = document.getElementById("teacherContainer");
-container.innerHTML = "";
+    let teachers = JSON.parse(localStorage.getItem("teachers")) || [];
+    let container = document.getElementById("teacherContainer");
+    container.innerHTML = "";
 
-if(teachers.length === 0){
-container.innerHTML = `<div class="no-teacher">No Teachers Added Yet</div>`;
-return;
-}
+    if(teachers.length === 0){
+        container.innerHTML = `<div class="no-teacher">No Teachers Added Yet</div>`;
+        return;
+    }
 
-teachers.forEach(teacher => {
+    teachers.forEach(teacher => {
+        let card = document.createElement("div");
+        card.className = "teacher-card";
 
-let card = document.createElement("div");
-card.className = "teacher-card";
+        // Use teacher.image if exists, else default image
+        let imgSrc = teacher.image ? teacher.image : "https://via.placeholder.com/100";
 
-card.innerHTML = `
-<h3>${teacher.name}</h3>
-<p><span class="info-label">Subject:</span> ${teacher.subject}</p>
-<p><span class="info-label">Experience:</span> ${teacher.experience || "N/A"} Years</p>
-<p><span class="info-label">Mobile:</span> ${teacher.mobile}</p>
-<p><span class="info-label">Email:</span> ${teacher.email || "N/A"}</p>
-<p><span class="info-label">WhatsApp:</span> ${teacher.whatsapp || "N/A"}</p>
-<a class="contact-btn" href="https://wa.me/${teacher.whatsapp}" target="_blank">Chat on WhatsApp</a>
-`;
+        card.innerHTML = `
+            <img src="${imgSrc}" alt="${teacher.name}">
+            <h3>${teacher.name}</h3>
+            <p><span class="info-label">Subject:</span> ${teacher.subject}</p>
+            <p><span class="info-label">Experience:</span> ${teacher.experience || "N/A"} Years</p>
+            <p><span class="info-label">Mobile:</span> ${teacher.mobile}</p>
+            <p><span class="info-label">Email:</span> ${teacher.email || "N/A"}</p>
+            <p><span class="info-label">WhatsApp:</span> ${teacher.whatsapp || "N/A"}</p>
+            <a class="contact-btn" href="https://wa.me/${teacher.whatsapp}" target="_blank">Chat on WhatsApp</a>
+        `;
 
-container.appendChild(card);
-
-});
-
+        container.appendChild(card);
+    });
 }
 
 loadTeachers();
-
 </script>
 
 </body>

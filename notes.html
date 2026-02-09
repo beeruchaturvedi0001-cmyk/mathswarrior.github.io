@@ -42,7 +42,7 @@ function displayNotes(){
 let notes=JSON.parse(localStorage.getItem("notes"))||[];
 let html="";
 if(notes.length===0){
-html="<p>No Notes Available</p>";
+html="<p>NO NOTES AVAILABLE</p>";
 }
 notes.forEach(note=>{
 html+=`
