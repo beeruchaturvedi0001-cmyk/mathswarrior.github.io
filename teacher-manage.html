@@ -4,97 +4,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Our Teachers | MATH'S WARRIOR</title>
-
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
-}
-
-body{
-background:linear-gradient(135deg,#1d2671,#c33764);
-padding:20px;
-color:white;
-min-height:100vh;
-}
-
-.header{
-text-align:center;
-margin-bottom:40px;
-}
-
-.header h1{
-font-size:30px;
-}
-
-.teacher-container{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-gap:25px;
-}
-
-.teacher-card{
-background:white;
-color:#333;
-padding:25px;
-border-radius:25px;
-box-shadow:0 15px 30px rgba(0,0,0,0.3);
-transition:0.4s;
-text-align:center;
-}
-
-.teacher-card:hover{
-transform:translateY(-8px);
-box-shadow:0 20px 40px rgba(0,0,0,0.4);
-}
-
-.teacher-card img{
-width:100px;
-height:100px;
-border-radius:50%;
-object-fit:cover;
-margin-bottom:15px;
-}
-
-.teacher-card h3{
-color:#1d2671;
-margin-bottom:10px;
-font-size:20px;
-}
-
-.teacher-card p{
-font-size:14px;
-margin:6px 0;
-}
-
-.info-label{
-font-weight:600;
-color:#c33764;
-}
-
-.contact-btn{
-display:inline-block;
-margin-top:10px;
-padding:6px 12px;
-border-radius:20px;
-background:linear-gradient(45deg,#1d2671,#c33764);
-color:white;
-font-size:12px;
-text-decoration:none;
-}
-
-.no-teacher{
-text-align:center;
-font-size:18px;
-margin-top:50px;
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{background:linear-gradient(135deg,#1d2671,#c33764);padding:20px;color:white;min-height:100vh;}
+.header{text-align:center;margin-bottom:40px;}
+.header h1{font-size:30px;}
+.teacher-container{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:25px;}
+.teacher-card{background:white;color:#333;padding:25px;border-radius:25px;box-shadow:0 15px 30px rgba(0,0,0,0.3);transition:0.4s;text-align:center;}
+.teacher-card:hover{transform:translateY(-8px);box-shadow:0 20px 40px rgba(0,0,0,0.4);}
+.teacher-card img{width:100px;height:100px;border-radius:50%;object-fit:cover;margin-bottom:15px;}
+.teacher-card h3{color:#1d2671;margin-bottom:10px;font-size:20px;}
+.teacher-card p{font-size:14px;margin:6px 0;}
+.info-label{font-weight:600;color:#c33764;}
+.contact-btn{display:inline-block;margin-top:10px;padding:6px 12px;border-radius:20px;background:linear-gradient(45deg,#1d2671,#c33764);color:white;font-size:12px;text-decoration:none;}
+.no-teacher{text-align:center;font-size:18px;margin-top:50px;}
 </style>
 </head>
-
 <body>
 
 <div class="header">
@@ -102,7 +28,6 @@ margin-top:50px;
 <p>MATH'S WARRIOR INSTITUTE</p>
 </div>
 
-<!-- Teacher Container -->
 <div class="teacher-container" id="teacherContainer"></div>
 
 <script>
@@ -120,7 +45,6 @@ function loadTeachers(){
         let card = document.createElement("div");
         card.className = "teacher-card";
 
-        // Use teacher.image if exists, else default image
         let imgSrc = teacher.image ? teacher.image : "https://via.placeholder.com/100";
 
         card.innerHTML = `
@@ -140,6 +64,5 @@ function loadTeachers(){
 
 loadTeachers();
 </script>
-
 </body>
 </html>

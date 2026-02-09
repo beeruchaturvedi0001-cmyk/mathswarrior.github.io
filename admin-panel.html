@@ -33,69 +33,70 @@ input[type="file"]{padding:5px;}
 <div class="container">
 
 <!-- Admin Login -->
-<div class="ADMIN-LOGIN" id="loginBox">
-  <h1>🧑🏻‍🏫ADMIN LOGIN</h1>
-  <input type="text" id="adminUser" placeholder="USER NAME"><br>
-  <input type="password" id="adminPass" placeholder="PASSWORD"><br>
-  <button onclick="adminLogin()">LOGIN</button>
+<div class="admin-login" id="loginBox">
+  <h1>Admin Login</h1>
+  <input type="text" id="adminUser" placeholder="Username"><br>
+  <input type="password" id="adminPass" placeholder="Password"><br>
+  <button onclick="adminLogin()">Login</button>
   <div class="success-msg" id="loginMsg"></div>
 </div>
 
 <!-- Admin Panel -->
 <div class="panel" id="adminPanel" style="display:none;">
-  <h1>ADMIN PANEL</h1>
+  <h1>Admin Panel</h1>
 
   <div class="tabs">
-    <button class="tabBtn activeTab" onclick="openTab('students')">🙋🏻STUDENTS</button>
-    <button class="tabBtn" onclick="openTab('teachers')">🧑🏻‍🏫TEACHERS</button>
-    <button class="tabBtn" onclick="openTab('notes')">📚NOTES</button>
-    <button class="tabBtn" onclick="openTab('links')">🔗LINKS</button>
-    <button class="tabBtn" onclick="openTab('notifications')">💬NOTIFICATIONS</button>
+    <button class="tabBtn activeTab" onclick="openTab('students')">Students</button>
+    <button class="tabBtn" onclick="openTab('teachers')">Teachers</button>
+    <button class="tabBtn" onclick="openTab('notes')">Notes</button>
+    <button class="tabBtn" onclick="openTab('links')">Links</button>
+    <button class="tabBtn" onclick="openTab('notifications')">Notifications</button>
   </div>
 
   <!-- Students Section -->
   <div class="section" id="students" style="display:block;">
-    <h3>REGISTERED STUDENTS</h3>
+    <h3>Registered Students</h3>
     <div class="list-box" id="studentList"></div>
   </div>
 
   <!-- Teachers Section -->
   <div class="section" id="teachers">
-    <h3>MANAGE TEACHERS</h3>
-    <input type="text" id="teacherName" placeholder="TEACHER NAME">
-    <input type="text" id="teacherSubject" placeholder="SUBJECT">
-    <input type="text" id="teacherExp" placeholder="EXPERIENCE (YEARS)">
-    <input type="text" id="teacherMobile" placeholder="MOBILE NUMBER">
-    <input type="text" id="teacherWhatsapp" placeholder="WHATSAPP NUMBER">
-    <input type="email" id="teacherEmail" placeholder="EMAIL ID">
+    <h3>Manage Teachers</h3>
+    <input type="text" id="teacherName" placeholder="Teacher Name">
+    <input type="text" id="teacherSubject" placeholder="Subject">
+    <input type="text" id="teacherExperience" placeholder="Experience (Years)">
+    <input type="text" id="teacherMobile" placeholder="Mobile Number">
+    <input type="text" id="teacherEmail" placeholder="Email ID">
+    <input type="text" id="teacherWhatsapp" placeholder="WhatsApp Number">
+    <input type="file" id="teacherImage">
     <button onclick="addTeacher()">Add Teacher</button>
     <div class="list-box" id="teacherList"></div>
   </div>
 
   <!-- Notes Section -->
   <div class="section" id="notes">
-    <h3>UPLOAD NOTES</h3>
-    <input type="text" id="noteTitle" placeholder="NOTE TITLE">
+    <h3>Upload Notes</h3>
+    <input type="text" id="noteTitle" placeholder="Note Title">
     <input type="file" id="noteFile">
-    <button onclick="addNote()">UPLOAD NOTE</button>
+    <button onclick="addNote()">Upload Note</button>
     <div class="list-box" id="noteList"></div>
   </div>
 
   <!-- Links Section -->
   <div class="section" id="links">
-    <h3>MANAGE LINKS</h3>
-    <input type="text" id="linkTitle" placeholder="LINK TITLE">
-    <input type="text" id="linkURL" placeholder="PASTE LINK HERE">
-    <button onclick="addLink()">ADD LINK</button>
+    <h3>Manage Links</h3>
+    <input type="text" id="linkTitle" placeholder="Link Title">
+    <input type="text" id="linkURL" placeholder="Paste Link Here">
+    <button onclick="addLink()">Add Link</button>
     <div class="list-box" id="linkList"></div>
   </div>
 
   <!-- Notifications Section -->
   <div class="section" id="notifications">
-    <h3>NOTIFICATIONS</h3>
-    <input type="text" id="notifyTitle" placeholder="NOTIFICATION TITLE">
-    <input type="text" id="notifyLink" placeholder="PASTE LINK HERE">
-    <button onclick="addNotification()">ADD NOTIFICATION</button>
+    <h3>Notifications</h3>
+    <input type="text" id="notifyTitle" placeholder="Notification Title">
+    <input type="text" id="notifyLink" placeholder="Paste Link Here">
+    <button onclick="addNotification()">Add Notification</button>
     <div class="list-box" id="notifyList"></div>
   </div>
 </div>
@@ -108,7 +109,7 @@ function adminLogin(){
   const user=document.getElementById("adminUser").value.trim();
   const pass=document.getElementById("adminPass").value.trim();
   const msg=document.getElementById("loginMsg");
-  if(user==="WARRIOR" && pass==="ABHINAYPRATAP"){
+  if(user==="admin" && pass==="admin123"){
     msg.innerText="Login Successful ✅";
     setTimeout(()=>{
       document.getElementById("loginBox").style.display="none";
@@ -144,41 +145,49 @@ function loadTeachers(){
   const container=document.getElementById("teacherList");
   container.innerHTML="";
   teachers.forEach((t,i)=>{
-    container.innerHTML+=`
-    <div>
-      <span style="color:black;">
-        <strong>${t.name}</strong> | ${t.subject} | ${t.experience || "N/A"} yrs | Mobile: ${t.mobile} | WhatsApp: ${t.whatsapp || "N/A"} | Email: ${t.email || "N/A"}
-      </span>
-      <span>
-        <a href="https://wa.me/${t.whatsapp}" target="_blank"><button>Chat</button></a>
-        <button onclick="deleteTeacher(${i})">Delete</button>
-      </span>
+    container.innerHTML+=`<div>
+      <span style="color:black;">${t.name} (${t.subject}, ${t.experience}yrs)</span>
+      <button onclick="deleteTeacher(${i})">Delete</button>
     </div>`;
   });
 }
 
 function addTeacher(){
-  const name=document.getElementById("TEACHER NAME").value.trim();
-  const subject=document.getElementById("TEACHER SUBJECT").value.trim();
-  const experience=document.getElementById("TEACHER EXP").value.trim();
-  const mobile=document.getElementById("TEACHER MOBILE").value.trim();
-  const whatsapp=document.getElementById("TEACHER WHATSAPP").value.trim();
+  const name=document.getElementById("teacherName").value.trim();
+  const subject=document.getElementById("teacherSubject").value.trim();
+  const experience=document.getElementById("teacherExperience").value.trim();
+  const mobile=document.getElementById("teacherMobile").value.trim();
   const email=document.getElementById("teacherEmail").value.trim();
-  
-  if(!name || !subject || !mobile){alert("Enter Name, Subject and Mobile"); return;}
-  
-  let teachers=JSON.parse(localStorage.getItem("teachers"))||[];
-  teachers.push({name,subject,experience,mobile,whatsapp,email});
-  localStorage.setItem("teachers",JSON.stringify(teachers));
-  
-  document.getElementById("teacherName").value="";
-  document.getElementById("teacherSubject").value="";
-  document.getElementById("teacherExp").value="";
-  document.getElementById("teacherMobile").value="";
-  document.getElementById("teacherWhatsapp").value="";
-  document.getElementById("teacherEmail").value="";
-  
-  loadTeachers();
+  const whatsapp=document.getElementById("teacherWhatsapp").value.trim();
+  const file=document.getElementById("teacherImage").files[0];
+
+  if(!name || !subject){alert("Enter Name & Subject"); return;}
+
+  const reader=new FileReader();
+  reader.onload=function(e){
+    let teachers=JSON.parse(localStorage.getItem("teachers"))||[];
+    teachers.push({
+      name, subject, experience, mobile, email, whatsapp, image:e.target.result
+    });
+    localStorage.setItem("teachers",JSON.stringify(teachers));
+
+    document.getElementById("teacherName").value="";
+    document.getElementById("teacherSubject").value="";
+    document.getElementById("teacherExperience").value="";
+    document.getElementById("teacherMobile").value="";
+    document.getElementById("teacherEmail").value="";
+    document.getElementById("teacherWhatsapp").value="";
+    document.getElementById("teacherImage").value="";
+
+    loadTeachers();
+  }
+  if(file) reader.readAsDataURL(file);
+  else{
+    let teachers=JSON.parse(localStorage.getItem("teachers"))||[];
+    teachers.push({name, subject, experience, mobile, email, whatsapp, image:""});
+    localStorage.setItem("teachers",JSON.stringify(teachers));
+    loadTeachers();
+  }
 }
 
 function deleteTeacher(index){
@@ -199,12 +208,19 @@ function loadNotes(){
 }
 function addNote(){
   const title=document.getElementById("noteTitle").value.trim();
-  if(!title){alert("Enter Note Title"); return;}
-  let notes=JSON.parse(localStorage.getItem("notes"))||[];
-  notes.push({title});
-  localStorage.setItem("notes",JSON.stringify(notes));
-  document.getElementById("noteTitle").value="";
-  loadNotes();
+  const file=document.getElementById("noteFile").files[0];
+  if(!title || !file){alert("Enter Title & File"); return;}
+
+  const reader=new FileReader();
+  reader.onload=function(e){
+    let notes=JSON.parse(localStorage.getItem("notes"))||[];
+    notes.push({title, file:e.target.result, filename:file.name});
+    localStorage.setItem("notes",JSON.stringify(notes));
+    document.getElementById("noteTitle").value="";
+    document.getElementById("noteFile").value="";
+    loadNotes();
+  }
+  reader.readAsDataURL(file);
 }
 function deleteNote(index){
   let notes=JSON.parse(localStorage.getItem("notes"))||[];
@@ -276,6 +292,5 @@ function loadAll(){
   loadNotifications();
 }
 </script>
-
 </body>
 </html>
