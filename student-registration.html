@@ -6,79 +6,58 @@
 <title>Student Registration | MATH'S WARRIOR</title>
 
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial, sans-serif;
-}
-
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif;}
 body{
-background:linear-gradient(135deg,#ff512f,#dd2476);
-display:flex;
-justify-content:center;
-align-items:center;
-min-height:100vh;
-padding:20px;
+  background:linear-gradient(135deg,#ff512f,#dd2476);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+  padding:20px;
 }
-
 .form-container{
-background:white;
-padding:30px;
-width:100%;
-max-width:500px;
-border-radius:20px;
-box-shadow:0 10px 25px rgba(0,0,0,0.3);
+  background:white;
+  padding:30px;
+  width:100%;
+  max-width:500px;
+  border-radius:20px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.3);
 }
-
-h2{
-text-align:center;
-margin-bottom:20px;
-color:red;
-}
-
+h2{text-align:center;margin-bottom:20px;color:red;}
 input, select{
-width:100%;
-padding:10px;
-margin:8px 0;
-border-radius:8px;
-border:1px solid #ccc;
-font-size:14px;
+  width:100%;
+  padding:10px;
+  margin:8px 0;
+  border-radius:8px;
+  border:1px solid #ccc;
+  font-size:14px;
 }
-
 button{
-width:100%;
-padding:12px;
-background:red;
-color:white;
-border:none;
-border-radius:10px;
-font-size:16px;
-cursor:pointer;
-margin-top:10px;
+  width:100%;
+  padding:12px;
+  background:red;
+  color:white;
+  border:none;
+  border-radius:10px;
+  font-size:16px;
+  cursor:pointer;
+  margin-top:10px;
 }
-
-button:hover{
-background:black;
-}
-
+button:hover{background:black;}
 .course-box{
-background:#ffe6e6;
-padding:10px;
-border-radius:8px;
-margin-bottom:10px;
-color:red;
-font-weight:bold;
-text-align:center;
+  background:#ffe6e6;
+  padding:10px;
+  border-radius:8px;
+  margin-bottom:10px;
+  color:red;
+  font-weight:bold;
+  text-align:center;
 }
-
 </style>
 </head>
 
 <body>
-
 <div class="form-container">
-
 <h2>Student Registration</h2>
 
 <div class="course-box">
@@ -86,11 +65,9 @@ Selected Course: <span id="selectedCourse"></span>
 </div>
 
 <form onsubmit="registerStudent(); return false;">
-
 <input type="text" id="name" placeholder="Full Name" required>
 <input type="text" id="father" placeholder="Father's Name" required>
 <input type="text" id="mother" placeholder="Mother's Name" required>
-
 <input type="email" id="email" placeholder="Email ID" required>
 <input type="text" id="aadhaar" placeholder="Aadhaar Number (12 Digit)" required>
 <input type="text" id="mobile" placeholder="Mobile Number (10 Digit)" required>
@@ -120,99 +97,56 @@ Selected Course: <span id="selectedCourse"></span>
 </select>
 
 <button type="submit">Register Now</button>
-
 </form>
-
 </div>
 
 <script>
-
 // Show Selected Course
-let courseName = localStorage.getItem("selectedCourse") || "Not Selected";
+let courseName = localStorage.getItem("selectedCourse") || "Demo Course";
 let courseFee = localStorage.getItem("selectedFee") || "0";
-
 document.getElementById("selectedCourse").innerText = courseName + " (₹" + courseFee + ")";
 
 // Generate Registration ID
-function generateRegID(){
-return "MW" + Math.floor(Math.random()*1000000);
-}
+function generateRegID(){ return "MW" + Math.floor(Math.random()*1000000); }
 
 function registerStudent(){
+let name=document.getElementById("name").value.trim();
+let father=document.getElementById("father").value.trim();
+let mother=document.getElementById("mother").value.trim();
+let email=document.getElementById("email").value.trim();
+let aadhaar=document.getElementById("aadhaar").value.trim();
+let mobile=document.getElementById("mobile").value.trim();
+let whatsapp=document.getElementById("whatsapp").value.trim();
+let state=document.getElementById("state").value;
+let district=document.getElementById("district").value;
 
-let name = document.getElementById("name").value.trim();
-let father = document.getElementById("father").value.trim();
-let mother = document.getElementById("mother").value.trim();
-let email = document.getElementById("email").value.trim();
-let aadhaar = document.getElementById("aadhaar").value.trim();
-let mobile = document.getElementById("mobile").value.trim();
-let whatsapp = document.getElementById("whatsapp").value.trim();
-let state = document.getElementById("state").value;
-let district = document.getElementById("district").value;
-
-if(!name || !father || !mother || !email || !aadhaar || !mobile || !whatsapp || !state || !district){
-alert("All fields are required!");
-return;
+if(!name||!father||!mother||!email||!aadhaar||!mobile||!whatsapp||!state||!district){
+  alert("All fields are required!");
+  return;
 }
+if(aadhaar.length !=12 || isNaN(aadhaar)){alert("Invalid Aadhaar!"); return;}
+if(mobile.length !=10 || isNaN(mobile)){alert("Invalid Mobile!"); return;}
 
-if(aadhaar.length != 12 || isNaN(aadhaar)){
-alert("Invalid Aadhaar Number!");
-return;
-}
-
-if(mobile.length != 10 || isNaN(mobile)){
-alert("Invalid Mobile Number!");
-return;
-}
-
-let students = JSON.parse(localStorage.getItem("students")) || [];
-
-let existing = students.find(s => s.aadhaar === aadhaar);
+let students=JSON.parse(localStorage.getItem("students"))||[];
+let existing=students.find(s=>s.aadhaar===aadhaar);
 
 if(existing){
-
-let already = existing.courses.find(c => c.name === courseName);
-
-if(already){
-alert("You already enrolled in this course!");
-return;
-}
-
-existing.courses.push({
-name: courseName,
-fee: courseFee
-});
-
+  let already=existing.courses.find(c=>c.name===courseName);
+  if(already){alert("Already enrolled in this course!"); return;}
+  existing.courses.push({name:courseName, fee:courseFee});
 }else{
-
-let newStudent = {
-regID: generateRegID(),
-name,
-father,
-mother,
-email,
-aadhaar,
-mobile,
-whatsapp,
-state,
-district,
-courses: [{
-name: courseName,
-fee: courseFee
-}]
-};
-
-students.push(newStudent);
+  let newStudent={
+    regID:generateRegID(),
+    name,father,mother,email,aadhaar,mobile,whatsapp,state,district,
+    courses:[{name:courseName, fee:courseFee}]
+  };
+  students.push(newStudent);
 }
 
-localStorage.setItem("students", JSON.stringify(students));
-
+localStorage.setItem("students",JSON.stringify(students));
 alert("Registration Successful!");
 window.location.href="mycourses.html";
-
 }
-
 </script>
-
 </body>
 </html>

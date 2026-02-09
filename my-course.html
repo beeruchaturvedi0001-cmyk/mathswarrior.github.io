@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>My Courses | MATH'S WARRIOR</title>
-
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
 body{
@@ -12,23 +11,20 @@ body{
   min-height:100vh;
   display:flex;
   justify-content:center;
-  align-items:center;
+  align-items:flex-start;
   padding:20px;
   color:white;
 }
 
-/* Container */
 .container{
   background:white;
   color:#333;
   padding:30px 25px;
-  max-width:600px;
+  max-width:700px;
   width:100%;
   border-radius:20px;
   box-shadow:0 15px 40px rgba(0,0,0,0.3);
 }
-
-/* Headings */
 h2{
   text-align:center;
   margin-bottom:25px;
@@ -36,8 +32,6 @@ h2{
   font-size:26px;
   letter-spacing:1px;
 }
-
-/* Input & Button */
 input{
   width:100%;
   padding:12px;
@@ -51,50 +45,47 @@ input:focus{
   outline:none;
   box-shadow:0 0 8px rgba(255,75,43,0.4);
 }
-
 button{
-  width:100%;
-  padding:14px;
+  padding:8px 12px;
+  font-size:14px;
   background:linear-gradient(45deg,#ff416c,#ff4b2b);
   color:white;
   border:none;
-  border-radius:12px;
-  font-size:16px;
-  font-weight:bold;
+  border-radius:10px;
   cursor:pointer;
+  margin-top:8px;
   transition:0.3s;
-  margin-top:10px;
 }
 button:hover{
   background:#d90429;
-  transform:scale(1.02);
-  box-shadow:0 8px 25px rgba(0,0,0,0.3);
+  transform:scale(1.05);
 }
-
-/* Courses List */
 .course-card{
-  background:#ffe6e6;
-  color:#d90429;
-  padding:15px;
-  border-radius:12px;
+  background: linear-gradient(135deg,#ff9a9e,#fad0c4);
+  color:#fff;
+  padding:18px;
+  border-radius:15px;
   margin-bottom:15px;
   font-weight:bold;
   box-shadow:0 5px 15px rgba(0,0,0,0.2);
+  position:relative;
 }
-
-/* Responsive */
-@media(max-width:520px){
-  .container{padding:25px 15px;}
-  input{padding:10px;}
-  button{padding:12px;}
+.course-card div{
+  margin-bottom:6px;
+}
+.code-box{
+  background: rgba(0,0,0,0.2);
+  padding:5px 10px;
+  border-radius:8px;
+  display:inline-block;
+  font-weight:bold;
+  letter-spacing:1px;
 }
 </style>
 </head>
 <body>
-
 <div class="container">
 <h2>My Courses</h2>
-
 <input type="text" id="aadhaar" placeholder="Enter Aadhaar Number" required>
 <button onclick="showCourses()">Show My Courses</button>
 
@@ -102,7 +93,12 @@ button:hover{
 </div>
 
 <script>
-// Show Courses Function
+// Auto generate unique code for each course
+function generateCourseCode(aadhaar, courseName){
+  let random = Math.floor(1000 + Math.random()*9000); // 4 digit random
+  return `MW-${aadhaar.slice(-4)}-${courseName.replace(/\s+/g,'').toUpperCase()}-${random}`;
+}
+
 function showCourses(){
   const aadhaar = document.getElementById("aadhaar").value.trim();
   if(aadhaar.length != 12 || isNaN(aadhaar)){
@@ -112,7 +108,6 @@ function showCourses(){
 
   let students = JSON.parse(localStorage.getItem("students")) || [];
   let student = students.find(s => s.aadhaar === aadhaar);
-
   let div = document.getElementById("coursesList");
   div.innerHTML = "";
 
@@ -128,13 +123,41 @@ function showCourses(){
     return;
   }
 
-  student.courses.forEach(c => {
+  student.courses.forEach((c, idx) => {
+    // Initialize paid status if not exists
+    if(c.paid === undefined) c.paid = false;
+    if(!c.code) c.code = generateCourseCode(aadhaar, c.name);
+
     div.innerHTML += `<div class="course-card">
-      Course: ${c.name} <br> Fee: ₹${c.fee}
+      <div>📘 Course: ${c.name}</div>
+      <div>💰 Fee: ₹${c.fee} - <strong>${c.paid ? "Paid ✅" : "Pending ❌"}</strong></div>
+      <div>📝 Code: <span class="code-box">${c.code}</span></div>
+      <button onclick="togglePayment(${idx})">${c.paid ? "Mark as Unpaid" : "Mark as Paid"}</button>
+      <button onclick="downloadCertificate('${c.name}','${student.name}')">Download Certificate</button>
     </div>`;
   });
+
+  // Save back updated paid status and code
+  localStorage.setItem("students", JSON.stringify(students));
+}
+
+// Toggle payment status
+function togglePayment(courseIndex){
+  const aadhaar = document.getElementById("aadhaar").value.trim();
+  let students = JSON.parse(localStorage.getItem("students")) || [];
+  let student = students.find(s => s.aadhaar === aadhaar);
+  if(student){
+    student.courses[courseIndex].paid = !student.courses[courseIndex].paid;
+    localStorage.setItem("students", JSON.stringify(students));
+    showCourses();
+  }
+}
+
+// Dummy certificate download
+function downloadCertificate(course, studentName){
+  alert(`Certificate for ${studentName} - ${course} is ready to download!`);
+  // Future: generate PDF dynamically
 }
 </script>
-
 </body>
 </html>
