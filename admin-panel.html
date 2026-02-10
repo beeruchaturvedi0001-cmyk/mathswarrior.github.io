@@ -51,7 +51,7 @@ button{background:#001f7f;color:white;font-weight:bold;cursor:pointer}
 <input type="text" id="tMobile" placeholder="Mobile">
 <input type="text" id="tWhatsapp" placeholder="WhatsApp">
 <input type="text" id="tEmail" placeholder="Email">
-<input type="file" id="tPhoto">
+<input type="file" id="tPhoto" accept="image/*">
 <button onclick="addTeacher()">Add</button>
 <div id="teacherList"></div>
 </div>
@@ -61,30 +61,13 @@ button{background:#001f7f;color:white;font-weight:bold;cursor:pointer}
 <h3>Add Responsibility / Founder</h3>
 <input type="text" id="rName" placeholder="Name">
 <input type="text" id="rRole" placeholder="Role">
+<input type="text" id="rExperience" placeholder="Experience (Years)">
 <input type="text" id="rMobile" placeholder="Mobile">
 <input type="text" id="rWhatsapp" placeholder="WhatsApp">
 <input type="text" id="rEmail" placeholder="Email">
-<input type="file" id="rPhoto">
+<input type="file" id="rPhoto" accept="image/*">
 <button onclick="addResponsibility()">Add</button>
 <div id="respList"></div>
-</div>
-
-<!-- NOTES -->
-<div class="section" id="notes">
-<h3>Upload Notes</h3>
-<input type="text" id="noteTitle" placeholder="Title">
-<input type="file" id="noteFile">
-<button onclick="addNote()">Upload</button>
-<div id="noteList"></div>
-</div>
-
-<!-- NOTIFICATIONS -->
-<div class="section" id="notifications">
-<h3>Add Notification</h3>
-<input type="text" id="notifyTitle" placeholder="Title">
-<input type="text" id="notifyLink" placeholder="Link">
-<button onclick="addNotification()">Add</button>
-<div id="notifyList"></div>
 </div>
 
 </div>
@@ -92,34 +75,38 @@ button{background:#001f7f;color:white;font-weight:bold;cursor:pointer}
 
 <script>
 
-/* LOGIN (UPDATED ONLY THIS PART) */
+/* LOGIN */
 function adminLogin(){
-
-let u = adminUser.value.trim();
-let p = adminPass.value.trim();
-
-if(u === "ABHINAYPRATAP" && p === "ABHINAY0011"){
-
-loginMsg.style.color = "green";
-loginMsg.innerHTML = "✅ SUCCESSFULL LOGIN";
-
+if(adminUser.value==="ABHINAYPRATAP" && adminPass.value==="ABHINAY0011"){
+loginMsg.innerHTML="✅ SUCCESSFULL LOGIN";
 setTimeout(()=>{
 loginBox.style.display="none";
 adminPanel.style.display="block";
 openTab('teachers');
 loadAll();
 },800);
-
 }else{
-loginMsg.style.color = "red";
-loginMsg.innerHTML = "❌ Invalid Credentials";
+loginMsg.innerHTML="Invalid Credentials ❌";
 }
-
 }
 
 function openTab(id){
 document.querySelectorAll(".section").forEach(s=>s.style.display="none");
 document.getElementById(id).style.display="block";
+}
+
+/* IMAGE VALIDATION FUNCTION */
+function validateImage(file){
+const allowedTypes=["image/jpeg","image/png","image/jpg","image/webp","image/gif"];
+if(!allowedTypes.includes(file.type)){
+alert("Only JPG, PNG, JPEG, WEBP, GIF allowed");
+return false;
+}
+if(file.size > 5*1024*1024){
+alert("Image size must be less than 5MB");
+return false;
+}
+return true;
 }
 
 /* TEACHERS */
@@ -138,9 +125,11 @@ image:img
 });
 localStorage.setItem("teachers",JSON.stringify(data));
 loadTeachers();
+tName.value=tSubject.value=tMobile.value=tWhatsapp.value=tEmail.value=tPhoto.value="";
 }
 
 if(file){
+if(!validateImage(file)) return;
 let reader=new FileReader();
 reader.onload=e=>save(e.target.result);
 reader.readAsDataURL(file);
@@ -181,6 +170,7 @@ function addResponsibility(){
 
 let name=rName.value.trim();
 let role=rRole.value.trim();
+let experience=rExperience.value.trim();
 let mobile=rMobile.value.trim();
 let whatsapp=rWhatsapp.value.trim();
 let email=rEmail.value.trim();
@@ -194,13 +184,14 @@ return;
 let data=JSON.parse(localStorage.getItem("responsibilityData"))||[];
 
 function save(img){
-data.push({name,role,mobile,whatsapp,email,image:img});
+data.push({name,role,experience,mobile,whatsapp,email,image:img});
 localStorage.setItem("responsibilityData",JSON.stringify(data));
 loadResponsibility();
-rName.value=rRole.value=rMobile.value=rWhatsapp.value=rEmail.value=rPhoto.value="";
+rName.value=rRole.value=rExperience.value=rMobile.value=rWhatsapp.value=rEmail.value=rPhoto.value="";
 }
 
 if(file){
+if(!validateImage(file)) return;
 let reader=new FileReader();
 reader.onload=e=>save(e.target.result);
 reader.readAsDataURL(file);
@@ -217,7 +208,8 @@ respList.innerHTML+=`
 <div class="card">
 <div>
 <img src="${r.image||'https://via.placeholder.com/60'}">
-<b>${r.name}</b><br>${r.role}
+<b>${r.name}</b><br>${r.role}<br>
+Experience: ${r.experience||'N/A'} Years
 </div>
 <div>
 <a class="small-btn call" href="tel:${r.mobile}">Call</a>
@@ -236,74 +228,9 @@ localStorage.setItem("responsibilityData",JSON.stringify(data));
 loadResponsibility();
 }
 
-/* NOTES */
-function addNote(){
-let file=noteFile.files[0];
-let data=JSON.parse(localStorage.getItem("notes"))||[];
-
-let reader=new FileReader();
-reader.onload=e=>{
-data.push({title:noteTitle.value,file:e.target.result});
-localStorage.setItem("notes",JSON.stringify(data));
-loadNotes();
-}
-if(file) reader.readAsDataURL(file);
-}
-
-function loadNotes(){
-let data=JSON.parse(localStorage.getItem("notes"))||[];
-noteList.innerHTML="";
-data.forEach((n,i)=>{
-noteList.innerHTML+=`
-<div class="card">
-<span>${n.title}</span>
-<div>
-<a class="small-btn download" href="${n.file}" download>Download</a>
-<button class="small-btn delete" onclick="deleteNote(${i})">X</button>
-</div>
-</div>`;
-});
-}
-
-function deleteNote(i){
-let data=JSON.parse(localStorage.getItem("notes"))||[];
-data.splice(i,1);
-localStorage.setItem("notes",JSON.stringify(data));
-loadNotes();
-}
-
-/* NOTIFICATIONS */
-function addNotification(){
-let data=JSON.parse(localStorage.getItem("notifications"))||[];
-data.push({title:notifyTitle.value,link:notifyLink.value});
-localStorage.setItem("notifications",JSON.stringify(data));
-loadNotifications();
-}
-
-function loadNotifications(){
-let data=JSON.parse(localStorage.getItem("notifications"))||[];
-notifyList.innerHTML="";
-data.forEach((n,i)=>{
-notifyList.innerHTML+=`
-<div class="card">
-<span>${n.title}</span>
-<button class="small-btn delete" onclick="deleteNotification(${i})">X</button>
-</div>`;
-});
-}
-
-function deleteNotification(i){
-let data=JSON.parse(localStorage.getItem("notifications"))||[];
-data.splice(i,1);
-localStorage.setItem("notifications",JSON.stringify(data));
-loadNotifications();
-}
-
 function loadAll(){
 loadTeachers();
 loadResponsibility();
-loadNotes();
-loadNotifications();
 }
 
 </script>
