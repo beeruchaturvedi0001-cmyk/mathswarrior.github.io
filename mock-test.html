@@ -1,163 +1,243 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MATH'S WARRIOR MOCK TEST</title>
+<title>Math's Warrior Subject Mock</title>
+
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
-body{background: linear-gradient(135deg,#ff0000,#001f7f); min-height:100vh; display:flex; justify-content:center; align-items:flex-start; padding:20px; color:white; position:relative; overflow-x:hidden;}
-body::before{content:"ABHINAYPRATAPMATHS"; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%) rotate(-30deg); font-size:80px; color:rgba(255,255,255,0.08); z-index:0; pointer-events:none; white-space:nowrap;}
-#registration{background:#fff0f0;padding:20px;border-radius:20px;box-shadow:0 10px 25px rgba(0,0,0,0.3); text-align:center;width:100%;max-width:400px; z-index:1;}
-#registration h1{color:black;margin-bottom:15px;}
-#registration input{width:80%;padding:10px;border-radius:12px;border:1px solid #ccc;margin:10px 0;font-size:16px;}
-#registration button{padding:10px 20px;border:none;border-radius:12px; background:linear-gradient(45deg,#ff0000,#001f7f);color:white;font-weight:bold;cursor:pointer;font-size:16px;}
-#registration button:hover{transform:scale(1.05);}
-#mockTestContainer{display:none;width:100%;max-width:900px; z-index:1;}
-#mockHeader{display:flex;justify-content:space-between;align-items:center;background:linear-gradient(90deg,#ffeb3b,#001f7f);padding:10px 20px;border-radius:12px;margin-bottom:15px;color:black;font-weight:bold;font-size:18px;}
-#questionsBox{background:#001f7f;color:white;padding:20px;border-radius:15px;box-shadow:0 10px 25px rgba(0,0,0,0.3);margin-bottom:20px;}
-.question{position:relative;margin-bottom:15px;padding:15px;background:rgba(255,255,255,0.1);border-radius:10px;}
-.question::after{content:"ABHINAYPRATAPMATHS"; position:absolute; top:40%; left:20%; font-size:40px; color:rgba(255,255,255,0.08); transform:rotate(-30deg); pointer-events:none;}
-.question p{margin-bottom:8px;font-weight:bold;}
-.options label{display:block;margin-bottom:5px;cursor:pointer;}
-#submitBtn{padding:10px 20px;border:none;border-radius:12px;background:linear-gradient(45deg,#ff0000,#001f7f);color:white;font-weight:bold;cursor:pointer;margin-bottom:20px;}
-#submitBtn:hover{transform:scale(1.05);}
-#answerKey{display:none;background:#ff0000;color:white;padding:20px;border-radius:15px;margin-bottom:20px;max-height:500px;overflow-y:auto;}
-#leaderboard{display:none;background:#001f7f;color:white;padding:20px;border-radius:15px;max-height:300px;overflow-y:auto;}
-#leaderboard h3{margin-bottom:10px;}
-table{width:100%;border-collapse:collapse;}
-th,td{border:1px solid white;padding:8px;text-align:center;}
-th{background:#ff0000;}
+body{
+font-family:Arial;
+background:linear-gradient(135deg,#000428,#004e92);
+color:white;
+margin:0;
+padding:20px;
+text-align:center;
+}
+.container{max-width:900px;margin:auto}
+button{
+padding:10px 18px;
+margin:5px;
+border:none;
+border-radius:6px;
+background:#ff9800;
+color:white;
+font-weight:bold;
+cursor:pointer;
+}
+.timer{font-size:18px;color:yellow;margin:10px}
+.question-box{
+background:white;
+color:black;
+padding:12px;
+border-radius:8px;
+margin-bottom:12px;
+text-align:left;
+}
+.result{
+background:white;
+color:black;
+padding:15px;
+border-radius:8px;
+margin-top:20px;
+display:none;
+}
 </style>
 </head>
 <body>
 
-<div id="registration">
-  <h1>MATH'S WARRIOR</h1>
-  <input type="text" id="studentName" placeholder="Enter Student Name" required>
-  <button onclick="startTest()">Attempt Now</button>
+<div class="container">
+
+<h3>📘 MATH'S WARRIOR ENTRANCE MOCK TEST</h3>
+
+<div id="subjectBox">
+<button onclick="startMock('math')">2️⃣Math Mock</button>
+<button onclick="startMock('reasoning')">⭕Reasoning Mock</button>
+<button onclick="startMock('gs')">⛰️GS Mock</button>
+<button onclick="startMock('english')">💂🏻English Mock</button>
 </div>
 
-<div id="mockTestContainer">
-  <div id="mockHeader">
-    <div>Student: <span id="displayName" style="color:yellow;"></span></div>
-    <div>Time Left: <span id="timer">30:00</span></div>
-  </div>
+<div id="testBox" style="display:none;">
+<div class="timer">Time Left: <span id="time">10:00</span></div>
+<form id="quizForm"></form>
+<button onclick="submitTest()">Submit</button>
+</div>
 
-  <div id="questionsBox"></div>
-  <button id="submitBtn" onclick="submitTest()">Submit Test</button>
+<div id="resultBox" class="result"></div>
 
-  <div id="answerKey"></div>
-
-  <div id="leaderboard">
-    <h3>Top Scorer</h3>
-    <table>
-      <thead>
-        <tr><th>Name</th><th>Score</th><th>Right</th><th>Attempted</th><th>Not Attempted</th></tr>
-      </thead>
-      <tbody id="leaderboardBody"></tbody>
-    </table>
-  </div>
 </div>
 
 <script>
-const MARKS_PER_Q=1.25;
-const questionsData={
-Maths:[{q:"2+2=?",options:["3","4","5","6"],answer:"4"},{q:"5*3=?",options:["15","10","8","20"],answer:"15"},{q:"12/4=?",options:["2","3","4","6"],answer:"3"},{q:"7-5=?",options:["1","2","3","4"],answer:"2"},{q:"9+6=?",options:["14","15","16","17"],answer:"15"},{q:"8*2=?",options:["14","16","18","20"],answer:"16"},{q:"10-7=?",options:["2","3","4","5"],answer:"3"},{q:"6+9=?",options:["14","15","16","17"],answer:"15"},{q:"3*3=?",options:["6","9","12","15"],answer:"9"},{q:"18/3=?",options:["5","6","7","8"],answer:"6"}],
-Reasoning:[{q:"Next number: 2,4,6,8,?",options:["10","9","12","14"],answer:"10"},{q:"If A>B & B>C then A?",options:[">C","<C","=C","None"],answer:">C"},{q:"Pattern: AB, BC, CD, ?",options:["DE","EF","FG","GH"],answer:"DE"},{q:"Find odd: 2,3,5,7,9",options:["2","3","5","9"],answer:"9"},{q:"Mirror of R?",options:["Я","R","P","Q"],answer:"Я"},{q:"Complete: 5,10,15,?",options:["20","25","30","35"],answer:"20"},{q:"Select next: 1,4,9,16,?",options:["25","20","21","36"],answer:"25"},{q:"Opposite of North?",options:["South","East","West","North"],answer:"South"},{q:"Next: 3,6,9,?",options:["12","15","18","21"],answer:"12"},{q:"Missing letter: A,B,?,D",options:["C","E","F","G"],answer:"C"}],
-Science:[{q:"Water formula?",options:["H2O","CO2","O2","NaCl"],answer:"H2O"},{q:"Sun is?",options:["Star","Planet","Moon","Comet"],answer:"Star"},{q:"Our planet?",options:["Earth","Mars","Venus","Jupiter"],answer:"Earth"},{q:"Boiling point of water?",options:["100°C","0°C","50°C","90°C"],answer:"100°C"},{q:"Atomic number of H?",options:["1","2","3","4"],answer:"1"},{q:"Gas we breathe?",options:["Oxygen","CO2","Nitrogen","Hydrogen"],answer:"Oxygen"},{q:"Human heart?",options:["4","2","3","1"],answer:"4"},{q:"Speed of light?",options:["3*10^8 m/s","1*10^8","3*10^6","3*10^9"],answer:"3*10^8 m/s"},{q:"Main gas in air?",options:["Oxygen","Hydrogen","Nitrogen","Carbon dioxide"],answer:"Nitrogen"},{q:"F=ma?",options:["Yes","No","Maybe","None"],answer:"Yes"}],
-GK:[{q:"Capital of India?",options:["Delhi","Mumbai","Kolkata","Chennai"],answer:"Delhi"},{q:"President of India?",options:["Modi","Murmu","Kovind","Singh"],answer:"Murmu"},{q:"Largest country?",options:["Russia","India","China","USA"],answer:"Russia"},{q:"Currency of USA?",options:["Dollar","Euro","Rupee","Yen"],answer:"Dollar"},{q:"Fastest land animal?",options:["Tiger","Cheetah","Lion","Leopard"],answer:"Cheetah"},{q:"Mount Everest height?",options:["8848","9000","8500","8000"],answer:"8848"},{q:"Olympics 2024?",options:["Paris","Tokyo","Los Angeles","London"],answer:"Paris"},{q:"Largest ocean?",options:["Pacific","Atlantic","Indian","Arctic"],answer:"Pacific"},{q:"National sport of India?",options:["Hockey","Cricket","Football","Kabaddi"],answer:"Hockey"},{q:"Biggest desert?",options:["Sahara","Gobi","Thar","Kalahari"],answer:"Sahara"}]
+
+let questions=[];
+let timeLeft=600;
+let timer;
+
+/* Question Bank */
+const questionBank={
+
+math:[
+{q:"25 × 4 = ?",options:[100,90,110,120],ans:100},
+{q:"√144 = ?",options:[10,11,12,13],ans:12},
+{q:"15% of 200?",options:[25,30,35,40],ans:30},
+{q:"18 ÷ 3 = ?",options:[5,6,7,8],ans:6},
+{q:"9² = ?",options:[18,72,81,90],ans:81},
+{q:"1000 - 450 = ?",options:[550,450,650,500],ans:550},
+{q:"LCM of 4,6?",options:[12,18,24,6],ans:12},
+{q:"20% of 500?",options:[100,200,150,50],ans:100},
+{q:"7×8=?",options:[54,56,58,60],ans:56},
+{q:"12²=?",options:[124,144,154,164],ans:144},
+{q:"50% of 300?",options:[150,200,250,100],ans:150},
+{q:"8×9=?",options:[72,81,63,54],ans:72},
+{q:"144÷12=?",options:[10,12,14,16],ans:12},
+{q:"3³=?",options:[6,9,27,18],ans:27},
+{q:"(5+5)×2=?",options:[20,15,10,25],ans:20},
+{q:"200÷4=?",options:[40,50,60,30],ans:50},
+{q:"Square root 81?",options:[8,9,7,6],ans:9},
+{q:"10% of 90?",options:[9,10,11,12],ans:9},
+{q:"4²=?",options:[8,12,16,14],ans:16},
+{q:"60÷5=?",options:[10,12,15,8],ans:12}
+],
+
+reasoning:[
+{q:"2,4,8,16,?",options:[18,24,32,20],ans:32},
+{q:"Odd one: Apple, Mango, Car, Banana",options:["Apple","Car","Mango","Banana"],ans:"Car"},
+{q:"5+3×2=?",options:[11,16,13,10],ans:11},
+{q:"A=1, B=2, C=?",options:[1,2,3,4],ans:3},
+{q:"Mirror of 3?",options:["Ɛ","E","M","W"],ans:"Ɛ"},
+{q:"1,1,2,3,5,?",options:[8,7,6,9],ans:8},
+{q:"Dog is to Bark as Cat is to?",options:["Mew","Run","Jump","Fly"],ans:"Mew"},
+{q:"Coding: CAT=DBU, DOG=?",options:["EPH","EPG","FQI","EOG"],ans:"EPH"},
+{q:"If 5+5=55, 6+6=?",options:[66,12,36,60],ans:66},
+{q:"Clock angle at 3:00?",options:["90","60","45","30"],ans:"90"},
+{q:"Next: 3,6,12,24,?",options:[36,48,30,42],ans:48},
+{q:"VIBGYOR colors count?",options:[5,6,7,8],ans:7},
+{q:"Cube faces?",options:[4,5,6,7],ans:6},
+{q:"Triangle sides?",options:[2,3,4,5],ans:3},
+{q:"Opposite of North?",options:["South","East","West","Up"],ans:"South"},
+{q:"7th month?",options:["July","June","May","August"],ans:"July"},
+{q:"Binary of 2?",options:["10","11","01","00"],ans:"10"},
+{q:"Days in week?",options:[5,6,7,8],ans:7},
+{q:"Leap year days?",options:[365,366,364,360],ans:366},
+{q:"Even number?",options:[3,5,8,9],ans:8}
+],
+
+gs:[
+{q:"Capital of India?",options:["Delhi","Mumbai","Chennai","Kolkata"],ans:"Delhi"},
+{q:"Currency of Japan?",options:["Yen","Dollar","Rupee","Euro"],ans:"Yen"},
+{q:"Largest planet?",options:["Earth","Mars","Jupiter","Saturn"],ans:"Jupiter"},
+{q:"Red Fort in?",options:["Delhi","Agra","Jaipur","Lucknow"],ans:"Delhi"},
+{q:"National Animal?",options:["Lion","Tiger","Elephant","Horse"],ans:"Tiger"},
+{q:"Water formula?",options:["H2O","CO2","O2","NaCl"],ans:"H2O"},
+{q:"Freedom Year?",options:["1947","1950","1930","1942"],ans:"1947"},
+{q:"President of India?",options:["Droupadi Murmu","Modi","Rahul","Shah"],ans:"Droupadi Murmu"},
+{q:"National Bird?",options:["Peacock","Crow","Parrot","Sparrow"],ans:"Peacock"},
+{q:"Currency of USA?",options:["Dollar","Yen","Euro","Rupee"],ans:"Dollar"},
+{q:"Sun is a?",options:["Planet","Star","Galaxy","Moon"],ans:"Star"},
+{q:"Earth satellite?",options:["Moon","Mars","Sun","Jupiter"],ans:"Moon"},
+{q:"Gas we breathe?",options:["Oxygen","Nitrogen","CO2","Helium"],ans:"Oxygen"},
+{q:"Taj Mahal in?",options:["Agra","Delhi","Jaipur","Lucknow"],ans:"Agra"},
+{q:"First PM?",options:["Nehru","Gandhi","Patel","Modi"],ans:"Nehru"},
+{q:"Currency of UK?",options:["Pound","Dollar","Euro","Yen"],ans:"Pound"},
+{q:"Smallest planet?",options:["Mercury","Earth","Mars","Venus"],ans:"Mercury"},
+{q:"Longest river?",options:["Nile","Ganga","Amazon","Yamuna"],ans:"Nile"},
+{q:"Computer brain?",options:["CPU","RAM","ROM","Mouse"],ans:"CPU"},
+{q:"Vande Bharat is?",options:["Train","Plane","Ship","Bus"],ans:"Train"}
+],
+
+english:[
+{q:"Synonym of Big?",options:["Large","Small","Tiny","Short"],ans:"Large"},
+{q:"Antonym of Happy?",options:["Sad","Joy","Smile","Glad"],ans:"Sad"},
+{q:"Plural of Child?",options:["Children","Childs","Childrens","Childes"],ans:"Children"},
+{q:"Verb in 'He runs fast'?",options:["Runs","He","Fast","None"],ans:"Runs"},
+{q:"Opposite of Hot?",options:["Cold","Warm","Cool","Heat"],ans:"Cold"},
+{q:"Past of Go?",options:["Went","Gone","Goed","Go"],ans:"Went"},
+{q:"Synonym of Fast?",options:["Quick","Slow","Late","Low"],ans:"Quick"},
+{q:"Antonym of Good?",options:["Bad","Nice","Great","Fine"],ans:"Bad"},
+{q:"Noun in 'Ram plays cricket'?",options:["Ram","Plays","Cricket","Both"],ans:"Both"},
+{q:"Article before Apple?",options:["An","A","The","No"],ans:"An"},
+{q:"Plural of Box?",options:["Boxes","Boxs","Box","Boxies"],ans:"Boxes"},
+{q:"Opposite of Up?",options:["Down","Above","Over","Top"],ans:"Down"},
+{q:"Synonym of Begin?",options:["Start","End","Close","Finish"],ans:"Start"},
+{q:"Antonym of Early?",options:["Late","Soon","Fast","Quick"],ans:"Late"},
+{q:"Past of Eat?",options:["Ate","Eat","Eated","Eaten"],ans:"Ate"},
+{q:"Adjective in 'Red car'?",options:["Red","Car","Both","None"],ans:"Red"},
+{q:"Opposite of Light?",options:["Dark","Bright","Heavy","White"],ans:"Dark"},
+{q:"Synonym of Happy?",options:["Glad","Sad","Cry","Angry"],ans:"Glad"},
+{q:"Antonym of Love?",options:["Hate","Like","Care","Kind"],ans:"Hate"},
+{q:"Plural of Foot?",options:["Feet","Foots","Feets","Footes"],ans:"Feet"}
+]
+
 };
 
-let answers={};
-
-function startTest(){
-  const name=document.getElementById("studentName").value.trim();
-  if(!name){alert("Enter Name"); return;}
-  document.getElementById("registration").style.display="none";
-  document.getElementById("mockTestContainer").style.display="block";
-  document.getElementById("displayName").innerText=name;
-  displayAllQuestions();
-  startTimer(30);
+function startMock(subject){
+questions=questionBank[subject];
+document.getElementById("subjectBox").style.display="none";
+document.getElementById("testBox").style.display="block";
+loadQuestions();
+startTimer();
 }
 
-function displayAllQuestions(){
-  const box=document.getElementById("questionsBox");
-  box.innerHTML="";
-  Object.keys(questionsData).forEach(section=>{
-    box.innerHTML+=`<h3 style='color:#ffeb3b;margin-top:15px;'>${section}</h3>`;
-    questionsData[section].forEach((q,i)=>{
-      const selected=answers[section]?answers[section][i]:"";
-      let html=`<div class='question'><p>${i+1}. ${q.q}</p><div class='options'>`;
-      q.options.forEach(o=>{
-        html+=`<label><input type='radio' name='${section}_${i}' value='${o}' ${selected===o?"checked":""}> ${o}</label>`;
-      });
-      html+=`</div></div>`;
-      box.innerHTML+=html;
-    });
-  });
+function loadQuestions(){
+let form=document.getElementById("quizForm");
+form.innerHTML="";
+questions.forEach((q,i)=>{
+form.innerHTML+=`
+<div class="question-box">
+<b>Q${i+1}. ${q.q}</b><br>
+${q.options.map(opt=>`
+<label><input type="radio" name="q${i}" value="${opt}"> ${opt}</label><br>
+`).join("")}
+</div>`;
+});
+}
+
+function startTimer(){
+timer=setInterval(()=>{
+timeLeft--;
+let m=Math.floor(timeLeft/60);
+let s=timeLeft%60;
+document.getElementById("time").innerText=`${m}:${s<10?'0':''}${s}`;
+if(timeLeft<=0){
+clearInterval(timer);
+submitTest();
+}
+},1000);
 }
 
 function submitTest(){
-  let totalRight=0,attempted=0,notAttempted=0;
-  Object.keys(questionsData).forEach(section=>{
-    answers[section]=[];
-    questionsData[section].forEach((q,i)=>{
-      const selected=document.querySelector(`input[name='${section}_${i}']:checked`);
-      let ans=selected?selected.value:"Not Attempted";
-      answers[section].push(ans);
-      if(ans!=="Not Attempted") attempted++;
-      if(ans==="Not Attempted") notAttempted++;
-      if(ans===q.answer) totalRight++;
-    });
-  });
+clearInterval(timer);
+let score=0,correct=0,wrong=0;
 
-  let totalScore=(totalRight*MARKS_PER_Q).toFixed(2);
+questions.forEach((q,i)=>{
+let selected=document.querySelector(`input[name="q${i}"]:checked`);
+if(selected){
+if(selected.value==q.ans){
+score+=2.5; correct++;
+}else{
+score-=0.5; wrong++;
+}
+}
+});
 
-  // Answer Key
-  const keyBox=document.getElementById("answerKey");
-  keyBox.style.display="block";
-  keyBox.innerHTML="<h3>Answer Key</h3>";
-  Object.keys(questionsData).forEach(section=>{
-    keyBox.innerHTML+=`<h4>${section}</h4>`;
-    questionsData[section].forEach((q,i)=>{
-      keyBox.innerHTML+=`<p>${i+1}. ${q.q} ✅ Correct: ${q.answer} | Your Answer: ${answers[section][i]}</p>`;
-    });
-  });
+let percent=((score/50)*100).toFixed(2);
+let rank= percent>=80?"🏆 Excellent":
+percent>=60?"🥈 Good":
+percent>=40?"👍 Average":"❌ Improve";
 
-  // Leaderboard
-  const name=document.getElementById("displayName").innerText;
-  let leaderboard=JSON.parse(localStorage.getItem("leaderboard"))||[];
-  leaderboard.push({name,totalScore,right:totalRight,attempted,notAttempted});
-  leaderboard.sort((a,b)=>b.totalScore-a.totalScore);
-  localStorage.setItem("leaderboard",JSON.stringify(leaderboard));
-
-  const lbBody=document.getElementById("leaderboardBody");
-  document.getElementById("leaderboard").style.display="block";
-  const top=leaderboard[0];
-  lbBody.innerHTML=`<tr>
-    <td>${top.name}</td>
-    <td>${top.totalScore}/50</td>
-    <td>${top.right}</td>
-    <td>${top.attempted}</td>
-    <td>${top.notAttempted}</td>
-  </tr>`;
+document.getElementById("testBox").style.display="none";
+document.getElementById("resultBox").style.display="block";
+document.getElementById("resultBox").innerHTML=`
+<h3>Result</h3>
+Score: ${score}/50 <br>
+Correct: ${correct} <br>
+Wrong: ${wrong} <br>
+Percentage: ${percent}% <br>
+Rank: ${rank} <br><br>
+<button onclick="location.reload()">Back to Subjects</button>
+`;
 }
 
-function startTimer(minutes){
-  let time=minutes*60;
-  const interval=setInterval(()=>{
-    let m=Math.floor(time/60);
-    let s=time%60;
-    document.getElementById("timer").innerText=(m<10?"0"+m:m)+":"+(s<10?"0"+s:s);
-    if(time<=0){
-      clearInterval(interval);
-      submitTest();
-      alert("Time Over! Test submitted automatically.");
-    }
-    time--;
-  },1000);
-}
 </script>
 </body>
 </html>
