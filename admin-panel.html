@@ -48,8 +48,8 @@ input[type="file"]{padding:5px;}
   <div class="tabs">
     <button class="tabBtn activeTab" onclick="openTab('students')">Students</button>
     <button class="tabBtn" onclick="openTab('teachers')">Teachers</button>
+    <button class="tabBtn" onclick="openTab('responsibility')">Responsibility</button>
     <button class="tabBtn" onclick="openTab('notes')">Notes</button>
-    <button class="tabBtn" onclick="openTab('links')">Links</button>
     <button class="tabBtn" onclick="openTab('notifications')">Notifications</button>
   </div>
 
@@ -73,6 +73,19 @@ input[type="file"]{padding:5px;}
     <div class="list-box" id="teacherList"></div>
   </div>
 
+  <!-- Responsibility Section -->
+  <div class="section" id="responsibility">
+    <h3>Manage Responsibility</h3>
+    <input type="text" id="respName" placeholder="Name">
+    <input type="text" id="respRole" placeholder="Responsibility">
+    <input type="text" id="respMobile" placeholder="Mobile Number">
+    <input type="text" id="respWhatsapp" placeholder="WhatsApp Number">
+    <input type="text" id="respEmail" placeholder="Email ID">
+    <input type="file" id="respPhoto">
+    <button onclick="addResponsibility()">Add</button>
+    <div class="list-box" id="respList"></div>
+  </div>
+
   <!-- Notes Section -->
   <div class="section" id="notes">
     <h3>Upload Notes</h3>
@@ -80,15 +93,6 @@ input[type="file"]{padding:5px;}
     <input type="file" id="noteFile">
     <button onclick="addNote()">Upload Note</button>
     <div class="list-box" id="noteList"></div>
-  </div>
-
-  <!-- Links Section -->
-  <div class="section" id="links">
-    <h3>Manage Links</h3>
-    <input type="text" id="linkTitle" placeholder="Link Title">
-    <input type="text" id="linkURL" placeholder="Paste Link Here">
-    <button onclick="addLink()">Add Link</button>
-    <div class="list-box" id="linkList"></div>
   </div>
 
   <!-- Notifications Section -->
@@ -189,12 +193,65 @@ function addTeacher(){
     loadTeachers();
   }
 }
-
 function deleteTeacher(index){
   let teachers=JSON.parse(localStorage.getItem("teachers"))||[];
   teachers.splice(index,1);
   localStorage.setItem("teachers",JSON.stringify(teachers));
   loadTeachers();
+}
+
+// Responsibility Section
+function loadResponsibility(){
+  let resp=JSON.parse(localStorage.getItem("responsibility"))||[];
+  const container=document.getElementById("respList");
+  container.innerHTML="";
+  resp.forEach((r,i)=>{
+    container.innerHTML+=`<div>
+      <span style="color:black;">${r.name} (${r.role})</span>
+      <button onclick="deleteResponsibility(${i})">Delete</button>
+    </div>`;
+  });
+}
+
+function addResponsibility(){
+  const name=document.getElementById("respName").value.trim();
+  const role=document.getElementById("respRole").value.trim();
+  const mobile=document.getElementById("respMobile").value.trim();
+  const whatsapp=document.getElementById("respWhatsapp").value.trim();
+  const email=document.getElementById("respEmail").value.trim();
+  const file=document.getElementById("respPhoto").files[0];
+
+  if(!name || !role){alert("Enter Name & Responsibility"); return;}
+
+  const reader=new FileReader();
+  reader.onload=function(e){
+    let resp=JSON.parse(localStorage.getItem("responsibility"))||[];
+    resp.push({name, role, mobile, whatsapp, email, image:e.target.result});
+    localStorage.setItem("responsibility",JSON.stringify(resp));
+
+    document.getElementById("respName").value="";
+    document.getElementById("respRole").value="";
+    document.getElementById("respMobile").value="";
+    document.getElementById("respWhatsapp").value="";
+    document.getElementById("respEmail").value="";
+    document.getElementById("respPhoto").value="";
+
+    loadResponsibility();
+  }
+  if(file) reader.readAsDataURL(file);
+  else{
+    let resp=JSON.parse(localStorage.getItem("responsibility"))||[];
+    resp.push({name, role, mobile, whatsapp, email, image:""});
+    localStorage.setItem("responsibility",JSON.stringify(resp));
+    loadResponsibility();
+  }
+}
+
+function deleteResponsibility(index){
+  let resp=JSON.parse(localStorage.getItem("responsibility"))||[];
+  resp.splice(index,1);
+  localStorage.setItem("responsibility",JSON.stringify(resp));
+  loadResponsibility();
 }
 
 // Notes
@@ -229,33 +286,6 @@ function deleteNote(index){
   loadNotes();
 }
 
-// Links
-function loadLinks(){
-  let links=JSON.parse(localStorage.getItem("links"))||[];
-  const container=document.getElementById("linkList");
-  container.innerHTML="";
-  links.forEach((l,i)=>{
-    container.innerHTML+=`<div><span>${l.title}</span><button onclick="deleteLink(${i})">Delete</button></div>`;
-  });
-}
-function addLink(){
-  const title=document.getElementById("linkTitle").value.trim();
-  const url=document.getElementById("linkURL").value.trim();
-  if(!title || !url){alert("Enter title & URL"); return;}
-  let links=JSON.parse(localStorage.getItem("links"))||[];
-  links.push({title,url});
-  localStorage.setItem("links",JSON.stringify(links));
-  document.getElementById("linkTitle").value="";
-  document.getElementById("linkURL").value="";
-  loadLinks();
-}
-function deleteLink(index){
-  let links=JSON.parse(localStorage.getItem("links"))||[];
-  links.splice(index,1);
-  localStorage.setItem("links",JSON.stringify(links));
-  loadLinks();
-}
-
 // Notifications
 function loadNotifications(){
   let notify=JSON.parse(localStorage.getItem("notifications"))||[];
@@ -287,10 +317,11 @@ function deleteNotification(index){
 function loadAll(){
   loadStudents();
   loadTeachers();
+  loadResponsibility();
   loadNotes();
-  loadLinks();
   loadNotifications();
 }
 </script>
+
 </body>
 </html>
