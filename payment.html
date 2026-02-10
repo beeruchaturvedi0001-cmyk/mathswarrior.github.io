@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Course Payment | MATH'S WARRIOR</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
 <style>
 body{
   font-family:'Poppins',sans-serif;
@@ -103,7 +106,7 @@ body::before{
   text-align:center;
 }
 .qr-box img{
-  width:100px;
+  width:130px;
   border-radius:6px;
   box-shadow:0 5px 10px rgba(0,0,0,0.2);
 }
@@ -124,11 +127,13 @@ body::before{
 </select>
 
 <p>COURSE SELECTED: <b id="courseName">-</b></p>
-<p>Fee: ₹<span id="COURSE FEE">0</span></p>
+<p>Fee: ₹<span id="courseFee">0</span></p>
 
 <div class="qr-box">
   <p>UPI ID: <b>7705042892@axl</b></p>
-  <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=7705042892@axl&pn=MATH'S+WARRIOR&tn=Course+Fee&am=100" alt="UPI QR Code">
+  <img id="qrImage" 
+  src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=7705042892@axl" 
+  alt="UPI QR Code">
 </div>
 
 <label>UPLOAD PAYMENT SCREENSHOT:</label>
@@ -140,54 +145,85 @@ body::before{
 </div>
 
 <script>
+
 const courseSelect = document.getElementById('courseSelect');
 const courseName = document.getElementById('courseName');
 const courseFee = document.getElementById('courseFee');
+const qrImage = document.getElementById('qrImage');
 
-courseSelect.addEventListener('change', ()=>{
-  const selected = courseSelect.value;
-  courseName.innerText = selected || '-';
-  if(selected === "LAKSYA FOUNDATION BATCH") courseFee.innerText = "2199";
-  else if(selected === "PRATHAM TARGET BATCH") courseFee.innerText = "2499";
-  else if(selected === "MATH SPECIAL 2.0") courseFee.innerText = "2099";
-  else courseFee.innerText = "0";
+const upiID = "7705042892@axl";
+const payeeName = "MATH'S WARRIOR";
+
+courseSelect.addEventListener('change', function(){
+
+  const selected = this.value;
+  let amount = "0";
+
+  if(selected === "LAKSYA FOUNDATION BATCH") amount = "2199";
+  else if(selected === "PRATHAM TARGET BATCH") amount = "2499";
+  else if(selected === "MATH SPECIAL 2.0") amount = "2099";
+
+  courseName.innerText = selected || "-";
+  courseFee.innerText = amount;
+
+  if(amount !== "0"){
+    const upiLink = `upi://pay?pa=${upiID}&pn=${encodeURIComponent(payeeName)}&tn=Course Fee&am=${amount}`;
+    qrImage.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(upiLink)}`;
+  }
 });
 
-// Auto-select course if redirected from course card
 window.onload = function(){
   const selectedCourse = localStorage.getItem('selectedCourse');
   const selectedFee = localStorage.getItem('selectedFee');
+
   if(selectedCourse && selectedFee){
     courseSelect.value = selectedCourse;
     courseName.innerText = selectedCourse;
     courseFee.innerText = selectedFee;
+
+    const upiLink = `upi://pay?pa=${upiID}&pn=${encodeURIComponent(payeeName)}&tn=Course Fee&am=${selectedFee}`;
+    qrImage.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(upiLink)}`;
+
     localStorage.removeItem('selectedCourse');
     localStorage.removeItem('selectedFee');
   }
 }
 
 function verifyPayment(){
+
   const selectedCourse = courseSelect.value;
   const fee = courseFee.innerText;
   const screenshot = document.getElementById('paymentScreenshot').files[0];
-  
-  if(!selectedCourse){ alert("Select a course first!"); return;}
-  if(!screenshot){ alert("Upload payment screenshot!"); return;}
-  
+
+  if(!selectedCourse){
+    alert("Please select a course!");
+    return;
+  }
+
+  if(!screenshot){
+    alert("Please upload payment screenshot!");
+    return;
+  }
+
   const reader = new FileReader();
+
   reader.onload = function(e){
+
     localStorage.setItem('selectedCourse', selectedCourse);
     localStorage.setItem('selectedFee', fee);
     localStorage.setItem('paymentScreenshot', e.target.result);
-    
-    document.getElementById('status').innerText = "✅ Payment Verified! Redirecting to Registration...";
-    
-    setTimeout(()=>{
-      window.location.href = 'student-registration.html';
-    },1200);
+
+    document.getElementById('status').innerText = 
+    "✅ Payment Submitted Successfully! Redirecting...";
+
+    setTimeout(function(){
+      window.location.href = "student-registration.html";
+    },1500);
   };
+
   reader.readAsDataURL(screenshot);
 }
+
 </script>
 
 </body>
