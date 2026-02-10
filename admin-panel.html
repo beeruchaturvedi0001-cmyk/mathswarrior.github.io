@@ -92,16 +92,29 @@ button{background:#001f7f;color:white;font-weight:bold;cursor:pointer}
 
 <script>
 
-/* LOGIN */
+/* LOGIN (UPDATED ONLY THIS PART) */
 function adminLogin(){
-if(adminUser.value==="admin" && adminPass.value==="admin123"){
+
+let u = adminUser.value.trim();
+let p = adminPass.value.trim();
+
+if(u === "ABHINAYPRATAP" && p === "ABHINAY0011"){
+
+loginMsg.style.color = "green";
+loginMsg.innerHTML = "✅ SUCCESSFULL LOGIN";
+
+setTimeout(()=>{
 loginBox.style.display="none";
 adminPanel.style.display="block";
 openTab('teachers');
 loadAll();
+},800);
+
 }else{
-loginMsg.innerText="Invalid Credentials ❌";
+loginMsg.style.color = "red";
+loginMsg.innerHTML = "❌ Invalid Credentials";
 }
+
 }
 
 function openTab(id){
@@ -163,7 +176,7 @@ localStorage.setItem("teachers",JSON.stringify(data));
 loadTeachers();
 }
 
-/* RESPONSIBILITY - FIXED */
+/* RESPONSIBILITY */
 function addResponsibility(){
 
 let name=rName.value.trim();
