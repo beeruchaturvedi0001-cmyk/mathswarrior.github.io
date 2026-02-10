@@ -4,27 +4,22 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MATH'S WARRIOR ADMIN PANEL</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
-body{background:linear-gradient(135deg,#ff0000,#001f7f);padding:20px;color:white;}
-.container{max-width:1200px;margin:auto;}
-.admin-login,.panel{background:white;color:black;padding:20px;border-radius:20px;margin-bottom:20px;}
-input,button{padding:10px;margin:5px;border-radius:10px;border:1px solid #ccc;}
-button{background:linear-gradient(45deg,#ff0000,#001f7f);color:white;font-weight:bold;cursor:pointer;}
-.tabs{margin:15px 0;}
-.tabs button{background:#ffeb3b;color:black;margin:3px;}
-.section{display:none;margin-top:15px;}
-.list-box div{background:#f5f5f5;margin:8px 0;padding:8px;border-radius:10px;display:flex;justify-content:space-between;align-items:center;}
-.card{display:flex;align-items:center;gap:10px;}
-.card img{width:60px;height:60px;border-radius:50%;object-fit:cover;}
-.btn-sm{padding:4px 8px;font-size:12px;border-radius:6px;color:white;text-decoration:none;margin-right:5px;}
-.call{background:#28a745;}
-.whatsapp{background:#25D366;}
-.email{background:#007bff;}
-.download{background:#ff9800;}
-.delete{background:red;}
+body{font-family:Arial;background:linear-gradient(135deg,#ff0000,#001f7f);padding:20px;color:white}
+.container{max-width:1100px;margin:auto}
+.box{background:white;color:black;padding:20px;border-radius:15px;margin-bottom:20px}
+input,button{padding:8px;margin:5px;border-radius:8px;border:1px solid #ccc}
+button{background:#001f7f;color:white;font-weight:bold;cursor:pointer}
+.section{display:none;margin-top:15px}
+.card{background:#f5f5f5;padding:10px;margin:10px 0;border-radius:10px;display:flex;justify-content:space-between;align-items:center}
+.card img{width:60px;height:60px;border-radius:50%;object-fit:cover}
+.small-btn{padding:5px 8px;font-size:12px;border-radius:6px;color:white;text-decoration:none;margin-right:5px}
+.call{background:green}
+.whatsapp{background:#25D366}
+.email{background:#007bff}
+.delete{background:red}
+.download{background:orange}
 </style>
 </head>
 <body>
@@ -32,7 +27,7 @@ button{background:linear-gradient(45deg,#ff0000,#001f7f);color:white;font-weight
 <div class="container">
 
 <!-- LOGIN -->
-<div class="admin-login" id="loginBox">
+<div class="box" id="loginBox">
 <h2>Admin Login</h2>
 <input type="text" id="adminUser" placeholder="Username"><br>
 <input type="password" id="adminPass" placeholder="Password"><br>
@@ -41,14 +36,12 @@ button{background:linear-gradient(45deg,#ff0000,#001f7f);color:white;font-weight
 </div>
 
 <!-- PANEL -->
-<div class="panel" id="adminPanel" style="display:none;">
+<div class="box" id="adminPanel" style="display:none">
 
-<div class="tabs">
 <button onclick="openTab('teachers')">Teachers</button>
-<button onclick="openTab('responsibility')">Responsibility</button>
+<button onclick="openTab('responsibility')">Responsibility / Founder</button>
 <button onclick="openTab('notes')">Notes</button>
 <button onclick="openTab('notifications')">Notifications</button>
-</div>
 
 <!-- TEACHERS -->
 <div class="section" id="teachers">
@@ -101,9 +94,7 @@ button{background:linear-gradient(45deg,#ff0000,#001f7f);color:white;font-weight
 
 /* LOGIN */
 function adminLogin(){
-let u=adminUser.value;
-let p=adminPass.value;
-if(u==="admin" && p==="admin123"){
+if(adminUser.value==="admin" && adminPass.value==="admin123"){
 loginBox.style.display="none";
 adminPanel.style.display="block";
 openTab('teachers');
@@ -113,30 +104,36 @@ loginMsg.innerText="Invalid Credentials ❌";
 }
 }
 
-/* TAB */
 function openTab(id){
 document.querySelectorAll(".section").forEach(s=>s.style.display="none");
 document.getElementById(id).style.display="block";
 }
 
-/* ================= TEACHERS ================= */
+/* TEACHERS */
 function addTeacher(){
-let reader=new FileReader();
 let file=tPhoto.files[0];
-reader.onload=function(e){
 let data=JSON.parse(localStorage.getItem("teachers"))||[];
+
+function save(img){
 data.push({
 name:tName.value,
 subject:tSubject.value,
 mobile:tMobile.value,
 whatsapp:tWhatsapp.value,
 email:tEmail.value,
-image:e.target.result
+image:img
 });
 localStorage.setItem("teachers",JSON.stringify(data));
 loadTeachers();
 }
-if(file) reader.readAsDataURL(file);
+
+if(file){
+let reader=new FileReader();
+reader.onload=e=>save(e.target.result);
+reader.readAsDataURL(file);
+}else{
+save("");
+}
 }
 
 function loadTeachers(){
@@ -144,18 +141,16 @@ let data=JSON.parse(localStorage.getItem("teachers"))||[];
 teacherList.innerHTML="";
 data.forEach((t,i)=>{
 teacherList.innerHTML+=`
-<div class="list-box">
 <div class="card">
-<img src="${t.image||'https://via.placeholder.com/60'}">
 <div>
+<img src="${t.image||'https://via.placeholder.com/60'}">
 <b>${t.name}</b><br>${t.subject}
 </div>
-</div>
 <div>
-<a class="btn-sm call" href="tel:${t.mobile}">Call</a>
-<a class="btn-sm whatsapp" target="_blank" href="https://wa.me/${t.whatsapp}">WA</a>
-<a class="btn-sm email" href="mailto:${t.email}">Mail</a>
-<button class="btn-sm delete" onclick="deleteTeacher(${i})">X</button>
+<a class="small-btn call" href="tel:${t.mobile}">Call</a>
+<a class="small-btn whatsapp" href="https://wa.me/${t.whatsapp}" target="_blank">WA</a>
+<a class="small-btn email" href="mailto:${t.email}">Mail</a>
+<button class="small-btn delete" onclick="deleteTeacher(${i})">X</button>
 </div>
 </div>`;
 });
@@ -168,24 +163,37 @@ localStorage.setItem("teachers",JSON.stringify(data));
 loadTeachers();
 }
 
-/* ================= RESPONSIBILITY ================= */
+/* RESPONSIBILITY - FIXED */
 function addResponsibility(){
-let reader=new FileReader();
+
+let name=rName.value.trim();
+let role=rRole.value.trim();
+let mobile=rMobile.value.trim();
+let whatsapp=rWhatsapp.value.trim();
+let email=rEmail.value.trim();
 let file=rPhoto.files[0];
-reader.onload=function(e){
+
+if(!name || !role){
+alert("Name aur Role enter karein");
+return;
+}
+
 let data=JSON.parse(localStorage.getItem("responsibilityData"))||[];
-data.push({
-name:rName.value,
-role:rRole.value,
-mobile:rMobile.value,
-whatsapp:rWhatsapp.value,
-email:rEmail.value,
-image:e.target.result
-});
+
+function save(img){
+data.push({name,role,mobile,whatsapp,email,image:img});
 localStorage.setItem("responsibilityData",JSON.stringify(data));
 loadResponsibility();
+rName.value=rRole.value=rMobile.value=rWhatsapp.value=rEmail.value=rPhoto.value="";
 }
-if(file) reader.readAsDataURL(file);
+
+if(file){
+let reader=new FileReader();
+reader.onload=e=>save(e.target.result);
+reader.readAsDataURL(file);
+}else{
+save("");
+}
 }
 
 function loadResponsibility(){
@@ -193,18 +201,16 @@ let data=JSON.parse(localStorage.getItem("responsibilityData"))||[];
 respList.innerHTML="";
 data.forEach((r,i)=>{
 respList.innerHTML+=`
-<div class="list-box">
 <div class="card">
-<img src="${r.image||'https://via.placeholder.com/60'}">
 <div>
+<img src="${r.image||'https://via.placeholder.com/60'}">
 <b>${r.name}</b><br>${r.role}
 </div>
-</div>
 <div>
-<a class="btn-sm call" href="tel:${r.mobile}">Call</a>
-<a class="btn-sm whatsapp" target="_blank" href="https://wa.me/${r.whatsapp}">WA</a>
-<a class="btn-sm email" href="mailto:${r.email}">Mail</a>
-<button class="btn-sm delete" onclick="deleteResp(${i})">X</button>
+<a class="small-btn call" href="tel:${r.mobile}">Call</a>
+<a class="small-btn whatsapp" href="https://wa.me/${r.whatsapp}" target="_blank">WA</a>
+<a class="small-btn email" href="mailto:${r.email}">Mail</a>
+<button class="small-btn delete" onclick="deleteResp(${i})">X</button>
 </div>
 </div>`;
 });
@@ -217,13 +223,14 @@ localStorage.setItem("responsibilityData",JSON.stringify(data));
 loadResponsibility();
 }
 
-/* ================= NOTES ================= */
+/* NOTES */
 function addNote(){
-let reader=new FileReader();
 let file=noteFile.files[0];
-reader.onload=function(e){
 let data=JSON.parse(localStorage.getItem("notes"))||[];
-data.push({title:noteTitle.value,file:e.target.result,filename:file.name});
+
+let reader=new FileReader();
+reader.onload=e=>{
+data.push({title:noteTitle.value,file:e.target.result});
 localStorage.setItem("notes",JSON.stringify(data));
 loadNotes();
 }
@@ -235,11 +242,11 @@ let data=JSON.parse(localStorage.getItem("notes"))||[];
 noteList.innerHTML="";
 data.forEach((n,i)=>{
 noteList.innerHTML+=`
-<div class="list-box">
+<div class="card">
 <span>${n.title}</span>
 <div>
-<a class="btn-sm download" href="${n.file}" download="${n.filename}">Download</a>
-<button class="btn-sm delete" onclick="deleteNote(${i})">X</button>
+<a class="small-btn download" href="${n.file}" download>Download</a>
+<button class="small-btn delete" onclick="deleteNote(${i})">X</button>
 </div>
 </div>`;
 });
@@ -252,7 +259,7 @@ localStorage.setItem("notes",JSON.stringify(data));
 loadNotes();
 }
 
-/* ================= NOTIFICATIONS ================= */
+/* NOTIFICATIONS */
 function addNotification(){
 let data=JSON.parse(localStorage.getItem("notifications"))||[];
 data.push({title:notifyTitle.value,link:notifyLink.value});
@@ -265,9 +272,9 @@ let data=JSON.parse(localStorage.getItem("notifications"))||[];
 notifyList.innerHTML="";
 data.forEach((n,i)=>{
 notifyList.innerHTML+=`
-<div class="list-box">
+<div class="card">
 <span>${n.title}</span>
-<button class="btn-sm delete" onclick="deleteNotification(${i})">X</button>
+<button class="small-btn delete" onclick="deleteNotification(${i})">X</button>
 </div>`;
 });
 }
