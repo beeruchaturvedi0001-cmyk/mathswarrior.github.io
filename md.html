@@ -3,179 +3,129 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MD / Founder List | MATH'S WARRIOR</title>
+<title>MATH'S WARRIOR - Founder</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
 <style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
 body{
-    font-family:'Poppins',sans-serif;
-    margin:0;
-    padding:0;
-    background: linear-gradient(135deg,#ff512f,#dd2476);
-    color:white;
+background:linear-gradient(135deg,#001f7f,#ff0000);
+padding:20px;
+color:white;
 }
+
 .container{
-    padding:20px;
+max-width:1000px;
+margin:auto;
 }
+
 h1{
-    text-align:center; 
-    font-size:28px; 
-    margin-bottom:30px; 
-    letter-spacing:1px;
-    text-shadow: 2px 2px 5px #00000080;
+text-align:center;
+margin-bottom:25px;
 }
 
-/* MD Cards */
-.md-list{
-    display:flex;
-    flex-wrap:wrap;
-    gap:25px;
-    justify-content:center;
-}
-.md-card{
-    background:white;
-    color:#333;
-    border-radius:20px;
-    width:280px;       /* Bigger card */
-    padding:25px;      
-    text-align:center;
-    box-shadow:0 12px 25px rgba(0,0,0,0.3);
-    transition:0.3s;
-    position:relative;
-}
-.md-card:hover{
-    transform:translateY(-8px);
-    box-shadow:0 20px 40px rgba(0,0,0,0.4);
-}
-.md-card img{
-    width:130px;       /* Bigger photo */
-    height:130px;
-    border-radius:50%;
-    object-fit:cover;
-    margin-bottom:15px;
-    border:4px solid #ff512f;
-}
-.md-card b{
-    display:block;
-    font-size:20px;
-    margin-bottom:5px;
-}
-.md-card span{
-    display:block;
-    font-size:16px;
-    color:#ff512f;
-    margin-bottom:10px;
-}
-.md-card .contact-btn{
-    display:block;
-    width:100%;
-    margin:5px 0;
-    padding:8px 0;
-    border:none;
-    border-radius:12px;
-    background:linear-gradient(45deg,#00c6ff,#ff00ff);
-    color:white;
-    cursor:pointer;
-    font-weight:600;
-    font-size:14px;
-    text-decoration:none;
-    transition:0.3s;
-}
-.md-card .contact-btn:hover{
-    transform:scale(1.05);
-    opacity:0.9;
+.card{
+background:white;
+color:black;
+border-radius:20px;
+padding:15px;
+margin-bottom:20px;
+display:flex;
+align-items:center;
+gap:15px;
+box-shadow:0 8px 20px rgba(0,0,0,0.3);
 }
 
-/* Modal */
-.modal{
-    display:none;
-    position:fixed;
-    z-index:1000;
-    left:0;
-    top:0;
-    width:100%;
-    height:100%;
-    overflow:auto;
-    background:rgba(0,0,0,0.6);
+.card img{
+width:90px;
+height:90px;
+border-radius:50%;
+object-fit:cover;
+border:3px solid #001f7f;
 }
-.modal-content{
-    background:white;
-    margin:10% auto;
-    padding:20px;
-    border-radius:15px;
-    width:90%;
-    max-width:400px;
-    text-align:left;
-    box-shadow:0 10px 25px rgba(0,0,0,0.3);
+
+.info{
+flex:1;
 }
-.close{
-    float:right;
-    font-size:22px;
-    cursor:pointer;
-    font-weight:bold;
-    color:#ff512f;
+
+.info h2{
+margin-bottom:5px;
 }
-.modal-content h3{
-    color:#ff512f;
-    margin-bottom:10px;
+
+.buttons a{
+text-decoration:none;
+padding:6px 12px;
+border-radius:10px;
+color:white;
+font-size:13px;
+margin-right:6px;
+display:inline-block;
 }
-.modal-content p{
-    color:#333;
-    line-height:1.5;
+
+.call{background:#28a745;}
+.whatsapp{background:#25D366;}
+.email{background:#007bff;}
+
+.no-data{
+text-align:center;
+font-size:18px;
+background:white;
+color:black;
+padding:20px;
+border-radius:15px;
 }
 </style>
 </head>
 <body>
 
 <div class="container">
-<h2>👑 MATH'S WARRIOR FOUNDER </h2>
-<div class="md-list" id="mdList"></div>
-</div>
+<h3>INSTITUTE RESPONSIBILITY  MEMBERS</h3>
 
-<!-- Modal for Responsibility -->
-<div id="modal" class="modal">
-  <div class="modal-content">
-    <span class="close" onclick="closeModal()">&times;</span>
-    <h3>Responsibility / Dayitv</h3>
-    <p id="modalText"></p>
-  </div>
+<div id="founderContainer"></div>
+
 </div>
 
 <script>
-function loadMDs(){
-    const mdListDiv = document.getElementById("mdList");
-    let mds = JSON.parse(localStorage.getItem("mdList"))||[];
-    mdListDiv.innerHTML = "";
-    if(mds.length===0){
-        mdListDiv.innerHTML = "<p style='color:white; font-size:16px;'>No MD / Founder added yet.</p>";
-        return;
-    }
-    mds.forEach((md,i)=>{
-        mdListDiv.innerHTML += `
-        <div class="md-card">
-            <img src="${md.photo}" alt="${md.name}">
-            <b>${md.name}</b>
-            <span>${md.role}</span>
-            <a href="tel:${md.phone}" class="contact-btn">📞 Call</a>
-            <a href="https://wa.me/${md.whatsapp}" target="_blank" class="contact-btn">📱 WhatsApp</a>
-            <p>✉️ ${md.email}</p>
-            <button class="contact-btn" onclick="showResponsibility(${i})">View Responsibility</button>
-        </div>`;
-    });
+
+function loadFounder(){
+
+let data = JSON.parse(localStorage.getItem("responsibilityData")) || [];
+
+let container = document.getElementById("founderContainer");
+container.innerHTML = "";
+
+if(data.length === 0){
+container.innerHTML = "<div class='no-data'>No Founder Data Available</div>";
+return;
 }
 
-function showResponsibility(index){
-    let mds = JSON.parse(localStorage.getItem("mdList"))||[];
-    if(!mds[index]) return;
-    document.getElementById("modalText").innerText = mds[index].responsibility || "-";
-    document.getElementById("modal").style.display = "block";
+data.forEach(r => {
+
+let img = r.image ? r.image : "https://via.placeholder.com/90";
+
+container.innerHTML += `
+<div class="card">
+<img src="${img}">
+<div class="info">
+<h2>${r.name}</h2>
+<p><b>${r.role}</b></p>
+<p>Mobile: ${r.mobile}</p>
+<p>Email: ${r.email}</p>
+<div class="buttons">
+<a class="call" href="tel:${r.mobile}">Call</a>
+<a class="whatsapp" target="_blank" href="https://wa.me/${r.whatsapp}">WhatsApp</a>
+<a class="email" href="mailto:${r.email}">Email</a>
+</div>
+</div>
+</div>
+`;
+
+});
+
 }
 
-function closeModal(){
-    document.getElementById("modal").style.display = "none";
-}
+loadFounder();
 
-// Load on page load
-window.onload = loadMDs;
 </script>
 
 </body>

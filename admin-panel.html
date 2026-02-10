@@ -5,357 +5,287 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MATH'S WARRIOR ADMIN PANEL</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
-body{background: linear-gradient(135deg,#ff0000,#001f7f); min-height:100vh; padding:20px; color:white;}
+body{background:linear-gradient(135deg,#ff0000,#001f7f);padding:20px;color:white;}
 .container{max-width:1200px;margin:auto;}
-h1,h2,h3{margin-bottom:15px;text-align:center;}
-.admin-login, .panel{background:rgba(255,255,255,0.95);color:#000;padding:20px;border-radius:20px;box-shadow:0 10px 25px rgba(0,0,0,0.3);margin-bottom:30px;}
-.admin-login input, .admin-login button, .panel input, .panel button{padding:10px 12px;border-radius:12px;border:1px solid #ccc;margin:5px 0;font-size:16px;}
-.admin-login button, .panel button{cursor:pointer;background:linear-gradient(45deg,#ff0000,#001f7f);color:white;font-weight:bold;}
-.admin-login button:hover, .panel button:hover{transform:scale(1.05);}
-.success-msg{color:green;font-weight:bold;margin-bottom:10px;text-align:center;}
-.tabs{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:20px;}
-.tabBtn{padding:10px 20px;border:none;border-radius:12px;background:#ffeb3b;color:black;font-weight:bold;cursor:pointer;transition:0.3s;}
-.tabBtn.activeTab{background:#001f7f;color:#ffeb3b;}
-.section{display:none;background:#f0f0f0;padding:15px;border-radius:15px;color:black;}
-.section h3{margin-bottom:10px;}
-.list-box{max-height:300px;overflow-y:auto;margin-bottom:15px;}
-.list-box div{padding:8px;border-bottom:1px solid #ccc;display:flex;justify-content:space-between;align-items:center;}
-.list-box div span{color:black;font-weight:bold;}
-.list-box div button{padding:5px 10px;border:none;border-radius:8px;background:#ff0000;color:white;cursor:pointer;}
-.list-box div button:hover{opacity:0.8;}
-input[type="file"]{padding:5px;}
-.teacher-card, .resp-card{display:flex;align-items:center;gap:10px;}
-.teacher-card img, .resp-card img{width:60px;height:60px;border-radius:50%;object-fit:cover;}
-.teacher-info, .resp-info{flex:1;}
-.teacher-buttons a, .resp-buttons a{margin-right:5px;text-decoration:none;padding:4px 8px;border-radius:8px;color:white;font-size:12px;}
-.call-btn{background:#28a745;}
-.whatsapp-btn{background:#25D366;}
-.email-btn{background:#007bff;}
-.download-btn{background:#ff9800;}
+.admin-login,.panel{background:white;color:black;padding:20px;border-radius:20px;margin-bottom:20px;}
+input,button{padding:10px;margin:5px;border-radius:10px;border:1px solid #ccc;}
+button{background:linear-gradient(45deg,#ff0000,#001f7f);color:white;font-weight:bold;cursor:pointer;}
+.tabs{margin:15px 0;}
+.tabs button{background:#ffeb3b;color:black;margin:3px;}
+.section{display:none;margin-top:15px;}
+.list-box div{background:#f5f5f5;margin:8px 0;padding:8px;border-radius:10px;display:flex;justify-content:space-between;align-items:center;}
+.card{display:flex;align-items:center;gap:10px;}
+.card img{width:60px;height:60px;border-radius:50%;object-fit:cover;}
+.btn-sm{padding:4px 8px;font-size:12px;border-radius:6px;color:white;text-decoration:none;margin-right:5px;}
+.call{background:#28a745;}
+.whatsapp{background:#25D366;}
+.email{background:#007bff;}
+.download{background:#ff9800;}
+.delete{background:red;}
 </style>
 </head>
 <body>
 
 <div class="container">
 
-<!-- Admin Login -->
+<!-- LOGIN -->
 <div class="admin-login" id="loginBox">
-  <h1>Admin Login</h1>
-  <input type="text" id="adminUser" placeholder="Username"><br>
-  <input type="password" id="adminPass" placeholder="Password"><br>
-  <button onclick="adminLogin()">Login</button>
-  <div class="success-msg" id="loginMsg"></div>
+<h2>Admin Login</h2>
+<input type="text" id="adminUser" placeholder="Username"><br>
+<input type="password" id="adminPass" placeholder="Password"><br>
+<button onclick="adminLogin()">Login</button>
+<p id="loginMsg"></p>
 </div>
 
-<!-- Admin Panel -->
+<!-- PANEL -->
 <div class="panel" id="adminPanel" style="display:none;">
-  <h1>Admin Panel</h1>
 
-  <div class="tabs">
-    <button class="tabBtn activeTab" onclick="openTab('students')">Students</button>
-    <button class="tabBtn" onclick="openTab('teachers')">Teachers</button>
-    <button class="tabBtn" onclick="openTab('responsibility')">Responsibility</button>
-    <button class="tabBtn" onclick="openTab('notes')">Notes</button>
-    <button class="tabBtn" onclick="openTab('notifications')">Notifications</button>
-  </div>
-
-  <!-- Students Section -->
-  <div class="section" id="students" style="display:block;">
-    <h3>Registered Students</h3>
-    <div class="list-box" id="studentList"></div>
-  </div>
-
-  <!-- Teachers Section -->
-  <div class="section" id="teachers">
-    <h3>Manage Teachers</h3>
-    <input type="text" id="teacherName" placeholder="Teacher Name">
-    <input type="text" id="teacherSubject" placeholder="Subject">
-    <input type="text" id="teacherExperience" placeholder="Experience (Years)">
-    <input type="text" id="teacherMobile" placeholder="Mobile Number">
-    <input type="text" id="teacherEmail" placeholder="Email ID">
-    <input type="text" id="teacherWhatsapp" placeholder="WhatsApp Number">
-    <input type="file" id="teacherImage">
-    <button onclick="addTeacher()">Add Teacher</button>
-    <div class="list-box" id="teacherList"></div>
-  </div>
-
-  <!-- Responsibility Section -->
-  <div class="section" id="responsibility">
-    <h3>Manage Responsibility</h3>
-    <input type="text" id="respName" placeholder="Name">
-    <input type="text" id="respRole" placeholder="Responsibility">
-    <input type="text" id="respMobile" placeholder="Mobile Number">
-    <input type="text" id="respWhatsapp" placeholder="WhatsApp Number">
-    <input type="text" id="respEmail" placeholder="Email ID">
-    <input type="file" id="respPhoto">
-    <button onclick="addResponsibility()">Add</button>
-    <div class="list-box" id="respList"></div>
-  </div>
-
-  <!-- Notes Section -->
-  <div class="section" id="notes">
-    <h3>Upload Notes</h3>
-    <input type="text" id="noteTitle" placeholder="Note Title">
-    <input type="file" id="noteFile">
-    <button onclick="addNote()">Upload Note</button>
-    <div class="list-box" id="noteList"></div>
-  </div>
-
-  <!-- Notifications Section -->
-  <div class="section" id="notifications">
-    <h3>Notifications</h3>
-    <input type="text" id="notifyTitle" placeholder="Notification Title">
-    <input type="text" id="notifyLink" placeholder="Paste Link Here">
-    <button onclick="addNotification()">Add Notification</button>
-    <div class="list-box" id="notifyList"></div>
-  </div>
+<div class="tabs">
+<button onclick="openTab('teachers')">Teachers</button>
+<button onclick="openTab('responsibility')">Responsibility</button>
+<button onclick="openTab('notes')">Notes</button>
+<button onclick="openTab('notifications')">Notifications</button>
 </div>
 
+<!-- TEACHERS -->
+<div class="section" id="teachers">
+<h3>Add Teacher</h3>
+<input type="text" id="tName" placeholder="Name">
+<input type="text" id="tSubject" placeholder="Subject">
+<input type="text" id="tMobile" placeholder="Mobile">
+<input type="text" id="tWhatsapp" placeholder="WhatsApp">
+<input type="text" id="tEmail" placeholder="Email">
+<input type="file" id="tPhoto">
+<button onclick="addTeacher()">Add</button>
+<div id="teacherList"></div>
+</div>
+
+<!-- RESPONSIBILITY -->
+<div class="section" id="responsibility">
+<h3>Add Responsibility / Founder</h3>
+<input type="text" id="rName" placeholder="Name">
+<input type="text" id="rRole" placeholder="Role">
+<input type="text" id="rMobile" placeholder="Mobile">
+<input type="text" id="rWhatsapp" placeholder="WhatsApp">
+<input type="text" id="rEmail" placeholder="Email">
+<input type="file" id="rPhoto">
+<button onclick="addResponsibility()">Add</button>
+<div id="respList"></div>
+</div>
+
+<!-- NOTES -->
+<div class="section" id="notes">
+<h3>Upload Notes</h3>
+<input type="text" id="noteTitle" placeholder="Title">
+<input type="file" id="noteFile">
+<button onclick="addNote()">Upload</button>
+<div id="noteList"></div>
+</div>
+
+<!-- NOTIFICATIONS -->
+<div class="section" id="notifications">
+<h3>Add Notification</h3>
+<input type="text" id="notifyTitle" placeholder="Title">
+<input type="text" id="notifyLink" placeholder="Link">
+<button onclick="addNotification()">Add</button>
+<div id="notifyList"></div>
+</div>
+
+</div>
 </div>
 
 <script>
-// Admin Login
+
+/* LOGIN */
 function adminLogin(){
-  const user=document.getElementById("adminUser").value.trim();
-  const pass=document.getElementById("adminPass").value.trim();
-  const msg=document.getElementById("loginMsg");
-  if(user==="admin" && pass==="admin123"){
-    msg.innerText="Login Successful ✅";
-    setTimeout(()=>{
-      document.getElementById("loginBox").style.display="none";
-      document.getElementById("adminPanel").style.display="block";
-      loadAll();
-    },800);
-  } else {
-    msg.innerText="Invalid Credentials ❌";
-  }
+let u=adminUser.value;
+let p=adminPass.value;
+if(u==="admin" && p==="admin123"){
+loginBox.style.display="none";
+adminPanel.style.display="block";
+openTab('teachers');
+loadAll();
+}else{
+loginMsg.innerText="Invalid Credentials ❌";
+}
 }
 
-// Tabs
-function openTab(tab){
-  document.querySelectorAll(".section").forEach(s=>s.style.display="none");
-  document.getElementById(tab).style.display="block";
-  document.querySelectorAll(".tabBtn").forEach(b=>b.classList.remove("activeTab"));
-  document.querySelector(`.tabBtn[onclick="openTab('${tab}')"]`).classList.add("activeTab");
+/* TAB */
+function openTab(id){
+document.querySelectorAll(".section").forEach(s=>s.style.display="none");
+document.getElementById(id).style.display="block";
 }
 
-// Students
-function loadStudents(){
-  let students=JSON.parse(localStorage.getItem("students"))||[];
-  const container=document.getElementById("studentList");
-  container.innerHTML="";
-  students.forEach(s=>{
-    container.innerHTML+=`<div><span>${s}</span></div>`;
-  });
-}
-
-// Teachers
-function loadTeachers(){
-  let teachers=JSON.parse(localStorage.getItem("teachers"))||[];
-  const container=document.getElementById("teacherList");
-  container.innerHTML="";
-  teachers.forEach((t,i)=>{
-    let img=t.image || "https://via.placeholder.com/60";
-    container.innerHTML+=`<div class="teacher-card">
-      <img src="${img}">
-      <div class="teacher-info">
-        <b>${t.name}</b><br>${t.subject} (${t.experience}yrs)<br>Mobile: ${t.mobile}<br>Email: ${t.email}
-      </div>
-      <div class="teacher-buttons">
-        <a class="call-btn" href="tel:${t.mobile}">Call</a>
-        <a class="whatsapp-btn" href="https://wa.me/${t.whatsapp}" target="_blank">WhatsApp</a>
-        <a class="email-btn" href="mailto:${t.email}">Email</a>
-      </div>
-      <button onclick="deleteTeacher(${i})">Delete</button>
-    </div>`;
-  });
-}
+/* ================= TEACHERS ================= */
 function addTeacher(){
-  const name=document.getElementById("teacherName").value.trim();
-  const subject=document.getElementById("teacherSubject").value.trim();
-  const experience=document.getElementById("teacherExperience").value.trim();
-  const mobile=document.getElementById("teacherMobile").value.trim();
-  const email=document.getElementById("teacherEmail").value.trim();
-  const whatsapp=document.getElementById("teacherWhatsapp").value.trim();
-  const file=document.getElementById("teacherImage").files[0];
-
-  if(!name || !subject){alert("Enter Name & Subject"); return;}
-
-  const reader=new FileReader();
-  reader.onload=function(e){
-    let teachers=JSON.parse(localStorage.getItem("teachers"))||[];
-    teachers.push({name, subject, experience, mobile, email, whatsapp, image:e.target.result});
-    localStorage.setItem("teachers",JSON.stringify(teachers));
-    document.getElementById("teacherName").value="";
-    document.getElementById("teacherSubject").value="";
-    document.getElementById("teacherExperience").value="";
-    document.getElementById("teacherMobile").value="";
-    document.getElementById("teacherEmail").value="";
-    document.getElementById("teacherWhatsapp").value="";
-    document.getElementById("teacherImage").value="";
-    loadTeachers();
-  }
-  if(file) reader.readAsDataURL(file);
-  else addTeacherNoImage();
+let reader=new FileReader();
+let file=tPhoto.files[0];
+reader.onload=function(e){
+let data=JSON.parse(localStorage.getItem("teachers"))||[];
+data.push({
+name:tName.value,
+subject:tSubject.value,
+mobile:tMobile.value,
+whatsapp:tWhatsapp.value,
+email:tEmail.value,
+image:e.target.result
+});
+localStorage.setItem("teachers",JSON.stringify(data));
+loadTeachers();
 }
-function addTeacherNoImage(){
-  const name=document.getElementById("teacherName").value.trim();
-  const subject=document.getElementById("teacherSubject").value.trim();
-  const experience=document.getElementById("teacherExperience").value.trim();
-  const mobile=document.getElementById("teacherMobile").value.trim();
-  const email=document.getElementById("teacherEmail").value.trim();
-  const whatsapp=document.getElementById("teacherWhatsapp").value.trim();
-  let teachers=JSON.parse(localStorage.getItem("teachers"))||[];
-  teachers.push({name, subject, experience, mobile, email, whatsapp, image:""});
-  localStorage.setItem("teachers",JSON.stringify(teachers));
-  loadTeachers();
-}
-function deleteTeacher(index){
-  let teachers=JSON.parse(localStorage.getItem("teachers"))||[];
-  teachers.splice(index,1);
-  localStorage.setItem("teachers",JSON.stringify(teachers));
-  loadTeachers();
+if(file) reader.readAsDataURL(file);
 }
 
-// Responsibility
-function loadResponsibility(){
-  let resp=JSON.parse(localStorage.getItem("responsibility"))||[];
-  const container=document.getElementById("respList");
-  container.innerHTML="";
-  resp.forEach((r,i)=>{
-    let img=r.image || "https://via.placeholder.com/60";
-    container.innerHTML+=`<div class="resp-card">
-      <img src="${img}">
-      <div class="resp-info">
-        <b>${r.name}</b><br>${r.role}<br>Mobile: ${r.mobile}<br>Email: ${r.email}
-      </div>
-      <div class="resp-buttons">
-        <a class="call-btn" href="tel:${r.mobile}">Call</a>
-        <a class="whatsapp-btn" href="https://wa.me/${r.whatsapp}" target="_blank">WhatsApp</a>
-        <a class="email-btn" href="mailto:${r.email}">Email</a>
-      </div>
-      <button onclick="deleteResponsibility(${i})">Delete</button>
-    </div>`;
-  });
+function loadTeachers(){
+let data=JSON.parse(localStorage.getItem("teachers"))||[];
+teacherList.innerHTML="";
+data.forEach((t,i)=>{
+teacherList.innerHTML+=`
+<div class="list-box">
+<div class="card">
+<img src="${t.image||'https://via.placeholder.com/60'}">
+<div>
+<b>${t.name}</b><br>${t.subject}
+</div>
+</div>
+<div>
+<a class="btn-sm call" href="tel:${t.mobile}">Call</a>
+<a class="btn-sm whatsapp" target="_blank" href="https://wa.me/${t.whatsapp}">WA</a>
+<a class="btn-sm email" href="mailto:${t.email}">Mail</a>
+<button class="btn-sm delete" onclick="deleteTeacher(${i})">X</button>
+</div>
+</div>`;
+});
 }
+
+function deleteTeacher(i){
+let data=JSON.parse(localStorage.getItem("teachers"))||[];
+data.splice(i,1);
+localStorage.setItem("teachers",JSON.stringify(data));
+loadTeachers();
+}
+
+/* ================= RESPONSIBILITY ================= */
 function addResponsibility(){
-  const name=document.getElementById("respName").value.trim();
-  const role=document.getElementById("respRole").value.trim();
-  const mobile=document.getElementById("respMobile").value.trim();
-  const whatsapp=document.getElementById("respWhatsapp").value.trim();
-  const email=document.getElementById("respEmail").value.trim();
-  const file=document.getElementById("respPhoto").files[0];
-
-  if(!name || !role){alert("Enter Name & Responsibility"); return;}
-
-  const reader=new FileReader();
-  reader.onload=function(e){
-    let resp=JSON.parse(localStorage.getItem("responsibility"))||[];
-    resp.push({name, role, mobile, whatsapp, email, image:e.target.result});
-    localStorage.setItem("responsibility",JSON.stringify(resp));
-    document.getElementById("respName").value="";
-    document.getElementById("respRole").value="";
-    document.getElementById("respMobile").value="";
-    document.getElementById("respWhatsapp").value="";
-    document.getElementById("respEmail").value="";
-    document.getElementById("respPhoto").value="";
-    loadResponsibility();
-  }
-  if(file) reader.readAsDataURL(file);
-  else addResponsibilityNoImage();
+let reader=new FileReader();
+let file=rPhoto.files[0];
+reader.onload=function(e){
+let data=JSON.parse(localStorage.getItem("responsibilityData"))||[];
+data.push({
+name:rName.value,
+role:rRole.value,
+mobile:rMobile.value,
+whatsapp:rWhatsapp.value,
+email:rEmail.value,
+image:e.target.result
+});
+localStorage.setItem("responsibilityData",JSON.stringify(data));
+loadResponsibility();
 }
-function addResponsibilityNoImage(){
-  const name=document.getElementById("respName").value.trim();
-  const role=document.getElementById("respRole").value.trim();
-  const mobile=document.getElementById("respMobile").value.trim();
-  const whatsapp=document.getElementById("respWhatsapp").value.trim();
-  const email=document.getElementById("respEmail").value.trim();
-  let resp=JSON.parse(localStorage.getItem("responsibility"))||[];
-  resp.push({name, role, mobile, whatsapp, email, image:""});
-  localStorage.setItem("responsibility",JSON.stringify(resp));
-  loadResponsibility();
-}
-function deleteResponsibility(index){
-  let resp=JSON.parse(localStorage.getItem("responsibility"))||[];
-  resp.splice(index,1);
-  localStorage.setItem("responsibility",JSON.stringify(resp));
-  loadResponsibility();
+if(file) reader.readAsDataURL(file);
 }
 
-// Notes
-function loadNotes(){
-  let notes=JSON.parse(localStorage.getItem("notes"))||[];
-  const container=document.getElementById("noteList");
-  container.innerHTML="";
-  notes.forEach((n,i)=>{
-    container.innerHTML+=`<div><span>${n.title}</span>
-      <a class="download-btn" href="${n.file}" download="${n.filename}">Download</a>
-      <button onclick="deleteNote(${i})">Delete</button>
-    </div>`;
-  });
+function loadResponsibility(){
+let data=JSON.parse(localStorage.getItem("responsibilityData"))||[];
+respList.innerHTML="";
+data.forEach((r,i)=>{
+respList.innerHTML+=`
+<div class="list-box">
+<div class="card">
+<img src="${r.image||'https://via.placeholder.com/60'}">
+<div>
+<b>${r.name}</b><br>${r.role}
+</div>
+</div>
+<div>
+<a class="btn-sm call" href="tel:${r.mobile}">Call</a>
+<a class="btn-sm whatsapp" target="_blank" href="https://wa.me/${r.whatsapp}">WA</a>
+<a class="btn-sm email" href="mailto:${r.email}">Mail</a>
+<button class="btn-sm delete" onclick="deleteResp(${i})">X</button>
+</div>
+</div>`;
+});
 }
+
+function deleteResp(i){
+let data=JSON.parse(localStorage.getItem("responsibilityData"))||[];
+data.splice(i,1);
+localStorage.setItem("responsibilityData",JSON.stringify(data));
+loadResponsibility();
+}
+
+/* ================= NOTES ================= */
 function addNote(){
-  const title=document.getElementById("noteTitle").value.trim();
-  const file=document.getElementById("noteFile").files[0];
-  if(!title || !file){alert("Enter Title & File"); return;}
-  const reader=new FileReader();
-  reader.onload=function(e){
-    let notes=JSON.parse(localStorage.getItem("notes"))||[];
-    notes.push({title, file:e.target.result, filename:file.name});
-    localStorage.setItem("notes",JSON.stringify(notes));
-    document.getElementById("noteTitle").value="";
-    document.getElementById("noteFile").value="";
-    loadNotes();
-  }
-  reader.readAsDataURL(file);
+let reader=new FileReader();
+let file=noteFile.files[0];
+reader.onload=function(e){
+let data=JSON.parse(localStorage.getItem("notes"))||[];
+data.push({title:noteTitle.value,file:e.target.result,filename:file.name});
+localStorage.setItem("notes",JSON.stringify(data));
+loadNotes();
 }
-function deleteNote(index){
-  let notes=JSON.parse(localStorage.getItem("notes"))||[];
-  notes.splice(index,1);
-  localStorage.setItem("notes",JSON.stringify(notes));
-  loadNotes();
+if(file) reader.readAsDataURL(file);
 }
 
-// Notifications
-function loadNotifications(){
-  let notify=JSON.parse(localStorage.getItem("notifications"))||[];
-  const container=document.getElementById("notifyList");
-  container.innerHTML="";
-  notify.forEach((n,i)=>{
-    container.innerHTML+=`<div><span>${n.title}</span>
-      <button onclick="deleteNotification(${i})">Delete</button>
-    </div>`;
-  });
+function loadNotes(){
+let data=JSON.parse(localStorage.getItem("notes"))||[];
+noteList.innerHTML="";
+data.forEach((n,i)=>{
+noteList.innerHTML+=`
+<div class="list-box">
+<span>${n.title}</span>
+<div>
+<a class="btn-sm download" href="${n.file}" download="${n.filename}">Download</a>
+<button class="btn-sm delete" onclick="deleteNote(${i})">X</button>
+</div>
+</div>`;
+});
 }
+
+function deleteNote(i){
+let data=JSON.parse(localStorage.getItem("notes"))||[];
+data.splice(i,1);
+localStorage.setItem("notes",JSON.stringify(data));
+loadNotes();
+}
+
+/* ================= NOTIFICATIONS ================= */
 function addNotification(){
-  const title=document.getElementById("notifyTitle").value.trim();
-  const link=document.getElementById("notifyLink").value.trim();
-  if(!title || !link){alert("Enter title & link"); return;}
-  let notify=JSON.parse(localStorage.getItem("notifications"))||[];
-  notify.push({title,link});
-  localStorage.setItem("notifications",JSON.stringify(notify));
-  document.getElementById("notifyTitle").value="";
-  document.getElementById("notifyLink").value="";
-  loadNotifications();
-}
-function deleteNotification(index){
-  let notify=JSON.parse(localStorage.getItem("notifications"))||[];
-  notify.splice(index,1);
-  localStorage.setItem("notifications",JSON.stringify(notify));
-  loadNotifications();
+let data=JSON.parse(localStorage.getItem("notifications"))||[];
+data.push({title:notifyTitle.value,link:notifyLink.value});
+localStorage.setItem("notifications",JSON.stringify(data));
+loadNotifications();
 }
 
-// Load all
+function loadNotifications(){
+let data=JSON.parse(localStorage.getItem("notifications"))||[];
+notifyList.innerHTML="";
+data.forEach((n,i)=>{
+notifyList.innerHTML+=`
+<div class="list-box">
+<span>${n.title}</span>
+<button class="btn-sm delete" onclick="deleteNotification(${i})">X</button>
+</div>`;
+});
+}
+
+function deleteNotification(i){
+let data=JSON.parse(localStorage.getItem("notifications"))||[];
+data.splice(i,1);
+localStorage.setItem("notifications",JSON.stringify(data));
+loadNotifications();
+}
+
 function loadAll(){
-  loadStudents();
-  loadTeachers();
-  loadResponsibility();
-  loadNotes();
-  loadNotifications();
+loadTeachers();
+loadResponsibility();
+loadNotes();
+loadNotifications();
 }
-</script>
 
+</script>
 </body>
 </html>
