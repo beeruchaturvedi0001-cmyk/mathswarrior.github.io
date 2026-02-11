@@ -1,163 +1,153 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Professional Teachers | MATH'S WARRIOR</title>
+<title>TEACHER MANAGE | MATH'S WARRIOR</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
 <style>
-BODY{
-  FONT-FAMILY:'POPPINS',SANS-SERIF;
-  BACKGROUND:LINEAR-GRADIENT(135DEG,#0F2027,#203A43,#2C5364);
-  MARGIN:0; PADDING:20PX; COLOR:WHITE;
+body{
+margin:0;
+font-family:'Poppins',sans-serif;
+background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+color:white;
 }
 
-/* Container */
-.CONTAINER{
-  MAX-WIDTH:1200PX;
-  MARGIN:AUTO;
-  PADDING:10PX;
+.header{
+text-align:center;
+padding:30px 10px;
+font-size:32px;
+font-weight:700;
+color:#FF416C;
+letter-spacing:1px;
 }
 
-/* Heading */
-H2{
-  TEXT-ALIGN:CENTER;
-  COLOR:#FF416C;
-  MARGIN-BOTTOM:25PX;
-  FONT-SIZE:28PX;
+.container{
+max-width:1200px;
+margin:auto;
+padding:20px;
 }
 
-/* Grid for cards */
-.CARD-GRID{
-  DISPLAY:GRID;
-  GRID-TEMPLATE-COLUMNS:REPEAT(AUTO-FIT,MINMAX(250PX,1FR));
-  GAP:20PX;
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:25px;
 }
 
-/* Teacher Card */
-.CARD{
-  BACKGROUND:#1A1A1A;
-  COLOR:WHITE;
-  BORDER-RADIUS:15PX;
-  PADDING:20PX;
-  TEXT-ALIGN:CENTER;
-  BOX-SHADOW:0 8PX 25PX RGBA(0,0,0,0.5);
-  TRANSITION:0.3S;
+.card{
+background:#111;
+border-radius:18px;
+padding:20px;
+text-align:center;
+box-shadow:0 10px 30px rgba(0,0,0,0.6);
+transition:0.3s;
 }
 
-.CARD:HOVER{
-  TRANSFORM:TRANSLATEY(-8PX);
-  BOX-SHADOW:0 15PX 40PX RGBA(0,0,0,0.7);
+.card:hover{
+transform:translateY(-8px);
+box-shadow:0 15px 40px rgba(0,0,0,0.8);
 }
 
-/* Image */
-.CARD IMG{
-  WIDTH:120PX;
-  HEIGHT:120PX;
-  BORDER-RADIUS:50%;
-  OBJECT-FIT:COVER;
-  MARGIN-BOTTOM:15PX;
-  BORDER:3PX SOLID #FF416C;
+.card img{
+width:130px;
+height:130px;
+border-radius:50%;
+object-fit:cover;
+border:4px solid #FF416C;
+margin-bottom:15px;
 }
 
-/* Name */
-.CARD H3{
-  COLOR:#FF416C;
-  MARGIN-BOTTOM:8PX;
+.name{
+font-size:20px;
+font-weight:700;
+color:#FF416C;
+margin-bottom:5px;
 }
 
-/* Info Paragraphs */
-.CARD P{
-  MARGIN:5PX 0;
-  FONT-WEIGHT:500;
+.info{
+font-size:14px;
+margin:4px 0;
 }
 
-/* Button Container */
-.BTN-CONTAINER{
-  DISPLAY:FLEX;
-  JUSTIFY-CONTENT:CENTER;
-  FLEX-WRAP:WRAP;
-  GAP:10PX;
-  MARGIN-TOP:12PX;
+.mobile{
+color:#ccc;
+font-size:13px;
+margin-top:5px;
 }
 
-/* Buttons */
-.BTN{
-  FLEX:1;
-  PADDING:10PX;
-  BORDER:NONE;
-  BORDER-RADIUS:10PX;
-  FONT-WEIGHT:BOLD;
-  CURSOR:POINTER;
-  COLOR:WHITE;
-  TRANSITION:0.3S;
-  TEXT-DECORATION:NONE;
+.btn{
+display:inline-block;
+margin-top:12px;
+padding:10px 18px;
+background:#25D366;
+color:white;
+border-radius:30px;
+font-weight:bold;
+text-decoration:none;
+transition:0.3s;
+box-shadow:0 5px 15px rgba(0,0,0,0.5);
 }
 
-/* Specific Buttons */
-.CALL-BTN{BACKGROUND:#28A745;}
-.CALL-BTN:HOVER{BACKGROUND:#1E7E34;}
+.btn:hover{
+background:#1ebe5d;
+transform:scale(1.05);
+}
 
-.WA-BTN{BACKGROUND:#25D366;}
-.WA-BTN:HOVER{BACKGROUND:#1C8C4A;}
-
-.TELEGRAM-BTN{BACKGROUND:#0088CC;}
-.TELEGRAM-BTN:HOVER{BACKGROUND:#005F80;}
-
-.LASTCHAT-BTN{BACKGROUND:#FF5722;}
-.LASTCHAT-BTN:HOVER{BACKGROUND:#E64A19;}
-
-.YOUTUBE-BTN{BACKGROUND:#FF0000;}
-.YOUTUBE-BTN:HOVER{BACKGROUND:#CC0000;}
-</STYLE>
+.empty{
+text-align:center;
+font-size:18px;
+color:#ccc;
+margin-top:40px;
+}
+</style>
 </head>
+
 <body>
 
-<DIV CLASS="CONTAINER">
-  <H2>Our Professional Teachers</H2>
-  <DIV CLASS="CARD-GRID" ID="TEACHERGRID"></DIV>
-</DIV>
+<div class="header">
+OUR PROFESSIONAL TEACHERS
+</div>
 
-<SCRIPT>
-// Load teacher data from localStorage
-FUNCTION LOADTEACHERS(){
-  CONST TEACHERS=JSON.PARSE(LOCALSTORAGE.GETITEM('TEACHERS'))||[];
-  CONST GRID=DOCUMENT.GETELEMENTBYID('TEACHERGRID');
-  GRID.INNERHTML='';
+<div class="container">
+<div class="grid" id="teacherGrid"></div>
+</div>
 
-  IF(TEACHERS.LENGTH===0){
-    GRID.INNERHTML='<P STYLE="COLOR:WHITE;TEXT-ALIGN:CENTER;">NO TEACHERS FOUND!</P>';
-    RETURN;
-  }
+<script>
+function loadTeachers(){
+let teachers=JSON.parse(localStorage.getItem("TEACHERS"))||[];
+let grid=document.getElementById("teacherGrid");
+grid.innerHTML="";
 
-  TEACHERS.FOREACH(T=>{
-    CONST PHOTO=T.TPHOTO||'https://via.placeholder.com/120';
-    CONST CARD=DOCUMENT.CREATEELEMENT('DIV');
-    CARD.CLASSNAME='CARD';
-    CARD.INNERHTML=`
-      <IMG SRC="${PHOTO}" ALT="${T.TNAME}">
-      <H3>${T.TNAME}</H3>
-      <P>📚 SUBJECT: ${T.TSUBJECT}</P>
-      <P>💼 EXPERIENCE: ${T.TEXP} YEARS</P>
-      <P>📱 MOBILE: ${T.TMOBILE}</P>
-      <P>💬 WHATSAPP: ${T.TWHATSAPP}</P>
-      <P>✉️ EMAIL: ${T.TEMAIL||'-'}</P>
-      <P>📡 TELEGRAM: ${T.TTELEGRAM||'-'}</P>
-      <DIV CLASS="BTN-CONTAINER">
-        <A CLASS="BTN CALL-BTN" HREF="TEL:${T.TMOBILE}">CALL</A>
-        <A CLASS="BTN WA-BTN" HREF="HTTPS://WA.ME/${T.TWHATSAPP}" TARGET="_BLANK">WHATSAPP</A>
-        <A CLASS="BTN LASTCHAT-BTN" HREF="HTTPS://WA.ME/${T.TWHATSAPP}" TARGET="_BLANK">LAST CHAT / NOW</A>
-        <A CLASS="BTN TELEGRAM-BTN" HREF="${T.TTELEGRAM||'#'}" TARGET="_BLANK">TELEGRAM</A>
-        <A CLASS="BTN YOUTUBE-BTN" HREF="${T.YOUTUBE||'#'}" TARGET="_BLANK">YOUTUBE</A>
-      </DIV>
-    `;
-    GRID.APPENDCHILD(CARD);
-  });
+if(teachers.length===0){
+grid.innerHTML="<div class='empty'>NO TEACHERS AVAILABLE</div>";
+return;
 }
 
-// Initialize
-LOADTEACHERS();
-</SCRIPT>
+teachers.forEach(t=>{
 
-</BODY>
-</HTML>
+let photo=t.photo || "https://via.placeholder.com/130";
+
+grid.innerHTML+=`
+<div class="card">
+<img src="${photo}">
+<div class="name">${t.name}</div>
+<div class="info"> SUBJECT: ${t.subject}</div>
+<div class="info">EXPERIENCE: ${t.exp} YEARS</div>
+<div class="mobile"> MOBILE NUMBER:${t.mobile}</div>
+
+<a class="btn" href="https://wa.me/${t.whatsapp}" target="_blank">
+CHAT ON WHATSAPP
+</a>
+</div>
+`;
+
+});
+}
+
+loadTeachers();
+</script>
+
+</body>
+</html>

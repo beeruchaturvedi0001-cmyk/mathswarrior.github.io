@@ -1,132 +1,139 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MATH'S WARRIOR - Founder</title>
+<title>FOUNDER | MATH'S WARRIOR</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
 body{
-background:linear-gradient(135deg,#001f7f,#ff0000);
-padding:20px;
+margin:0;
+font-family:'Poppins',sans-serif;
+background:linear-gradient(135deg,#141e30,#243b55);
 color:white;
 }
 
-.container{
-max-width:1000px;
-margin:auto;
-}
-
-h3{
+/* Header */
+.header{
 text-align:center;
-margin-bottom:25px;
+padding:30px;
+font-size:32px;
+font-weight:700;
+color:#FF416C;
 }
 
+/* Container */
+.container{
+max-width:1100px;
+margin:auto;
+padding:20px;
+}
+
+/* Card Grid */
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+gap:30px;
+}
+
+/* Founder Card */
 .card{
-background:white;
-color:black;
+background:#111;
 border-radius:20px;
-padding:15px;
-margin-bottom:20px;
-display:flex;
-align-items:center;
-gap:15px;
-box-shadow:0 8px 20px rgba(0,0,0,0.3);
+padding:25px;
+text-align:center;
+box-shadow:0 15px 40px rgba(0,0,0,0.6);
+transition:0.3s;
 }
 
+.card:hover{
+transform:translateY(-8px);
+}
+
+/* Image */
 .card img{
-width:90px;
-height:90px;
+width:150px;
+height:150px;
 border-radius:50%;
 object-fit:cover;
-border:3px solid #001f7f;
+border:4px solid #FF416C;
+margin-bottom:15px;
 }
 
-.info{
-flex:1;
+/* Name */
+.card h2{
+color:#FF416C;
+margin-bottom:10px;
 }
 
-.info h2{
-margin-bottom:5px;
+/* Info */
+.card p{
+margin:6px 0;
+font-size:15px;
 }
 
-.info p{
-margin:3px 0;
-}
-
-.buttons a{
-text-decoration:none;
-padding:6px 12px;
-border-radius:10px;
-color:white;
-font-size:13px;
-margin-right:6px;
+/* Buttons */
+.btn{
 display:inline-block;
-margin-top:5px;
+margin:8px 5px;
+padding:8px 18px;
+border-radius:25px;
+text-decoration:none;
+color:white;
+font-weight:600;
 }
 
-.call{background:#28a745;}
-.whatsapp{background:#25D366;}
-.email{background:#007bff;}
+.call-btn{ background:#28a745; }
+.wa-btn{ background:#25D366; }
+.mail-btn{ background:#ff5722; }
 
 .no-data{
 text-align:center;
 font-size:18px;
-background:white;
-color:black;
-padding:20px;
-border-radius:15px;
+margin-top:40px;
 }
 </style>
 </head>
+
 <body>
 
+<div class="header">
+MANAGING DIRECTOR / FOUNDER
+</div>
+
 <div class="container">
-<h3>INSTITUTE RESPONSIBILITY MEMBERS</h3>
-
-<div id="founderContainer"></div>
-
+<div class="grid" id="founderGrid"></div>
 </div>
 
 <script>
 
 function loadFounder(){
+let founders = JSON.parse(localStorage.getItem("FOUNDERS")) || [];
+let grid = document.getElementById("founderGrid");
+grid.innerHTML="";
 
-let data = JSON.parse(localStorage.getItem("responsibilityData")) || [];
-
-let container = document.getElementById("founderContainer");
-container.innerHTML = "";
-
-if(data.length === 0){
-container.innerHTML = "<div class='no-data'>No Founder Data Available</div>";
+if(founders.length===0){
+grid.innerHTML="<div class='no-data'>NO FOUNDER DATA FOUND</div>";
 return;
 }
 
-data.forEach(r => {
-
-let img = r.image ? r.image : "https://via.placeholder.com/90";
-
-container.innerHTML += `
+founders.forEach(f=>{
+grid.innerHTML+=`
 <div class="card">
-<img src="${img}">
-<div class="info">
-<h2>${r.name}</h2>
-<p><b>${r.role}</b></p>
-<p>Mobile: ${r.mobile}</p>
-<p>Email: ${r.email}</p>
+<img src="${f.photo || 'https://via.placeholder.com/150'}">
+<h2>${f.name}</h2>
+<p><strong>Responsibility:</strong> ${f.responsibility}</p>
+<p><strong>Mobile:</strong> ${f.mobile}</p>
+<p><strong>WhatsApp:</strong> ${f.whatsapp}</p>
+<p><strong>Email:</strong> ${f.email}</p>
 
-<div class="buttons">
-<a class="call" href="tel:${r.mobile}">Call</a>
-<a class="whatsapp" target="_blank" href="https://wa.me/${r.whatsapp}">WhatsApp</a>
-<a class="email" href="mailto:${r.email}">Email</a>
-</div>
-
-</div>
+<a class="btn call-btn" href="tel:${f.mobile}">Call</a>
+<a class="btn wa-btn" href="https://wa.me/${f.whatsapp}" target="_blank">WhatsApp</a>
+<a class="btn mail-btn" href="mailto:${f.email}">Email</a>
 </div>
 `;
-
 });
 
 }

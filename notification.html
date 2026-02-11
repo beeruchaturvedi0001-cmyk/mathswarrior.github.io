@@ -3,97 +3,103 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Exam Notifications | MATH'S WARRIOR</title>
+<title>Notifications | MATH'S WARRIOR</title>
 
 <style>
 body{
-margin:0;
-font-family:Arial;
-background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
-color:white;
-text-align:center;
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+  color:white;
+  text-align:center;
 }
 
 h1{
-color:gold;
-margin-top:20px;
+  margin-top:20px;
+  color:#ff416c;
+}
+
+h3{
+  margin-bottom:20px;
 }
 
 .container{
-background:rgba(255,255,255,0.1);
-padding:20px;
-margin:20px;
-border-radius:20px;
+  background:rgba(255,255,255,0.1);
+  padding:20px;
+  margin:20px auto;
+  border-radius:20px;
+  max-width:900px;
 }
 
-.notification-card{
-background:rgba(255,255,255,0.15);
-margin:15px;
-padding:15px;
-border-radius:15px;
-text-align:left;
+.noti-item{
+  background:rgba(255,255,255,0.15);
+  margin:15px 0;
+  padding:15px;
+  border-radius:15px;
+  text-align:left;
+  transition:0.3s;
 }
 
-.notification-card b{
-color:gold;
-font-size:16px;
+.noti-item:hover{
+  background:rgba(255,255,255,0.25);
 }
 
-.notification-details{
-margin-top:5px;
-font-size:14px;
-line-height:22px;
+.noti-item b{
+  color:#ffeb3b;
+  font-size:18px;
 }
 
-a{
-color:yellow;
-text-decoration:none;
-font-weight:bold;
+.open-btn{
+  display:inline-block;
+  margin-top:10px;
+  padding:6px 12px;
+  border-radius:12px;
+  background:linear-gradient(45deg,#ff0000,#001f7f);
+  color:white;
+  text-decoration:none;
+  font-weight:bold;
+}
+
+.no-noti{
+  margin-top:30px;
+  font-size:18px;
+  color:#ffeb3b;
 }
 </style>
-
 </head>
+
 <body>
 
 <h1>MATH'S WARRIOR</h1>
-<h3> EXAM NOTIFICATIONS</h3>
+<h3>NOTIFICATIONS</h3>
 
 <div class="container">
-
-<div id="notificationList"></div>
-
+  <div id="notificationList"></div>
 </div>
 
 <script>
 
-function loadNotifications(){
+function displayNotifications(){
+  let notifications = JSON.parse(localStorage.getItem("NOTIFICATIONS")) || [];
+  let container = document.getElementById("notificationList");
+  container.innerHTML = "";
 
-let notifications = JSON.parse(localStorage.getItem("notifications")) || [];
-let html = "";
+  if(notifications.length === 0){
+    container.innerHTML = `<div class="no-noti">NO NOTIFICATIONS AVAILABLE</div>`;
+    return;
+  }
 
-if(notifications.length === 0){
-html = "<p>No Notifications Available</p>";
+  notifications.forEach(noti => {
+    container.innerHTML += `
+      <div class="noti-item">
+        <b>${noti.name || "Notification"}</b><br>
+        <a class="open-btn" href="${noti.link}" target="_blank">🔗 Open Link</a>
+      </div>
+    `;
+  });
 }
 
-notifications.reverse().forEach((n)=>{
-
-html += `
-<div class="notification-card">
-<b>${n.examName}</b>
-<div class="notification-details">
- Start Date: ${n.startDate}<br>
- End Date: ${n.endDate}<br><br>
-<a href="${n.link}" target="_blank"> Official Notification</a>
-</div>
-</div>
-`;
-
-});
-
-document.getElementById("notificationList").innerHTML = html;
-}
-
-loadNotifications();
+displayNotifications();
 
 </script>
 

@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MATH'S WARRIOR</title>
+
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
 body{background: linear-gradient(135deg,#ff512f,#ffffff); min-height:100vh; overflow-x:hidden;}
@@ -67,23 +68,15 @@ body{background: linear-gradient(135deg,#ff512f,#ffffff); min-height:100vh; over
   background-size:200% 200%;
 }
 
-/* Button colors with gradient animation */
 .card button.register{
   background: linear-gradient(45deg,#ff416c,#ff4b2b);
   color:white; animation: gradientBG 3s ease infinite;
-}
-.card button.register:hover{
-  transform:scale(1.05);
 }
 .card button.features{
   background: linear-gradient(45deg,#28a745,#20c997);
   color:white; animation: gradientBG 3s ease infinite;
 }
-.card button.features:hover{
-  transform:scale(1.05);
-}
 
-/* Gradient animation */
 @keyframes gradientBG{
   0%{background-position:0% 50%;}
   50%{background-position:100% 50%;}
@@ -96,29 +89,62 @@ body{background: linear-gradient(135deg,#ff512f,#ffffff); min-height:100vh; over
   margin-top:20px; font-size:14px;
 }
 
-/* Responsive Fix */
-@media(max-width:450px){.main{grid-template-columns:1fr;}}
+/* Premium Bottom Scrolling Bar */
+.premium-scroll{
+  width:100%;
+  height:60px;
+  overflow:hidden;
+  background:linear-gradient(90deg,#000428,#004e92,#ff416c,#ff4b2b);
+  display:flex;
+  align-items:center;
+  position:relative;
+}
 
-/* Professional scrolling welcome bar */
-.welcome-bar{
-  position:fixed; bottom:50px; width:100%; height:50px; overflow:hidden; background:#007BFF; z-index:10000; display:flex; align-items:center;
+.scroll-text{
+  white-space:nowrap;
+  display:inline-block;
+  padding-left:100%;
+  font-weight:bold;
+  font-size:19px;
+  color:#ffffff;
+  animation:premiumScroll 25s linear infinite;
+  letter-spacing:2px;
+  text-shadow:0 0 10px #fff,0 0 20px #ff416c;
 }
-.welcome-bar div{
-  white-space:nowrap; display:inline-block; padding-left:100%; animation:scrollText 30s linear infinite; font-weight:bold; font-size:18px; 
-  color:white; text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+
+/* Shine Effect */
+.scroll-text::after{
+  content:"";
+  position:absolute;
+  top:0;
+  left:-100%;
+  width:50%;
+  height:100%;
+  background:linear-gradient(120deg,transparent,rgba(255,255,255,0.6),transparent);
+  animation:shine 5s infinite;
 }
-@keyframes scrollText {0%{transform: translateX(0%);}100%{transform: translateX(-100%);}}
+
+@keyframes premiumScroll{
+  0%{transform:translateX(0%);}
+  100%{transform:translateX(-100%);}
+}
+
+@keyframes shine{
+  0%{left:-100%;}
+  100%{left:150%;}
+}
+
+/* Responsive */
+@media(max-width:450px){.main{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
 
-<!-- App Bar -->
 <div class="appbar">
 <span class="menu-btn" onclick="openMenu()">☰</span>
 MATH'S WARRIOR INSTITUTE 
 </div>
 
-<!-- Sidebar -->
 <div class="sidebar" id="sidebar">
 <a href="index.html">🏠 HOME</a>
 <a href="dashboard.html">📊 DASHBOARD</a>
@@ -136,73 +162,72 @@ MATH'S WARRIOR INSTITUTE
 <a href="notification.html">💬 EXAM NOTIFICATION</a>
 </div>
 
-<!-- Main Content -->
 <div class="main">
 
-  <!-- Card 1 -->
-  <div class="card">
-    <h3>LAKSYA FOUNDATION BATCH 🎖️🎖️</h3>
-    <p>➡️ CLASS 9 | UP STATE BOARD & CBSE | FACULTY: ABHINAY PRATAP & TEAM</p>
-    <div class="btn-container">
-      <button class="register" onclick="registerCourse('LAKSYA FOUNDATION BATCH', 500)">REGISTER NOW</button>
-      <button class="features" onclick="showFeatures('LAKSYA FOUNDATION BATCH')">FEATURES</button>
-    </div>
-  </div>
+<div class="card">
+<h3>LAKSYA FOUNDATION BATCH 🎖️🎖️</h3>
+<p>➡️ CLASS 9 | UP STATE BOARD & CBSE | FACULTY: ABHINAY PRATAP & TEAM</p>
+<div class="btn-container">
+<button class="register" onclick="registerCourse('LAKSYA FOUNDATION BATCH', 500)">REGISTER NOW</button>
+<button class="features" onclick="showFeatures('LAKSYA FOUNDATION BATCH')">FEATURES</button>
+</div>
+</div>
 
-  <!-- Card 2 -->
-  <div class="card">
-    <h3>PRATHAM TARGET BATCH 🎖️🎖️</h3>
-    <p>➡️ CLASS 10 | UP STATE BOARD & CBSE | FACULTY: ABHINAY PRATAP & TEAM</p>
-    <div class="btn-container">
-      <button class="register" onclick="registerCourse('PRATHAM TARGET BATCH', 2499)">REGISTER NOW</button>
-      <button class="features" onclick="showFeatures('PRATHAM TARGET BATCH')">FEATURES</button>
-    </div>
-  </div>
+<div class="card">
+<h3>PRATHAM TARGET BATCH 🎖️🎖️</h3>
+<p>➡️ CLASS 10 | UP STATE BOARD & CBSE | FACULTY: ABHINAY PRATAP & TEAM</p>
+<div class="btn-container">
+<button class="register" onclick="registerCourse('PRATHAM TARGET BATCH', 2499)">REGISTER NOW</button>
+<button class="features" onclick="showFeatures('PRATHAM TARGET BATCH')">FEATURES</button>
+</div>
+</div>
 
-  <!-- Card 3 -->
-  <div class="card">
-    <h3>MATH SPECIAL 2.0</h3>
-    <p>✅ FOR ALL KVS/NVS ENTRANCE EXAMS | FACULTY: ABHINAY PRATAP</p>
-    <div class="btn-container">
-      <button class="register" onclick="registerCourse('MATH SPECIAL 2.0', 2099)">REGISTER NOW</button>
-      <button class="features" onclick="showFeatures('MATH SPECIAL 2.0')">FEATURES</button>
-    </div>
-  </div>
+<div class="card">
+<h3>MATH SPECIAL 2.0</h3>
+<p>✅ FOR ALL KVS/NVS ENTRANCE EXAMS | FACULTY: ABHINAY PRATAP</p>
+<div class="btn-container">
+<button class="register" onclick="registerCourse('MATH SPECIAL 2.0', 2099)">REGISTER NOW</button>
+<button class="features" onclick="showFeatures('MATH SPECIAL 2.0')">FEATURES</button>
+</div>
+</div>
 
 </div>
 
-<!-- Footer -->
 <div class="footer">
 © 2026 MATH'S WARRIOR | ▶️ ABHINAY_PRATAP_MATHS | SUBSCRIBE ON YOUTUBE 🔗 @ABHINAYPRATAPMATHS
 </div>
 
-<!-- Scrolling welcome bar -->
-<div class="welcome-bar">
-  <div>🌟 WELCOME TO MATH'S WARRIOR INSTITUTE— THE PATH Of SELECTION! Keep Learning, Practicing & Achieving! 🚀💪</div>
+<!-- Premium Scrolling Bar -->
+<div class="premium-scroll">
+<div class="scroll-text">
+🚀 WELCOME TO MATH'S WARRIOR INSTITUTE 🚀 |
+🎯 THE PATH OF SELECTION 🎯 |
+📚 DAILY PRACTICE • WEEKLY MOCK TEST • FREE PDF NOTES 📚 |
+🏆 RESULT ORIENTED TEACHING 🏆 |
+💪 KEEP LEARNING • KEEP PRACTICING • KEEP WINNING 💪 |
+</div>
 </div>
 
 <script>
 function openMenu(){
-  let sidebar = document.getElementById("sidebar");
-  sidebar.style.left = (sidebar.style.left==="0px") ? "-260px" : "0px";
+let sidebar = document.getElementById("sidebar");
+sidebar.style.left = (sidebar.style.left==="0px") ? "-260px" : "0px";
 }
 
-/* Registration button */
 function registerCourse(courseName, fee){
-  localStorage.setItem('selectedCourse', courseName);
-  localStorage.setItem('selectedFee', fee);
-  window.location.href='student-registration.html';
+localStorage.setItem('selectedCourse', courseName);
+localStorage.setItem('selectedFee', fee);
+window.location.href='student-registration.html';
 }
 
-/* Features button */
 function showFeatures(courseName){
-  let features = `✅ RESULT ORIENTED APPROACH
+let features = `✅ RESULT ORIENTED APPROACH
 ✅ BILINGUAL CLASSES AND NOTES
 ✅ FREE PRACTICE SHEET
 ✅ FREE E-BOOK
 ✅ COURSE DURATION 08 MONTHS
 🧑🏻‍🏫 FACULTIES ABHINAY SIR AND TEAM`;
-  alert(courseName + " Features:\n\n" + features);
+alert(courseName + " Features:\n\n" + features);
 }
 </script>
 

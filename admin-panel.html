@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MATH'S WARRIOR ADMIN</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&display=swap" rel="stylesheet">
+<title>ADMIN PANEL | MATH'S WARRIOR</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
 body{
@@ -13,33 +13,35 @@ font-family:'Poppins',sans-serif;
 background:linear-gradient(135deg,#000428,#004e92);
 color:white;
 }
-
-.top-bar{
-text-align:right;
-padding:15px 25px;
-}
-
-.admin-btn{
-background:#ff416c;
-border:none;
-padding:10px 18px;
-border-radius:8px;
-color:white;
-font-weight:bold;
-cursor:pointer;
-}
-
-.login-box{
-display:none;
-width:320px;
-background:#111;
-padding:30px;
-border-radius:15px;
-margin:80px auto;
+.header{
 text-align:center;
-box-shadow:0 0 25px rgba(0,0,0,0.6);
+padding:20px;
+font-size:28px;
+font-weight:bold;
+background:#111;
+color:#FF416C;
 }
-
+.container{
+max-width:1200px;
+margin:auto;
+padding:20px;
+display:none;
+}
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+gap:20px;
+}
+.box{
+background:#111;
+padding:20px;
+border-radius:15px;
+box-shadow:0 0 20px rgba(0,0,0,0.6);
+}
+.box h3{
+color:#FF416C;
+text-align:center;
+}
 input{
 width:100%;
 padding:8px;
@@ -47,46 +49,17 @@ margin:6px 0;
 border:none;
 border-radius:6px;
 }
-
 button{
 width:100%;
 padding:8px;
-margin-top:6px;
 border:none;
 border-radius:6px;
-background:#ff416c;
+background:#FF416C;
 color:white;
 font-weight:bold;
 cursor:pointer;
+margin-top:6px;
 }
-
-.header{
-background:#111;
-padding:20px;
-text-align:center;
-font-size:28px;
-font-weight:900;
-color:#ff416c;
-}
-
-.container{
-max-width:1200px;
-margin:auto;
-padding:20px;
-}
-
-.section{
-background:#111;
-padding:20px;
-border-radius:15px;
-margin-bottom:25px;
-box-shadow:0 0 20px rgba(0,0,0,0.6);
-}
-
-.section h3{
-color:#ff416c;
-}
-
 .item{
 background:#222;
 padding:10px;
@@ -94,92 +67,95 @@ margin-top:10px;
 border-radius:8px;
 font-size:14px;
 }
-
-.item img{
-width:70px;
-height:70px;
+.delete-btn{background:red;margin-top:5px;}
+.edit-btn{background:orange;margin-top:5px;}
+.login-box{
+max-width:400px;
+margin:100px auto;
+background:#111;
+padding:30px;
+border-radius:15px;
+box-shadow:0 0 20px black;
+}
+.message{
+text-align:center;
+margin-top:10px;
+color:yellow;
+}
+img{
+width:60px;
+height:60px;
+border-radius:50%;
 object-fit:cover;
-border-radius:8px;
-margin-bottom:5px;
+margin-top:5px;
 }
-
-.action-btn{
-width:auto;
-padding:5px 10px;
-margin:5px 5px 0 0;
-font-size:12px;
-}
-
-.edit-btn{background:orange;}
-.delete-btn{background:red;}
 </style>
 </head>
+
 <body>
 
-<div class="top-bar">
-<button class="admin-btn" onclick="showLogin()">ADMIN LOGIN</button>
-</div>
+<div class="header">ADMIN DASHBOARD - MATH'S WARRIOR</div>
 
 <div class="login-box" id="loginBox">
-<h2>ADMIN LOGIN</h2>
-<input type="text" id="adminId" placeholder="ADMIN ID">
+<h3>ADMIN LOGIN</h3>
+<input type="text" id="adminId" placeholder="USER ID">
 <input type="password" id="adminPass" placeholder="PASSWORD">
 <button onclick="login()">LOGIN</button>
-<p id="loginMsg"></p>
+<div class="message" id="loginMsg"></div>
 </div>
 
-<div id="adminPanel" style="display:none;">
-<div class="header">ADMIN PANEL - MATH'S WARRIOR</div>
-<div class="container">
+<div class="container" id="adminPanel">
+<div class="grid">
 
 <!-- STUDENTS -->
-<div class="section">
+<div class="box">
 <h3>REGISTERED STUDENTS</h3>
 <div id="studentList"></div>
 </div>
 
-<!-- TEACHERS -->
-<div class="section">
+<!-- TEACHER -->
+<div class="box">
 <h3>ADD TEACHER</h3>
-<input type="text" id="tName" placeholder="NAME">
-<input type="text" id="tSubject" placeholder="SUBJECT">
-<input type="number" id="tExp" placeholder="EXPERIENCE">
-<input type="text" id="tMobile" placeholder="MOBILE">
-<input type="text" id="tWhatsapp" placeholder="WHATSAPP">
-<input type="text" id="tTelegram" placeholder="TELEGRAM LINK">
+<input id="tName" placeholder="NAME">
+<input id="tSubject" placeholder="SUBJECT">
+<input id="tExp" placeholder="EXPERIENCE">
+<input id="tMobile" placeholder="MOBILE">
+<input id="tWhatsapp" placeholder="WHATSAPP">
+<input id="tEmail" placeholder="EMAIL">
 <input type="file" id="tPhoto">
 <button onclick="addTeacher()">ADD TEACHER</button>
 <div id="teacherList"></div>
 </div>
 
 <!-- FOUNDER -->
-<div class="section">
+<div class="box">
 <h3>ADD FOUNDER</h3>
-<input type="text" id="fName" placeholder="NAME">
-<input type="text" id="fRole" placeholder="RESPONSIBILITY">
-<input type="text" id="fMobile" placeholder="MOBILE">
-<input type="text" id="fWhatsapp" placeholder="WHATSAPP">
+<input id="fName" placeholder="NAME">
+<input id="fRole" placeholder="RESPONSIBILITY">
+<input id="fMobile" placeholder="MOBILE">
+<input id="fWhatsapp" placeholder="WHATSAPP">
+<input id="fEmail" placeholder="EMAIL">
 <input type="file" id="fPhoto">
 <button onclick="addFounder()">ADD FOUNDER</button>
 <div id="founderList"></div>
 </div>
 
 <!-- NOTES -->
-<div class="section">
-<h3>UPLOAD NOTES</h3>
-<input type="text" id="noteName" placeholder="NOTES NAME">
-<input type="text" id="noteClass" placeholder="CLASS">
-<input type="file" id="noteFile">
-<button onclick="addNote()">ADD NOTES</button>
-<div id="noteList"></div>
+<div class="box">
+<h3>UPLOAD NOTES (PDF)</h3>
+<input id="nTitle" placeholder="NOTES NAME">
+<input id="nClass" placeholder="CLASS">
+<input type="file" id="nFile" accept="application/pdf">
+<button onclick="addNote()">ADD NOTE</button>
+<div id="notesList"></div>
 </div>
 
 <!-- NOTIFICATION -->
-<div class="section">
+<div class="box">
 <h3>ADD NOTIFICATION</h3>
-<input type="text" id="nTitle" placeholder="NOTIFICATION NAME">
-<input type="text" id="nLink" placeholder="LINK">
-<button onclick="addNotification()">ADD</button>
+<input id="notiName" placeholder="NOTIFICATION NAME">
+<input id="notiLink" placeholder="PASTE LINK">
+<button onclick="addNotification()">ADD NOTIFICATION</button>
 <div id="notificationList"></div>
 </div>
 
@@ -188,199 +164,189 @@ font-size:12px;
 
 <script>
 
-function showLogin(){
-loginBox.style.display="block";
-}
+const ADMIN_ID="ABHINAY CHAUBEY";
+const ADMIN_PASS="ABHINAYPRATAPMATHS";
 
 function login(){
-if(adminId.value==="ADMIN" && adminPass.value==="12345"){
-loginMsg.style.color="lime";
-loginMsg.innerText="LOGIN SUCCESSFUL";
-setTimeout(()=>{
-loginBox.style.display="none";
-document.querySelector(".top-bar").style.display="none";
-adminPanel.style.display="block";
+let id=document.getElementById("adminId").value.trim();
+let pass=document.getElementById("adminPass").value.trim();
+if(id===ADMIN_ID && pass===ADMIN_PASS){
+document.getElementById("loginMsg").innerHTML="LOGIN SUCCESSFUL";
+document.getElementById("loginBox").style.display="none";
+document.getElementById("adminPanel").style.display="block";
 loadAll();
-},800);
 }else{
-loginMsg.style.color="red";
-loginMsg.innerText="INVALID USER ID OR PASSWORD";
+document.getElementById("loginMsg").innerHTML="INVALID USER ID OR PASSWORD";
 }
-}
-
-function loadAll(){
-loadStudents();
-loadTeachers();
-loadFounders();
-loadNotes();
-loadNotifications();
 }
 
 /* STUDENTS */
 function loadStudents(){
-let students=JSON.parse(localStorage.getItem("registrations"))||[];
-studentList.innerHTML="";
-students.forEach((s,i)=>{
-studentList.innerHTML+=`
+let data=JSON.parse(localStorage.getItem("STUDENTS"))||[];
+let list=document.getElementById("studentList");
+list.innerHTML="";
+data.forEach(s=>{
+list.innerHTML+=`
 <div class="item">
-<strong>${s.fullName||''}</strong><br>
-Mobile: ${s.mobile||''}<br>
-Course: ${s.selectedCourse||''}<br>
-<button class="action-btn delete-btn" onclick="deleteStudent(${i})">DELETE</button>
+${s.name} | ${s.batch} | ${s.mobile} | ${s.utr}
 </div>`;
 });
 }
 
-function deleteStudent(i){
-let students=JSON.parse(localStorage.getItem("registrations"))||[];
-students.splice(i,1);
-localStorage.setItem("registrations",JSON.stringify(students));
-loadStudents();
-}
-
-/* TEACHERS */
+/* TEACHER */
 function addTeacher(){
-let photo="";
-if(tPhoto.files[0]) photo=URL.createObjectURL(tPhoto.files[0]);
-let teacher={name:tName.value,subject:tSubject.value,exp:tExp.value,mobile:tMobile.value,whatsapp:tWhatsapp.value,telegram:tTelegram.value,photo:photo};
-let list=JSON.parse(localStorage.getItem("TEACHERS"))||[];
-list.push(teacher);
-localStorage.setItem("TEACHERS",JSON.stringify(list));
+let file=document.getElementById("tPhoto").files[0];
+if(!file){alert("Select Photo");return;}
+let reader=new FileReader();
+reader.onload=function(){
+let teachers=JSON.parse(localStorage.getItem("TEACHERS"))||[];
+teachers.push({
+name:tName.value,
+subject:tSubject.value,
+exp:tExp.value,
+mobile:tMobile.value,
+whatsapp:tWhatsapp.value,
+email:tEmail.value,
+photo:reader.result
+});
+localStorage.setItem("TEACHERS",JSON.stringify(teachers));
 loadTeachers();
+};
+reader.readAsDataURL(file);
 }
 
 function loadTeachers(){
-let list=JSON.parse(localStorage.getItem("TEACHERS"))||[];
-teacherList.innerHTML="";
-list.forEach((t,i)=>{
-teacherList.innerHTML+=`
+let data=JSON.parse(localStorage.getItem("TEACHERS"))||[];
+let list=document.getElementById("teacherList");
+list.innerHTML="";
+data.forEach((t,i)=>{
+list.innerHTML+=`
 <div class="item">
-<img src="${t.photo||''}">
-<strong>${t.name}</strong><br>
-Subject: ${t.subject}<br>
-Experience: ${t.exp}<br>
-Mobile: ${t.mobile}<br>
-<button class="action-btn edit-btn" onclick="editTeacher(${i})">EDIT</button>
-<button class="action-btn delete-btn" onclick="deleteTeacher(${i})">DELETE</button>
+<img src="${t.photo}">
+${t.name} | ${t.subject}
+<button class="delete-btn" onclick="deleteTeacher(${i})">DELETE</button>
 </div>`;
 });
 }
-
 function deleteTeacher(i){
-let list=JSON.parse(localStorage.getItem("TEACHERS"))||[];
-list.splice(i,1);
-localStorage.setItem("TEACHERS",JSON.stringify(list));
+let data=JSON.parse(localStorage.getItem("TEACHERS"))||[];
+data.splice(i,1);
+localStorage.setItem("TEACHERS",JSON.stringify(data));
 loadTeachers();
-}
-
-function editTeacher(i){
-let list=JSON.parse(localStorage.getItem("TEACHERS"))||[];
-let t=list[i];
-tName.value=t.name;
-tSubject.value=t.subject;
-tExp.value=t.exp;
-tMobile.value=t.mobile;
-deleteTeacher(i);
 }
 
 /* FOUNDER */
 function addFounder(){
-let photo="";
-if(fPhoto.files[0]) photo=URL.createObjectURL(fPhoto.files[0]);
-let founder={name:fName.value,role:fRole.value,mobile:fMobile.value,whatsapp:fWhatsapp.value,photo:photo};
-let list=JSON.parse(localStorage.getItem("FOUNDERS"))||[];
-list.push(founder);
-localStorage.setItem("FOUNDERS",JSON.stringify(list));
-loadFounders();
+let file=document.getElementById("fPhoto").files[0];
+if(!file){alert("Select Photo");return;}
+let reader=new FileReader();
+reader.onload=function(){
+let data=JSON.parse(localStorage.getItem("FOUNDERS"))||[];
+data.push({
+name:fName.value,
+role:fRole.value,
+mobile:fMobile.value,
+whatsapp:fWhatsapp.value,
+email:fEmail.value,
+photo:reader.result
+});
+localStorage.setItem("FOUNDERS",JSON.stringify(data));
+loadFounder();
+};
+reader.readAsDataURL(file);
 }
-
-function loadFounders(){
-let list=JSON.parse(localStorage.getItem("FOUNDERS"))||[];
-founderList.innerHTML="";
-list.forEach((f,i)=>{
-founderList.innerHTML+=`
+function loadFounder(){
+let data=JSON.parse(localStorage.getItem("FOUNDERS"))||[];
+let list=document.getElementById("founderList");
+list.innerHTML="";
+data.forEach((f,i)=>{
+list.innerHTML+=`
 <div class="item">
-<img src="${f.photo||''}">
-<strong>${f.name}</strong><br>
-${f.role}<br>
-<button class="action-btn edit-btn" onclick="editFounder(${i})">EDIT</button>
-<button class="action-btn delete-btn" onclick="deleteFounder(${i})">DELETE</button>
+<img src="${f.photo}">
+${f.name} | ${f.role}
+<button class="delete-btn" onclick="deleteFounder(${i})">DELETE</button>
 </div>`;
 });
 }
-
 function deleteFounder(i){
-let list=JSON.parse(localStorage.getItem("FOUNDERS"))||[];
-list.splice(i,1);
-localStorage.setItem("FOUNDERS",JSON.stringify(list));
-loadFounders();
-}
-
-function editFounder(i){
-let list=JSON.parse(localStorage.getItem("FOUNDERS"))||[];
-let f=list[i];
-fName.value=f.name;
-fRole.value=f.role;
-fMobile.value=f.mobile;
-deleteFounder(i);
+let data=JSON.parse(localStorage.getItem("FOUNDERS"))||[];
+data.splice(i,1);
+localStorage.setItem("FOUNDERS",JSON.stringify(data));
+loadFounder();
 }
 
 /* NOTES */
 function addNote(){
-let file="";
-if(noteFile.files[0]) file=URL.createObjectURL(noteFile.files[0]);
-let note={name:noteName.value,class:noteClass.value,file:file};
-let list=JSON.parse(localStorage.getItem("NOTES"))||[];
-list.push(note);
-localStorage.setItem("NOTES",JSON.stringify(list));
+let file=document.getElementById("nFile").files[0];
+if(!file){alert("Select PDF");return;}
+let reader=new FileReader();
+reader.onload=function(){
+let notes=JSON.parse(localStorage.getItem("NOTES"))||[];
+notes.push({
+title:nTitle.value,
+className:nClass.value,
+file:reader.result
+});
+localStorage.setItem("NOTES",JSON.stringify(notes));
 loadNotes();
+};
+reader.readAsDataURL(file);
 }
-
 function loadNotes(){
-let list=JSON.parse(localStorage.getItem("NOTES"))||[];
-noteList.innerHTML="";
-list.forEach((n,i)=>{
-noteList.innerHTML+=`
+let data=JSON.parse(localStorage.getItem("NOTES"))||[];
+let list=document.getElementById("notesList");
+list.innerHTML="";
+data.forEach((n,i)=>{
+list.innerHTML+=`
 <div class="item">
-${n.name} (Class: ${n.class})
-<button class="action-btn delete-btn" onclick="deleteNote(${i})">DELETE</button>
+${n.title} | ${n.className}
+<a href="${n.file}" download>Download</a>
+<button class="delete-btn" onclick="deleteNote(${i})">DELETE</button>
 </div>`;
 });
 }
-
 function deleteNote(i){
-let list=JSON.parse(localStorage.getItem("NOTES"))||[];
-list.splice(i,1);
-localStorage.setItem("NOTES",JSON.stringify(list));
+let data=JSON.parse(localStorage.getItem("NOTES"))||[];
+data.splice(i,1);
+localStorage.setItem("NOTES",JSON.stringify(data));
 loadNotes();
 }
 
 /* NOTIFICATION */
 function addNotification(){
-let notification={title:nTitle.value,link:nLink.value};
-let list=JSON.parse(localStorage.getItem("NOTIFICATIONS"))||[];
-list.push(notification);
-localStorage.setItem("NOTIFICATIONS",JSON.stringify(list));
-loadNotifications();
+let data=JSON.parse(localStorage.getItem("NOTIFICATIONS"))||[];
+data.push({
+name:notiName.value,
+link:notiLink.value
+});
+localStorage.setItem("NOTIFICATIONS",JSON.stringify(data));
+loadNotification();
 }
-
-function loadNotifications(){
-let list=JSON.parse(localStorage.getItem("NOTIFICATIONS"))||[];
-notificationList.innerHTML="";
-list.forEach((n,i)=>{
-notificationList.innerHTML+=`
+function loadNotification(){
+let data=JSON.parse(localStorage.getItem("NOTIFICATIONS"))||[];
+let list=document.getElementById("notificationList");
+list.innerHTML="";
+data.forEach((n,i)=>{
+list.innerHTML+=`
 <div class="item">
-${n.title}
-<button class="action-btn delete-btn" onclick="deleteNotification(${i})">DELETE</button>
+<a href="${n.link}" target="_blank">${n.name}</a>
+<button class="delete-btn" onclick="deleteNotification(${i})">DELETE</button>
 </div>`;
 });
 }
-
 function deleteNotification(i){
-let list=JSON.parse(localStorage.getItem("NOTIFICATIONS"))||[];
-list.splice(i,1);
-localStorage.setItem("NOTIFICATIONS",JSON.stringify(list));
-loadNotifications();
+let data=JSON.parse(localStorage.getItem("NOTIFICATIONS"))||[];
+data.splice(i,1);
+localStorage.setItem("NOTIFICATIONS",JSON.stringify(data));
+loadNotification();
+}
+
+function loadAll(){
+loadStudents();
+loadTeachers();
+loadFounder();
+loadNotes();
+loadNotification();
 }
 
 </script>
