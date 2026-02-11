@@ -5,225 +5,177 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Course Payment | MATH'S WARRIOR</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-
 <style>
 body{
-  font-family:'Poppins',sans-serif;
+  font-family:Arial;
   margin:0;
   padding:0;
   min-height:100vh;
   display:flex;
   justify-content:center;
   align-items:center;
-  background: linear-gradient(135deg,#ff0000,#dd2476);
-  position:relative;
-  overflow:hidden;
+  background: linear-gradient(135deg,#ff0000,#001f7f);
+  color:white;
 }
 
-/* Watermark */
-body::before{
-  content: "MATH'S WARRIOR  √ ∑ π ∆";
-  position:absolute;
-  font-size:50px;
-  color:rgba(255,255,255,0.05);
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%) rotate(-30deg);
-  white-space:nowrap;
-  pointer-events:none;
-  user-select:none;
-}
-
-/* Payment Box */
 .payment-box{
   background:white;
-  padding:18px;
+  color:black;
+  padding:25px;
   border-radius:15px;
-  box-shadow:0 10px 25px rgba(0,0,0,0.3);
   width:100%;
-  max-width:350px;
+  max-width:400px;
   text-align:center;
-  z-index:1;
-  position:relative;
+  box-shadow:0 10px 25px rgba(0,0,0,0.4);
 }
 
-.payment-box h1{
-  color:#0000ff;
-  margin-bottom:4px;
-  font-size:20px;
-}
-
-.payment-box h2{
-  color:#0000ff;
-  margin-bottom:12px;
-  font-size:16px;
-}
-
-.payment-box label{
-  font-weight:bold;
-  display:block;
-  margin:6px 0 3px;
-  color:#333;
-}
-
-.payment-box select, .payment-box input{
-  width:100%;
-  padding:7px;
-  margin-bottom:8px;
-  border-radius:8px;
-  border:1px solid #ccc;
-  font-size:14px;
-}
-
-.payment-box button{
+select,input,button{
   width:100%;
   padding:10px;
-  border:none;
-  border-radius:10px;
-  background:#0000ff;
-  color:white;
-  font-weight:bold;
+  margin:8px 0;
+  border-radius:8px;
   font-size:14px;
-  cursor:pointer;
-  margin-top:5px;
-  transition:0.3s;
 }
 
-.payment-box button:hover{
-  background:#000080;
+button{
+  background:#001f7f;
+  color:white;
+  font-weight:bold;
+  border:none;
+  cursor:pointer;
 }
 
 #status{
-  margin-top:8px;
   font-weight:bold;
+  margin-top:12px;
   color:green;
+}
+
+label{
+  font-weight:bold;
+  display:block;
+  margin-top:10px;
+  text-align:left;
+}
+
+.payment-detail{
+  text-align:left;
+  background:#f2f2f2;
+  padding:12px;
+  border-radius:10px;
+  margin:10px 0;
   font-size:14px;
 }
 
-.qr-box{
-  margin:10px 0;
-  text-align:center;
-}
-.qr-box img{
-  width:130px;
-  border-radius:6px;
-  box-shadow:0 5px 10px rgba(0,0,0,0.2);
+#preview{
+  max-width:100%;
+  margin-top:10px;
+  border-radius:10px;
+  display:none;
 }
 </style>
 </head>
 <body>
 
 <div class="payment-box">
-<h1>MATH'S WARRIOR INSTITUTE</h1>
-<h2>COURSE FEE PAYMENT</h2>
+<h2>COURSE PAYMENT</h2>
 
-<label>SELECT COURSE:</label>
-<select id="courseSelect">
-  <option value="">-- SELECT COURSE --</option>
-  <option value="LAKSYA FOUNDATION BATCH">LAKSYA FOUNDATION BATCH - ₹2199</option>
-  <option value="PRATHAM TARGET BATCH">PRATHAM TARGET BATCH - ₹2499</option>
-  <option value="MATH SPECIAL 2.0">MATH SPECIAL 2.0 - ₹2099</option>
+<label>SELECT COURSE</label>
+<select id="courseSelect" onchange="updateFee()">
+  <option value="">Select Course</option>
+  <option value="LAKSYA FOUNDATION BATCH|500">LAKSYA FOUNDATION BATCH - ₹500</option>
+  <option value="PRATHAM TARGET BATCH|2499">PRATHAM TARGET BATCH - ₹2499</option>
+  <option value="MATH SPECIAL 2.0|2099">MATH SPECIAL 2.0 - ₹2099</option>
 </select>
 
-<p>COURSE SELECTED: <b id="courseName">-</b></p>
-<p>Fee: ₹<span id="courseFee">0</span></p>
+<p class="payment-detail">
+  <b>UPI ID:</b> 7705042892@axl <br>
+  <b>Account Name:</b> Bhanu Pratap Chaubey <br>
+  <b>Bank Name:</b> Union Bank of India <br>
+  <b>Branch:</b> Patruna
+</p>
 
-<div class="qr-box">
-  <p>UPI ID: <b>7705042892@axl</b></p>
-  <img id="qrImage" 
-  src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=7705042892@axl" 
-  alt="UPI QR Code">
-</div>
+<p><b>AMOUNT TO PAY: ₹<span id="courseFee">0</span></b></p>
 
-<label>UPLOAD PAYMENT SCREENSHOT:</label>
-<input type="file" id="paymentScreenshot" accept="image/*" required>
+<label>UPLOAD PAYMENT SCREENSHOT</label>
+<input type="file" id="paymentScreenshot" accept="image/*">
 
-<button onclick="verifyPayment()">VERIFY PAYMENT</button>
+<button onclick="submitPayment()">SUBMIT PAYMENT</button>
 
 <p id="status"></p>
+<img id="preview" src="" alt="Payment Screenshot Preview">
+
 </div>
 
 <script>
+const courseSelect = document.getElementById("courseSelect");
+const courseFeeSpan = document.getElementById("courseFee");
+const status = document.getElementById("status");
+const preview = document.getElementById("preview");
+const screenshotInput = document.getElementById("paymentScreenshot");
 
-const courseSelect = document.getElementById('courseSelect');
-const courseName = document.getElementById('courseName');
-const courseFee = document.getElementById('courseFee');
-const qrImage = document.getElementById('qrImage');
-
-const upiID = "7705042892@axl";
-const payeeName = "MATH'S WARRIOR";
-
-courseSelect.addEventListener('change', function(){
-
-  const selected = this.value;
-  let amount = "0";
-
-  if(selected === "LAKSYA FOUNDATION BATCH") amount = "2199";
-  else if(selected === "PRATHAM TARGET BATCH") amount = "2499";
-  else if(selected === "MATH SPECIAL 2.0") amount = "2099";
-
-  courseName.innerText = selected || "-";
-  courseFee.innerText = amount;
-
-  if(amount !== "0"){
-    const upiLink = `upi://pay?pa=${upiID}&pn=${encodeURIComponent(payeeName)}&tn=Course Fee&am=${amount}`;
-    qrImage.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(upiLink)}`;
-  }
-});
-
-window.onload = function(){
-  const selectedCourse = localStorage.getItem('selectedCourse');
-  const selectedFee = localStorage.getItem('selectedFee');
-
-  if(selectedCourse && selectedFee){
-    courseSelect.value = selectedCourse;
-    courseName.innerText = selectedCourse;
-    courseFee.innerText = selectedFee;
-
-    const upiLink = `upi://pay?pa=${upiID}&pn=${encodeURIComponent(payeeName)}&tn=Course Fee&am=${selectedFee}`;
-    qrImage.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(upiLink)}`;
-
-    localStorage.removeItem('selectedCourse');
-    localStorage.removeItem('selectedFee');
+function updateFee(){
+  const selected = courseSelect.value;
+  if(selected){
+    const fee = selected.split("|")[1];
+    courseFeeSpan.innerText = fee;
+  } else {
+    courseFeeSpan.innerText = "0";
   }
 }
 
-function verifyPayment(){
-
-  const selectedCourse = courseSelect.value;
-  const fee = courseFee.innerText;
-  const screenshot = document.getElementById('paymentScreenshot').files[0];
-
-  if(!selectedCourse){
-    alert("Please select a course!");
-    return;
+// Load previous payment if exists
+window.onload = function(){
+  const payments = JSON.parse(localStorage.getItem("payments")) || [];
+  if(payments.length > 0){
+    const last = payments[payments.length - 1];
+    courseSelect.value = last.course + "|" + last.fee;
+    updateFee();
+    preview.src = last.screenshot;
+    preview.style.display = "block";
+    status.innerText = "✅ Payment Successfully Completed!";
   }
+}
 
-  if(!screenshot){
-    alert("Please upload payment screenshot!");
-    return;
-  }
+function submitPayment(){
+  const selected = courseSelect.value;
+  const file = screenshotInput.files[0];
+
+  if(!selected){ alert("Select Course"); return; }
+  if(!file){ alert("Upload Screenshot"); return; }
+
+  const courseName = selected.split("|")[0];
+  const fee = selected.split("|")[1];
 
   const reader = new FileReader();
-
   reader.onload = function(e){
+    let payments = JSON.parse(localStorage.getItem("payments")) || [];
 
-    localStorage.setItem('selectedCourse', selectedCourse);
-    localStorage.setItem('selectedFee', fee);
-    localStorage.setItem('paymentScreenshot', e.target.result);
+    // Replace previous payment for same course if exists
+    const index = payments.findIndex(p => p.course === courseName);
+    const paymentData = {
+      course: courseName,
+      fee: fee,
+      screenshot: e.target.result
+    };
 
-    document.getElementById('status').innerText = 
-    "✅ Payment Submitted Successfully! Redirecting...";
+    if(index >= 0){
+      payments[index] = paymentData;
+    } else {
+      payments.push(paymentData);
+    }
 
-    setTimeout(function(){
-      window.location.href = "student-registration.html";
-    },1500);
+    localStorage.setItem("payments", JSON.stringify(payments));
+
+    status.innerText = "✅ Payment Successfully Completed! Thanks for connecting with MATH'S WARRIOR";
+    preview.src = e.target.result;
+    preview.style.display = "block";
+
+    screenshotInput.value = "";
   };
 
-  reader.readAsDataURL(screenshot);
+  reader.readAsDataURL(file);
 }
-
 </script>
 
 </body>

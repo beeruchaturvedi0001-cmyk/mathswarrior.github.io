@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,7 +23,7 @@ body{background: linear-gradient(135deg,#ff0000,#ffffff); min-height:100vh; over
   margin-top:80px;
   padding:20px;
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(400px,1fr));
+  grid-template-columns:repeat(auto-fit,minmax(350px,1fr));
   justify-content:center;
   gap:25px;
 }
@@ -64,11 +64,8 @@ body{background: linear-gradient(135deg,#ff0000,#ffffff); min-height:100vh; over
 .card button.register{background:linear-gradient(45deg,#ff416c,#ff4b2b); color:white;}
 .card button.register:hover{background:black; transform:scale(1.05);}
 
-.card button.buy{background:linear-gradient(45deg,#007bff,#00cfff); color:white;}
-.card button.buy:hover{background:#0056b3; transform:scale(1.05);}
-
-.card button.details{background:linear-gradient(45deg,#28a745,#20c997); color:white;}
-.card button.details:hover{background:#1e7e34; transform:scale(1.05);}
+.card button.features{background:linear-gradient(45deg,#28a745,#20c997); color:white;}
+.card button.features:hover{background:#1e7e34; transform:scale(1.05);}
 
 /* Footer */
 .footer{text-align:center; padding:20px; font-weight:bold; color:black; margin-top:10px;}
@@ -89,18 +86,18 @@ MATH'S WARRIOR INSTITUTE
 <div class="sidebar" id="sidebar">
 <a href="index.html">🏠 HOME</a>
 <a href="dashboard.html">📊 DASHBOARD</a>
-<a href="payment.html">💶COURSE FEE PAYMENT</a>
+<a href="payment.html">💶 COURSE PAYMENT</a>
 <a href="student-registration.html">📝 STUDENT REGISTRATION</a>
 <a href="teacher-manage.html">👨‍🏫 TEACHER MANAGE</a>
-<a href="my-course.html">📋MY COURSE</a>
+<a href="my-course.html">📋 MY COURSE</a>
 <a href="notes.html">📚 NOTES SECTION</a>
 <a href="mock-test.html">🧠 MOCK TEST</a>
 <a href="contact.html">📞 CONTACT QUERIES</a>
-<a href="md.html"> 💺FOUNDER AND DIRECTOR</a>
+<a href="md.html">💺 FOUNDER AND DIRECTOR</a>
 <a href="admin-panel.html">⚙ ADMIN PANEL</a>
-<a href="links.html">🔗SOCIAL MEDIA LINKS</a>
-<a href="videos.html">▶️YOUTUBE VIDEO</a>
-<a href="notification.html">💬EXAM NOTIFICATION</a>
+<a href="links.html">🔗 SOCIAL MEDIA LINKS</a>
+<a href="videos.html">▶️ YOUTUBE VIDEO</a>
+<a href="notification.html">💬 EXAM NOTIFICATION</a>
 </div>
 
 <!-- Main Content -->
@@ -108,43 +105,38 @@ MATH'S WARRIOR INSTITUTE
 
   <!-- Card 1 -->
   <div class="card">
-    <h3>LAKSYA FOUNDATION BATCH🎖️🎖️</h3>
-    <p>➡️CLASS 9 | UP STATE BOARD & CBSE | FACULTY: ABHINAY PRATAP & TEAM</p>
+    <h3>LAKSYA FOUNDATION BATCH 🎖️🎖️</h3>
+    <p>➡️ CLASS 9 | UP STATE BOARD & CBSE | FACULTY: ABHINAY PRATAP & TEAM</p>
     <div class="btn-container">
-      <button class="register" onclick="registerCourse('LAKSYA FOUNDATION BATCH', 2199)">REGISTER NOW</button>
-      <button class="buy" onclick="buyCourse('LAKSYA FOUNDATION BATCH', 2199)">BUY NOW</button>
-      <button class="details" onclick="courseDetails('LAKSYA FOUNDATION BATCH')">COURSE DETAILS</button>
+      <button class="register" onclick="registerCourse('LAKSYA FOUNDATION BATCH', 500)">REGISTER NOW</button>
+      <button class="features" onclick="showFeatures('LAKSYA FOUNDATION BATCH')">FEATURES</button>
     </div>
   </div>
 
   <!-- Card 2 -->
   <div class="card">
-    <h3>PRATHAM TARGET BATCH🎖️🎖️</h3>
-    <p>➡️CLASS 10 | UP STATE BOARD & CBSE | FACULTY: ABHINAY PRATAP & TEAM</p>
+    <h3>PRATHAM TARGET BATCH 🎖️🎖️</h3>
+    <p>➡️ CLASS 10 | UP STATE BOARD & CBSE | FACULTY: ABHINAY PRATAP & TEAM</p>
     <div class="btn-container">
       <button class="register" onclick="registerCourse('PRATHAM TARGET BATCH', 2499)">REGISTER NOW</button>
-      <button class="buy" onclick="buyCourse('PRATHAM TARGET BATCH', 2499)">BUY NOW</button>
-      <button class="details" onclick="courseDetails('PRATHAM TARGET BATCH')">COURSE DETAILS</button>
+      <button class="features" onclick="showFeatures('PRATHAM TARGET BATCH')">FEATURES</button>
     </div>
   </div>
 
   <!-- Card 3 -->
   <div class="card">
     <h3>MATH SPECIAL 2.0</h3>
-    <p>✅FOR ALL KVS NVS ENTRENCE EXAMS | FACULTY: ABHINAY PRATAP</p>
+    <p>✅ FOR ALL KVS/NVS ENTRANCE EXAMS | FACULTY: ABHINAY PRATAP</p>
     <div class="btn-container">
       <button class="register" onclick="registerCourse('MATH SPECIAL 2.0', 2099)">REGISTER NOW</button>
-      <button class="buy" onclick="buyCourse('MATH SPECIAL 2.0', 2099)">BUY NOW</button>
-      <button class="details" onclick="courseDetails('MATH SPECIAL 2.0')">COURSE DETAILS</button>
+      <button class="features" onclick="showFeatures('MATH SPECIAL 2.0')">FEATURES</button>
     </div>
   </div>
-
 
 </div>
 
 <div class="footer">
-© 2026 MATH'S WARRIOR | ▶️ ABHINAY_PRATAP_MATHS
-▶️ SUBSCRIBE ON YOUTUBE 🔗@ABHINAYPRATAPMATHS
+© 2026 MATH'S WARRIOR | ▶️ ABHINAY_PRATAP_MATHS | SUBSCRIBE ON YOUTUBE 🔗 @ABHINAYPRATAPMATHS
 </div>
 
 <script>
@@ -161,28 +153,15 @@ function registerCourse(courseName, fee){
   window.location.href='student-registration.html';
 }
 
-/* Buy Now button */
-function buyCourse(courseName, fee){
-  localStorage.setItem('selectedCourse', courseName);
-  localStorage.setItem('selectedFee', fee);
-  window.location.href='payment.html';
-}
-
-/* Course Details button */
-function courseDetails(courseName){
-  let details="";
-  switch(courseName){
-    case 'LAKSYA FOUNDATION BATCH':
-      details = "CLASS 9 | UP STATE & CBSE | Faculty: Abhinay Pratap & Team | Duration: 3 Months | Fee: ₹2199";
-      break;
-    case 'PRATHAM TARGET BATCH':
-      details = "CLASS 10 | UP STATE & CBSE | Faculty: Abhinay Pratap & Team | Duration: 4 Months | Fee: ₹2499";
-      break;
-    case 'MATH SPECIAL 2.0':
-      details = "All KVS/NVS Entrance Exams | Faculty: Abhinay Pratap | Duration: 2 Months | Fee: ₹2099";
-      break;
-  }
-  alert("Course Details:\n" + details);
+/* Features button */
+function showFeatures(courseName){
+  let features = `✅ RESULT ORIENTED APPROACH
+✅ BILINGUAL CLASSES AND NOTES
+✅ FREE PRACTICE SHEET
+✅ FREE E-BOOK
+✅ COURSE DURATION 08 MONTHS
+🧑🏻‍🏫 FACULTIES ABHINAY SIR AND TEAM`;
+  alert(courseName + " Features:\n\n" + features);
 }
 </script>
 

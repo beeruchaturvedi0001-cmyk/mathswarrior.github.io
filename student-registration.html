@@ -1,98 +1,175 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Student Registration | MATH'S WARRIOR</title>
 <style>
-body{font-family:'Poppins',sans-serif; background:linear-gradient(135deg,#ff512f,#dd2476); display:flex; justify-content:center; align-items:center; min-height:100vh; padding:20px;}
-.form-container{background:white; padding:30px; width:100%; max-width:500px; border-radius:20px; box-shadow:0 10px 25px rgba(0,0,0,0.3);}
-h2{text-align:center; color:red; margin-bottom:20px;}
-input, select{width:100%; padding:10px; margin:8px 0; border-radius:8px; border:1px solid #ccc;}
-button{width:100%; padding:12px; background:red; color:white; border:none; border-radius:10px; font-weight:bold; cursor:pointer; margin-top:10px;}
-button:hover{background:black;}
+body{font-family:'Poppins',sans-serif; background: linear-gradient(135deg,#ff0000,#001f7f); padding:20px; color:white;}
+.container{max-width:700px; margin:auto; background:white; color:black; padding:20px; border-radius:15px; box-shadow:0 8px 25px rgba(0,0,0,0.3);}
+h2{text-align:center; margin-bottom:20px; color:#001f7f;}
+input, select, textarea{width:100%; padding:10px; margin:8px 0; border-radius:8px; border:1px solid #ccc; text-transform:uppercase;}
+input:focus, textarea:focus{border-color:#ff4b2b; outline:none;}
+button{width:100%; padding:12px; margin-top:10px; border:none; border-radius:10px; background:#001f7f; color:white; font-weight:bold; cursor:pointer;}
+button:hover{background:#000080;}
+label{font-weight:bold; margin-top:10px; display:block;}
+#status{margin-top:15px; font-weight:bold; color:green; text-align:center;}
+input.error, textarea.error{border-color:red;}
 </style>
 </head>
 <body>
 
-<div class="form-container">
-<h2>STUDENT REGISTRATION</h2>
+<div class="container">
+<h3>MATH'S WARRIOR INSTITUTE</h3>
+<h2>STUDENT REGISTRATION FORM</h2>
 
-<form onsubmit="registerStudent(); return false;">
-<input type="text" id="name" placeholder="FULL NAME" required>
-<input type="text" id="father" placeholder="FATHER'S NAME" required>
-<input type="text" id="mother" placeholder="MOTHER'S NAME" required>
-<input type="email" id="email" placeholder="EMAIL ID" required>
-<input type="text" id="aadhaar" placeholder="AADHAAR NUMBER (12 Digit)" required>
-<input type="text" id="mobile" placeholder="MOBILE NUMBER (10 Digit)" required>
-<input type="text" id="whatsapp" placeholder="WHATSAPP NUMBER" required>
+<label>STUDENT NAME</label>
+<input type="text" id="fullName" placeholder="Enter Full Name">
 
-<select id="state" required>
-<option value="">SELECT STATE</option>
-<option>UTTAR PRADESH</option>
-<option>BIHAR</option>
-<option>MADHYA PRADESH</option>
-<option>RAJASTHAN</option>
-<option>DELHI</option>
+<label>FATHER'S NAME</label>
+<input type="text" id="fatherName" placeholder="Enter Father's Name">
+
+<label>MOTHER'S NAME</label>
+<input type="text" id="motherName" placeholder="Enter Mother's Name">
+
+<label>MOBILE NUMBER</label>
+<input type="text" id="mobile" placeholder="Enter Mobile Number">
+
+<label>EMAIL ID</label>
+<input type="email" id="email" placeholder="Enter Email ID">
+
+<label>WHATSAPP NUMBER</label>
+<input type="text" id="whatsapp" placeholder="Enter WhatsApp Number">
+
+<label>AADHAR CARD NUMBER</label>
+<input type="text" id="aadhar" placeholder="Enter aadhar Number 12 DIGIT">
+
+<label>SELECT COURSE</label>
+<select id="selectedCourse" onchange="updateFee()">
+  <option value="">Select Course</option>
 </select>
 
-<select id="district" required>
-<option value="">SELECT DISTRICT</option>
-<option>LUCKNOW</option>
-<option>KANPUR</option>
-<option>VARANASI</option>
-<option>PRAYAGRAJ</option>
-<option>GORAKHPUR</option>
-<option>KUSHINAGAR</option>
-<option>AGRA</option>
-<option>NOIDA</option>
-<option>GHAZIABAD</option>
-<option>MEERUT</option>
-<option>AYODHYA</option>
-</select>
+<label>COURSE FEE</label>
+<input type="text" id="courseFee" readonly placeholder="Fee will appear here">
 
-<button type="submit">REGISTER NOW</button>
-</form>
+<label>ADDRESS</label>
+<textarea id="address" placeholder="Enter Full Address" rows="2"></textarea>
+
+<label>POST OFFICE</label>
+<input type="text" id="postOffice" placeholder="Enter Post Office">
+
+<label>DISTRICT</label>
+<input type="text" id="district" placeholder="Enter District">
+
+<label>PIN CODE</label>
+<input type="text" id="pincode" placeholder="Enter Pin Code">
+
+<label>STATE</label>
+<input type="text" id="state" placeholder="Enter State">
+
+<label>UPLOAD YOUR PHOTO</label>
+<input type="file" id="photo" accept="image/png,image/jpeg,image/jpg,image/webp">
+
+<label>UPI ID For FEE PAYMENT</label>
+<input type="text" id="upiId" value="7705042892@AXL" readonly>
+
+<label>UTR NUMBER </label>
+<input type="text" id="utr" placeholder="Enter UTR Number to verify payment">
+
+<button onclick="submitForm()">Submit Registration</button>
+<p id="status"></p>
 </div>
 
 <script>
-let courseName = localStorage.getItem("selectedCourse") || "N/A";
-let courseFee = localStorage.getItem("selectedFee") || "0";
+// Sample Courses
+const courses = [
+  {name:"LAKSHYA FOUNDATION BATCH ", fee:2499},
+  {name:"PRATHAM TARGET BATCH", fee:2199},
+  {name:" MATHS SPECIAL 2.0", fee:2099}
+];
 
-function generateRegID(){return "MW"+Math.floor(Math.random()*1000000);}
-
-function registerStudent(){
-let name = document.getElementById("name").value.trim();
-let father = document.getElementById("father").value.trim();
-let mother = document.getElementById("mother").value.trim();
-let email = document.getElementById("email").value.trim();
-let aadhaar = document.getElementById("aadhaar").value.trim();
-let mobile = document.getElementById("mobile").value.trim();
-let whatsapp = document.getElementById("whatsapp").value.trim();
-let state = document.getElementById("state").value;
-let district = document.getElementById("district").value;
-
-if(!name || !father || !mother || !email || !aadhaar || !mobile || !whatsapp || !state || !district){
-alert("All fields are required!"); return;
-}
-if(aadhaar.length!=12 || isNaN(aadhaar)){alert("Invalid Aadhaar!"); return;}
-if(mobile.length!=10 || isNaN(mobile)){alert("Invalid Mobile!"); return;}
-
-let students = JSON.parse(localStorage.getItem("students"))||[];
-let existing = students.find(s=>s.aadhaar===aadhaar);
-
-if(existing){
-existing.courses.push({name:courseName, fee:courseFee, payment:localStorage.getItem('paymentScreenshot')});
-}else{
-students.push({
-regID: generateRegID(),
-name,father,mother,email,aadhaar,mobile,whatsapp,state,district,
-courses:[{name:courseName, fee:courseFee, payment:localStorage.getItem('paymentScreenshot')}]
+// Populate Courses
+const courseSelect = document.getElementById('selectedCourse');
+const courseFee = document.getElementById('courseFee');
+courses.forEach(c=>{
+  let opt=document.createElement('option');
+  opt.value=c.name;
+  opt.textContent=c.name;
+  courseSelect.appendChild(opt);
 });
+
+function updateFee(){
+  let selected = courses.find(c=>c.name===courseSelect.value);
+  courseFee.value = selected ? selected.fee : "";
 }
-localStorage.setItem("students", JSON.stringify(students));
-alert("Registration Successful!");
-window.location.href="my-course.html";
+
+// Convert input fields to uppercase automatically
+const uppercaseFields = ['fullName','fatherName','motherName','address','postOffice','district','state','utr'];
+uppercaseFields.forEach(id=>{
+  const el = document.getElementById(id);
+  el.addEventListener('input', ()=>{ el.value = el.value.toUpperCase(); });
+});
+
+// Submit Form
+function submitForm(){
+  const fields = ['fullName','fatherName','motherName','mobile','email','whatsapp','selectedCourse','address','postOffice','district','pincode','state','photo','utr'];
+  let valid=true;
+  fields.forEach(f=>{
+    const el=document.getElementById(f);
+    if(!el.value){
+      el.classList.add('error');
+      valid=false;
+    } else el.classList.remove('error');
+  });
+
+  // Photo file validation
+  const file=document.getElementById('photo').files[0];
+  if(file){
+    const allowed=['image/png','image/jpeg','image/jpg','image/webp'];
+    if(!allowed.includes(file.type)){
+      alert("Only PNG, JPG, JPEG, WEBP allowed");
+      return;
+    }
+    if(file.size > 10*1024*1024){
+      alert("Image size must be less than 10MB");
+      return;
+    }
+  }
+
+  if(!valid){
+    document.getElementById('status').innerText="❌ Fill all required fields! verify payment";
+    return;
+  }
+
+  const registration={
+    fullName: document.getElementById('FULLNAME').value,
+    fatherName: document.getElementById('fatherName').value,
+    motherName: document.getElementById('motherName').value,
+    mobile: document.getElementById('mobile').value,
+    email: document.getElementById('email').value,
+    whatsapp: document.getElementById('whatsapp').value,
+    selectedCourse: document.getElementById('selectedCourse').value,
+    courseFee: courseFee.value,
+    address: document.getElementById('address').value,
+    postOffice: document.getElementById('postOffice').value,
+    district: document.getElementById('district').value,
+    pincode: document.getElementById('pincode').value,
+    state: document.getElementById('state').value,
+    upiId: document.getElementById('upiId').value,
+    utr: document.getElementById('utr').value,
+    photo:file ? URL.createObjectURL(file) : ""
+  };
+
+  // Save in localStorage
+  let registrations=JSON.parse(localStorage.getItem('registrations'))||[];
+  registrations.push(registration);
+  localStorage.setItem('registrations',JSON.stringify(registrations));
+
+  document.getElementById('status').innerText="✅ Registration Successful! Thanks for connecting MATH'S WARRIOR INSTITUTE.";
+  
+  // Reset form
+  document.querySelectorAll('input, textarea, select').forEach(i=>i.value='');
+  courseFee.value='';
 }
 </script>
 </body>
