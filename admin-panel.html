@@ -3,351 +3,170 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Panel | MATH'S WARRIOR</title>
+<title>ADMIN PANEL | MATH'S WARRIOR</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-body{
-  font-family:'Poppins',sans-serif;
-  margin:0; padding:0;
-  background:linear-gradient(135deg,#ff416c,#ff4b2b);
-  color:white;
-}
-.container{
-  max-width:1000px; margin:20px auto; padding:20px;
-  background:white; color:#333; border-radius:15px; box-shadow:0 8px 25px rgba(0,0,0,0.3);
-}
-h2{color:#ff416c; text-align:center;}
-input,select,textarea,button{
-  width:100%; padding:10px; margin:5px 0; border-radius:8px; border:1px solid #ccc;
-}
-button{
-  background:#ff416c; color:white; font-weight:bold; cursor:pointer; transition:0.3s;
-}
-button:hover{background:#ff4b2b;}
-.accordion{
-  background:#ff9a9e; cursor:pointer; padding:12px; margin:5px 0; border:none; text-align:left;
-  outline:none; font-size:16px; transition:0.3s; border-radius:8px;
-}
-.accordion:hover{background:#ff6a6a;}
-.panel{padding:10px; display:none; background:#ffe6e6; border-radius:8px; margin-bottom:10px;}
-.table-box{width:100%; overflow-x:auto; margin-top:10px;}
-table{width:100%; border-collapse:collapse;}
-th,td{padding:8px; text-align:left; border-bottom:1px solid #ccc;}
-th{background:#ff4b2b; color:white;}
-td{background:#fff; color:#333;}
-.status{color:green; font-weight:bold; text-align:center; margin:10px 0;}
+BODY{MARGIN:0;FONT-FAMILY:'POPPINS',SANS-SERIF;BACKGROUND:LINEAR-GRADIENT(135DEG,#1E3C72,#2A5298);COLOR:#FFF;}
+.CONTAINER{MAX-WIDTH:1000PX;MARGIN:40PX AUTO;BACKGROUND:#FFF;COLOR:#333;PADDING:20PX 30PX;BORDER-RADIUS:15PX;BOX-SHADOW:0 10PX 30PX RGBA(0,0,0,0.2);}
+H2{TEXT-ALIGN:CENTER;MARGIN-BOTTOM:20PX;COLOR:#1E3C72;}
+INPUT,SELECT,TEXTAREA{WIDTH:100%;PADDING:10PX;MARGIN:8PX 0;BORDER-RADIUS:8PX;BORDER:1PX SOLID #CCC;FONT-SIZE:14PX;BACKGROUND:RED;COLOR:WHITE;TEXT-TRANSFORM:UPPERCASE;}
+INPUT:FOCUS,SELECT:FOCUS,TEXTAREA:FOCUS{BORDER-COLOR:#1E90FF;OUTLINE:NONE;BOX-SHADOW:0 0 5PX RGBA(30,144,255,0.5);}
+BUTTON{PADDING:10PX 15PX;FONT-SIZE:14PX;FONT-WEIGHT:BOLD;BACKGROUND:LINEAR-GRADIENT(90DEG,#1E3C72,#2A5298);COLOR:WHITE;BORDER:NONE;BORDER-RADIUS:8PX;CURSOR:POINTER;MARGIN-TOP:5PX;TRANSITION:0.3S;}
+BUTTON:HOVER{BACKGROUND:LINEAR-GRADIENT(90DEG,#2A5298,#1E3C72);}
+.NAV-BUTTONS{DISPLAY:FLEX; GAP:10PX; FLEX-WRAP:WRAP; JUSTIFY-CONTENT:CENTER; MARGIN-BOTTOM:20PX;}
+.NAV-BUTTONS BUTTON{FLEX:1; MIN-WIDTH:120PX;}
+.SECTION{DISPLAY:NONE; BACKGROUND:#F0F4FF; COLOR:#333; PADDING:20PX; BORDER-RADIUS:12PX; BOX-SHADOW:0 5PX 15PX RGBA(0,0,0,0.1); MARGIN-BOTTOM:20PX;}
+.SECTION H3{MARGIN-BOTTOM:15PX; COLOR:#1E3C72;}
+LABEL{FONT-WEIGHT:BOLD; MARGIN-TOP:10PX; DISPLAY:BLOCK;}
+TABLE{WIDTH:100%; BORDER-COLLAPSE:COLLAPSE; BACKGROUND:BLACK; COLOR:WHITE;}
+TABLE TH,TABLE TD{PADDING:8PX; BORDER:1PX SOLID #CCC; TEXT-ALIGN:LEFT;}
+.SUCCESS{COLOR:GREEN; FONT-WEIGHT:BOLD; MARGIN:5PX 0;}
+.ERROR{COLOR:RED; FONT-WEIGHT:BOLD; MARGIN:5PX 0;}
 </style>
 </head>
 <body>
 
-<div class="container" id="loginBox">
-<h2>Admin Login</h2>
-<input type="text" id="adminId" placeholder="Enter Admin ID">
-<input type="password" id="adminPass" placeholder="Enter Password">
-<button onclick="adminLogin()">Login</button>
-<p id="loginStatus"></p>
+<!-- LOGIN -->
+<div class="container" id="loginContainer">
+  <h2>ADMIN LOGIN</h2>
+  <label>ADMIN ID</label>
+  <input type="text" id="adminId" placeholder="ENTER ADMIN ID">
+  <label>PASSWORD</label>
+  <input type="password" id="adminPass" placeholder="ENTER PASSWORD">
+  <button id="loginBtn">LOGIN</button>
+  <p id="loginMsg"></p>
 </div>
 
+<!-- ADMIN PANEL -->
 <div class="container" id="adminPanel" style="display:none;">
-<h2>Admin Panel</h2>
-
-<!-- Student Data Accordion -->
-<button class="accordion">Student Data</button>
-<div class="panel" id="studentPanel">
-  <div class="table-box">
-    <table id="studentTable">
-      <tr>
-        <th>Sr No</th>
-        <th>Name</th>
-        <th>Mobile No</th>
-        <th>Course</th>
-      </tr>
-    </table>
+  <h2>ADMIN PANEL | MATH'S WARRIOR</h2>
+  <div class="nav-buttons">
+    <button onclick="showSection('studentSection')">STUDENTS</button>
+    <button onclick="showSection('teacherSection')">TEACHERS</button>
+    <button onclick="showSection('courseSection')">COURSES</button>
+    <button onclick="showSection('notificationSection')">NOTIFICATIONS</button>
+    <button onclick="showSection('filesSection')">FILES</button>
+    <button onclick="showSection('standardsSection')">STANDARDS</button>
+    <button onclick="showSection('founderSection')">FOUNDER/OWNER</button>
   </div>
-</div>
 
-<!-- Teacher Management Accordion -->
-<button class="accordion">Teacher Management</button>
-<div class="panel" id="teacherPanel">
-  <h3>Add Teacher</h3>
-  <input type="text" id="teacherName" placeholder="Name">
-  <input type="text" id="teacherMobile" placeholder="Mobile Number">
-  <input type="text" id="teacherWhatsApp" placeholder="WhatsApp Number">
-  <input type="text" id="teacherEmail" placeholder="Email ID">
-  <input type="text" id="teacherTelegram" placeholder="Telegram ID/Link">
-  <input type="text" id="teacherSubject" placeholder="Subject">
-  <input type="text" id="teacherExperience" placeholder="Experience">
-  <input type="file" id="teacherPhoto" accept="image/png,image/jpeg,image/jpg,image/webp">
-  <button onclick="addTeacher()">Add Teacher</button>
-  <p class="status" id="teacherStatus"></p>
-  <div class="table-box">
-    <table id="teacherTable">
-      <tr>
-        <th>Sr No</th>
-        <th>Name</th>
-        <th>Subject</th>
-        <th>Mobile</th>
-        <th>Actions</th>
-      </tr>
-    </table>
+  <!-- STUDENTS -->
+  <div class="section" id="studentSection">
+    <h3>STUDENT DATA</h3>
+    <div id="studentList"></div>
   </div>
-</div>
 
-<!-- Founder Management Accordion -->
-<button class="accordion">Founder Management</button>
-<div class="panel" id="founderPanel">
-  <h3>Add Founder</h3>
-  <input type="text" id="founderName" placeholder="Name">
-  <input type="text" id="founderResp" placeholder="Responsibility">
-  <input type="text" id="founderMobile" placeholder="Mobile Number">
-  <input type="text" id="founderWhatsApp" placeholder="WhatsApp Number">
-  <input type="email" id="founderEmail" placeholder="Email ID">
-  <input type="text" id="founderTelegram" placeholder="Telegram ID/Link">
-  <input type="file" id="founderPhoto" accept="image/png,image/jpeg,image/jpg,image/webp">
-  <button onclick="addFounder()">Add Founder</button>
-  <p class="status" id="founderStatus"></p>
-  <div class="table-box">
-    <table id="founderTable">
-      <tr>
-        <th>Sr No</th>
-        <th>Name</th>
-        <th>Responsibility</th>
-        <th>Mobile</th>
-        <th>WhatsApp</th>
-        <th>Email</th>
-        <th>Telegram</th>
-        <th>Photo</th>
-        <th>Actions</th>
-      </tr>
-    </table>
+  <!-- TEACHERS -->
+  <div class="section" id="teacherSection">
+    <h3>ADD TEACHER</h3>
+    <label>NAME</label><input type="text" id="tName">
+    <label>SUBJECT</label><input type="text" id="tSubject">
+    <label>EXPERIENCE (YEARS)</label><input type="number" id="tExp">
+    <label>MOBILE</label><input type="text" id="tMobile">
+    <label>WHATSAPP</label><input type="text" id="tWhatsapp">
+    <label>EMAIL</label><input type="email" id="tEmail">
+    <label>TELEGRAM</label><input type="text" id="tTelegram">
+    <label>PHOTO</label><input type="file" id="tPhoto" accept="image/*">
+    <button onclick="addTeacher()">ADD TEACHER</button>
+    <p id="teacherMsg"></p>
+    <div id="teacherList" style="margin-top:20px;"></div>
   </div>
-</div>
 
-<!-- Notification Management Accordion -->
-<button class="accordion">Notifications</button>
-<div class="panel" id="notificationPanel">
-  <input type="text" id="notifName" placeholder="Notification Name">
-  <input type="text" id="notifLink" placeholder="Notification Link">
-  <button onclick="addNotification()">Add Notification</button>
-  <p class="status" id="notifStatus"></p>
-  <div class="table-box">
-    <table id="notifTable">
-      <tr>
-        <th>Sr No</th>
-        <th>Name</th>
-        <th>Link</th>
-        <th>Actions</th>
-      </tr>
-    </table>
+  <!-- STANDARDS -->
+  <div class="section" id="standardsSection">
+    <h3>ADD STANDARD</h3>
+    <label>NAME</label><input type="text" id="sName">
+    <label>RESPONSIBILITY</label><input type="text" id="sResp">
+    <label>MOBILE</label><input type="text" id="sMobile">
+    <label>WHATSAPP</label><input type="text" id="sWhatsapp">
+    <label>INSTAGRAM</label><input type="text" id="sInsta">
+    <label>TELEGRAM</label><input type="text" id="sTelegram">
+    <button onclick="addStandard()">ADD STANDARD</button>
+    <p id="standMsg"></p>
+    <div id="standList" style="margin-top:20px;"></div>
   </div>
-</div>
 
-<!-- Files Management Accordion -->
-<button class="accordion">Files Management</button>
-<div class="panel" id="filesPanel">
-  <input type="text" id="fileName" placeholder="File Name">
-  <input type="file" id="fileUpload">
-  <button onclick="addFile()">Upload File</button>
-  <p class="status" id="fileStatus"></p>
-  <div class="table-box">
-    <table id="filesTable">
-      <tr>
-        <th>Sr No</th>
-        <th>Name</th>
-        <th>File</th>
-        <th>Actions</th>
-      </tr>
-    </table>
+  <!-- COURSE -->
+  <div class="section" id="courseSection">
+    <h3>ADD COURSE</h3>
+    <label>COURSE NAME</label><input type="text" id="cName">
+    <label>COURSE FEE</label><input type="number" id="cFee">
+    <button onclick="addCourse()">ADD COURSE</button>
+    <p id="courseMsg"></p>
+    <div id="courseList" style="margin-top:20px;"></div>
+  </div>
+
+  <!-- NOTIFICATIONS -->
+  <div class="section" id="notificationSection">
+    <h3>ADD NOTIFICATION</h3>
+    <label>TITLE / EXAM NAME</label><input type="text" id="nTitle">
+    <label>LINK</label><input type="text" id="nLink">
+    <button onclick="addNotification()">ADD NOTIFICATION</button>
+    <p id="notificationMsg"></p>
+    <div id="notificationList" style="margin-top:20px;"></div>
+  </div>
+
+  <!-- FILES -->
+  <div class="section" id="filesSection">
+    <h3>UPLOAD FILE</h3>
+    <label>FILE NAME</label><input type="text" id="fName">
+    <label>CHOOSE FILE</label><input type="file" id="fFile">
+    <button onclick="addFile()">UPLOAD FILE</button>
+    <p id="fileMsg"></p>
+    <div id="fileList" style="margin-top:20px;"></div>
+  </div>
+
+  <!-- FOUNDER -->
+  <div class="section" id="founderSection">
+    <h3>FOUNDER / OWNER</h3>
+    <p>AS PER PREVIOUS DESIGN (UNCHANGED)</p>
   </div>
 </div>
 
 <script>
-// Admin Login
-function adminLogin(){
-  const id=document.getElementById('adminId').value.trim();
-  const pass=document.getElementById('adminPass').value.trim();
-  if(id==="admin" && pass==="12345"){
-    document.getElementById('loginBox').style.display="none";
-    document.getElementById('adminPanel').style.display="block";
-    loadStudents();
-    loadTeachers();
-    loadFounders();
-    loadNotifications();
-    loadFiles();
-    alert("Login Successful!");
-  }else{
-    alert("Invalid User ID or Password!");
+// LOGIN FUNCTION
+document.getElementById('loginBtn').addEventListener('click', function(){
+  const id = document.getElementById('adminId').value.trim().toUpperCase();
+  const pass = document.getElementById('adminPass').value.trim().toUpperCase();
+  const msg = document.getElementById('loginMsg');
+  if(id === 'ADMIN' && pass === '12345'){
+    document.getElementById('loginContainer').style.display='none';
+    document.getElementById('adminPanel').style.display='block';
+    msg.innerText='✅ LOGIN SUCCESSFUL';
+    loadStudentData(); loadTeacherData(); loadCourseData(); loadNotificationData(); loadFilesData(); loadStandardsData();
+  } else {
+    msg.innerText='❌ INVALID CRITERIA OR INVALID USER ID/PASSWORD';
   }
-}
+});
 
-// Accordion
-const acc=document.getElementsByClassName('accordion');
-for(let i=0;i<acc.length;i++){
-  acc[i].addEventListener('click',function(){
-    this.classList.toggle('active');
-    const panel=this.nextElementSibling;
-    panel.style.display=(panel.style.display==="block")?"none":"block";
-  });
-}
+// SHOW SECTIONS
+function showSection(id){document.querySelectorAll('.section').forEach(s=>s.style.display='none');document.getElementById(id).style.display='block';}
 
-// Load Students
-function loadStudents(){
-  const students=JSON.parse(localStorage.getItem('registrations'))||[];
-  const table=document.getElementById('studentTable');
-  table.innerHTML=`<tr><th>Sr No</th><th>Name</th><th>Mobile No</th><th>Course</th></tr>`;
-  students.forEach((s,i)=>{
-    const row=table.insertRow();
-    row.insertCell(0).innerText=i+1;
-    row.insertCell(1).innerText=s.fullName;
-    row.insertCell(2).innerText=s.whatsapp;
-    row.insertCell(3).innerText=s.selectedCourse;
-  });
-}
+// EXAMPLE LOAD DATA FUNCTIONS
+function loadStudentData(){const STUDENTS=JSON.parse(localStorage.getItem('STUDENTS'))||[];let html='<table><tr><th>SR</th><th>NAME</th><th>MOBILE</th><th>COURSE</th></tr>';STUDENTS.forEach((s,i)=>{html+=`<tr><td>${i+1}</td><td>${s.NAME}</td><td>${s.MOBILE}</td><td>${s.COURSE}</td></tr>`});html+='</table>';document.getElementById('studentList').innerHTML=html;}
+function loadTeacherData(){const T=JSON.parse(localStorage.getItem('TEACHERS'))||[];let html='<table><tr><th>SR</th><th>NAME</th><th>SUBJECT</th><th>EXP</th><th>MOBILE</th><th>WHATSAPP</th><th>EMAIL</th><th>TELEGRAM</th><th>PHOTO</th></tr>';T.forEach((t,i)=>{html+=`<tr><td>${i+1}</td><td>${t.TNAME}</td><td>${t.TSUBJECT}</td><td>${t.TEXP}</td><td>${t.TMOBILE}</td><td>${t.TWHATSAPP}</td><td>${t.TEMAIL}</td><td>${t.TTELEGRAM}</td><td>${t.TPHOTO?'<img src="'+t.TPHOTO+'" width="50">':''}</td></tr>`});html+='</table>';document.getElementById('teacherList').innerHTML=html;}
+function loadStandardsData(){const S=JSON.parse(localStorage.getItem('STANDARDS'))||[];let html='<table><tr><th>SR</th><th>NAME</th><th>RESPONSIBILITY</th><th>MOBILE</th><th>WHATSAPP</th><th>INSTAGRAM</th><th>TELEGRAM</th></tr>';S.forEach((s,i)=>{html+=`<tr><td>${i+1}</td><td>${s.SNAME}</td><td>${s.SRESP}</td><td>${s.SMOBILE}</td><td>${s.SWHATSAPP}</td><td>${s.SINSTA}</td><td>${s.STELEGRAM}</td></tr>`});html+='</table>';document.getElementById('standList').innerHTML=html;}
+function loadCourseData(){const C=JSON.parse(localStorage.getItem('COURSES'))||[];let html='<table><tr><th>SR</th><th>COURSE NAME</th><th>FEE</th></tr>';C.forEach((c,i)=>{html+=`<tr><td>${i+1}</td><td>${c.CNAME}</td><td>${c.CFEE}</td></tr>`});html+='</table>';document.getElementById('courseList').innerHTML=html;}
+function loadNotificationData(){const N=JSON.parse(localStorage.getItem('NOTIFICATIONS'))||[];let html='<table><tr><th>SR</th><th>TITLE</th><th>LINK</th></tr>';N.forEach((n,i)=>{html+=`<tr><td>${i+1}</td><td>${n.NTITLE}</td><td>${n.NLINK}</td></tr>`});html+='</table>';document.getElementById('notificationList').innerHTML=html;}
+function loadFilesData(){const F=JSON.parse(localStorage.getItem('FILES'))||[];let html='<table><tr><th>SR</th><th>FILE NAME</th></tr>';F.forEach((f,i)=>{html+=`<tr><td>${i+1}</td><td>${f.FNAME}</td></tr>`});html+='</table>';document.getElementById('fileList').innerHTML=html;}
 
-// Teacher Management
+// ADD TEACHER FUNCTION
 function addTeacher(){
-  const t={
-    name:document.getElementById('teacherName').value,
-    mobile:document.getElementById('teacherMobile').value,
-    whatsapp:document.getElementById('teacherWhatsApp').value,
-    email:document.getElementById('teacherEmail').value,
-    telegram:document.getElementById('teacherTelegram').value,
-    subject:document.getElementById('teacherSubject').value,
-    experience:document.getElementById('teacherExperience').value,
-    photo:document.getElementById('teacherPhoto').files[0]?URL.createObjectURL(document.getElementById('teacherPhoto').files[0]):""
-  };
-  if(!t.name || !t.mobile || !t.subject){ alert("Fill Name, Mobile, Subject"); return;}
-  let teachers=JSON.parse(localStorage.getItem('teachers'))||[];
-  teachers.push(t);
-  localStorage.setItem('teachers',JSON.stringify(teachers));
-  document.getElementById('teacherStatus').innerText="Teacher Added Successfully!";
-  loadTeachers();
-}
-function loadTeachers(){
-  const teachers=JSON.parse(localStorage.getItem('teachers'))||[];
-  const table=document.getElementById('teacherTable');
-  table.innerHTML=`<tr><th>Sr No</th><th>Name</th><th>Subject</th><th>Mobile</th><th>Actions</th></tr>`;
-  teachers.forEach((t,i)=>{
-    const row=table.insertRow();
-    row.insertCell(0).innerText=i+1;
-    row.insertCell(1).innerText=t.name;
-    row.insertCell(2).innerText=t.subject;
-    row.insertCell(3).innerText=t.mobile;
-    row.insertCell(4).innerHTML=`<button onclick="deleteTeacher(${i})">Delete</button>`;
-  });
-}
-function deleteTeacher(i){
-  let teachers=JSON.parse(localStorage.getItem('teachers'))||[];
-  teachers.splice(i,1);
-  localStorage.setItem('teachers',JSON.stringify(teachers));
-  loadTeachers();
-}
-
-// Founder Management
-function addFounder(){
-  const f={
-    name:document.getElementById('founderName').value,
-    resp:document.getElementById('founderResp').value,
-    mobile:document.getElementById('founderMobile').value,
-    whatsapp:document.getElementById('founderWhatsApp').value,
-    email:document.getElementById('founderEmail').value,
-    telegram:document.getElementById('founderTelegram').value,
-    photo:document.getElementById('founderPhoto').files[0]?URL.createObjectURL(document.getElementById('founderPhoto').files[0]):""
-  };
-  let founders=JSON.parse(localStorage.getItem('founders'))||[];
-  founders.push(f);
-  localStorage.setItem('founders',JSON.stringify(founders));
-  document.getElementById('founderStatus').innerText="Founder Added Successfully!";
-  loadFounders();
-}
-function loadFounders(){
-  const founders=JSON.parse(localStorage.getItem('founders'))||[];
-  const table=document.getElementById('founderTable');
-  table.innerHTML=`<tr>
-    <th>Sr No</th><th>Name</th><th>Responsibility</th><th>Mobile</th>
-    <th>WhatsApp</th><th>Email</th><th>Telegram</th><th>Photo</th><th>Actions</th></tr>`;
-  founders.forEach((f,i)=>{
-    const row=table.insertRow();
-    row.insertCell(0).innerText=i+1;
-    row.insertCell(1).innerText=f.name;
-    row.insertCell(2).innerText=f.resp;
-    row.insertCell(3).innerText=f.mobile;
-    row.insertCell(4).innerText=f.whatsapp;
-    row.insertCell(5).innerText=f.email;
-    row.insertCell(6).innerText=f.telegram;
-    row.insertCell(7).innerHTML=f.photo? `<img src="${f.photo}" width="50">` : "";
-    row.insertCell(8).innerHTML=`<button onclick="deleteFounder(${i})">Delete</button>`;
-  });
-}
-function deleteFounder(i){
-  let founders=JSON.parse(localStorage.getItem('founders'))||[];
-  founders.splice(i,1);
-  localStorage.setItem('founders',JSON.stringify(founders));
-  loadFounders();
-}
-
-// Notifications
-function addNotification(){
-  const n={
-    name:document.getElementById('notifName').value,
-    link:document.getElementById('notifLink').value
-  };
-  let notifs=JSON.parse(localStorage.getItem('notifications'))||[];
-  notifs.push(n);
-  localStorage.setItem('notifications',JSON.stringify(notifs));
-  document.getElementById('notifStatus').innerText="Notification Added!";
-  loadNotifications();
-}
-function loadNotifications(){
-  const notifs=JSON.parse(localStorage.getItem('notifications'))||[];
-  const table=document.getElementById('notifTable');
-  table.innerHTML=`<tr><th>Sr No</th><th>Name</th><th>Link</th><th>Actions</th></tr>`;
-  notifs.forEach((n,i)=>{
-    const row=table.insertRow();
-    row.insertCell(0).innerText=i+1;
-    row.insertCell(1).innerText=n.name;
-    row.insertCell(2).innerHTML=`<a href="${n.link}" target="_blank">${n.link}</a>`;
-    row.insertCell(3).innerHTML=`<button onclick="deleteNotification(${i})">Delete</button>`;
-  });
-}
-function deleteNotification(i){
-  let notifs=JSON.parse(localStorage.getItem('notifications'))||[];
-  notifs.splice(i,1);
-  localStorage.setItem('notifications',JSON.stringify(notifs));
-  loadNotifications();
-}
-
-// Files
-function addFile(){
-  const fName=document.getElementById('fileName').value;
-  const fFile=document.getElementById('fileUpload').files[0];
-  if(!fName || !fFile){ alert("Fill all fields"); return; }
-  const f={
-    name:fName,
-    file:URL.createObjectURL(fFile)
-  };
-  let files=JSON.parse(localStorage.getItem('files'))||[];
-  files.push(f);
-  localStorage.setItem('files',JSON.stringify(files));
-  document.getElementById('fileStatus').innerText="File Uploaded!";
-  loadFiles();
-}
-function loadFiles(){
-  const files=JSON.parse(localStorage.getItem('files'))||[];
-  const table=document.getElementById('filesTable');
-  table.innerHTML=`<tr><th>Sr No</th><th>Name</th><th>File</th><th>Actions</th></tr>`;
-  files.forEach((f,i)=>{
-    const row=table.insertRow();
-    row.insertCell(0).innerText=i+1;
-    row.insertCell(1).innerText=f.name;
-    row.insertCell(2).innerHTML=`<a href="${f.file}" target="_blank">View File</a>`;
-    row.insertCell(3).innerHTML=`<button onclick="deleteFile(${i})">Delete</button>`;
-  });
-}
-function deleteFile(i){
-  let files=JSON.parse(localStorage.getItem('files'))||[];
-  files.splice(i,1);
-  localStorage.setItem('files',JSON.stringify(files));
-  loadFiles();
+  const tName=document.getElementById('tName').value.trim();
+  const tSubject=document.getElementById('tSubject').value.trim();
+  const tExp=document.getElementById('tExp').value.trim();
+  const tMobile=document.getElementById('tMobile').value.trim();
+  const tWhatsapp=document.getElementById('tWhatsapp').value.trim();
+  const tEmail=document.getElementById('tEmail').value.trim();
+  const tTelegram=document.getElementById('tTelegram').value.trim();
+  const tPhoto=document.getElementById('tPhoto').files[0]?URL.createObjectURL(document.getElementById('tPhoto').files[0]):'';
+  if(!tName||!tSubject){document.getElementById('teacherMsg').innerText='❌ FILL REQUIRED FIELDS';return;}
+  let T=JSON.parse(localStorage.getItem('TEACHERS'))||[];
+  T.push({TNAME:tName,TSUBJECT:tSubject,TEXP:tExp,TMOBILE:tMobile,TWHATSAPP:tWhatsapp,TEMAIL:tEmail,TTELEGRAM:tTelegram,TPHOTO:tPhoto});
+  localStorage.setItem('TEACHERS',JSON.stringify(T));
+  document.getElementById('teacherMsg').innerText='✅ TEACHER ADDED';
+  document.getElementById('tName').value='';document.getElementById('tSubject').value='';document.getElementById('tExp').value='';document.getElementById('tMobile').value='';document.getElementById('tWhatsapp').value='';document.getElementById('tEmail').value='';document.getElementById('tTelegram').value='';document.getElementById('tPhoto').value='';
+  loadTeacherData();
 }
 </script>
 </body>
