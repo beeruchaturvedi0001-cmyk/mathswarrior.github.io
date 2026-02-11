@@ -1,145 +1,98 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FOUNDER | MATH'S WARRIOR</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-
+<title>Founder & MD | MATH'S WARRIOR</title>
 <style>
 body{
-margin:0;
-font-family:'Poppins',sans-serif;
-background:linear-gradient(135deg,#141e30,#243b55);
-color:white;
+  margin:0;
+  font-family:'Poppins',sans-serif;
+  background: linear-gradient(135deg,#000428,#004e92);
+  color:white;
 }
-
-/* Header */
 .header{
-text-align:center;
-padding:30px;
-font-size:32px;
-font-weight:700;
-color:#FF416C;
+  text-align:center;
+  padding:20px;
+  font-size:28px;
+  font-weight:bold;
+  background:#111;
+  color:#FF416C;
 }
-
-/* Container */
-.container{
-max-width:1100px;
-margin:auto;
-padding:20px;
-}
-
-/* Card Grid */
 .grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-gap:30px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:20px;
+  padding:20px;
 }
-
-/* Founder Card */
 .card{
-background:#111;
-border-radius:20px;
-padding:25px;
-text-align:center;
-box-shadow:0 15px 40px rgba(0,0,0,0.6);
-transition:0.3s;
+  background:#111;
+  border-radius:15px;
+  padding:15px;
+  box-shadow:0 0 15px rgba(0,0,0,0.6);
+  text-align:center;
+  transition:0.3s;
 }
-
 .card:hover{
-transform:translateY(-8px);
+  transform:translateY(-8px);
+  box-shadow:0 8px 25px rgba(0,0,0,0.7);
 }
-
-/* Image */
 .card img{
-width:150px;
-height:150px;
-border-radius:50%;
-object-fit:cover;
-border:4px solid #FF416C;
-margin-bottom:15px;
+  width:100px;
+  height:100px;
+  border-radius:50%;
+  object-fit:cover;
+  margin-bottom:10px;
 }
-
-/* Name */
-.card h2{
-color:#FF416C;
-margin-bottom:10px;
+.card h3{
+  margin:5px 0;
+  color:#FF416C;
 }
-
-/* Info */
 .card p{
-margin:6px 0;
-font-size:15px;
+  margin:5px 0;
+  font-size:14px;
+  color:#fff;
 }
-
-/* Buttons */
-.btn{
-display:inline-block;
-margin:8px 5px;
-padding:8px 18px;
-border-radius:25px;
-text-decoration:none;
-color:white;
-font-weight:600;
+.card a{
+  display:inline-block;
+  margin:5px;
+  padding:6px 12px;
+  border-radius:12px;
+  color:white;
+  text-decoration:none;
+  font-weight:bold;
 }
-
-.call-btn{ background:#28a745; }
-.wa-btn{ background:#25D366; }
-.mail-btn{ background:#ff5722; }
-
-.no-data{
-text-align:center;
-font-size:18px;
-margin-top:40px;
-}
+.call-btn{background:#1E90FF;}
+.whatsapp-btn{background:#25D366;}
 </style>
 </head>
-
 <body>
 
-<div class="header">
-MANAGING DIRECTOR / FOUNDER
-</div>
-
-<div class="container">
+<div class="header">Founder & MD - MATH'S WARRIOR</div>
 <div class="grid" id="founderGrid"></div>
-</div>
 
 <script>
-
 function loadFounder(){
-let founders = JSON.parse(localStorage.getItem("FOUNDERS")) || [];
-let grid = document.getElementById("founderGrid");
-grid.innerHTML="";
-
-if(founders.length===0){
-grid.innerHTML="<div class='no-data'>NO FOUNDER DATA FOUND</div>";
-return;
+  let data = JSON.parse(localStorage.getItem("FOUNDERS")) || [];
+  let grid = document.getElementById("founderGrid");
+  grid.innerHTML = "";
+  if(data.length === 0){
+    grid.innerHTML = "<p style='text-align:center; font-size:18px;'>No founders added yet.</p>";
+    return;
+  }
+  data.forEach(f=>{
+    grid.innerHTML += `
+      <div class="card">
+        <img src="${f.photo}" alt="${f.name}">
+        <h3>${f.name}</h3>
+        <p>Responsibility: ${f.responsibility}</p>
+        <p>Email: ${f.email}</p>
+        <a href="tel:${f.mobile}" class="call-btn">CALL</a>
+        <a href="https://wa.me/${f.whatsapp}" target="_blank" class="whatsapp-btn">WHATSAPP</a>
+      </div>`;
+  });
 }
-
-founders.forEach(f=>{
-grid.innerHTML+=`
-<div class="card">
-<img src="${f.photo || 'https://via.placeholder.com/150'}">
-<h2>${f.name}</h2>
-<p><strong>Responsibility:</strong> ${f.responsibility}</p>
-<p><strong>Mobile:</strong> ${f.mobile}</p>
-<p><strong>WhatsApp:</strong> ${f.whatsapp}</p>
-<p><strong>Email:</strong> ${f.email}</p>
-
-<a class="btn call-btn" href="tel:${f.mobile}">Call</a>
-<a class="btn wa-btn" href="https://wa.me/${f.whatsapp}" target="_blank">WhatsApp</a>
-<a class="btn mail-btn" href="mailto:${f.email}">Email</a>
-</div>
-`;
-});
-
-}
-
 loadFounder();
-
 </script>
 
 </body>

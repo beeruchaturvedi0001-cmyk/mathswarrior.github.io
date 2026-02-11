@@ -1,151 +1,98 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TEACHER MANAGE | MATH'S WARRIOR</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-
+<title>Teacher Management | MATH'S WARRIOR</title>
 <style>
 body{
-margin:0;
-font-family:'Poppins',sans-serif;
-background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
-color:white;
+  margin:0;
+  font-family:'Poppins',sans-serif;
+  background: linear-gradient(135deg,#000428,#004e92);
+  color:white;
 }
-
 .header{
-text-align:center;
-padding:30px 10px;
-font-size:32px;
-font-weight:700;
-color:#FF416C;
-letter-spacing:1px;
+  text-align:center;
+  padding:20px;
+  font-size:28px;
+  font-weight:bold;
+  background:#111;
+  color:#FF416C;
 }
-
-.container{
-max-width:1200px;
-margin:auto;
-padding:20px;
-}
-
 .grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-gap:25px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:20px;
+  padding:20px;
 }
-
 .card{
-background:#111;
-border-radius:18px;
-padding:20px;
-text-align:center;
-box-shadow:0 10px 30px rgba(0,0,0,0.6);
-transition:0.3s;
+  background:#111;
+  border-radius:15px;
+  padding:15px;
+  box-shadow:0 0 15px rgba(0,0,0,0.6);
+  text-align:center;
+  transition:0.3s;
 }
-
 .card:hover{
-transform:translateY(-8px);
-box-shadow:0 15px 40px rgba(0,0,0,0.8);
+  transform:translateY(-8px);
+  box-shadow:0 8px 25px rgba(0,0,0,0.7);
 }
-
 .card img{
-width:130px;
-height:130px;
-border-radius:50%;
-object-fit:cover;
-border:4px solid #FF416C;
-margin-bottom:15px;
+  width:100px;
+  height:100px;
+  border-radius:50%;
+  object-fit:cover;
+  margin-bottom:10px;
 }
-
-.name{
-font-size:20px;
-font-weight:700;
-color:#FF416C;
-margin-bottom:5px;
+.card h3{
+  margin:5px 0;
+  color:#FF416C;
 }
-
-.info{
-font-size:14px;
-margin:4px 0;
+.card p{
+  margin:5px 0;
+  font-size:14px;
+  color:#fff;
 }
-
-.mobile{
-color:#ccc;
-font-size:13px;
-margin-top:5px;
+.card a{
+  display:inline-block;
+  margin:5px;
+  padding:6px 12px;
+  border-radius:12px;
+  color:white;
+  text-decoration:none;
+  font-weight:bold;
 }
-
-.btn{
-display:inline-block;
-margin-top:12px;
-padding:10px 18px;
-background:#25D366;
-color:white;
-border-radius:30px;
-font-weight:bold;
-text-decoration:none;
-transition:0.3s;
-box-shadow:0 5px 15px rgba(0,0,0,0.5);
-}
-
-.btn:hover{
-background:#1ebe5d;
-transform:scale(1.05);
-}
-
-.empty{
-text-align:center;
-font-size:18px;
-color:#ccc;
-margin-top:40px;
-}
+.call-btn{background:#1E90FF;}
+.whatsapp-btn{background:#25D366;}
 </style>
 </head>
-
 <body>
 
-<div class="header">
-OUR PROFESSIONAL TEACHERS
-</div>
-
-<div class="container">
+<div class="header">Teacher Management - MATH'S WARRIOR</div>
 <div class="grid" id="teacherGrid"></div>
-</div>
 
 <script>
 function loadTeachers(){
-let teachers=JSON.parse(localStorage.getItem("TEACHERS"))||[];
-let grid=document.getElementById("teacherGrid");
-grid.innerHTML="";
-
-if(teachers.length===0){
-grid.innerHTML="<div class='empty'>NO TEACHERS AVAILABLE</div>";
-return;
+  let data = JSON.parse(localStorage.getItem("TEACHERS")) || [];
+  let grid = document.getElementById("teacherGrid");
+  grid.innerHTML = "";
+  if(data.length === 0){
+    grid.innerHTML = "<p style='text-align:center; font-size:18px;'>No teachers added yet.</p>";
+    return;
+  }
+  data.forEach(t=>{
+    grid.innerHTML += `
+      <div class="card">
+        <img src="${t.photo}" alt="${t.name}">
+        <h3>${t.name}</h3>
+        <p>Subject: ${t.subject}</p>
+        <p>Experience: ${t.exp}</p>
+        <p>Email: ${t.email}</p>
+        <a href="tel:${t.mobile}" class="call-btn">CALL</a>
+        <a href="https://wa.me/${t.whatsapp}" target="_blank" class="whatsapp-btn">WHATSAPP</a>
+      </div>`;
+  });
 }
-
-teachers.forEach(t=>{
-
-let photo=t.photo || "https://via.placeholder.com/130";
-
-grid.innerHTML+=`
-<div class="card">
-<img src="${photo}">
-<div class="name">${t.name}</div>
-<div class="info"> SUBJECT: ${t.subject}</div>
-<div class="info">EXPERIENCE: ${t.exp} YEARS</div>
-<div class="mobile"> MOBILE NUMBER:${t.mobile}</div>
-
-<a class="btn" href="https://wa.me/${t.whatsapp}" target="_blank">
-CHAT ON WHATSAPP
-</a>
-</div>
-`;
-
-});
-}
-
 loadTeachers();
 </script>
 
