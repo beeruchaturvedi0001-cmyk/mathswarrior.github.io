@@ -3,309 +3,161 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Panel | MATH'S WARRIOR</title>
+<title>Professional Teachers | MATH'S WARRIOR</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-body{
-  margin:0;
-  font-family:'Poppins',sans-serif;
-  background: linear-gradient(135deg,#1e3c72,#2a5298);
-  color:#fff;
+BODY{
+  FONT-FAMILY:'POPPINS',SANS-SERIF;
+  BACKGROUND:LINEAR-GRADIENT(135DEG,#0F2027,#203A43,#2C5364);
+  MARGIN:0; PADDING:20PX; COLOR:WHITE;
 }
-.container{
-  max-width:900px;
-  margin:40px auto;
-  background:#fff;
-  color:#333;
-  padding:20px 30px;
-  border-radius:15px;
-  box-shadow:0 10px 30px rgba(0,0,0,0.2);
+
+/* Container */
+.CONTAINER{
+  MAX-WIDTH:1200PX;
+  MARGIN:AUTO;
+  PADDING:10PX;
 }
-h2{
-  text-align:center;
-  margin-bottom:20px;
-  color:#1e3c72;
+
+/* Heading */
+H2{
+  TEXT-ALIGN:CENTER;
+  COLOR:#FF416C;
+  MARGIN-BOTTOM:25PX;
+  FONT-SIZE:28PX;
 }
-input, select, textarea{
-  width:100%;
-  padding:10px;
-  margin:8px 0;
-  border-radius:8px;
-  border:1px solid #ccc;
-  font-size:14px;
+
+/* Grid for cards */
+.CARD-GRID{
+  DISPLAY:GRID;
+  GRID-TEMPLATE-COLUMNS:REPEAT(AUTO-FIT,MINMAX(250PX,1FR));
+  GAP:20PX;
 }
-input:focus, select:focus, textarea:focus{
-  border-color:#1e90ff;
-  outline:none;
-  box-shadow:0 0 5px rgba(30,144,255,0.5);
+
+/* Teacher Card */
+.CARD{
+  BACKGROUND:#1A1A1A;
+  COLOR:WHITE;
+  BORDER-RADIUS:15PX;
+  PADDING:20PX;
+  TEXT-ALIGN:CENTER;
+  BOX-SHADOW:0 8PX 25PX RGBA(0,0,0,0.5);
+  TRANSITION:0.3S;
 }
-button{
-  padding:10px 15px;
-  font-size:14px;
-  font-weight:bold;
-  background:linear-gradient(90deg,#1e3c72,#2a5298);
-  color:white;
-  border:none;
-  border-radius:8px;
-  cursor:pointer;
-  margin-top:10px;
-  transition:0.3s;
+
+.CARD:HOVER{
+  TRANSFORM:TRANSLATEY(-8PX);
+  BOX-SHADOW:0 15PX 40PX RGBA(0,0,0,0.7);
 }
-button:hover{
-  background:linear-gradient(90deg,#2a5298,#1e3c72);
+
+/* Image */
+.CARD IMG{
+  WIDTH:120PX;
+  HEIGHT:120PX;
+  BORDER-RADIUS:50%;
+  OBJECT-FIT:COVER;
+  MARGIN-BOTTOM:15PX;
+  BORDER:3PX SOLID #FF416C;
 }
-.nav-buttons{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  justify-content:center;
-  margin-bottom:20px;
+
+/* Name */
+.CARD H3{
+  COLOR:#FF416C;
+  MARGIN-BOTTOM:8PX;
 }
-.nav-buttons button{
-  flex:1;
-  min-width:120px;
+
+/* Info Paragraphs */
+.CARD P{
+  MARGIN:5PX 0;
+  FONT-WEIGHT:500;
 }
-.section{
-  display:none;
-  background:#f0f4ff;
-  color:#333;
-  padding:20px;
-  border-radius:12px;
-  box-shadow:0 5px 15px rgba(0,0,0,0.1);
-  margin-bottom:20px;
+
+/* Button Container */
+.BTN-CONTAINER{
+  DISPLAY:FLEX;
+  JUSTIFY-CONTENT:CENTER;
+  FLEX-WRAP:WRAP;
+  GAP:10PX;
+  MARGIN-TOP:12PX;
 }
-.section h3{
-  margin-bottom:15px;
-  color:#1e3c72;
+
+/* Buttons */
+.BTN{
+  FLEX:1;
+  PADDING:10PX;
+  BORDER:NONE;
+  BORDER-RADIUS:10PX;
+  FONT-WEIGHT:BOLD;
+  CURSOR:POINTER;
+  COLOR:WHITE;
+  TRANSITION:0.3S;
+  TEXT-DECORATION:NONE;
 }
-label{
-  font-weight:bold;
-  margin-top:10px;
-  display:block;
-}
-#error{color:red;font-weight:bold;margin-bottom:10px;}
-.success{color:green;font-weight:bold;margin-bottom:10px;}
-</style>
+
+/* Specific Buttons */
+.CALL-BTN{BACKGROUND:#28A745;}
+.CALL-BTN:HOVER{BACKGROUND:#1E7E34;}
+
+.WA-BTN{BACKGROUND:#25D366;}
+.WA-BTN:HOVER{BACKGROUND:#1C8C4A;}
+
+.TELEGRAM-BTN{BACKGROUND:#0088CC;}
+.TELEGRAM-BTN:HOVER{BACKGROUND:#005F80;}
+
+.LASTCHAT-BTN{BACKGROUND:#FF5722;}
+.LASTCHAT-BTN:HOVER{BACKGROUND:#E64A19;}
+
+.YOUTUBE-BTN{BACKGROUND:#FF0000;}
+.YOUTUBE-BTN:HOVER{BACKGROUND:#CC0000;}
+</STYLE>
 </head>
 <body>
 
-<div class="container" id="loginContainer">
-  <h2>ADMIN LOGIN</h2>
-  <label>Admin ID</label>
-  <input type="text" id="adminId" placeholder="Enter Admin ID">
-  <label>Password</label>
-  <input type="password" id="adminPass" placeholder="Enter Password">
-  <button onclick="login()">LOGIN</button>
-  <p id="loginError"></p>
-</div>
+<DIV CLASS="CONTAINER">
+  <H2>Our Professional Teachers</H2>
+  <DIV CLASS="CARD-GRID" ID="TEACHERGRID"></DIV>
+</DIV>
 
-<div class="container" id="adminPanel" style="display:none;">
-  <h2>ADMIN PANEL | MATH'S WARRIOR</h2>
-  <div class="nav-buttons">
-    <button onclick="showSection('studentSection')">STUDENT DATA</button>
-    <button onclick="showSection('teacherSection')">TEACHER</button>
-    <button onclick="showSection('courseSection')">COURSE</button>
-    <button onclick="showSection('notificationSection')">NOTIFICATION</button>
-    <button onclick="showSection('filesSection')">FILES</button>
-  </div>
+<SCRIPT>
+// Load teacher data from localStorage
+FUNCTION LOADTEACHERS(){
+  CONST TEACHERS=JSON.PARSE(LOCALSTORAGE.GETITEM('TEACHERS'))||[];
+  CONST GRID=DOCUMENT.GETELEMENTBYID('TEACHERGRID');
+  GRID.INNERHTML='';
 
-  <!-- STUDENT DATA -->
-  <div class="section" id="studentSection">
-    <h3>STUDENT DATA</h3>
-    <div id="studentList"></div>
-  </div>
-
-  <!-- TEACHER DATA -->
-  <div class="section" id="teacherSection">
-    <h3>ADD TEACHER</h3>
-    <div id="teacherForm">
-      <label>Teacher Name</label><input type="text" id="tName">
-      <label>Subject</label><input type="text" id="tSubject">
-      <label>Experience (years)</label><input type="number" id="tExp">
-      <label>Mobile Number</label><input type="text" id="tMobile">
-      <label>WhatsApp Number</label><input type="text" id="tWhatsapp">
-      <label>Email</label><input type="email" id="tEmail">
-      <label>Telegram</label><input type="text" id="tTelegram">
-      <label>Photo (optional)</label><input type="file" id="tPhoto" accept="image/*">
-      <button onclick="addTeacher()">ADD TEACHER</button>
-      <p id="teacherMsg"></p>
-    </div>
-    <div id="teacherList" style="margin-top:20px;"></div>
-  </div>
-
-  <!-- COURSE DATA -->
-  <div class="section" id="courseSection">
-    <h3>ADD COURSE</h3>
-    <label>Course Name</label><input type="text" id="cName">
-    <label>Course Fee</label><input type="number" id="cFee">
-    <button onclick="addCourse()">ADD COURSE</button>
-    <p id="courseMsg"></p>
-    <div id="courseList" style="margin-top:20px;"></div>
-  </div>
-
-  <!-- NOTIFICATION -->
-  <div class="section" id="notificationSection">
-    <h3>ADD NOTIFICATION</h3>
-    <label>Exam Name / Title</label><input type="text" id="nTitle">
-    <label>Link</label><input type="text" id="nLink">
-    <button onclick="addNotification()">ADD NOTIFICATION</button>
-    <p id="notificationMsg"></p>
-    <div id="notificationList" style="margin-top:20px;"></div>
-  </div>
-
-  <!-- FILES -->
-  <div class="section" id="filesSection">
-    <h3>UPLOAD FILE</h3>
-    <label>File Name</label><input type="text" id="fName">
-    <label>Choose File</label><input type="file" id="fFile">
-    <button onclick="addFile()">UPLOAD FILE</button>
-    <p id="fileMsg"></p>
-    <div id="fileList" style="margin-top:20px;"></div>
-  </div>
-</div>
-
-<script>
-// Admin Login
-function login(){
-  const id=document.getElementById('adminId').value.trim();
-  const pass=document.getElementById('adminPass').value.trim();
-  if(id==='admin' && pass==='12345'){
-    document.getElementById('loginContainer').style.display='none';
-    document.getElementById('adminPanel').style.display='block';
-    loadStudentData();
-    loadTeacherData();
-    loadCourseData();
-    loadNotificationData();
-    loadFilesData();
-  } else {
-    document.getElementById('loginError').innerText='❌ Invalid ID or Password';
+  IF(TEACHERS.LENGTH===0){
+    GRID.INNERHTML='<P STYLE="COLOR:WHITE;TEXT-ALIGN:CENTER;">NO TEACHERS FOUND!</P>';
+    RETURN;
   }
-}
 
-// Show Section
-function showSection(id){
-  const sections=document.querySelectorAll('.section');
-  sections.forEach(sec=>sec.style.display='none');
-  document.getElementById(id).style.display='block';
-}
-
-// STUDENT DATA
-function loadStudentData(){
-  const students=JSON.parse(localStorage.getItem('registrations'))||[];
-  let html='<table border="1" width="100%" style="border-collapse:collapse;"><tr><th>Name</th><th>Father</th><th>Mother</th><th>Mobile</th><th>Email</th><th>Whatsapp</th><th>Course</th><th>Fee</th></tr>';
-  students.forEach(s=>{
-    html+=`<tr>
-      <td>${s.fullName}</td>
-      <td>${s.fatherName}</td>
-      <td>${s.motherName}</td>
-      <td>${s.mobile||''}</td>
-      <td>${s.email||''}</td>
-      <td>${s.whatsapp||''}</td>
-      <td>${s.selectedCourse||''}</td>
-      <td>${s.courseFee||''}</td>
-    </tr>`;
+  TEACHERS.FOREACH(T=>{
+    CONST PHOTO=T.TPHOTO||'https://via.placeholder.com/120';
+    CONST CARD=DOCUMENT.CREATEELEMENT('DIV');
+    CARD.CLASSNAME='CARD';
+    CARD.INNERHTML=`
+      <IMG SRC="${PHOTO}" ALT="${T.TNAME}">
+      <H3>${T.TNAME}</H3>
+      <P>📚 SUBJECT: ${T.TSUBJECT}</P>
+      <P>💼 EXPERIENCE: ${T.TEXP} YEARS</P>
+      <P>📱 MOBILE: ${T.TMOBILE}</P>
+      <P>💬 WHATSAPP: ${T.TWHATSAPP}</P>
+      <P>✉️ EMAIL: ${T.TEMAIL||'-'}</P>
+      <P>📡 TELEGRAM: ${T.TTELEGRAM||'-'}</P>
+      <DIV CLASS="BTN-CONTAINER">
+        <A CLASS="BTN CALL-BTN" HREF="TEL:${T.TMOBILE}">CALL</A>
+        <A CLASS="BTN WA-BTN" HREF="HTTPS://WA.ME/${T.TWHATSAPP}" TARGET="_BLANK">WHATSAPP</A>
+        <A CLASS="BTN LASTCHAT-BTN" HREF="HTTPS://WA.ME/${T.TWHATSAPP}" TARGET="_BLANK">LAST CHAT / NOW</A>
+        <A CLASS="BTN TELEGRAM-BTN" HREF="${T.TTELEGRAM||'#'}" TARGET="_BLANK">TELEGRAM</A>
+        <A CLASS="BTN YOUTUBE-BTN" HREF="${T.YOUTUBE||'#'}" TARGET="_BLANK">YOUTUBE</A>
+      </DIV>
+    `;
+    GRID.APPENDCHILD(CARD);
   });
-  html+='</table>';
-  document.getElementById('studentList').innerHTML=html;
 }
 
-// TEACHER DATA
-function addTeacher(){
-  const tName=document.getElementById('tName').value.trim();
-  const tSubject=document.getElementById('tSubject').value.trim();
-  const tExp=document.getElementById('tExp').value.trim();
-  const tMobile=document.getElementById('tMobile').value.trim();
-  const tWhatsapp=document.getElementById('tWhatsapp').value.trim();
-  const tEmail=document.getElementById('tEmail').value.trim();
-  const tTelegram=document.getElementById('tTelegram').value.trim();
-  const tPhoto=document.getElementById('tPhoto').files[0] ? URL.createObjectURL(document.getElementById('tPhoto').files[0]) : '';
+// Initialize
+LOADTEACHERS();
+</SCRIPT>
 
-  if(!tName||!tSubject||!tExp||!tMobile) {document.getElementById('teacherMsg').innerText='❌ Fill required fields'; return;}
-  let teachers=JSON.parse(localStorage.getItem('teachers'))||[];
-  teachers.push({tName,tSubject,tExp,tMobile,tWhatsapp,tEmail,tTelegram,tPhoto});
-  localStorage.setItem('teachers',JSON.stringify(teachers));
-  document.getElementById('teacherMsg').innerText='✅ Teacher Added';
-  document.getElementById('tName').value=''; document.getElementById('tSubject').value=''; document.getElementById('tExp').value='';
-  document.getElementById('tMobile').value=''; document.getElementById('tWhatsapp').value=''; document.getElementById('tEmail').value=''; document.getElementById('tTelegram').value='';
-  loadTeacherData();
-}
-
-function loadTeacherData(){
-  const teachers=JSON.parse(localStorage.getItem('teachers'))||[];
-  let html='<table border="1" width="100%" style="border-collapse:collapse;"><tr><th>Name</th><th>Subject</th><th>Experience</th><th>Mobile</th><th>Whatsapp</th><th>Email</th><th>Telegram</th></tr>';
-  teachers.forEach(t=>{
-    html+=`<tr>
-      <td>${t.tName}</td><td>${t.tSubject}</td><td>${t.tExp}</td>
-      <td>${t.tMobile}</td><td>${t.tWhatsapp}</td><td>${t.tEmail}</td><td>${t.tTelegram}</td>
-    </tr>`;
-  });
-  html+='</table>';
-  document.getElementById('teacherList').innerHTML=html;
-}
-
-// COURSE DATA
-function addCourse(){
-  const cName=document.getElementById('cName').value.trim();
-  const cFee=document.getElementById('cFee').value.trim();
-  if(!cName||!cFee){document.getElementById('courseMsg').innerText='❌ Fill required fields'; return;}
-  let courses=JSON.parse(localStorage.getItem('courses'))||[];
-  courses.push({cName,cFee});
-  localStorage.setItem('courses',JSON.stringify(courses));
-  document.getElementById('courseMsg').innerText='✅ Course Added';
-  document.getElementById('cName').value=''; document.getElementById('cFee').value='';
-  loadCourseData();
-}
-
-function loadCourseData(){
-  const courses=JSON.parse(localStorage.getItem('courses'))||[];
-  let html='<table border="1" width="100%" style="border-collapse:collapse;"><tr><th>Course Name</th><th>Fee</th></tr>';
-  courses.forEach(c=>{html+=`<tr><td>${c.cName}</td><td>${c.cFee}</td></tr>`;});
-  html+='</table>';
-  document.getElementById('courseList').innerHTML=html;
-}
-
-// NOTIFICATION
-function addNotification(){
-  const nTitle=document.getElementById('nTitle').value.trim();
-  const nLink=document.getElementById('nLink').value.trim();
-  if(!nTitle||!nLink){document.getElementById('notificationMsg').innerText='❌ Fill required fields'; return;}
-  let notifications=JSON.parse(localStorage.getItem('notifications'))||[];
-  notifications.push({nTitle,nLink});
-  localStorage.setItem('notifications',JSON.stringify(notifications));
-  document.getElementById('notificationMsg').innerText='✅ Notification Added';
-  document.getElementById('nTitle').value=''; document.getElementById('nLink').value='';
-  loadNotificationData();
-}
-
-function loadNotificationData(){
-  const notifications=JSON.parse(localStorage.getItem('notifications'))||[];
-  let html='<table border="1" width="100%" style="border-collapse:collapse;"><tr><th>Title</th><th>Link</th></tr>';
-  notifications.forEach(n=>{html+=`<tr><td>${n.nTitle}</td><td>${n.nLink}</td></tr>`;});
-  html+='</table>';
-  document.getElementById('notificationList').innerHTML=html;
-}
-
-// FILES
-function addFile(){
-  const fName=document.getElementById('fName').value.trim();
-  const fFile=document.getElementById('fFile').files[0];
-  if(!fName||!fFile){document.getElementById('fileMsg').innerText='❌ Fill required fields'; return;}
-  let files=JSON.parse(localStorage.getItem('files'))||[];
-  const fURL=URL.createObjectURL(fFile);
-  files.push({fName,fURL});
-  localStorage.setItem('files',JSON.stringify(files));
-  document.getElementById('fileMsg').innerText='✅ File Uploaded';
-  document.getElementById('fName').value=''; document.getElementById('fFile').value='';
-  loadFilesData();
-}
-
-function loadFilesData(){
-  const files=JSON.parse(localStorage.getItem('files'))||[];
-  let html='<table border="1" width="100%" style="border-collapse:collapse;"><tr><th>File Name</th><th>Download</th></tr>';
-  files.forEach(f=>{html+=`<tr><td>${f.fName}</td><td><a href="${f.fURL}" target="_blank">Download</a></td></tr>`;});
-  html+='</table>';
-  document.getElementById('fileList').innerHTML=html;
-}
-</script>
-</body>
-</html>
+</BODY>
+</HTML>
