@@ -3,118 +3,85 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Student Panel | MATH'S WARRIOR</title>
+<title>My Courses | MATH'S WARRIOR</title>
 <style>
-body{font-family:'Poppins',sans-serif;background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);min-height:100vh;color:white;padding:20px;}
-.container{max-width:900px;margin:auto;background:white;color:#333;padding:25px;border-radius:15px;}
-h2,h3{text-align:center;color:#ff4b2b;margin-bottom:15px;}
-input{width:100%;padding:10px;margin:8px 0;border-radius:10px;border:1px solid #ccc;}
-button{padding:10px 15px;background:#ff416c;color:white;border:none;border-radius:10px;cursor:pointer;margin-top:8px;}
+body{
+  font-family:'Poppins',sans-serif;
+  background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+  color:white;
+  padding:20px;
+}
+.container{
+  max-width:900px;
+  margin:auto;
+  background:white;
+  color:#333;
+  padding:25px;
+  border-radius:15px;
+}
+h2{text-align:center;color:#ff4b2b;margin-bottom:15px;text-transform:uppercase;}
+input{width:100%;padding:10px;margin:8px 0;border-radius:10px;border:1px solid #ccc;text-transform:uppercase;font-weight:bold;}
+button{padding:12px;background:#ff416c;color:white;border:none;border-radius:10px;cursor:pointer;width:100%;font-weight:bold;text-transform:uppercase;margin-top:10px;}
 button:hover{background:#ff4b2b;}
-.section{margin-top:20px;}
-.card{background:#f5f5f5;padding:12px;border-radius:10px;margin:10px 0;display:flex;justify-content:space-between;align-items:center;}
-.card img{width:60px;height:60px;border-radius:50%;object-fit:cover;}
-.code-box{background:rgba(0,0,0,0.2);padding:3px 8px;border-radius:6px;font-weight:bold;}
-.book-card{background:linear-gradient(135deg,#ff9a9e,#fad0c4);padding:15px;border-radius:12px;margin:10px 0;color:white;}
-.book-card a{margin-right:5px;background:rgba(0,0,0,0.2);padding:5px 8px;border-radius:6px;color:white;text-decoration:none;}
-.book-card img{width:50px;height:50px;border-radius:6px;margin-right:8px;}
+.section{margin-top:20px;overflow-x:auto;}
+table#studentCourses{width:100%;border-collapse:collapse;background:black;color:white;}
+th,td{padding:12px 8px;text-align:center;border:1px solid #ddd;font-weight:bold;text-transform:uppercase;}
+th{background:#ff416c;color:white;}
+tr:nth-child(even){background:#222;}
 </style>
 </head>
 <body>
-<div class="container">
-<h2>Welcome to MATH'S WARRIOR</h2>
-<input type="text" id="aadhaar" placeholder="Enter Your 12-digit Aadhaar Number">
-<button onclick="showStudentData()">Show My Panel</button>
 
-<div id="studentPanel" class="section"></div>
+<div class="container">
+<h2>MY COURSES</h2>
+
+<label>ENTER AADHAAR NUMBER</label>
+<input type="text" id="aadhaar" placeholder="ENTER YOUR 12-DIGIT AADHAAR" maxlength="12">
+<button onclick="showMyCourses()">SHOW MY COURSES</button>
+
+<div id="coursePanel" class="section"></div>
 </div>
 
 <script>
-function showStudentData(){
+// Show courses for student
+function showMyCourses(){
   const aadhaar=document.getElementById("aadhaar").value.trim();
   if(aadhaar.length!==12 || isNaN(aadhaar)){
-    alert("Enter valid 12-digit Aadhaar!");
+    alert("PLEASE ENTER VALID 12-DIGIT AADHAAR!");
     return;
   }
 
-  const students=JSON.parse(localStorage.getItem("students"))||[];
-  const student=students.find(s=>s.aadhaar===aadhaar);
-  const panel=document.getElementById("studentPanel");
+  const registrations=JSON.parse(localStorage.getItem("registrations"))||[];
+  const student=registrations.find(s=>s.aadhaar===aadhaar);
+  const panel=document.getElementById("coursePanel");
   panel.innerHTML="";
 
   if(!student){
-    panel.innerHTML="<p style='color:red;text-align:center;'>No student found with this Aadhaar!</p>";
+    panel.innerHTML="<p style='color:red;text-align:center;'>NO COURSE REGISTERED FOR THIS AADHAAR!</p>";
     return;
   }
 
-  // Student Info
-  panel.innerHTML+=`<h3>Hello, ${student.name}</h3>
-  <p>📱 ${student.mobile} | 🏠 ${student.address} | 🎓 ${student.className}</p>`;
+  const table=document.createElement("table");
+  table.id="studentCourses";
+  const header=table.insertRow();
+  ["S.NO","NAME","FATHER NAME","COURSE","FEE","PAYMENT STATUS","UTR NUMBER"].forEach(h=>{
+    const th=document.createElement("th");
+    th.innerText=h;
+    header.appendChild(th);
+  });
 
-  // Courses
-  if(student.courses && student.courses.length>0){
-    panel.innerHTML+=`<h3>My Courses</h3>`;
-    student.courses.forEach(c=>{
-      if(!c.code) c.code=`MW-${aadhaar.slice(-4)}-${c.name.replace(/\s+/g,'').toUpperCase()}-${Math.floor(1000+Math.random()*9000)}`;
-      panel.innerHTML+=`<div class="card">
-        <div>📘 ${c.name}</div>
-        <div>💰 ₹${c.fee} - <strong>Paid ✅</strong></div>
-        <div>📝 Code: <span class="code-box">${c.code}</span></div>
-      </div>`;
-    });
-  }
+  const row=table.insertRow();
+  row.insertCell(0).innerText=1;
+  row.insertCell(1).innerText=student.fullName;
+  row.insertCell(2).innerText=student.fatherName;
+  row.insertCell(3).innerText=student.selectedCourse;
+  row.insertCell(4).innerText="₹"+student.courseFee;
+  row.insertCell(5).innerText="PAID ✅";
+  row.insertCell(6).innerText=student.utrNumber;
 
-  // Teachers
-  const teachers=JSON.parse(localStorage.getItem("teachers"))||[];
-  if(teachers.length>0){
-    panel.innerHTML+=`<h3>Our Teachers</h3>`;
-    teachers.forEach(t=>{
-      panel.innerHTML+=`<div class="card">
-        <div>
-          <img src="${t.image||'https://via.placeholder.com/60'}">
-          <b>${t.name}</b><br>${t.subject}<br>Exp: ${t.experience} Years
-        </div>
-        <div>
-          <a href="tel:${t.mobile}">Call</a>
-          <a href="https://wa.me/${t.whatsapp}" target="_blank">WA</a>
-          <a href="mailto:${t.email}">Mail</a>
-        </div>
-      </div>`;
-    });
-  }
-
-  // Notes
-  const notes=JSON.parse(localStorage.getItem("notes"))||[];
-  if(notes.length>0){
-    panel.innerHTML+=`<h3>Notes</h3>`;
-    notes.forEach(n=>{
-      panel.innerHTML+=`<div class="card">
-        <span>${n.title}</span>
-        <a href="${n.file}" download="${n.filename}">Download</a>
-      </div>`;
-    });
-  }
-
-  // Floating Books
-  const books=JSON.parse(localStorage.getItem("books"))||[];
-  if(books.length>0){
-    panel.innerHTML+=`<h3>Buy Books</h3>`;
-    books.forEach(b=>{
-      panel.innerHTML+=`<div class="book-card">
-        <div style="display:flex;align-items:center;">
-          <img src="${b.image||'https://via.placeholder.com/50'}">
-          <div>
-            <b>${b.name}</b><br>Author: ${b.author}<br>Price: ₹${b.price}
-          </div>
-        </div>
-        <div>
-          <a href="${b.flipkart}" target="_blank">Flipkart</a>
-          <a href="${b.amazon}" target="_blank">Amazon</a>
-        </div>
-      </div>`;
-    });
-  }
+  panel.appendChild(table);
 }
 </script>
+
 </body>
 </html>
