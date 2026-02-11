@@ -1,180 +1,158 @@
 <!DOCTYPE html>
-<html>
+<html lang="hi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Floating Books Click | MATH'S WARRIOR</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-
+<title>Smart Book Store</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:'Poppins',sans-serif;
-}
+:root { --primary-blue: #00a2ff; --dark-blue: #0081cc; }
+body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; margin: 0; padding-bottom: 80px; }
+.container { max-width: 450px; margin: auto; background: white; min-height: 100vh; text-align: center; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
 
-body{
-  background:linear-gradient(135deg,#ff512f,#dd2476);
-  min-height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  flex-direction:column;
-  color:white;
-}
+/* Profile Section */
+.profile-img { width: 100px; height: 100px; border-radius: 50%; border: 3px solid #ff4d4d; margin-top: 30px; }
+h2 { font-size: 18px; margin: 10px 0; color: #333; }
+p { font-size: 14px; color: #555; margin-bottom: 15px; }
 
-/* Header */
-.header{
-  text-align:center;
-  margin-bottom:50px;
+/* Book Card */
+.book-card {
+    background: var(--primary-blue);
+    margin: 10px 15px;
+    padding: 12px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    color: white;
+    cursor: pointer;
+    transition: transform 0.2s;
 }
+.book-card:active { transform: scale(0.98); }
+.book-img { width: 50px; height: 65px; border-radius: 4px; margin-right: 15px; background: #fff; }
+.book-info { flex-grow: 1; text-align: left; }
+.price { font-weight: bold; font-size: 1.1em; margin-top: 5px; }
 
-.header h1{
-  font-size:28px;
-  font-weight:700;
+/* Cart Bar */
+#cart-bar {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    max-width: 450px;
+    background: #222;
+    color: white;
+    display: none;
+    justify-content: space-between;
+    padding: 15px 20px;
+    box-sizing: border-box;
+    border-radius: 15px 15px 0 0;
+    animation: slideUp 0.3s ease;
 }
+@keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
 
-.header p{
-  font-size:14px;
-  margin-top:5px;
-}
-
-/* Floating Books Container */
-.floating-books{
-  position:fixed;
-  bottom:20px;
-  left:50%;
-  transform:translateX(-50%);
-  display:flex;
-  gap:30px;
-  z-index:1000;
-}
-
-/* Book Circle */
-.book-circle{
-  position:relative;
-  width:100px;
-  height:100px;
-  border-radius:50%;
-  overflow:hidden;
-  cursor:pointer;
-  transition:0.3s;
-  box-shadow:0 8px 15px rgba(0,0,0,0.3);
-}
-
-.book-circle img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  transition:0.3s;
-}
-
-.book-circle:hover img{
-  transform:scale(1.1);
-}
-
-/* Buy Buttons Panel */
-.buy-buttons{
-  position:absolute;
-  bottom:110%;
-  left:50%;
-  transform:translateX(-50%) scale(0);
-  display:flex;
-  gap:8px;
-  transition:0.3s;
-  background:rgba(255,255,255,0.95);
-  padding:5px 10px;
-  border-radius:12px;
-  pointer-events:none;
-  z-index:10;
-}
-
-.buy-buttons.show{
-  transform:translateX(-50%) scale(1);
-  pointer-events:auto;
-}
-
-/* Buy Buttons Style */
-.buy-buttons a{
-  display:inline-block;
-  width:35px;
-  height:35px;
-  border-radius:6px;
-  overflow:hidden;
-  transition:0.3s;
-}
-
-.buy-buttons a img{
-  width:100%;
-  height:100%;
-  object-fit:contain;
-}
-
-.buy-buttons a:hover{
-  transform:scale(1.2);
+.checkout-btn {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
 }
 </style>
 </head>
 <body>
 
-<div class="header">
-<h1>BUY BOOKS</h1>
-<p>MATH'S WARRIOR | BY ABHINAY PRATAP</p>
+<div class="container">
+    <img src="https://via.placeholder.com/100" class="profile-img">
+    <h2>ABHINAY PRATAP MATHS BOOK STORE</h2>
+    <p>Select books to purchase</p>
+
+    <!-- Books -->
+    <div class="book-card" onclick="addToCart('Maths Revision Booster', 299)">
+        <img src="https://via.placeholder.com/50x65" class="book-img">
+        <div class="book-info">
+            <div>Maths Revision Booster</div>
+            <div class="price">₹299</div>
+        </div>
+        <i class="fas fa-plus-circle"></i>
+    </div>
+
+    <div class="book-card" onclick="addToCart('SSC Maths 7300+ | 14th Edition', 550)">
+        <img src="https://via.placeholder.com/50x65" class="book-img">
+        <div class="book-info">
+            <div>SSC Maths 7300+ | 14th Edition</div>
+            <div class="price">₹550</div>
+        </div>
+        <i class="fas fa-plus-circle"></i>
+    </div>
+
+    <div class="book-card" onclick="addToCart('KVS NVS Maths Practice Set', 399)">
+        <img src="https://via.placeholder.com/50x65" class="book-img">
+        <div class="book-info">
+            <div>KVS NVS Maths Practice Set</div>
+            <div class="price">₹399</div>
+        </div>
+        <i class="fas fa-plus-circle"></i>
+    </div>
+
+    <div class="book-card" onclick="addToCart('Math Special 2.0', 2099)">
+        <img src="https://via.placeholder.com/50x65" class="book-img">
+        <div class="book-info">
+            <div>Math Special 2.0</div>
+            <div class="price">₹2099</div>
+        </div>
+        <i class="fas fa-plus-circle"></i>
+    </div>
+
+    <div class="book-card" onclick="addToCart('Math Olympiad Workbook', 499)">
+        <img src="https://via.placeholder.com/50x65" class="book-img">
+        <div class="book-info">
+            <div>Math Olympiad Workbook</div>
+            <div class="price">₹499</div>
+        </div>
+        <i class="fas fa-plus-circle"></i>
+    </div>
 </div>
 
-<div class="floating-books">
-
-  <!-- Book 1 -->
-  <div class="book-circle" onclick="toggleBuy(this)">
-    <img src="images/book1.jpg" alt="Book 1">
-    <div class="buy-buttons">
-      <a href="https://www.flipkart.com/example-book1" target="_blank">
-        <img src="images/flipkart-logo.png" alt="Flipkart">
-      </a>
-      <a href="https://www.amazon.in/example-book1" target="_blank">
-        <img src="images/amazon-logo.png" alt="Amazon">
-      </a>
+<div id="cart-bar">
+    <div>
+        <span id="items-count">0</span> Items | 
+        <strong>Total: ₹<span id="total-price">0</span></strong>
     </div>
-  </div>
-
-  <!-- Book 2 -->
-  <div class="book-circle" onclick="toggleBuy(this)">
-    <img src="images/book2.jpg" alt="Book 2">
-    <div class="buy-buttons">
-      <a href="https://www.flipkart.com/example-book2" target="_blank">
-        <img src="images/flipkart-logo.png" alt="Flipkart">
-      </a>
-      <a href="https://www.amazon.in/example-book2" target="_blank">
-        <img src="images/amazon-logo.png" alt="Amazon">
-      </a>
-    </div>
-  </div>
-
+    <button class="checkout-btn" onclick="checkout()">Buy Now</button>
 </div>
 
 <script>
-function toggleBuy(book){
-  const panel = book.querySelector('.buy-buttons');
+let cart = [];
+let total = 0;
 
-  // Close all other open panels
-  document.querySelectorAll('.buy-buttons').forEach(b=>{
-    if(b!==panel) b.classList.remove('show');
-  });
-
-  // Toggle this one
-  panel.classList.toggle('show');
+function addToCart(name, price) {
+    cart.push({name, price});
+    total += price;
+    updateUI();
 }
 
-// Optional: click outside closes panels
-document.addEventListener('click', function(e){
-  if(!e.target.closest('.book-circle')){
-    document.querySelectorAll('.buy-buttons').forEach(b=>{
-      b.classList.remove('show');
+function updateUI() {
+    const cartBar = document.getElementById('cart-bar');
+    if(cart.length > 0) {
+        cartBar.style.display = 'flex';
+    }
+    document.getElementById('items-count').innerText = cart.length;
+    document.getElementById('total-price').innerText = total;
+}
+
+function checkout() {
+    if(cart.length === 0) { alert("Please select at least one book."); return; }
+    let message = "I want to buy:\n";
+    cart.forEach(item => {
+        message += `- ${item.name} (₹${item.price})\n`;
     });
-  }
-});
+    message += `\nTotal: ₹${total}`;
+    
+    // WhatsApp link (replace with your number)
+    let whatsappUrl = `https://wa.me/919670078465?text=${encodeURIComponent(message)}`;
+    window.location.href = whatsappUrl;
+}
 </script>
 
 </body>

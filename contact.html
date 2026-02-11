@@ -1,139 +1,149 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CONTACT | MATH'S WARRIOR</title>
-
+<title>MATH'S WARRIOR | CONTACT</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
-}
-
 body{
-background:linear-gradient(135deg,#ff512f,#dd2476);
-padding:20px;
-color:white;
+  margin:0;
+  font-family:'Poppins',sans-serif;
+  background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+  color:white;
 }
-
-/* Header */
 .header{
-text-align:center;
-margin-bottom:30px;
+  text-align:center;
+  padding:20px;
+  font-size:28px;
+  font-weight:bold;
+  background:#111;
+  color:#FF416C;
 }
-
-.header h1{
-font-size:26px;
+.container{
+  max-width:900px;
+  margin:auto;
+  padding:20px;
+  display:flex;
+  flex-direction:column;
+  gap:25px;
 }
 
 /* Contact Card */
-.contact-box{
-background:white;
-color:#333;
-padding:30px;
-border-radius:25px;
-box-shadow:0 15px 30px rgba(0,0,0,0.3);
-max-width:500px;
-margin:auto;
-text-align:center;
+.contact-card{
+  background:#111;
+  padding:20px;
+  border-radius:15px;
+  box-shadow:0 8px 25px rgba(0,0,0,0.5);
+  text-align:center;
+  transition:0.3s;
+}
+.contact-card:hover{
+  transform:translateY(-5px);
+  box-shadow:0 15px 40px rgba(0,0,0,0.6);
+}
+.contact-card h3{
+  color:#FF416C;
+  margin-bottom:15px;
+  font-size:22px;
+}
+.contact-card p{
+  margin:8px 0;
+  font-size:16px;
 }
 
-.contact-box h2{
-margin-bottom:15px;
-color:#dd2476;
-}
-
-.contact-box p{
-margin-bottom:15px;
-font-size:16px;
+/* Button Container */
+.btn-line{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:15px;
 }
 
 /* Buttons */
-.btn{
-display:block;
-width:100%;
-padding:12px;
-margin:10px 0;
-border:none;
-border-radius:30px;
-font-weight:600;
-cursor:pointer;
-text-decoration:none;
-color:white;
-transition:0.3s;
+.contact-btn{
+  padding:10px 18px;
+  border:none;
+  border-radius:25px;
+  cursor:pointer;
+  font-weight:bold;
+  color:white;
+  transition:0.3s;
+  box-shadow:0 5px 15px rgba(0,0,0,0.3);
+  text-decoration:none;
+  display:inline-block;
+  font-size:14px;
 }
 
-.call-btn{
-background:linear-gradient(45deg,#1e90ff,#0072ff);
+/* Button Colors */
+.whatsapp{background:#25D366;}
+.whatsapp:hover{background:#128C7E; transform:scale(1.05);}
+.phone{background:#28A745;}
+.phone:hover{background:#1E7E34; transform:scale(1.05);}
+.email{background:#FF416C;}
+.email:hover{background:#C70039; transform:scale(1.05);}
+.telegram{background:#0088CC;}
+.telegram:hover{background:#005F80; transform:scale(1.05);}
+
+/* Footer */
+.footer{
+  text-align:center;
+  padding:15px;
+  font-weight:bold;
+  color:white;
+  background:#222;
+  margin-top:20px;
+  font-size:14px;
 }
 
-.whatsapp-btn{
-background:linear-gradient(45deg,#25D366,#128C7E);
+/* Responsive */
+@media(max-width:500px){
+  .container{padding:15px;}
+  .contact-card h3{font-size:20px;}
+  .contact-card p{font-size:14px;}
+  .btn-line{flex-direction:column; gap:8px;}
 }
-
-.btn:hover{
-transform:scale(1.05);
-box-shadow:0 10px 25px rgba(0,0,0,0.3);
-}
-
-/* Contact Form */
-form{
-margin-top:20px;
-}
-
-input, textarea{
-width:100%;
-padding:12px;
-margin:8px 0;
-border:none;
-border-radius:20px;
-background:#f2f2f2;
-outline:none;
-}
-
-.submit-btn{
-background:linear-gradient(45deg,#ff512f,#dd2476);
-color:white;
-}
-
 </style>
 </head>
-
 <body>
 
-<div class="header">
-<h1>STUDENT CONTACT QUERIES</h1>
-<p>MATH'S WARRIOR | MATHS By ABHINAY PRATAP</p>
+<div class="header">MATH'S WARRIOR INSTITUTE QUERIES SECTION</div>
+
+<div class="container">
+  <!-- Contact Card 1 -->
+  <div class="contact-card">
+    <h3>ABHINAY PRATAP MATHS</h3>
+    <p>📞 Phone: +91 9670078465</p>
+    <p>📧 Email: abhinaychaubey83@gmail.com</p>
+    <p>💬 WhatsApp: +91 9670078465</p>
+    <p>📡 Telegram: <a href="https://t.me/abhinaypratapmaths" target="_blank" style="color:#FF416C;">Join Channel</a></p>
+    <div class="btn-line">
+      <a href="tel:+919670078465" class="contact-btn phone">Call</a>
+      <a href="https://wa.me/919670078465" class="contact-btn whatsapp" target="_blank">WhatsApp</a>
+      <a href="mailto:abhinaychaubey83@gmail.com" class="contact-btn email">Email</a>
+      <a href="https://t.me/abhinaypratapmaths" class="contact-btn telegram" target="_blank">Telegram</a>
+    </div>
+  </div>
+
+  <!-- Contact Card 2 -->
+  <div class="contact-card">
+    <h3>SUPPORT TEAM</h3>
+    <p>📞 Phone: +91 9670078465</p>
+    <p>📧 Email: support@mathswarrior.com</p>
+    <p>💬 WhatsApp: +91 9161037926</p>
+    <p>📡 Telegram: <a href="https://t.me/mathswarriorsupport" target="_blank" style="color:#FF416C;">Join Channel</a></p>
+    <div class="btn-line">
+      <a href="tel:+919670078465" class="contact-btn phone">Call</a>
+      <a href="https://wa.me/919670078465" class="contact-btn whatsapp" target="_blank">WhatsApp</a>
+      <a href="mailto:support@mathswarrior.com" class="contact-btn email">Email</a>
+      <a href="https://t.me/mathswarriorsupport" class="contact-btn telegram" target="_blank">Telegram</a>
+    </div>
+  </div>
 </div>
 
-<div class="contact-box">
-
-<h2>INSTITUTE CONTACT</h2>
-
-<p>MOBILE: <b>9670078465</b></p>
-
-<a href="tel:9670078465" class="btn call-btn">
-CALL NOW
-</a>
-
-<a href="https://wa.me/919670078465" target="_blank" class="btn whatsapp-btn">
-Chat on WhatsApp
-</a>
-
-<h2>SEND YOUR QUERY</h2>
-
-<form>
-<input type="text" placeholder="YOUR NAME" required>
-<input type="email" placeholder="YOUR EMAIL" required>
-<textarea rows="4" placeholder="Write Your Message..." required></textarea>
-<button type="submit" class="btn submit-btn">SUBMIT QUERY</button>
-</form>
-
+<div class="footer">
+© 2026 MATH'S WARRIOR | ABHINAY PRATAP MATHS
 </div>
 
 </body>

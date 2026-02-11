@@ -1,132 +1,160 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>INSTITUTE GALLERY | MATH'S WARRIOR</title>
-
+<title>MATH'S WARRIOR | GALLERY</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:'Poppins',sans-serif;
-}
-
 body{
-  background:linear-gradient(135deg,#ff512f,#dd2476);
-  padding:20px;
+  margin:0;
+  font-family:'Poppins',sans-serif;
+  background: linear-gradient(135deg,#000428,#004e92);
   color:white;
 }
-
-/* Header */
 .header{
   text-align:center;
-  margin-bottom:30px;
-}
-
-.header h1{
+  padding:20px;
   font-size:28px;
-  font-weight:700;
+  font-weight:bold;
+  background:#111;
+  color:#FF416C;
 }
-
-.header p{
-  font-size:16px;
-  margin-top:5px;
+.container{
+  max-width:1200px;
+  margin:auto;
+  padding:20px;
 }
 
 /* Gallery Grid */
 .gallery{
   display:grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
   gap:20px;
-  max-width:1000px;
-  margin:auto;
 }
 
-.gallery img{
-  width:100%;
-  height:200px;
-  object-fit:cover;
-  border-radius:20px;
-  cursor:pointer;
+.card{
+  background:#111;
+  border-radius:15px;
+  overflow:hidden;
+  box-shadow:0 8px 20px rgba(0,0,0,0.5);
   transition:0.3s;
-  box-shadow:0 10px 20px rgba(0,0,0,0.3);
+  cursor:pointer;
+  position:relative;
 }
-
-.gallery img:hover{
-  transform:scale(1.05);
-  box-shadow:0 15px 30px rgba(0,0,0,0.5);
-}
-
-/* Lightbox */
-#lightbox{
-  position:fixed;
-  top:0;
-  left:0;
+.card img{
   width:100%;
-  height:100%;
-  background:rgba(0,0,0,0.8);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:1000;
+  display:block;
+  transition:0.3s;
+}
+.card:hover img{
+  transform:scale(1.05);
+}
+.card .overlay{
+  position:absolute;
+  bottom:0;
+  background:rgba(0,0,0,0.7);
+  width:100%;
+  padding:10px;
+  text-align:center;
+  font-weight:bold;
+  font-size:16px;
+  color:#ff416c;
+  opacity:0;
+  transition:0.3s;
+}
+.card:hover .overlay{
+  opacity:1;
 }
 
-#lightbox img{
+/* Modal View */
+.modal{
+  display:none;
+  position:fixed;
+  z-index:1000;
+  left:0;top:0;
+  width:100%;height:100%;
+  background:rgba(0,0,0,0.9);
+  justify-content:center;
+  align-items:center;
+}
+.modal img{
   max-width:90%;
   max-height:90%;
-  border-radius:15px;
+  border-radius:10px;
+  box-shadow:0 0 20px rgba(255,255,255,0.5);
+}
+.modal span{
+  position:absolute;
+  top:30px;
+  right:50px;
+  font-size:40px;
+  font-weight:bold;
+  cursor:pointer;
+  color:#ff416c;
+}
+.footer{
+  text-align:center;
+  padding:15px;
+  font-weight:bold;
+  color:white;
+  background:#222;
+  margin-top:20px;
+  font-size:14px;
 }
 </style>
 </head>
-
 <body>
 
-<div class="header">
-<h1>INSTITUTE GALLERY</h1>
-<p>MATH'S WARRIOR | BY ABHINAY PRATAP</p>
+<div class="header">MATH'S WARRIOR GALLERY</div>
+
+<div class="container">
+  <div class="gallery" id="gallery"></div>
 </div>
 
-<div class="gallery" id="gallery"></div>
+<div class="modal" id="modal">
+  <span onclick="closeModal()">&times;</span>
+  <img id="modalImg" src="">
+</div>
 
-<!-- Lightbox -->
-<div id="lightbox" onclick="this.style.display='none'">
-  <img id="lightbox-img" src="" alt="Full Image">
+<div class="footer">
+© 2026 MATH'S WARRIOR | ABHINAY PRATAP MATHS
 </div>
 
 <script>
-// Array of images
-const images = [
-    {src:"images/institute1.jpg", alt:"Institute Image 1"},
-    {src:"images/institute2.jpg", alt:"Institute Image 2"},
-    {src:"images/institute3.jpg", alt:"Institute Image 3"}
-    // Add more images here
+// Sample gallery images - Admin panel से add कर सकते हैं
+let galleryData = JSON.parse(localStorage.getItem("GALLERY")) || [
+  {title:"Math Workshop", src:"https://picsum.photos/500/300?random=1"},
+  {title:"KVS Batch", src:"https://picsum.photos/500/300?random=2"},
+  {title:"NVS Coaching", src:"https://picsum.photos/500/300?random=3"},
+  {title:"Math Special 2.0", src:"https://picsum.photos/500/300?random=4"},
+  {title:"Practical Class", src:"https://picsum.photos/500/300?random=5"},
+  {title:"Online Lecture", src:"https://picsum.photos/500/300?random=6"}
 ];
 
-// Render images dynamically
-const gallery = document.getElementById('gallery');
+function loadGallery(){
+  let gallery = document.getElementById("gallery");
+  gallery.innerHTML="";
+  galleryData.forEach((img,i)=>{
+    gallery.innerHTML+=`
+    <div class="card" onclick="openModal('${img.src}')">
+      <img src="${img.src}" alt="${img.title}">
+      <div class="overlay">${img.title}</div>
+    </div>`;
+  });
+}
 
-images.forEach(img => {
-    const imageElement = document.createElement('img');
-    imageElement.src = img.src;
-    imageElement.alt = img.alt;
-    gallery.appendChild(imageElement);
-});
+function openModal(src){
+  let modal=document.getElementById("modal");
+  let modalImg=document.getElementById("modalImg");
+  modal.style.display="flex";
+  modalImg.src=src;
+}
+function closeModal(){
+  document.getElementById("modal").style.display="none";
+}
 
-// Lightbox functionality
-const galleryImages = document.querySelectorAll('.gallery img');
-const lightbox = document.getElementById('lightbox');
-const lightboxImg = document.getElementById('lightbox-img');
-
-galleryImages.forEach(img => {
-    img.addEventListener('click', () => {
-        lightbox.style.display = 'flex';
-        lightboxImg.src = img.src;
-    });
-});
+loadGallery();
 </script>
 
 </body>
