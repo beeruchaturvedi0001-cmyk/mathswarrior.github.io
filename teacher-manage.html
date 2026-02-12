@@ -8,73 +8,109 @@
 <style>
 body{
 margin:0;
-font-family:Arial;
+font-family:Arial, sans-serif;
 background:linear-gradient(135deg,#000428,#004e92);
 }
 
 .header{
 text-align:center;
-padding:18px;
+padding:20px;
 font-size:24px;
 font-weight:bold;
 background:#111;
-color:#FF416C;
+color:#FFD700;
+letter-spacing:1px;
 }
 
+/* GRID */
 .grid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-gap:20px;
-padding:20px;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:18px;
+padding:18px;
 }
 
+/* CARD */
 .card{
 background:white;
-border-radius:15px;
-padding:18px;
+border-radius:16px;
+padding:18px 15px;
 text-align:center;
-box-shadow:0 6px 18px rgba(0,0,0,0.3);
-transition:0.3s;
+box-shadow:0 6px 18px rgba(0,0,0,0.25);
+transition:0.3s ease;
+position:relative;
+overflow:hidden;
 }
 
 .card:hover{
 transform:translateY(-6px);
 }
 
+/* PREMIUM TOP LINE */
+.card::before{
+content:"PREMIUM FACULTY";
+position:absolute;
+top:0;
+left:0;
+width:100%;
+background:linear-gradient(90deg,#FFD700,#FFA500);
+color:#111;
+font-size:11px;
+font-weight:bold;
+padding:4px 0;
+}
+
+/* IMAGE */
 .card img{
-width:100px;
-height:100px;
+width:90px;
+height:90px;
 border-radius:50%;
 object-fit:cover;
-border:4px solid #FFD700;
+border:3px solid gold;
+margin-top:20px;
 margin-bottom:10px;
 }
 
+/* NAME */
 .name{
-font-size:18px;
+font-size:20px;
 font-weight:bold;
-color:#FFD700;
-margin-bottom:4px;
+color:#111;
+margin-bottom:6px;
 }
 
+/* GOLDEN LINE BELOW NAME */
+.name::after{
+content:"";
+display:block;
+width:40px;
+height:3px;
+background:gold;
+margin:6px auto 0;
+border-radius:10px;
+}
+
+/* SUBJECT */
 .subject{
-font-size:14px;
-color:#333;
-margin-bottom:8px;
+font-size:16px;
+color:#FF416C;
+font-weight:bold;
+margin-bottom:6px;
 }
 
 .info{
-font-size:12px;
-color:#555;
-margin:3px 0;
+font-size:15px;
+color:#333;
+margin:4px 0;
 }
 
+/* BUTTONS */
 .btn{
 display:inline-block;
-margin:5px 4px;
+margin:6px 4px;
 padding:6px 10px;
-font-size:12px;
-border-radius:6px;
+font-size:13px;
+border-radius:18px;
 text-decoration:none;
 color:white;
 }
@@ -82,11 +118,13 @@ color:white;
 .call{background:#1E90FF;}
 .whatsapp{background:#25D366;}
 .email{background:#FF416C;}
+
 </style>
 </head>
+
 <body>
 
-<div class="header">OUR TEACHERS</div>
+<div class="header">OUR PREMIUM TEACHERS</div>
 <div class="grid" id="teacherGrid"></div>
 
 <script>
@@ -100,16 +138,19 @@ grid.innerHTML="<p style='color:white;text-align:center;'>No Teacher Added Yet</
 data.forEach(t=>{
 grid.innerHTML+=`
 <div class="card">
-<img src="${t.photo || 'https://via.placeholder.com/100'}">
-<div class="name">${t.name}</div>
-<div class="subject">Subject: ${t.subject}</div>
 
-<div class="info">📱 ${t.mobile || ''}</div>
-<div class="info">📧 ${t.email || ''}</div>
+<img src="${t.photo || 'https://via.placeholder.com/100'}">
+
+<div class="name">${t.name || ''}</div>
+<div class="subject">${t.subject || ''}</div>
+
+<div class="info"> ${t.mobile || ''}</div>
+<div class="info"> ${t.email || ''}</div>
 
 <a href="tel:${t.mobile}" class="btn call">Call</a>
-<a href="https://wa.me/${t.whatsapp}" class="btn whatsapp">WhatsApp</a>
+<a href="https://wa.me/${t.whatsapp || t.mobile}" class="btn whatsapp">WhatsApp</a>
 <a href="mailto:${t.email}" class="btn email">Email</a>
+
 </div>
 `;
 });
