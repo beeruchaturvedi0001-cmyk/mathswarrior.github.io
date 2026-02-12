@@ -1,88 +1,68 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Notes Section | MATH'S WARRIOR</title>
+<title>Notes | MATH'S WARRIOR</title>
+
 <style>
 body{
-  margin:0;
-  font-family:'Poppins',sans-serif;
-  background: linear-gradient(135deg,#000428,#004e92);
-  color:white;
+margin:0;
+font-family:Arial;
+background:linear-gradient(135deg,#000428,#004e92);
 }
+
 .header{
-  text-align:center;
-  padding:20px;
-  font-size:28px;
-  font-weight:bold;
-  background:#111;
-  color:#FF416C;
+text-align:center;
+padding:15px;
+font-size:22px;
+background:#111;
+color:#FF416C;
 }
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:20px;
-  padding:20px;
+
+.box{
+background:white;
+margin:15px;
+padding:12px;
+border-radius:10px;
+box-shadow:0 5px 15px rgba(0,0,0,0.2);
+display:flex;
+justify-content:space-between;
+align-items:center;
+font-size:14px;
 }
-.card{
-  background:#111;
-  border-radius:15px;
-  padding:15px;
-  box-shadow:0 0 15px rgba(0,0,0,0.6);
-  text-align:center;
-  transition:0.3s;
-}
-.card:hover{
-  transform:translateY(-8px);
-  box-shadow:0 8px 25px rgba(0,0,0,0.7);
-}
-.card h3{
-  color:#FF416C;
-  margin-bottom:10px;
-}
-.card p{
-  color:#fff;
-  font-size:14px;
-  margin:5px 0;
-}
-.card a{
-  display:inline-block;
-  margin:5px;
-  padding:6px 12px;
-  border-radius:12px;
-  color:white;
-  text-decoration:none;
-  font-weight:bold;
-  background:#28a745;
+
+.download{
+background:#FF416C;
+color:white;
+padding:6px 10px;
+border-radius:6px;
+text-decoration:none;
+font-size:12px;
 }
 </style>
 </head>
 <body>
 
-<div class="header">MATH'S WARRIOR INSTITUTE NOTES SECTION</div>
-<div class="grid" id="notesGrid"></div>
+<div class="header">STUDY NOTES</div>
+<div id="notesList"></div>
 
 <script>
-function loadNotes(){
-  let notes = JSON.parse(localStorage.getItem("NOTES")) || [];
-  let grid = document.getElementById("notesGrid");
-  grid.innerHTML = "";
-  if(notes.length === 0){
-    grid.innerHTML = "<p style='text-align:center; font-size:18px;'>No notes uploaded yet.</p>";
-    return;
-  }
-  notes.forEach(n=>{
-    grid.innerHTML += `
-      <div class="card">
-        <h3>${n.name}</h3>
-        <p>Class: ${n.className || '-'}</p>
-        <p>Teacher: ${n.teacher || '-'}</p>
-        <a href="${n.file}" download="${n.filename || 'note.pdf'}">📥 Download / View</a>
-      </div>`;
-  });
+let data = JSON.parse(localStorage.getItem("NOTES")) || [];
+let list = document.getElementById("notesList");
+
+if(data.length===0){
+list.innerHTML="<p style='color:white;text-align:center;'>No Notes Uploaded</p>";
 }
-loadNotes();
+
+data.forEach(n=>{
+list.innerHTML+=`
+<div class="box">
+<span>${n.name}</span>
+<a href="${n.file}" download="${n.filename}" class="download">Download</a>
+</div>
+`;
+});
 </script>
 
 </body>

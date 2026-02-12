@@ -18,6 +18,7 @@ text-align:center;
 padding:20px;
 font-size:22px;
 font-weight:600;
+position:relative;
 }
 
 .admin-btn{
@@ -30,6 +31,7 @@ padding:6px 12px;
 border-radius:20px;
 cursor:pointer;
 font-size:14px;
+font-weight:600;
 }
 
 .profile-section{
@@ -52,6 +54,27 @@ font-weight:700;
 margin-top:15px;
 }
 
+.social-buttons{
+margin-top:15px;
+display:flex;
+justify-content:center;
+gap:10px;
+flex-wrap:wrap;
+}
+
+.social-buttons a{
+text-decoration:none;
+padding:8px 14px;
+border-radius:20px;
+color:white;
+font-size:14px;
+font-weight:500;
+}
+
+.call-btn{background:#1e88e5;}
+.whatsapp-btn{background:#25D366;}
+.youtube-btn{background:#FF0000;}
+
 .book-container{padding:20px;}
 
 .book-card{
@@ -62,7 +85,6 @@ border-radius:8px;
 display:flex;
 align-items:center;
 margin-bottom:15px;
-cursor:pointer;
 }
 
 .book-card img{
@@ -73,6 +95,16 @@ margin-right:15px;
 object-fit:cover;
 }
 
+.view-btn{
+background:white;
+color:#1e88e5;
+border:none;
+padding:6px 12px;
+border-radius:5px;
+cursor:pointer;
+font-size:13px;
+}
+
 .delete-btn{
 background:red;
 border:none;
@@ -80,7 +112,7 @@ color:white;
 padding:5px 10px;
 border-radius:5px;
 cursor:pointer;
-margin-left:auto;
+margin-left:10px;
 }
 
 /* Admin Panel */
@@ -135,6 +167,13 @@ Math's Warrior Book Store
 <div class="profile-section">
 <img id="profileImage" class="profile-img">
 <div class="name" id="profileName">Abhinay Pratap Chaubey</div>
+
+<div class="social-buttons">
+<a href="tel:9670078465" class="call-btn">📞 Call</a>
+<a href="https://wa.me/919670078465" target="_blank" class="whatsapp-btn">💬 WhatsApp</a>
+<a href="https://youtube.com/@abhinaypratapmaths?si=7vX8mDSZ303yHsQN" target="_blank" class="youtube-btn">▶ YouTube</a>
+</div>
+
 </div>
 
 <div class="book-container" id="bookContainer"></div>
@@ -240,7 +279,10 @@ books.forEach((b,index)=>{
 container.innerHTML+=`
 <div class="book-card">
 <img src="${b.img}">
-<div onclick="window.open('${b.link}','_blank')" style="flex:1;">${b.name}</div>
+<div style="flex:1;">
+<div style="font-weight:600; margin-bottom:8px;">${b.name}</div>
+<button class="view-btn" onclick="window.open('${b.link}','_blank')">📖 View Book</button>
+</div>
 <button class="delete-btn" onclick="deleteBook(${index})">Delete</button>
 </div>`;
 });
