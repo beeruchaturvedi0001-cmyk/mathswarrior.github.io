@@ -4,13 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Teacher Management | MATH'S WARRIOR</title>
+
 <style>
 body{
   margin:0;
-  font-family:'Poppins',sans-serif;
-  background: linear-gradient(135deg,#000428,#004e92);
-  color:white;
+  font-family:Poppins,sans-serif;
+  background:linear-gradient(135deg,#000428,#004e92);
 }
+
 .header{
   text-align:center;
   padding:20px;
@@ -18,82 +19,113 @@ body{
   font-weight:bold;
   background:#111;
   color:#FF416C;
+  letter-spacing:2px;
 }
+
 .grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
   gap:20px;
   padding:20px;
 }
+
 .card{
-  background:#111;
-  border-radius:15px;
-  padding:15px;
-  box-shadow:0 0 15px rgba(0,0,0,0.6);
+  background:white;
+  border-radius:20px;
+  padding:20px;
   text-align:center;
+  box-shadow:0 10px 30px rgba(0,0,0,0.2);
   transition:0.3s;
 }
+
 .card:hover{
   transform:translateY(-8px);
-  box-shadow:0 8px 25px rgba(0,0,0,0.7);
+  box-shadow:0 15px 40px rgba(0,0,0,0.3);
 }
+
 .card img{
-  width:100px;
-  height:100px;
+  width:120px;
+  height:120px;
   border-radius:50%;
   object-fit:cover;
-  margin-bottom:10px;
+  border:4px solid #FFD700;
+  box-shadow:0 0 15px #FFD700;
+  margin-bottom:15px;
 }
+
 .card h3{
   margin:5px 0;
-  color:#FF416C;
+  color:#FFD700;
+  font-size:20px;
 }
+
 .card p{
-  margin:5px 0;
+  margin:4px 0;
   font-size:14px;
-  color:#fff;
+  color:#333;
 }
-.card a{
+
+.btn{
   display:inline-block;
-  margin:5px;
-  padding:6px 12px;
-  border-radius:12px;
-  color:white;
+  margin:6px 4px;
+  padding:7px 14px;
+  border-radius:20px;
   text-decoration:none;
+  color:white;
+  font-size:13px;
   font-weight:bold;
 }
+
 .call-btn{background:#1E90FF;}
 .whatsapp-btn{background:#25D366;}
+.email-btn{background:#FF416C;}
+
+.no-data{
+  text-align:center;
+  font-size:18px;
+  margin-top:40px;
+  color:white;
+}
 </style>
 </head>
 <body>
 
-<div class="header">MATH'S WARRIOR INSTITUTE    TEACHER FACULTIES</div>
+<div class="header">MATH'S WARRIOR TEACHERS</div>
+
 <div class="grid" id="teacherGrid"></div>
 
 <script>
+
 function loadTeachers(){
   let data = JSON.parse(localStorage.getItem("TEACHERS")) || [];
   let grid = document.getElementById("teacherGrid");
   grid.innerHTML = "";
+
   if(data.length === 0){
-    grid.innerHTML = "<p style='text-align:center; font-size:18px;'>No teachers added yet.</p>";
+    grid.innerHTML = "<div class='no-data'>No Teachers Added Yet</div>";
     return;
   }
-  data.forEach(t=>{
+
+  data.forEach((t)=>{
     grid.innerHTML += `
       <div class="card">
-        <img src="${t.photo}" alt="${t.name}">
+        <img src="${t.photo || 'https://via.placeholder.com/120'}">
         <h3>${t.name}</h3>
-        <p>Subject: ${t.subject}</p>
-        <p>Experience: ${t.exp}</p>
-        <p>Email: ${t.email}</p>
-        <a href="tel:${t.mobile}" class="call-btn">CALL</a>
-        <a href="https://wa.me/${t.whatsapp}" target="_blank" class="whatsapp-btn">WHATSAPP</a>
-      </div>`;
+        <p><b>Subject:</b> ${t.subject}</p>
+        <p><b>Mobile:</b> ${t.mobile || '-'}</p>
+        <p><b>Email:</b> ${t.email || '-'}</p>
+
+        <a href="tel:${t.mobile}" class="btn call-btn">CALL</a>
+        <a href="https://wa.me/${t.whatsapp}" target="_blank" class="btn whatsapp-btn">WHATSAPP</a>
+        <a href="mailto:${t.email}" class="btn email-btn">EMAIL</a>
+
+      </div>
+    `;
   });
 }
+
 loadTeachers();
+
 </script>
 
 </body>

@@ -3,154 +3,117 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MATH'S WARRIOR ADMIN PANEL</title>
+<title>Admin Panel | MATH'S WARRIOR</title>
 
 <style>
 body{
   margin:0;
-  font-family: 'Poppins', sans-serif;
-  background: linear-gradient(135deg,#000428,#004e92);
+  font-family:Poppins,sans-serif;
+  background:linear-gradient(135deg,#000428,#004e92);
   color:white;
 }
-
-.header{
-  background:#111;
-  padding:15px;
-  text-align:center;
-  font-size:22px;
-  font-weight:bold;
-  color:#FFD700;
-}
-
-.container{
+.login-box,.panel{
   max-width:1000px;
-  margin:auto;
-  padding:20px;
-}
-
-.section{
+  margin:30px auto;
   background:#111;
   padding:20px;
   border-radius:15px;
-  margin-bottom:25px;
   box-shadow:0 0 20px rgba(0,0,0,0.6);
 }
-
-.section h2{
-  color:#FFD700;
-  margin-bottom:15px;
-}
-
-input, textarea{
+input,textarea{
   width:100%;
+  padding:8px;
+  margin:6px 0;
+  border:none;
+  border-radius:8px;
+}
+button{
+  padding:7px 14px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  margin:5px 0;
+}
+.add-btn{background:#FF416C;color:white;}
+.delete-btn{background:#ff0000;color:white;}
+.add-btn:hover{background:#ff4b2b;}
+.delete-btn:hover{background:#cc0000;}
+.section{
+  margin-top:20px;
+  padding:15px;
+  background:#222;
+  border-radius:12px;
+}
+h2{color:#FFD700;}
+.hidden{display:none;}
+.card{
+  background:#333;
   padding:10px;
   margin:8px 0;
-  border-radius:8px;
-  border:none;
-  outline:none;
-}
-
-button{
-  background:#FF416C;
-  border:none;
-  padding:10px 20px;
-  border-radius:25px;
-  color:white;
-  font-weight:bold;
-  cursor:pointer;
-  margin-top:10px;
-}
-
-button:hover{
-  background:#C70039;
-}
-
-.card{
-  background:#222;
-  padding:15px;
-  border-radius:15px;
-  margin-top:15px;
-  text-align:center;
-}
-
-.card img{
-  width:90px;
-  height:90px;
-  border-radius:50%;
-  border:3px solid #FFD700;
-  object-fit:cover;
-  margin-bottom:10px;
-}
-
-.card h3{
-  color:#FFD700;
+  border-radius:10px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
 </style>
 </head>
 <body>
 
-<div class="header">MATH'S WARRIOR ADMIN PANEL</div>
+<div class="login-box" id="loginBox">
+<h2>Admin Login</h2>
+<input type="text" id="adminId" placeholder="Enter ID">
+<input type="password" id="adminPass" placeholder="Enter Password">
+<button class="add-btn" onclick="login()">Login</button>
+</div>
 
-<div class="container">
+<div class="panel hidden" id="adminPanel">
+<h1 style="text-align:center;color:#FF416C;">MATH'S WARRIOR ADMIN PANEL</h1>
 
-<!-- TEACHER SECTION -->
+<!-- TEACHER -->
 <div class="section">
 <h2>Add Teacher</h2>
-
-<input type="text" id="tName" placeholder="Teacher Name">
+<input type="text" id="tName" placeholder="Name">
 <input type="text" id="tSubject" placeholder="Subject">
 <input type="text" id="tMobile" placeholder="Mobile">
 <input type="text" id="tWhatsapp" placeholder="WhatsApp">
 <input type="email" id="tEmail" placeholder="Email">
-<input type="file" id="tPhoto">
-
-<button onclick="addTeacher()">Add Teacher</button>
-
+<input type="file" id="tPhoto" accept="image/*">
+<button class="add-btn" onclick="addTeacher()">Add Teacher</button>
 <div id="teacherList"></div>
 </div>
 
-<!-- FOUNDER SECTION -->
+<!-- FOUNDER -->
 <div class="section">
 <h2>Add Founder</h2>
-
-<input type="text" id="fName" placeholder="Founder Name">
+<input type="text" id="fName" placeholder="Name">
 <input type="text" id="fRole" placeholder="Role">
+<input type="email" id="fEmail" placeholder="Email">
 <input type="text" id="fMobile" placeholder="Mobile">
 <input type="text" id="fWhatsapp" placeholder="WhatsApp">
-<input type="email" id="fEmail" placeholder="Email">
-<input type="file" id="fPhoto">
-
-<button onclick="addFounder()">Add Founder</button>
-
+<input type="file" id="fPhoto" accept="image/*">
+<button class="add-btn" onclick="addFounder()">Add Founder</button>
 <div id="founderList"></div>
 </div>
 
-<!-- NOTES SECTION -->
+<!-- NOTES -->
 <div class="section">
 <h2>Add Notes</h2>
-
-<input type="text" id="noteTitle" placeholder="Notes Title">
+<input type="text" id="noteTitle" placeholder="Title">
 <input type="file" id="noteFile">
-<input type="text" id="noteLink" placeholder="Paste Google Drive / Any Link">
-
-<button onclick="addNote()">Add Notes</button>
-
+<button class="add-btn" onclick="addNote()">Add File</button>
 <div id="noteList"></div>
 </div>
 
-<!-- NOTIFICATION SECTION -->
+<!-- NOTIFICATION -->
 <div class="section">
 <h2>Add Notification</h2>
-
-<input type="text" id="notiText" placeholder="Notification Text">
-<input type="text" id="notiLink" placeholder="Paste Link Here (Optional)">
-
-<button onclick="addNotification()">Add Notification</button>
-
+<textarea id="notiText" placeholder="Notification Text"></textarea>
+<input type="text" id="notiLink" placeholder="Paste Link Here">
+<button class="add-btn" onclick="addNotification()">Add Notification</button>
 <div id="notiList"></div>
 </div>
 
-<!-- STUDENT REGISTER VIEW -->
+<!-- STUDENTS -->
 <div class="section">
 <h2>Registered Students</h2>
 <div id="studentList"></div>
@@ -159,169 +122,159 @@ button:hover{
 </div>
 
 <script>
-document.addEventListener("DOMContentLoaded", function(){
 
-loadTeachers();
-loadFounders();
-loadNotes();
-loadNotifications();
-loadStudents();
+function login(){
+if(adminId.value==="admin" && adminPass.value==="12345"){
+loginBox.classList.add("hidden");
+adminPanel.classList.remove("hidden");
+}else{
+alert("Wrong ID or Password");
+}
+}
 
-});
-
-function toBase64(file, callback){
-const reader = new FileReader();
-reader.onload = () => callback(reader.result);
+// IMAGE CONVERT
+function convertImage(file,callback){
+if(!file){callback("");return;}
+let reader=new FileReader();
+reader.onload=function(e){callback(e.target.result);}
 reader.readAsDataURL(file);
 }
 
-// ================= TEACHER =================
+/* ---------------- TEACHER ---------------- */
 function addTeacher(){
-let name = tName.value;
-let subject = tSubject.value;
-let mobile = tMobile.value;
-let whatsapp = tWhatsapp.value;
-let email = tEmail.value;
-let photoFile = tPhoto.files[0];
-
-if(!name || !subject){ alert("Fill required fields"); return; }
-
-if(photoFile){
-toBase64(photoFile, function(photo){
-saveTeacher(name,subject,mobile,whatsapp,email,photo);
+let data=JSON.parse(localStorage.getItem("TEACHERS"))||[];
+convertImage(tPhoto.files[0],function(img){
+data.push({name:tName.value,subject:tSubject.value});
+localStorage.setItem("TEACHERS",JSON.stringify(data));
+showTeachers();
 });
-}else{
-saveTeacher(name,subject,mobile,whatsapp,email,"");
 }
+function deleteTeacher(i){
+let data=JSON.parse(localStorage.getItem("TEACHERS"))||[];
+data.splice(i,1);
+localStorage.setItem("TEACHERS",JSON.stringify(data));
+showTeachers();
 }
-
-function saveTeacher(name,subject,mobile,whatsapp,email,photo){
-let teachers = JSON.parse(localStorage.getItem("TEACHERS")) || [];
-teachers.push({name,subject,mobile,whatsapp,email,photo});
-localStorage.setItem("TEACHERS", JSON.stringify(teachers));
-loadTeachers();
-}
-
-function loadTeachers(){
-let teachers = JSON.parse(localStorage.getItem("TEACHERS")) || [];
+function showTeachers(){
+let data=JSON.parse(localStorage.getItem("TEACHERS"))||[];
 teacherList.innerHTML="";
-teachers.forEach(t=>{
+data.forEach((t,i)=>{
 teacherList.innerHTML+=`
 <div class="card">
-<img src="${t.photo}">
-<h3>${t.name}</h3>
-<p>${t.subject}</p>
-<p>${t.mobile}</p>
+${t.name} - ${t.subject}
+<button class="delete-btn" onclick="deleteTeacher(${i})">Delete</button>
 </div>`;
 });
 }
 
-// ================= FOUNDER =================
+/* ---------------- FOUNDER ---------------- */
 function addFounder(){
-let name=fName.value;
-let role=fRole.value;
-let mobile=fMobile.value;
-let whatsapp=fWhatsapp.value;
-let email=fEmail.value;
-let photoFile=fPhoto.files[0];
-
-if(photoFile){
-toBase64(photoFile,function(photo){
-saveFounder(name,role,mobile,whatsapp,email,photo);
+let data=JSON.parse(localStorage.getItem("FOUNDERS"))||[];
+convertImage(fPhoto.files[0],function(img){
+data.push({name:fName.value,role:fRole.value});
+localStorage.setItem("FOUNDERS",JSON.stringify(data));
+showFounders();
 });
-}else{
-saveFounder(name,role,mobile,whatsapp,email,"");
 }
+function deleteFounder(i){
+let data=JSON.parse(localStorage.getItem("FOUNDERS"))||[];
+data.splice(i,1);
+localStorage.setItem("FOUNDERS",JSON.stringify(data));
+showFounders();
 }
-
-function saveFounder(name,role,mobile,whatsapp,email,photo){
-let founders=JSON.parse(localStorage.getItem("FOUNDERS"))||[];
-founders.push({name,role,mobile,whatsapp,email,photo});
-localStorage.setItem("FOUNDERS",JSON.stringify(founders));
-loadFounders();
-}
-
-function loadFounders(){
-let founders=JSON.parse(localStorage.getItem("FOUNDERS"))||[];
+function showFounders(){
+let data=JSON.parse(localStorage.getItem("FOUNDERS"))||[];
 founderList.innerHTML="";
-founders.forEach(f=>{
+data.forEach((f,i)=>{
 founderList.innerHTML+=`
 <div class="card">
-<img src="${f.photo}">
-<h3>${f.name}</h3>
-<p>${f.role}</p>
+${f.name} - ${f.role}
+<button class="delete-btn" onclick="deleteFounder(${i})">Delete</button>
 </div>`;
 });
 }
 
-// ================= NOTES =================
+/* ---------------- NOTES ---------------- */
 function addNote(){
-let title=noteTitle.value;
-let link=noteLink.value;
+let data=JSON.parse(localStorage.getItem("NOTES"))||[];
 let file=noteFile.files[0];
-
-if(file){
-toBase64(file,function(fileData){
-saveNote(title,fileData,link);
-});
-}else{
-saveNote(title,"",link);
+if(!file){alert("Select File");return;}
+let reader=new FileReader();
+reader.onload=function(e){
+data.push({title:noteTitle.value});
+localStorage.setItem("NOTES",JSON.stringify(data));
+showNotes();
 }
+reader.readAsDataURL(file);
 }
-
-function saveNote(title,file,link){
-let notes=JSON.parse(localStorage.getItem("NOTES"))||[];
-notes.push({title,file,link});
-localStorage.setItem("NOTES",JSON.stringify(notes));
-loadNotes();
+function deleteNote(i){
+let data=JSON.parse(localStorage.getItem("NOTES"))||[];
+data.splice(i,1);
+localStorage.setItem("NOTES",JSON.stringify(data));
+showNotes();
 }
-
-function loadNotes(){
-let notes=JSON.parse(localStorage.getItem("NOTES"))||[];
+function showNotes(){
+let data=JSON.parse(localStorage.getItem("NOTES"))||[];
 noteList.innerHTML="";
-notes.forEach(n=>{
+data.forEach((n,i)=>{
 noteList.innerHTML+=`
 <div class="card">
-<h3>${n.title}</h3>
-<a href="${n.link}" target="_blank">Open Link</a>
+${n.title}
+<button class="delete-btn" onclick="deleteNote(${i})">Delete</button>
 </div>`;
 });
 }
 
-// ================= NOTIFICATION =================
+/* ---------------- NOTIFICATION ---------------- */
 function addNotification(){
-let text=notiText.value;
-let link=notiLink.value;
-
-let notifications=JSON.parse(localStorage.getItem("NOTIFICATIONS"))||[];
-notifications.push({text,link});
-localStorage.setItem("NOTIFICATIONS",JSON.stringify(notifications));
-loadNotifications();
+let data=JSON.parse(localStorage.getItem("NOTIFICATIONS"))||[];
+data.push({text:notiText.value});
+localStorage.setItem("NOTIFICATIONS",JSON.stringify(data));
+showNotifications();
 }
-
-function loadNotifications(){
-let notifications=JSON.parse(localStorage.getItem("NOTIFICATIONS"))||[];
+function deleteNotification(i){
+let data=JSON.parse(localStorage.getItem("NOTIFICATIONS"))||[];
+data.splice(i,1);
+localStorage.setItem("NOTIFICATIONS",JSON.stringify(data));
+showNotifications();
+}
+function showNotifications(){
+let data=JSON.parse(localStorage.getItem("NOTIFICATIONS"))||[];
 notiList.innerHTML="";
-notifications.forEach(n=>{
+data.forEach((n,i)=>{
 notiList.innerHTML+=`
 <div class="card">
-<p>${n.text}</p>
-${n.link ? `<a href="${n.link}" target="_blank">Open</a>`:""}
+${n.text}
+<button class="delete-btn" onclick="deleteNotification(${i})">Delete</button>
 </div>`;
 });
 }
 
-// ================= STUDENTS =================
-function loadStudents(){
-let students=JSON.parse(localStorage.getItem("STUDENTS"))||[];
+/* ---------------- STUDENTS ---------------- */
+function deleteStudent(i){
+let data=JSON.parse(localStorage.getItem("STUDENTS"))||[];
+data.splice(i,1);
+localStorage.setItem("STUDENTS",JSON.stringify(data));
+showStudents();
+}
+function showStudents(){
+let data=JSON.parse(localStorage.getItem("STUDENTS"))||[];
 studentList.innerHTML="";
-students.forEach(s=>{
+data.forEach((s,i)=>{
 studentList.innerHTML+=`
 <div class="card">
-<p>${s.name} - ${s.mobile}</p>
+${s.name}
+<button class="delete-btn" onclick="deleteStudent(${i})">Delete</button>
 </div>`;
 });
 }
+
+showTeachers();
+showFounders();
+showNotes();
+showNotifications();
+showStudents();
+
 </script>
 
 </body>
