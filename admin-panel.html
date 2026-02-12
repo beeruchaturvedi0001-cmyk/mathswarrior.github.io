@@ -188,51 +188,38 @@ button:hover{
 const ADMIN_ID="ADMIN";
 const ADMIN_PASS="12345";
 
+// LOGIN
 function login(){
-  let id=document.getElementById("adminId").value;
-  let pass=document.getElementById("adminPass").value;
-  if(id===ADMIN_ID && pass===ADMIN_PASS){
+  const id = document.getElementById("adminId").value;
+  const pass = document.getElementById("adminPass").value;
+  if(id === ADMIN_ID && pass === ADMIN_PASS){
     document.getElementById("loginMsg").innerHTML="LOGIN SUCCESSFUL";
     document.getElementById("loginBox").style.display="none";
     document.getElementById("adminPanel").style.display="block";
     loadAll();
-  }else{
+  } else {
     document.getElementById("loginMsg").innerHTML="INVALID USER ID OR PASSWORD";
   }
 }
 
-/* STUDENTS */
-function loadStudents(){
-  let data=JSON.parse(localStorage.getItem("STUDENTS"))||[];
-  let list=document.getElementById("studentList");
-  list.innerHTML="";
-  data.forEach((s,i)=>{
-    list.innerHTML+=`<div class="item">
-      <div>${s.name} | ${s.course} | ${s.mobile} | ${s.utr}</div>
-      <div><button class="delete-btn" onclick="deleteStudent(${i})">DELETE</button></div>
-    </div>`;
-  });
-}
-function deleteStudent(i){
-  let data=JSON.parse(localStorage.getItem("STUDENTS"))||[];
-  data.splice(i,1);
-  localStorage.setItem("STUDENTS",JSON.stringify(data));
-  loadStudents();
-}
-
-/* TEACHERS */
-const tPhotoInput = document.getElementById('tPhoto');
-const tPreview = document.getElementById('tPreview');
-tPhotoInput.addEventListener('change',()=>{
-  const file = tPhotoInput.files[0];
+// UTILITY: File preview
+function previewFile(input, previewImgId){
+  const file = input.files[0];
+  const preview = document.getElementById(previewImgId);
   if(file){
-    tPreview.src = URL.createObjectURL(file);
-    tPreview.style.display='block';
-  }
-});
+    if(file.type.startsWith("image/")){
+      preview.src = URL.createObjectURL(file);
+      preview.style.display="block";
+    } else {
+      preview.style.display="none";
+    }
+  } else preview.style.display="none";
+}
 
+// TEACHER
+document.getElementById('tPhoto').addEventListener('change',()=>previewFile(tPhoto,'tPreview'));
 function addTeacher(){
-  const file = tPhotoInput.files[0];
+  const file = tPhoto.files[0];
   let reader = new FileReader();
   reader.onload = ()=>{
     let teachers = JSON.parse(localStorage.getItem("TEACHERS"))||[];
@@ -243,70 +230,53 @@ function addTeacher(){
     });
     localStorage.setItem("TEACHERS",JSON.stringify(teachers));
     loadTeachers();
-    alert("✅TEACHER ADDED!");
     tName.value=tSubject.value=tExp.value=tMobile.value=tWhatsapp.value=tEmail.value='';
-    tPhotoInput.value=''; tPreview.style.display='none';
+    tPhoto.value=''; tPreview.style.display='none';
   };
   if(file) reader.readAsDataURL(file);
   else reader.onload();
 }
-
 function loadTeachers(){
-  let data=JSON.parse(localStorage.getItem("TEACHERS"))||[];
-  let list=document.getElementById("teacherList");
+  const data = JSON.parse(localStorage.getItem("TEACHERS"))||[];
+  const list = document.getElementById("teacherList");
   list.innerHTML="";
   data.forEach((t,i)=>{
     list.innerHTML+=`<div class="item">
-      <div>
-        ${t.name} | ${t.subject} | ${t.exp} yrs | ${t.mobile} | ${t.whatsapp} | ${t.email}
-      </div>
-      <div>
-        <button class="delete-btn" onclick="deleteTeacher(${i})">DELETE</button>
-      </div>
+      <div>${t.name} | ${t.subject} | ${t.exp} yrs | ${t.mobile} | ${t.whatsapp} | ${t.email}</div>
+      <div><button class="delete-btn" onclick="deleteTeacher(${i})">DELETE</button></div>
     </div>`;
   });
 }
 function deleteTeacher(i){
-  let data=JSON.parse(localStorage.getItem("TEACHERS"))||[];
+  let data = JSON.parse(localStorage.getItem("TEACHERS"))||[];
   data.splice(i,1);
   localStorage.setItem("TEACHERS",JSON.stringify(data));
   loadTeachers();
 }
 
-/* FOUNDERS */
-const fPhotoInput = document.getElementById('fPhoto');
-const fPreview = document.getElementById('fPreview');
-fPhotoInput.addEventListener('change',()=>{
-  const file = fPhotoInput.files[0];
-  if(file){
-    fPreview.src = URL.createObjectURL(file);
-    fPreview.style.display='block';
-  }
-});
-
+// FOUNDER
+document.getElementById('fPhoto').addEventListener('change',()=>previewFile(fPhoto,'fPreview'));
 function addFounder(){
-  const file = fPhotoInput.files[0];
+  const file = fPhoto.files[0];
   let reader = new FileReader();
   reader.onload = ()=>{
-    let data = JSON.parse(localStorage.getItem("FOUNDERS"))||[];
-    data.push({
+    let founders = JSON.parse(localStorage.getItem("FOUNDERS"))||[];
+    founders.push({
       name:fName.value, responsibility:fRole.value,
       mobile:fMobile.value, whatsapp:fWhatsapp.value, email:fEmail.value,
       photo:file?reader.result:""
     });
-    localStorage.setItem("FOUNDERS",JSON.stringify(data));
+    localStorage.setItem("FOUNDERS",JSON.stringify(founders));
     loadFounder();
-    alert("✅FOUNDER ADDED!");
     fName.value=fRole.value=fMobile.value=fWhatsapp.value=fEmail.value='';
-    fPhotoInput.value=''; fPreview.style.display='none';
+    fPhoto.value=''; fPreview.style.display='none';
   };
   if(file) reader.readAsDataURL(file);
   else reader.onload();
 }
-
 function loadFounder(){
-  let data=JSON.parse(localStorage.getItem("FOUNDERS"))||[];
-  let list=document.getElementById("founderList");
+  const data = JSON.parse(localStorage.getItem("FOUNDERS"))||[];
+  const list = document.getElementById("founderList");
   list.innerHTML="";
   data.forEach((f,i)=>{
     list.innerHTML+=`<div class="item">
@@ -316,48 +286,37 @@ function loadFounder(){
   });
 }
 function deleteFounder(i){
-  let data=JSON.parse(localStorage.getItem("FOUNDERS"))||[];
+  let data = JSON.parse(localStorage.getItem("FOUNDERS"))||[];
   data.splice(i,1);
   localStorage.setItem("FOUNDERS",JSON.stringify(data));
   loadFounder();
 }
 
-/* NOTES */
-const nFileInput = document.getElementById('nFile');
-const nPreview = document.getElementById('nPreview');
-nFileInput.addEventListener('change',()=>{
-  const file = nFileInput.files[0];
-  if(file){
-    nPreview.innerHTML = `<span>${file.name}</span>`;
-  }else{
-    nPreview.innerHTML = '';
-  }
+// NOTES / FILES
+document.getElementById('nFile').addEventListener('change',()=>{
+  const file = nFile.files[0];
+  const preview = document.getElementById('nPreview');
+  preview.innerHTML = file?`<span>${file.name}</span>`:'';
 });
-
 function addNote(){
-  const file = nFileInput.files[0];
+  const file = nFile.files[0];
   if(!file){alert("Select a file!"); return;}
   let reader = new FileReader();
   reader.onload = ()=>{
-    let data = JSON.parse(localStorage.getItem("NOTES"))||[];
-    data.push({
-      name:nName.value, class:nClass.value,
-      file:reader.result, filename:file.name
-    });
-    localStorage.setItem("NOTES",JSON.stringify(data));
+    let notes = JSON.parse(localStorage.getItem("NOTES"))||[];
+    notes.push({name:nName.value, class:nClass.value, file:reader.result, filename:file.name});
+    localStorage.setItem("NOTES",JSON.stringify(notes));
     loadNotes();
-    alert("✅FILE UPLOADED!");
-    nName.value=nClass.value=''; nFileInput.value=''; nPreview.innerHTML='';
+    nName.value=nClass.value=''; nFile.value=''; nPreview.innerHTML='';
   };
   reader.readAsDataURL(file);
 }
-
 function loadNotes(){
-  let data=JSON.parse(localStorage.getItem("NOTES"))||[];
-  let list=document.getElementById("notesList");
+  const notes = JSON.parse(localStorage.getItem("NOTES"))||[];
+  const list = document.getElementById("notesList");
   list.innerHTML="";
-  data.forEach((n,i)=>{
-    list.innerHTML=`${list.innerHTML}<div class="item">
+  notes.forEach((n,i)=>{
+    list.innerHTML+=`<div class="item">
       <div>${n.name} | ${n.class}</div>
       <div>
         <a href="${n.file}" download="${n.filename}"><button>DOWNLOAD</button></a>
@@ -367,23 +326,23 @@ function loadNotes(){
   });
 }
 function deleteNote(i){
-  let data=JSON.parse(localStorage.getItem("NOTES"))||[];
-  data.splice(i,1);
-  localStorage.setItem("NOTES",JSON.stringify(data));
+  let notes = JSON.parse(localStorage.getItem("NOTES"))||[];
+  notes.splice(i,1);
+  localStorage.setItem("NOTES",JSON.stringify(notes));
   loadNotes();
 }
 
-/* NOTIFICATIONS */
+// NOTIFICATIONS
 function addNotification(){
-  let data=JSON.parse(localStorage.getItem("NOTIFICATIONS"))||[];
-  data.push({name:notiName.value,link:notiLink.value});
+  let data = JSON.parse(localStorage.getItem("NOTIFICATIONS"))||[];
+  data.push({name:notiName.value, link:notiLink.value});
   localStorage.setItem("NOTIFICATIONS",JSON.stringify(data));
   loadNotification();
   notiName.value=notiLink.value='';
 }
 function loadNotification(){
-  let data=JSON.parse(localStorage.getItem("NOTIFICATIONS"))||[];
-  let list=document.getElementById("notificationList");
+  const data = JSON.parse(localStorage.getItem("NOTIFICATIONS"))||[];
+  const list = document.getElementById("notificationList");
   list.innerHTML="";
   data.forEach((n,i)=>{
     list.innerHTML+=`<div class="item">
@@ -393,13 +352,13 @@ function loadNotification(){
   });
 }
 function deleteNotification(i){
-  let data=JSON.parse(localStorage.getItem("NOTIFICATIONS"))||[];
+  let data = JSON.parse(localStorage.getItem("NOTIFICATIONS"))||[];
   data.splice(i,1);
   localStorage.setItem("NOTIFICATIONS",JSON.stringify(data));
   loadNotification();
 }
 
-/* LOAD ALL */
+// LOAD ALL
 function loadAll(){
   loadStudents(); loadTeachers(); loadFounder(); loadNotes(); loadNotification();
 }
