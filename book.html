@@ -1,158 +1,282 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Smart Book Store</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<title>Math's Warrior Book Store</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
 <style>
-:root { --primary-blue: #00a2ff; --dark-blue: #0081cc; }
-body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; margin: 0; padding-bottom: 80px; }
-.container { max-width: 450px; margin: auto; background: white; min-height: 100vh; text-align: center; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif;}
 
-/* Profile Section */
-.profile-img { width: 100px; height: 100px; border-radius: 50%; border: 3px solid #ff4d4d; margin-top: 30px; }
-h2 { font-size: 18px; margin: 10px 0; color: #333; }
-p { font-size: 14px; color: #555; margin-bottom: 15px; }
+body{background:#f2f2f2;}
 
-/* Book Card */
-.book-card {
-    background: var(--primary-blue);
-    margin: 10px 15px;
-    padding: 12px;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    color: white;
-    cursor: pointer;
-    transition: transform 0.2s;
+.header{
+background:#0f9d9a;
+color:white;
+text-align:center;
+padding:20px;
+font-size:22px;
+font-weight:600;
 }
-.book-card:active { transform: scale(0.98); }
-.book-img { width: 50px; height: 65px; border-radius: 4px; margin-right: 15px; background: #fff; }
-.book-info { flex-grow: 1; text-align: left; }
-.price { font-weight: bold; font-size: 1.1em; margin-top: 5px; }
 
-/* Cart Bar */
-#cart-bar {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    max-width: 450px;
-    background: #222;
-    color: white;
-    display: none;
-    justify-content: space-between;
-    padding: 15px 20px;
-    box-sizing: border-box;
-    border-radius: 15px 15px 0 0;
-    animation: slideUp 0.3s ease;
+.admin-btn{
+position:absolute;
+right:15px;
+top:15px;
+background:white;
+color:#0f9d9a;
+padding:6px 12px;
+border-radius:20px;
+cursor:pointer;
+font-size:14px;
 }
-@keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
 
-.checkout-btn {
-    background: #28a745;
-    color: white;
-    border: none;
-    padding: 8px 20px;
-    border-radius: 5px;
-    font-weight: bold;
-    cursor: pointer;
+.profile-section{
+text-align:center;
+padding:30px 15px;
+background:white;
+}
+
+.profile-img{
+width:150px;
+height:150px;
+border-radius:50%;
+border:6px solid #0f9d9a;
+object-fit:cover;
+}
+
+.name{
+font-size:24px;
+font-weight:700;
+margin-top:15px;
+}
+
+.book-container{padding:20px;}
+
+.book-card{
+background:#1e88e5;
+color:white;
+padding:15px;
+border-radius:8px;
+display:flex;
+align-items:center;
+margin-bottom:15px;
+cursor:pointer;
+}
+
+.book-card img{
+width:60px;
+height:80px;
+border-radius:4px;
+margin-right:15px;
+object-fit:cover;
+}
+
+.delete-btn{
+background:red;
+border:none;
+color:white;
+padding:5px 10px;
+border-radius:5px;
+cursor:pointer;
+margin-left:auto;
+}
+
+/* Admin Panel */
+.admin-panel{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.8);
+display:none;
+justify-content:center;
+align-items:center;
+}
+
+.admin-box{
+background:white;
+width:95%;
+max-width:400px;
+padding:20px;
+border-radius:10px;
+color:black;
+max-height:90vh;
+overflow:auto;
+}
+
+.admin-box input{
+width:100%;
+padding:8px;
+margin:5px 0;
+}
+
+.admin-box button{
+width:100%;
+padding:8px;
+margin-top:5px;
+background:#0f9d9a;
+color:white;
+border:none;
+cursor:pointer;
 }
 </style>
 </head>
+
 <body>
 
-<div class="container">
-    <img src="https://via.placeholder.com/100" class="profile-img">
-    <h2>ABHINAY PRATAP MATHS BOOK STORE</h2>
-    <p>Select books to purchase</p>
-
-    <!-- Books -->
-    <div class="book-card" onclick="addToCart('Maths Revision Booster', 299)">
-        <img src="https://via.placeholder.com/50x65" class="book-img">
-        <div class="book-info">
-            <div>Maths Revision Booster</div>
-            <div class="price">₹299</div>
-        </div>
-        <i class="fas fa-plus-circle"></i>
-    </div>
-
-    <div class="book-card" onclick="addToCart('SSC Maths 7300+ | 14th Edition', 550)">
-        <img src="https://via.placeholder.com/50x65" class="book-img">
-        <div class="book-info">
-            <div>SSC Maths 7300+ | 14th Edition</div>
-            <div class="price">₹550</div>
-        </div>
-        <i class="fas fa-plus-circle"></i>
-    </div>
-
-    <div class="book-card" onclick="addToCart('KVS NVS Maths Practice Set', 399)">
-        <img src="https://via.placeholder.com/50x65" class="book-img">
-        <div class="book-info">
-            <div>KVS NVS Maths Practice Set</div>
-            <div class="price">₹399</div>
-        </div>
-        <i class="fas fa-plus-circle"></i>
-    </div>
-
-    <div class="book-card" onclick="addToCart('Math Special 2.0', 2099)">
-        <img src="https://via.placeholder.com/50x65" class="book-img">
-        <div class="book-info">
-            <div>Math Special 2.0</div>
-            <div class="price">₹2099</div>
-        </div>
-        <i class="fas fa-plus-circle"></i>
-    </div>
-
-    <div class="book-card" onclick="addToCart('Math Olympiad Workbook', 499)">
-        <img src="https://via.placeholder.com/50x65" class="book-img">
-        <div class="book-info">
-            <div>Math Olympiad Workbook</div>
-            <div class="price">₹499</div>
-        </div>
-        <i class="fas fa-plus-circle"></i>
-    </div>
+<div class="header">
+Math's Warrior Book Store
+<span class="admin-btn" onclick="openAdmin()">ADMIN</span>
 </div>
 
-<div id="cart-bar">
-    <div>
-        <span id="items-count">0</span> Items | 
-        <strong>Total: ₹<span id="total-price">0</span></strong>
-    </div>
-    <button class="checkout-btn" onclick="checkout()">Buy Now</button>
+<div class="profile-section">
+<img id="profileImage" class="profile-img">
+<div class="name" id="profileName">Abhinay Pratap Chaubey</div>
+</div>
+
+<div class="book-container" id="bookContainer"></div>
+
+<!-- ADMIN PANEL -->
+<div class="admin-panel" id="adminPanel">
+<div class="admin-box">
+
+<h3>Admin Login</h3>
+<div id="loginSection">
+<input type="text" id="adminId" placeholder="Admin ID">
+<input type="password" id="adminPass" placeholder="Password">
+<button onclick="login()">Login</button>
+</div>
+
+<div id="adminContent" style="display:none;">
+
+<h4>Update Profile</h4>
+<input type="file" id="newProfileImage">
+<input type="text" id="newProfileName" placeholder="Your Name">
+<button onclick="updateProfile()">Update Profile</button>
+
+<hr>
+
+<h4>Add Book</h4>
+<input type="file" id="bookImage">
+<input type="text" id="bookName" placeholder="Book Name">
+<input type="text" id="bookLink" placeholder="Book Link">
+<button onclick="addBook()">Add Book</button>
+
+<button onclick="closeAdmin()" style="background:red;">Close</button>
+
+</div>
+
+</div>
 </div>
 
 <script>
-let cart = [];
-let total = 0;
 
-function addToCart(name, price) {
-    cart.push({name, price});
-    total += price;
-    updateUI();
+const ADMIN_ID="ADMIN";
+const ADMIN_PASS="12345";
+
+/* Load Profile */
+function loadProfile(){
+let img=localStorage.getItem("PROFILE_IMG");
+let name=localStorage.getItem("PROFILE_NAME");
+
+if(img) document.getElementById("profileImage").src=img;
+else document.getElementById("profileImage").src="profile.jpg";
+
+if(name) document.getElementById("profileName").innerText=name;
 }
 
-function updateUI() {
-    const cartBar = document.getElementById('cart-bar');
-    if(cart.length > 0) {
-        cartBar.style.display = 'flex';
-    }
-    document.getElementById('items-count').innerText = cart.length;
-    document.getElementById('total-price').innerText = total;
+function updateProfile(){
+let file=document.getElementById("newProfileImage").files[0];
+let name=document.getElementById("newProfileName").value;
+
+if(file){
+let reader=new FileReader();
+reader.onload=function(){
+localStorage.setItem("PROFILE_IMG",reader.result);
+loadProfile();
+}
+reader.readAsDataURL(file);
 }
 
-function checkout() {
-    if(cart.length === 0) { alert("Please select at least one book."); return; }
-    let message = "I want to buy:\n";
-    cart.forEach(item => {
-        message += `- ${item.name} (₹${item.price})\n`;
-    });
-    message += `\nTotal: ₹${total}`;
-    
-    // WhatsApp link (replace with your number)
-    let whatsappUrl = `https://wa.me/919670078465?text=${encodeURIComponent(message)}`;
-    window.location.href = whatsappUrl;
+if(name){
+localStorage.setItem("PROFILE_NAME",name);
+loadProfile();
 }
+
+alert("Profile Updated");
+}
+
+/* Books */
+function addBook(){
+let file=document.getElementById("bookImage").files[0];
+let name=document.getElementById("bookName").value;
+let link=document.getElementById("bookLink").value;
+
+if(!file || !name || !link){
+alert("Fill all fields");
+return;
+}
+
+let reader=new FileReader();
+reader.onload=function(){
+let books=JSON.parse(localStorage.getItem("BOOKS"))||[];
+books.push({img:reader.result,name:name,link:link});
+localStorage.setItem("BOOKS",JSON.stringify(books));
+loadBooks();
+alert("Book Added");
+}
+reader.readAsDataURL(file);
+}
+
+function loadBooks(){
+let books=JSON.parse(localStorage.getItem("BOOKS"))||[];
+let container=document.getElementById("bookContainer");
+container.innerHTML="";
+
+books.forEach((b,index)=>{
+container.innerHTML+=`
+<div class="book-card">
+<img src="${b.img}">
+<div onclick="window.open('${b.link}','_blank')" style="flex:1;">${b.name}</div>
+<button class="delete-btn" onclick="deleteBook(${index})">Delete</button>
+</div>`;
+});
+}
+
+function deleteBook(i){
+let books=JSON.parse(localStorage.getItem("BOOKS"))||[];
+books.splice(i,1);
+localStorage.setItem("BOOKS",JSON.stringify(books));
+loadBooks();
+}
+
+/* Admin */
+function openAdmin(){
+document.getElementById("adminPanel").style.display="flex";
+}
+
+function closeAdmin(){
+document.getElementById("adminPanel").style.display="none";
+}
+
+function login(){
+let id=document.getElementById("adminId").value;
+let pass=document.getElementById("adminPass").value;
+
+if(id===ADMIN_ID && pass===ADMIN_PASS){
+document.getElementById("loginSection").style.display="none";
+document.getElementById("adminContent").style.display="block";
+}else{
+alert("Wrong ID or Password");
+}
+}
+
+loadProfile();
+loadBooks();
+
 </script>
 
 </body>
