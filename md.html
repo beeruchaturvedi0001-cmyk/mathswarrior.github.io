@@ -19,6 +19,7 @@ body {
   background: #111;
   color: #FF416C;
   text-shadow: 1px 1px 5px #000;
+  position: relative;
 }
 .grid {
   display: grid;
@@ -27,55 +28,32 @@ body {
   padding: 20px;
 }
 .card {
-  background: #111;
+  background: white; 
   border-radius: 20px;
   padding: 20px 15px;
-  box-shadow: 0 0 20px rgba(0,0,0,0.7);
   text-align: center;
-  transition: 0.3s;
-  position: relative;
-  overflow: hidden;
+  color: black; 
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
 }
-.card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 15px 40px rgba(0,0,0,0.8);
-}
-
-/* Circle image with gradient border */
 .img-wrapper {
   width: 110px;
   height: 110px;
   margin: 0 auto 12px auto;
   border-radius: 50%;
   background: linear-gradient(45deg, #FF416C, #FFD700);
-  padding: 4px; /* border thickness */
+  padding: 4px; 
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 0 4px 15px rgba(255,204,0,0.6);
-  transition: 0.3s;
 }
 .img-wrapper img {
   width: 100px;
   height: 100px;
-  border-radius: 50%; /* perfect circle */
+  border-radius: 50%;
   object-fit: cover;
 }
-.img-wrapper:hover {
-  transform: scale(1.1);
-}
-
-.card h3 {
-  margin: 5px 0;
-  color: #FFD700; /* Yellow color for name */
-  font-weight: bold;
-  text-shadow: 1px 1px 3px #000;
-}
-.card p {
-  margin: 5px 0;
-  font-size: 14px;
-  color: #fff;
-}
+.card h3 { margin: 5px 0; font-weight: bold; }
+.card p { margin: 4px 0; font-size: 14px; }
 .card a {
   display: inline-block;
   margin: 5px 5px 0 5px;
@@ -84,48 +62,110 @@ body {
   color: white;
   text-decoration: none;
   font-weight: bold;
-  transition: 0.3s;
 }
-.call-btn {
-  background: #1E90FF;
+.call-btn { background: #1E90FF; }
+.whatsapp-btn { background: #25D366; }
+
+.admin-panel{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.8);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:1000;
 }
-.call-btn:hover {
-  background: #0f66c3;
+.admin-box{
+  background:white;
+  width:95%;
+  max-width:400px;
+  padding:20px;
+  border-radius:10px;
+  color:black;
+  max-height:90vh;
+  overflow:auto;
 }
-.whatsapp-btn {
-  background: #25D366;
+.admin-box input{
+  width:100%;
+  padding:8px;
+  margin:5px 0;
 }
-.whatsapp-btn:hover {
-  background: #1da449;
+.admin-box button{
+  width:100%;
+  padding:8px;
+  margin-top:5px;
+  background:#0f9d9a;
+  color:white;
+  border:none;
+  cursor:pointer;
 }
-@media(max-width:600px){
-  .header { font-size: 22px; padding: 20px 10px; }
-  .img-wrapper { width: 90px; height: 90px; padding: 3px; }
-  .img-wrapper img { width: 84px; height: 84px; }
-}
+.close-btn{background:red;}
+.edit-btn {background:#FF9500;}
+.delete-btn {background:red;}
 </style>
 </head>
 <body>
 
-<div class="header">MATH'S WARRIOR RESPONSIBILITY SECTION</div>
+<div class="header">MATH'S WARRIOR RESPONSIBILITY SECTION
+  <button style="position:absolute; top:25px; right:20px; padding:8px 12px; border:none; border-radius:5px; background:#FF416C; color:white; cursor:pointer;" onclick="showPasswordPrompt()">ADMIN</button>
+</div>
+
 <div class="grid" id="founderGrid"></div>
 
+<!-- Admin Panel -->
+<div class="admin-panel" id="adminPanel">
+  <div class="admin-box">
+    <h3>Admin Panel</h3>
+    <input type="text" id="fName" placeholder="Name">
+    <input type="text" id="fResponsibility" placeholder="Responsibility">
+    <input type="text" id="fEmail" placeholder="Email">
+    <input type="text" id="fMobile" placeholder="Mobile">
+    <input type="text" id="fWhatsapp" placeholder="WhatsApp">
+    <input type="file" id="fPhoto">
+    <button onclick="saveFounderData()">Save Founder</button>
+    <hr>
+    <h4>Existing Founders</h4>
+    <div id="adminFounderList"></div>
+    <button class="close-btn" onclick="closeAdmin()">Close</button>
+  </div>
+</div>
+
 <script>
+const ADMIN_PASSWORD = "12345";
+let editIndex = -1;
+
+function showPasswordPrompt(){
+  let pass = prompt("Enter Admin Password:");
+  if(pass === ADMIN_PASSWORD){
+    document.getElementById("adminPanel").style.display="flex";
+    loadAdminList();
+  } else {
+    alert("Wrong password!");
+  }
+}
+
+function closeAdmin(){ 
+  document.getElementById("adminPanel").style.display="none"; 
+  editIndex = -1; 
+  clearForm();
+}
+
 function loadFounder(){
   let data = JSON.parse(localStorage.getItem("FOUNDERS")) || [];
   let grid = document.getElementById("founderGrid");
   grid.innerHTML = "";
   if(data.length === 0){
-    grid.innerHTML = "<p style='text-align:center; font-size:18px; color:#ffcc00;'>No founders/MDs added yet.</p>";
+    grid.innerHTML = "<p style='text-align:center; font-size:18px; color:#ff0000;'>No founders/MDs added yet.</p>";
     return;
   }
   data.forEach(f=>{
     let photo = f.photo ? f.photo : "https://via.placeholder.com/100x100.png?text=No+Image";
     grid.innerHTML += `
       <div class="card">
-        <div class="img-wrapper">
-          <img src="${photo}" alt="${f.name}">
-        </div>
+        <div class="img-wrapper"><img src="${photo}" alt="${f.name}"></div>
         <h3>${f.name}</h3>
         <p>Responsibility: ${f.responsibility}</p>
         <p>Email: ${f.email}</p>
@@ -135,6 +175,94 @@ function loadFounder(){
       </div>`;
   });
 }
+
+function saveFounderData(){
+  let name = document.getElementById("fName").value;
+  let responsibility = document.getElementById("fResponsibility").value;
+  let email = document.getElementById("fEmail").value;
+  let mobile = document.getElementById("fMobile").value;
+  let whatsapp = document.getElementById("fWhatsapp").value;
+  let photoFile = document.getElementById("fPhoto").files[0];
+
+  if(!name || !responsibility || !email || !mobile || !whatsapp){
+    alert("Fill all fields!");
+    return;
+  }
+
+  if(photoFile){
+    let reader = new FileReader();
+    reader.onload = function(e){
+      saveFounder(name,responsibility,email,mobile,whatsapp,e.target.result);
+    }
+    reader.readAsDataURL(photoFile);
+  } else {
+    let data = JSON.parse(localStorage.getItem("FOUNDERS")) || [];
+    let photo = (editIndex>-1) ? data[editIndex].photo : "";
+    saveFounder(name,responsibility,email,mobile,whatsapp,photo);
+  }
+}
+
+function saveFounder(name,responsibility,email,mobile,whatsapp,photo){
+  let data = JSON.parse(localStorage.getItem("FOUNDERS")) || [];
+  if(editIndex>-1){
+    data[editIndex] = {name,responsibility,email,mobile,whatsapp,photo};
+    editIndex = -1;
+  } else {
+    data.push({name,responsibility,email,mobile,whatsapp,photo});
+  }
+  localStorage.setItem("FOUNDERS",JSON.stringify(data));
+  loadFounder();
+  loadAdminList();
+  alert("Founder saved!");
+  clearForm();
+}
+
+function clearForm(){
+  document.getElementById("fName").value="";
+  document.getElementById("fResponsibility").value="";
+  document.getElementById("fEmail").value="";
+  document.getElementById("fMobile").value="";
+  document.getElementById("fWhatsapp").value="";
+  document.getElementById("fPhoto").value="";
+}
+
+function editFounder(index){
+  let data = JSON.parse(localStorage.getItem("FOUNDERS")) || [];
+  let f = data[index];
+  editIndex = index;
+  document.getElementById("fName").value = f.name;
+  document.getElementById("fResponsibility").value = f.responsibility;
+  document.getElementById("fEmail").value = f.email;
+  document.getElementById("fMobile").value = f.mobile;
+  document.getElementById("fWhatsapp").value = f.whatsapp;
+}
+
+function deleteFounder(index){
+  if(confirm("Are you sure you want to delete this founder?")){
+    let data = JSON.parse(localStorage.getItem("FOUNDERS")) || [];
+    data.splice(index,1);
+    localStorage.setItem("FOUNDERS",JSON.stringify(data));
+    loadFounder();
+    loadAdminList();
+  }
+}
+
+function loadAdminList(){
+  let data = JSON.parse(localStorage.getItem("FOUNDERS")) || [];
+  let listDiv = document.getElementById("adminFounderList");
+  listDiv.innerHTML = "";
+  data.forEach((f,i)=>{
+    listDiv.innerHTML += `
+      <div style="display:flex; justify-content:space-between; align-items:center; margin:5px 0; padding:5px; background:#f1f1f1; border-radius:5px; color:black;">
+        <span>${f.name}</span>
+        <div>
+          <button style="margin-right:5px;" class="edit-btn" onclick="editFounder(${i})">Edit</button>
+          <button class="delete-btn" onclick="deleteFounder(${i})">Delete</button>
+        </div>
+      </div>`;
+  });
+}
+
 loadFounder();
 </script>
 
