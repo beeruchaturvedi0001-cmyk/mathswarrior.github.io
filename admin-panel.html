@@ -3,363 +3,326 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ADMIN PANEL | MATH'S WARRIOR</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<title>MATH'S WARRIOR ADMIN PANEL</title>
+
 <style>
 body{
   margin:0;
-  font-family:'Poppins',sans-serif;
-  background:linear-gradient(135deg,#000428,#004e92);
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg,#000428,#004e92);
   color:white;
 }
+
 .header{
-  text-align:center;
-  padding:20px;
-  font-size:28px;
-  font-weight:bold;
   background:#111;
-  color:#FF416C;
+  padding:15px;
+  text-align:center;
+  font-size:22px;
+  font-weight:bold;
+  color:#FFD700;
 }
+
 .container{
-  max-width:1200px;
+  max-width:1000px;
   margin:auto;
   padding:20px;
-  display:none;
 }
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-  gap:20px;
-}
-.box{
+
+.section{
   background:#111;
   padding:20px;
   border-radius:15px;
+  margin-bottom:25px;
   box-shadow:0 0 20px rgba(0,0,0,0.6);
 }
-.box h3{
-  color:#FF416C;
-  text-align:center;
+
+.section h2{
+  color:#FFD700;
+  margin-bottom:15px;
 }
-input, select{
-  width:100%;
-  padding:8px;
-  margin:6px 0;
-  border:none;
-  border-radius:6px;
-}
-button{
+
+input, textarea{
   width:100%;
   padding:10px;
+  margin:8px 0;
+  border-radius:8px;
   border:none;
-  border-radius:6px;
+  outline:none;
+}
+
+button{
   background:#FF416C;
+  border:none;
+  padding:10px 20px;
+  border-radius:25px;
   color:white;
   font-weight:bold;
   cursor:pointer;
-  margin-top:6px;
-  transition:0.2s;
+  margin-top:10px;
 }
+
 button:hover{
-  opacity:0.85;
+  background:#C70039;
 }
-.item{
+
+.card{
   background:#222;
-  padding:10px;
-  margin-top:10px;
-  border-radius:8px;
-  font-size:14px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  flex-wrap:wrap;
-}
-.item div{
-  margin-right:10px;
-}
-.delete-btn{
-  background:red;
-  margin-left:5px;
-}
-.edit-btn{
-  background:orange;
-  margin-left:5px;
-}
-.preview-img{
-  width:50px;
-  height:50px;
-  object-fit:cover;
-  border-radius:50%;
-  margin-top:5px;
-}
-.login-box{
-  max-width:400px;
-  margin:100px auto;
-  background:#111;
-  padding:30px;
+  padding:15px;
   border-radius:15px;
-  box-shadow:0 0 20px black;
-}
-.message{
+  margin-top:15px;
   text-align:center;
-  margin-top:10px;
-  color:yellow;
+}
+
+.card img{
+  width:90px;
+  height:90px;
+  border-radius:50%;
+  border:3px solid #FFD700;
+  object-fit:cover;
+  margin-bottom:10px;
+}
+
+.card h3{
+  color:#FFD700;
 }
 </style>
 </head>
 <body>
 
-<div class="header">MATH'S WARRIOR INSTITUTE ADMIN DASHBOARD</div>
+<div class="header">MATH'S WARRIOR ADMIN PANEL</div>
 
-<!-- LOGIN SECTION -->
-<div class="login-box" id="loginBox">
-<h3>ADMIN LOGIN</h3>
-<input type="text" id="adminId" placeholder="ENTER YOUR USER ID">
-<input type="password" id="adminPass" placeholder="ENTER YOUR PASSWORD">
-<button onclick="login()">LOGIN</button>
-<div class="message" id="loginMsg"></div>
-</div>
+<div class="container">
 
-<!-- ADMIN PANEL -->
-<div class="container" id="adminPanel">
-<div class="grid">
+<!-- TEACHER SECTION -->
+<div class="section">
+<h2>Add Teacher</h2>
 
-<!-- ADD TEACHER -->
-<div class="box">
-<h3>ADD TEACHER</h3>
-<input id="tName" placeholder="NAME">
-<input id="tSubject" placeholder="SUBJECT">
-<input id="tExp" placeholder="EXPERIENCE">
-<input id="tMobile" placeholder="MOBILE">
-<input id="tWhatsapp" placeholder="WHATSAPP">
-<input id="tEmail" placeholder="EMAIL">
+<input type="text" id="tName" placeholder="Teacher Name">
+<input type="text" id="tSubject" placeholder="Subject">
+<input type="text" id="tMobile" placeholder="Mobile">
+<input type="text" id="tWhatsapp" placeholder="WhatsApp">
+<input type="email" id="tEmail" placeholder="Email">
 <input type="file" id="tPhoto">
-<img id="tPreview" class="preview-img" style="display:none;">
-<button onclick="addTeacher()">ADD TEACHER</button>
+
+<button onclick="addTeacher()">Add Teacher</button>
+
 <div id="teacherList"></div>
 </div>
 
-<!-- ADD FOUNDER -->
-<div class="box">
-<h3>ADD FOUNDER</h3>
-<input id="fName" placeholder="NAME">
-<input id="fRole" placeholder="RESPONSIBILITY">
-<input id="fMobile" placeholder="MOBILE">
-<input id="fWhatsapp" placeholder="WHATSAPP">
-<input id="fEmail" placeholder="EMAIL">
+<!-- FOUNDER SECTION -->
+<div class="section">
+<h2>Add Founder</h2>
+
+<input type="text" id="fName" placeholder="Founder Name">
+<input type="text" id="fRole" placeholder="Role">
+<input type="text" id="fMobile" placeholder="Mobile">
+<input type="text" id="fWhatsapp" placeholder="WhatsApp">
+<input type="email" id="fEmail" placeholder="Email">
 <input type="file" id="fPhoto">
-<img id="fPreview" class="preview-img" style="display:none;">
-<button onclick="addFounder()">ADD FOUNDER</button>
+
+<button onclick="addFounder()">Add Founder</button>
+
 <div id="founderList"></div>
 </div>
 
-<!-- NOTES -->
-<div class="box">
-<h3>UPLOAD NOTES / FILES</h3>
-<input id="nName" placeholder="FILE NAME">
-<input id="nClass" placeholder="CLASS">
-<input type="file" id="nFile">
-<span id="nPreview" style="color:#FFD700;"></span>
-<button onclick="addNote()">UPLOAD FILE</button>
-<div id="notesList"></div>
+<!-- NOTES SECTION -->
+<div class="section">
+<h2>Add Notes</h2>
+
+<input type="text" id="noteTitle" placeholder="Notes Title">
+<input type="file" id="noteFile">
+<input type="text" id="noteLink" placeholder="Paste Google Drive / Any Link">
+
+<button onclick="addNote()">Add Notes</button>
+
+<div id="noteList"></div>
 </div>
 
-<!-- NOTIFICATION -->
-<div class="box">
-<h3>ADD NOTIFICATION</h3>
-<input id="notiName" placeholder="NOTIFICATION NAME">
-<input id="notiLink" placeholder="PASTE LINK">
-<button onclick="addNotification()">ADD NOTIFICATION</button>
-<div id="notificationList"></div>
+<!-- NOTIFICATION SECTION -->
+<div class="section">
+<h2>Add Notification</h2>
+
+<input type="text" id="notiText" placeholder="Notification Text">
+<input type="text" id="notiLink" placeholder="Paste Link Here (Optional)">
+
+<button onclick="addNotification()">Add Notification</button>
+
+<div id="notiList"></div>
 </div>
 
+<!-- STUDENT REGISTER VIEW -->
+<div class="section">
+<h2>Registered Students</h2>
+<div id="studentList"></div>
 </div>
+
 </div>
 
 <script>
-// Admin ID & Password
-const ADMIN_ID="ADMIN";
-const ADMIN_PASS="12345";
+document.addEventListener("DOMContentLoaded", function(){
 
-function login(){
-  let id=document.getElementById("adminId").value;
-  let pass=document.getElementById("adminPass").value;
-  if(id===ADMIN_ID && pass===ADMIN_PASS){
-    document.getElementById("loginMsg").innerHTML="LOGIN SUCCESSFUL";
-    document.getElementById("loginBox").style.display="none";
-    document.getElementById("adminPanel").style.display="block";
-    loadAll();
-  }else{
-    document.getElementById("loginMsg").innerHTML="INVALID USER ID OR PASSWORD";
-  }
+loadTeachers();
+loadFounders();
+loadNotes();
+loadNotifications();
+loadStudents();
+
+});
+
+function toBase64(file, callback){
+const reader = new FileReader();
+reader.onload = () => callback(reader.result);
+reader.readAsDataURL(file);
 }
 
-// Helper for preview
-function previewFile(fileInput, previewElementId){
-  let file = fileInput.files[0];
-  if(!file) return;
-  let preview = document.getElementById(previewElementId);
-  if(file.type.startsWith('image/')){
-    let reader = new FileReader();
-    reader.onload = function(){
-      preview.src = reader.result;
-      preview.style.display = "inline-block";
-    }
-    reader.readAsDataURL(file);
-  }else{
-    preview.innerText = file.name;
-  }
-}
-
-/* TEACHER */
-document.getElementById("tPhoto").addEventListener("change",()=>previewFile(document.getElementById("tPhoto"),"tPreview"));
+// ================= TEACHER =================
 function addTeacher(){
-  let file = document.getElementById("tPhoto").files[0];
-  let reader = new FileReader();
-  reader.onload = function(){
-    let teachers=JSON.parse(localStorage.getItem("TEACHERS"))||[];
-    teachers.push({
-      name:tName.value,
-      subject:tSubject.value,
-      exp:tExp.value,
-      mobile:tMobile.value,
-      whatsapp:tWhatsapp.value,
-      email:tEmail.value,
-      photo:reader.result
-    });
-    localStorage.setItem("TEACHERS",JSON.stringify(teachers));
-    loadTeachers();
-    document.getElementById("tPreview").style.display="none";
-    tName.value=tSubject.value=tExp.value=tMobile.value=tWhatsapp.value=tEmail.value="";
-  }
-  if(file) reader.readAsDataURL(file);
-  else reader.onload();
+let name = tName.value;
+let subject = tSubject.value;
+let mobile = tMobile.value;
+let whatsapp = tWhatsapp.value;
+let email = tEmail.value;
+let photoFile = tPhoto.files[0];
+
+if(!name || !subject){ alert("Fill required fields"); return; }
+
+if(photoFile){
+toBase64(photoFile, function(photo){
+saveTeacher(name,subject,mobile,whatsapp,email,photo);
+});
+}else{
+saveTeacher(name,subject,mobile,whatsapp,email,"");
 }
+}
+
+function saveTeacher(name,subject,mobile,whatsapp,email,photo){
+let teachers = JSON.parse(localStorage.getItem("TEACHERS")) || [];
+teachers.push({name,subject,mobile,whatsapp,email,photo});
+localStorage.setItem("TEACHERS", JSON.stringify(teachers));
+loadTeachers();
+}
+
 function loadTeachers(){
-  let data=JSON.parse(localStorage.getItem("TEACHERS"))||[];
-  let list=document.getElementById("teacherList");
-  list.innerHTML="";
-  data.forEach((t,i)=>{
-    list.innerHTML+=`<div class="item">
-      <div>${t.name} | ${t.subject} | ${t.exp} yrs | ${t.mobile} | ${t.whatsapp} | ${t.email}</div>
-      <div><button class="delete-btn" onclick="deleteTeacher(${i})">DELETE</button></div>
-    </div>`;
-  });
-}
-function deleteTeacher(i){
-  let data=JSON.parse(localStorage.getItem("TEACHERS"))||[];
-  data.splice(i,1);
-  localStorage.setItem("TEACHERS",JSON.stringify(data));
-  loadTeachers();
+let teachers = JSON.parse(localStorage.getItem("TEACHERS")) || [];
+teacherList.innerHTML="";
+teachers.forEach(t=>{
+teacherList.innerHTML+=`
+<div class="card">
+<img src="${t.photo}">
+<h3>${t.name}</h3>
+<p>${t.subject}</p>
+<p>${t.mobile}</p>
+</div>`;
+});
 }
 
-/* FOUNDER */
-document.getElementById("fPhoto").addEventListener("change",()=>previewFile(document.getElementById("fPhoto"),"fPreview"));
+// ================= FOUNDER =================
 function addFounder(){
-  let file = document.getElementById("fPhoto").files[0];
-  let reader = new FileReader();
-  reader.onload = function(){
-    let data = JSON.parse(localStorage.getItem("FOUNDERS"))||[];
-    data.push({
-      name:fName.value,
-      responsibility:fRole.value,
-      mobile:fMobile.value,
-      whatsapp:fWhatsapp.value,
-      email:fEmail.value,
-      photo:reader.result
-    });
-    localStorage.setItem("FOUNDERS",JSON.stringify(data));
-    loadFounder();
-    document.getElementById("fPreview").style.display="none";
-    fName.value=fRole.value=fMobile.value=fWhatsapp.value=fEmail.value="";
-  }
-  if(file) reader.readAsDataURL(file);
-  else reader.onload();
+let name=fName.value;
+let role=fRole.value;
+let mobile=fMobile.value;
+let whatsapp=fWhatsapp.value;
+let email=fEmail.value;
+let photoFile=fPhoto.files[0];
+
+if(photoFile){
+toBase64(photoFile,function(photo){
+saveFounder(name,role,mobile,whatsapp,email,photo);
+});
+}else{
+saveFounder(name,role,mobile,whatsapp,email,"");
 }
-function loadFounder(){
-  let data = JSON.parse(localStorage.getItem("FOUNDERS"))||[];
-  let list=document.getElementById("founderList");
-  list.innerHTML="";
-  data.forEach((f,i)=>{
-    list.innerHTML=`<div class="item">${f.name} | ${f.responsibility} | ${f.mobile} | ${f.whatsapp} | ${f.email} <button class="delete-btn" onclick="deleteFounder(${i})">DELETE</button></div>` + list.innerHTML;
-  });
-}
-function deleteFounder(i){
-  let data=JSON.parse(localStorage.getItem("FOUNDERS"))||[];
-  data.splice(i,1);
-  localStorage.setItem("FOUNDERS",JSON.stringify(data));
-  loadFounder();
 }
 
-/* NOTES */
-document.getElementById("nFile").addEventListener("change",()=>previewFile(document.getElementById("nFile"),"nPreview"));
+function saveFounder(name,role,mobile,whatsapp,email,photo){
+let founders=JSON.parse(localStorage.getItem("FOUNDERS"))||[];
+founders.push({name,role,mobile,whatsapp,email,photo});
+localStorage.setItem("FOUNDERS",JSON.stringify(founders));
+loadFounders();
+}
+
+function loadFounders(){
+let founders=JSON.parse(localStorage.getItem("FOUNDERS"))||[];
+founderList.innerHTML="";
+founders.forEach(f=>{
+founderList.innerHTML+=`
+<div class="card">
+<img src="${f.photo}">
+<h3>${f.name}</h3>
+<p>${f.role}</p>
+</div>`;
+});
+}
+
+// ================= NOTES =================
 function addNote(){
-  let file=document.getElementById("nFile").files[0];
-  if(!file) return;
-  let reader=new FileReader();
-  reader.onload=function(){
-    let data=JSON.parse(localStorage.getItem("NOTES"))||[];
-    data.push({name:nName.value,class:nClass.value,file:reader.result,filename:file.name});
-    localStorage.setItem("NOTES",JSON.stringify(data));
-    loadNotes();
-    nName.value=nClass.value="";
-    document.getElementById("nPreview").innerText="";
-  }
-  reader.readAsDataURL(file);
+let title=noteTitle.value;
+let link=noteLink.value;
+let file=noteFile.files[0];
+
+if(file){
+toBase64(file,function(fileData){
+saveNote(title,fileData,link);
+});
+}else{
+saveNote(title,"",link);
 }
+}
+
+function saveNote(title,file,link){
+let notes=JSON.parse(localStorage.getItem("NOTES"))||[];
+notes.push({title,file,link});
+localStorage.setItem("NOTES",JSON.stringify(notes));
+loadNotes();
+}
+
 function loadNotes(){
-  let data=JSON.parse(localStorage.getItem("NOTES"))||[];
-  let list=document.getElementById("notesList");
-  list.innerHTML="";
-  data.forEach((n,i)=>{
-    list.innerHTML+=`<div class="item">
-      <div>${n.name} | ${n.class}</div>
-      <div>
-        <a href="${n.file}" download="${n.filename}"><button>DOWNLOAD</button></a>
-        <button class="delete-btn" onclick="deleteNote(${i})">DELETE</button>
-      </div>
-    </div>`;
-  });
-}
-function deleteNote(i){
-  let data=JSON.parse(localStorage.getItem("NOTES"))||[];
-  data.splice(i,1);
-  localStorage.setItem("NOTES",JSON.stringify(data));
-  loadNotes();
+let notes=JSON.parse(localStorage.getItem("NOTES"))||[];
+noteList.innerHTML="";
+notes.forEach(n=>{
+noteList.innerHTML+=`
+<div class="card">
+<h3>${n.title}</h3>
+<a href="${n.link}" target="_blank">Open Link</a>
+</div>`;
+});
 }
 
-/* NOTIFICATION */
+// ================= NOTIFICATION =================
 function addNotification(){
-  let data=JSON.parse(localStorage.getItem("NOTIFICATIONS"))||[];
-  data.push({name:notiName.value,link:notiLink.value});
-  localStorage.setItem("NOTIFICATIONS",JSON.stringify(data));
-  loadNotification();
-  notiName.value=notiLink.value="";
-}
-function loadNotification(){
-  let data=JSON.parse(localStorage.getItem("NOTIFICATIONS"))||[];
-  let list=document.getElementById("notificationList");
-  list.innerHTML="";
-  data.forEach((n,i)=>{
-    list.innerHTML+=`<div class="item">
-      <div>${n.name} | <a href="${n.link}" target="_blank">${n.link}</a></div>
-      <div><button class="delete-btn" onclick="deleteNotification(${i})">DELETE</button></div>
-    </div>`;
-  });
-}
-function deleteNotification(i){
-  let data=JSON.parse(localStorage.getItem("NOTIFICATIONS"))||[];
-  data.splice(i,1);
-  localStorage.setItem("NOTIFICATIONS",JSON.stringify(data));
-  loadNotification();
+let text=notiText.value;
+let link=notiLink.value;
+
+let notifications=JSON.parse(localStorage.getItem("NOTIFICATIONS"))||[];
+notifications.push({text,link});
+localStorage.setItem("NOTIFICATIONS",JSON.stringify(notifications));
+loadNotifications();
 }
 
-function loadAll(){
-  loadTeachers();
-  loadFounder();
-  loadNotes();
-  loadNotification();
+function loadNotifications(){
+let notifications=JSON.parse(localStorage.getItem("NOTIFICATIONS"))||[];
+notiList.innerHTML="";
+notifications.forEach(n=>{
+notiList.innerHTML+=`
+<div class="card">
+<p>${n.text}</p>
+${n.link ? `<a href="${n.link}" target="_blank">Open</a>`:""}
+</div>`;
+});
+}
+
+// ================= STUDENTS =================
+function loadStudents(){
+let students=JSON.parse(localStorage.getItem("STUDENTS"))||[];
+studentList.innerHTML="";
+students.forEach(s=>{
+studentList.innerHTML+=`
+<div class="card">
+<p>${s.name} - ${s.mobile}</p>
+</div>`;
+});
 }
 </script>
+
 </body>
 </html>
