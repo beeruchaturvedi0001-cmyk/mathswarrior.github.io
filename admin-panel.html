@@ -58,10 +58,6 @@ button{
   font-weight:bold;
   cursor:pointer;
   margin-top:6px;
-  transition:0.3s;
-}
-button:hover{
-  background:#C70039;
 }
 .item{
   background:#222;
@@ -81,6 +77,10 @@ button:hover{
   background:red;
   margin-left:5px;
 }
+.edit-btn{
+  background:orange;
+  margin-left:5px;
+}
 .login-box{
   max-width:400px;
   margin:100px auto;
@@ -95,28 +95,27 @@ button:hover{
   color:yellow;
 }
 .preview-img{
-  max-width:80px;
-  max-height:80px;
-  margin-top:5px;
-  border-radius:8px;
-  object-fit:cover;
+  max-width:60px;
+  max-height:60px;
+  border-radius:6px;
+  margin-right:5px;
 }
-.preview-file{
+.file-preview{
+  display:flex;
+  flex-wrap:wrap;
   margin-top:5px;
-  color:#FF416C;
-  font-size:13px;
 }
 </style>
 </head>
 <body>
 
-<div class="header">MATH'S WARRIOR ADMIN DASHBOARD</div>
+<div class="header">MATH'S WARRIOR INSTITUTE ADMIN DASHBOARD</div>
 
-<!-- LOGIN -->
+<!-- LOGIN SECTION -->
 <div class="login-box" id="loginBox">
 <h3>ADMIN LOGIN</h3>
-<input type="text" id="adminId" placeholder="ENTER USER ID">
-<input type="password" id="adminPass" placeholder="ENTER PASSWORD">
+<input type="text" id="adminId" placeholder="ENTER YOUR USER ID">
+<input type="password" id="adminPass" placeholder="ENTER YOUR PASSWORD">
 <button onclick="login()">LOGIN</button>
 <div class="message" id="loginMsg"></div>
 </div>
@@ -125,28 +124,28 @@ button:hover{
 <div class="container" id="adminPanel">
 <div class="grid">
 
-<!-- STUDENTS -->
+<!-- STUDENT LIST -->
 <div class="box">
 <h3>REGISTERED STUDENTS</h3>
 <div id="studentList"></div>
 </div>
 
-<!-- TEACHERS -->
+<!-- ADD TEACHER -->
 <div class="box">
 <h3>ADD TEACHER</h3>
 <input id="tName" placeholder="NAME">
 <input id="tSubject" placeholder="SUBJECT">
-<input id="tExp" placeholder="EXPERIENCE (YEARS)">
+<input id="tExp" placeholder="EXPERIENCE">
 <input id="tMobile" placeholder="MOBILE">
 <input id="tWhatsapp" placeholder="WHATSAPP">
 <input id="tEmail" placeholder="EMAIL">
 <input type="file" id="tPhoto">
-<img id="tPreview" class="preview-img" src="" style="display:none;">
+<div class="file-preview" id="tPreview"></div>
 <button onclick="addTeacher()">ADD TEACHER</button>
 <div id="teacherList"></div>
 </div>
 
-<!-- FOUNDERS -->
+<!-- ADD FOUNDER -->
 <div class="box">
 <h3>ADD FOUNDER</h3>
 <input id="fName" placeholder="NAME">
@@ -155,23 +154,23 @@ button:hover{
 <input id="fWhatsapp" placeholder="WHATSAPP">
 <input id="fEmail" placeholder="EMAIL">
 <input type="file" id="fPhoto">
-<img id="fPreview" class="preview-img" src="" style="display:none;">
+<div class="file-preview" id="fPreview"></div>
 <button onclick="addFounder()">ADD FOUNDER</button>
 <div id="founderList"></div>
 </div>
 
-<!-- NOTES / FILES -->
+<!-- NOTES -->
 <div class="box">
 <h3>UPLOAD NOTES / FILES</h3>
 <input id="nName" placeholder="FILE NAME">
 <input id="nClass" placeholder="CLASS">
 <input type="file" id="nFile">
-<div id="nPreview" class="preview-file"></div>
+<div class="file-preview" id="nPreview"></div>
 <button onclick="addNote()">UPLOAD FILE</button>
 <div id="notesList"></div>
 </div>
 
-<!-- NOTIFICATIONS -->
+<!-- NOTIFICATION -->
 <div class="box">
 <h3>ADD NOTIFICATION</h3>
 <input id="notiName" placeholder="NOTIFICATION NAME">
@@ -188,181 +187,184 @@ button:hover{
 const ADMIN_ID="ADMIN";
 const ADMIN_PASS="12345";
 
-// LOGIN
 function login(){
-  const id = document.getElementById("adminId").value;
-  const pass = document.getElementById("adminPass").value;
-  if(id === ADMIN_ID && pass === ADMIN_PASS){
+  let id=document.getElementById("adminId").value;
+  let pass=document.getElementById("adminPass").value;
+  if(id===ADMIN_ID && pass===ADMIN_PASS){
     document.getElementById("loginMsg").innerHTML="LOGIN SUCCESSFUL";
     document.getElementById("loginBox").style.display="none";
     document.getElementById("adminPanel").style.display="block";
     loadAll();
-  } else {
+  }else{
     document.getElementById("loginMsg").innerHTML="INVALID USER ID OR PASSWORD";
   }
 }
 
-// UTILITY: File preview
-function previewFile(input, previewImgId){
+/* PREVIEW FUNCTION */
+function previewFile(input, previewDiv){
   const file = input.files[0];
-  const preview = document.getElementById(previewImgId);
+  const preview = document.getElementById(previewDiv);
+  preview.innerHTML = "";
   if(file){
+    const url = URL.createObjectURL(file);
     if(file.type.startsWith("image/")){
-      preview.src = URL.createObjectURL(file);
-      preview.style.display="block";
+      const img = document.createElement("img");
+      img.src = url;
+      img.className = "preview-img";
+      preview.appendChild(img);
     } else {
-      preview.style.display="none";
+      const div = document.createElement("div");
+      div.innerText = file.name;
+      div.style.padding="5px";
+      div.style.background="#333";
+      div.style.borderRadius="5px";
+      preview.appendChild(div);
     }
-  } else preview.style.display="none";
+  }
 }
 
-// TEACHER
-document.getElementById('tPhoto').addEventListener('change',()=>previewFile(tPhoto,'tPreview'));
-function addTeacher(){
-  const file = tPhoto.files[0];
-  let reader = new FileReader();
-  reader.onload = ()=>{
-    let teachers = JSON.parse(localStorage.getItem("TEACHERS"))||[];
-    teachers.push({
-      name:tName.value, subject:tSubject.value, exp:tExp.value,
-      mobile:tMobile.value, whatsapp:tWhatsapp.value, email:tEmail.value,
-      photo:file?reader.result:""
-    });
-    localStorage.setItem("TEACHERS",JSON.stringify(teachers));
-    loadTeachers();
-    tName.value=tSubject.value=tExp.value=tMobile.value=tWhatsapp.value=tEmail.value='';
-    tPhoto.value=''; tPreview.style.display='none';
-  };
-  if(file) reader.readAsDataURL(file);
-  else reader.onload();
+/* LIST LOADERS */
+function loadStudents(){
+  let data=JSON.parse(localStorage.getItem("STUDENTS"))||[];
+  const list=document.getElementById("studentList");
+  list.innerHTML="";
+  data.forEach((s,i)=>{
+    list.innerHTML+=`
+    <div class="item">
+      <div>${s.name} | ${s.course} | ${s.mobile} | ${s.utr}</div>
+      <div><button class="delete-btn" onclick="deleteStudent(${i})">DELETE</button></div>
+    </div>`;
+  });
 }
 function loadTeachers(){
-  const data = JSON.parse(localStorage.getItem("TEACHERS"))||[];
-  const list = document.getElementById("teacherList");
+  let data=JSON.parse(localStorage.getItem("TEACHERS"))||[];
+  const list=document.getElementById("teacherList");
   list.innerHTML="";
   data.forEach((t,i)=>{
-    list.innerHTML+=`<div class="item">
-      <div>${t.name} | ${t.subject} | ${t.exp} yrs | ${t.mobile} | ${t.whatsapp} | ${t.email}</div>
+    let imgTag=t.photo ? `<img src="${t.photo}" class="preview-img">` : "";
+    list.innerHTML+=`
+    <div class="item">
+      <div>${imgTag}${t.name} | ${t.subject} | ${t.exp} yrs | ${t.mobile} | ${t.whatsapp} | ${t.email}</div>
       <div><button class="delete-btn" onclick="deleteTeacher(${i})">DELETE</button></div>
     </div>`;
   });
 }
-function deleteTeacher(i){
-  let data = JSON.parse(localStorage.getItem("TEACHERS"))||[];
-  data.splice(i,1);
-  localStorage.setItem("TEACHERS",JSON.stringify(data));
-  loadTeachers();
-}
-
-// FOUNDER
-document.getElementById('fPhoto').addEventListener('change',()=>previewFile(fPhoto,'fPreview'));
-function addFounder(){
-  const file = fPhoto.files[0];
-  let reader = new FileReader();
-  reader.onload = ()=>{
-    let founders = JSON.parse(localStorage.getItem("FOUNDERS"))||[];
-    founders.push({
-      name:fName.value, responsibility:fRole.value,
-      mobile:fMobile.value, whatsapp:fWhatsapp.value, email:fEmail.value,
-      photo:file?reader.result:""
-    });
-    localStorage.setItem("FOUNDERS",JSON.stringify(founders));
-    loadFounder();
-    fName.value=fRole.value=fMobile.value=fWhatsapp.value=fEmail.value='';
-    fPhoto.value=''; fPreview.style.display='none';
-  };
-  if(file) reader.readAsDataURL(file);
-  else reader.onload();
-}
 function loadFounder(){
-  const data = JSON.parse(localStorage.getItem("FOUNDERS"))||[];
-  const list = document.getElementById("founderList");
+  let data=JSON.parse(localStorage.getItem("FOUNDERS"))||[];
+  const list=document.getElementById("founderList");
   list.innerHTML="";
   data.forEach((f,i)=>{
-    list.innerHTML+=`<div class="item">
-      <div>${f.name} | ${f.responsibility} | ${f.mobile} | ${f.whatsapp} | ${f.email}</div>
+    let imgTag=f.photo ? `<img src="${f.photo}" class="preview-img">` : "";
+    list.innerHTML+=`
+    <div class="item">
+      <div>${imgTag}${f.name} | ${f.responsibility} | ${f.mobile} | ${f.whatsapp} | ${f.email}</div>
       <div><button class="delete-btn" onclick="deleteFounder(${i})">DELETE</button></div>
     </div>`;
   });
 }
-function deleteFounder(i){
-  let data = JSON.parse(localStorage.getItem("FOUNDERS"))||[];
-  data.splice(i,1);
-  localStorage.setItem("FOUNDERS",JSON.stringify(data));
-  loadFounder();
-}
-
-// NOTES / FILES
-document.getElementById('nFile').addEventListener('change',()=>{
-  const file = nFile.files[0];
-  const preview = document.getElementById('nPreview');
-  preview.innerHTML = file?`<span>${file.name}</span>`:'';
-});
-function addNote(){
-  const file = nFile.files[0];
-  if(!file){alert("Select a file!"); return;}
-  let reader = new FileReader();
-  reader.onload = ()=>{
-    let notes = JSON.parse(localStorage.getItem("NOTES"))||[];
-    notes.push({name:nName.value, class:nClass.value, file:reader.result, filename:file.name});
-    localStorage.setItem("NOTES",JSON.stringify(notes));
-    loadNotes();
-    nName.value=nClass.value=''; nFile.value=''; nPreview.innerHTML='';
-  };
-  reader.readAsDataURL(file);
-}
 function loadNotes(){
-  const notes = JSON.parse(localStorage.getItem("NOTES"))||[];
-  const list = document.getElementById("notesList");
+  let data=JSON.parse(localStorage.getItem("NOTES"))||[];
+  const list=document.getElementById("notesList");
   list.innerHTML="";
-  notes.forEach((n,i)=>{
-    list.innerHTML+=`<div class="item">
+  data.forEach((n,i)=>{
+    list.innerHTML+=`
+    <div class="item">
       <div>${n.name} | ${n.class}</div>
       <div>
-        <a href="${n.file}" download="${n.filename}"><button>DOWNLOAD</button></a>
+        <a href="${n.file}" download="${n.filename}"><button class="features">DOWNLOAD</button></a>
         <button class="delete-btn" onclick="deleteNote(${i})">DELETE</button>
       </div>
     </div>`;
   });
 }
-function deleteNote(i){
-  let notes = JSON.parse(localStorage.getItem("NOTES"))||[];
-  notes.splice(i,1);
-  localStorage.setItem("NOTES",JSON.stringify(notes));
-  loadNotes();
-}
-
-// NOTIFICATIONS
-function addNotification(){
-  let data = JSON.parse(localStorage.getItem("NOTIFICATIONS"))||[];
-  data.push({name:notiName.value, link:notiLink.value});
-  localStorage.setItem("NOTIFICATIONS",JSON.stringify(data));
-  loadNotification();
-  notiName.value=notiLink.value='';
-}
 function loadNotification(){
-  const data = JSON.parse(localStorage.getItem("NOTIFICATIONS"))||[];
-  const list = document.getElementById("notificationList");
+  let data=JSON.parse(localStorage.getItem("NOTIFICATIONS"))||[];
+  const list=document.getElementById("notificationList");
   list.innerHTML="";
   data.forEach((n,i)=>{
-    list.innerHTML+=`<div class="item">
+    list.innerHTML+=`
+    <div class="item">
       <div>${n.name} | <a href="${n.link}" target="_blank">${n.link}</a></div>
       <div><button class="delete-btn" onclick="deleteNotification(${i})">DELETE</button></div>
     </div>`;
   });
 }
-function deleteNotification(i){
-  let data = JSON.parse(localStorage.getItem("NOTIFICATIONS"))||[];
-  data.splice(i,1);
-  localStorage.setItem("NOTIFICATIONS",JSON.stringify(data));
+
+/* ADD FUNCTIONS */
+function addTeacher(){
+  const input=document.getElementById("tPhoto");
+  const file=input.files[0];
+  let reader=new FileReader();
+  reader.onload=()=>{
+    let teachers=JSON.parse(localStorage.getItem("TEACHERS"))||[];
+    teachers.push({
+      name:tName.value, subject:tSubject.value, exp:tExp.value,
+      mobile:tMobile.value, whatsapp:tWhatsapp.value, email:tEmail.value,
+      photo: file ? reader.result : ""
+    });
+    localStorage.setItem("TEACHERS", JSON.stringify(teachers));
+    loadTeachers();
+    input.value=""; document.getElementById("tPreview").innerHTML="";
+    tName.value=""; tSubject.value=""; tExp.value=""; tMobile.value=""; tWhatsapp.value=""; tEmail.value="";
+  };
+  if(file) reader.readAsDataURL(file);
+  else reader.onload();
+}
+function addFounder(){
+  const input=document.getElementById("fPhoto");
+  const file=input.files[0];
+  let reader=new FileReader();
+  reader.onload=()=>{
+    let data=JSON.parse(localStorage.getItem("FOUNDERS"))||[];
+    data.push({
+      name:fName.value, responsibility:fRole.value, mobile:fMobile.value,
+      whatsapp:fWhatsapp.value, email:fEmail.value, photo:file?reader.result:""
+    });
+    localStorage.setItem("FOUNDERS", JSON.stringify(data));
+    loadFounder();
+    input.value=""; document.getElementById("fPreview").innerHTML="";
+    fName.value=""; fRole.value=""; fMobile.value=""; fWhatsapp.value=""; fEmail.value="";
+  };
+  if(file) reader.readAsDataURL(file);
+  else reader.onload();
+}
+function addNote(){
+  const input=document.getElementById("nFile");
+  const file=input.files[0];
+  if(file){
+    let reader=new FileReader();
+    reader.onload=()=>{
+      let data=JSON.parse(localStorage.getItem("NOTES"))||[];
+      data.push({name:nName.value, class:nClass.value, file:reader.result, filename:file.name});
+      localStorage.setItem("NOTES", JSON.stringify(data));
+      loadNotes();
+      input.value=""; document.getElementById("nPreview").innerHTML="";
+      nName.value=""; nClass.value="";
+    };
+    reader.readAsDataURL(file);
+  } else alert("Select a file first!");
+}
+function addNotification(){
+  let data=JSON.parse(localStorage.getItem("NOTIFICATIONS"))||[];
+  data.push({name:notiName.value, link:notiLink.value});
+  localStorage.setItem("NOTIFICATIONS", JSON.stringify(data));
   loadNotification();
+  notiName.value=""; notiLink.value="";
 }
 
-// LOAD ALL
-function loadAll(){
-  loadStudents(); loadTeachers(); loadFounder(); loadNotes(); loadNotification();
-}
+/* DELETE FUNCTIONS */
+function deleteStudent(i){ let data=JSON.parse(localStorage.getItem("STUDENTS"))||[]; data.splice(i,1); localStorage.setItem("STUDENTS",JSON.stringify(data)); loadStudents(); }
+function deleteTeacher(i){ let data=JSON.parse(localStorage.getItem("TEACHERS"))||[]; data.splice(i,1); localStorage.setItem("TEACHERS",JSON.stringify(data)); loadTeachers(); }
+function deleteFounder(i){ let data=JSON.parse(localStorage.getItem("FOUNDERS"))||[]; data.splice(i,1); localStorage.setItem("FOUNDERS",JSON.stringify(data)); loadFounder(); }
+function deleteNote(i){ let data=JSON.parse(localStorage.getItem("NOTES"))||[]; data.splice(i,1); localStorage.setItem("NOTES",JSON.stringify(data)); loadNotes(); }
+function deleteNotification(i){ let data=JSON.parse(localStorage.getItem("NOTIFICATIONS"))||[]; data.splice(i,1); localStorage.setItem("NOTIFICATIONS",JSON.stringify(data)); loadNotification(); }
+
+function loadAll(){ loadStudents(); loadTeachers(); loadFounder(); loadNotes(); loadNotification(); }
+
+/* FILE INPUT CHANGE FOR PREVIEW */
+document.getElementById("tPhoto").addEventListener("change",()=>previewFile(tPhoto,"tPreview"));
+document.getElementById("fPhoto").addEventListener("change",()=>previewFile(fPhoto,"fPreview"));
+document.getElementById("nFile").addEventListener("change",()=>previewFile(nFile,"nPreview"));
 </script>
-
 </body>
 </html>
