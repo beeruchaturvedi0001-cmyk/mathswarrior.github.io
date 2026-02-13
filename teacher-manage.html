@@ -1,158 +1,284 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Our Teachers | MATH'S WARRIOR</title>
+<title>MATH'S WARRIOR INSTITUTE</title>
 
 <style>
 body{
-margin:0;
-font-family:Arial, sans-serif;
-background:linear-gradient(135deg,#000428,#004e92);
+  margin:0;
+  font-family:Poppins, sans-serif;
+  background:linear-gradient(135deg,#000428,#004e92);
+  overflow:hidden;
+  color:white;
 }
 
+/* HEADER */
 .header{
-text-align:center;
-padding:20px;
-font-size:24px;
-font-weight:bold;
-background:#111;
-color:#FFD700;
-letter-spacing:1px;
+  text-align:center;
+  padding:16px;
+  font-size:20px;
+  font-weight:bold;
+  background:#111;
+  color:#FFD700;
+  letter-spacing:1px;
+  text-shadow:0 0 8px rgba(255,215,0,0.6);
 }
 
-/* GRID */
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:18px;
-padding:18px;
+/* SLIDER CONTAINER */
+.slider-container{
+  overflow:hidden;
+  padding:20px 0;
+  position:relative;
 }
 
-/* CARD */
+/* SLIDER ROW */
+.slider{
+  display:flex;
+  gap:14px;
+  animation:slide 20s linear infinite;
+}
+
+/* SLIDER ROW REVERSE */
+.slider.reverse{
+  animation-direction: reverse;
+}
+
+/* RECTANGULAR CARD */
 .card{
-background:white;
-border-radius:16px;
-padding:18px 15px;
-text-align:center;
-box-shadow:0 6px 18px rgba(0,0,0,0.25);
-transition:0.3s ease;
-position:relative;
-overflow:hidden;
+  background:white;
+  border-radius:8px;
+  padding:12px 10px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+  transition:0.4s ease;
+  box-shadow:0 5px 15px rgba(0,0,0,0.3);
+  flex:0 0 200px; /* card width */
 }
 
-.card:hover{
-transform:translateY(-6px);
-}
-
-/* PREMIUM TOP LINE */
+/* ANIMATED STRIP */
 .card::before{
-content:"PREMIUM FACULTY";
-position:absolute;
-top:0;
-left:0;
-width:100%;
-background:linear-gradient(90deg,#FFD700,#FFA500);
-color:#111;
-font-size:11px;
-font-weight:bold;
-padding:4px 0;
+  content:"MATH'S WARRIOR INSTITUTE – THE PATH OF SELECTION";
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  background:linear-gradient(90deg,#FFD700,#FF416C,#1E90FF,#25D366);
+  background-size:300% 300%;
+  animation:stripMove 5s linear infinite;
+  color:#111;
+  font-size:8px;
+  font-weight:bold;
+  padding:3px 0;
 }
 
-/* IMAGE */
-.card img{
-width:90px;
-height:90px;
-border-radius:50%;
-object-fit:cover;
-border:3px solid gold;
-margin-top:20px;
-margin-bottom:10px;
+@keyframes stripMove{
+  0%{background-position:0% 50%;}
+  100%{background-position:100% 50%;}
+}
+
+/* HOVER EFFECT */
+.card:hover{
+  transform:translateY(-6px) scale(1.03);
+  box-shadow:0 12px 25px rgba(255,215,0,0.5);
+}
+
+/* IMAGE WRAPPER */
+.img-wrapper{
+  width:75px;
+  height:75px;
+  margin:20px auto 6px;
+  border-radius:50%;
+  padding:3px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  transition:0.3s;
+  background:linear-gradient(45deg,#FFD700,#FF416C,#1E90FF,#25D366);
+  background-size:400% 400%;
+  animation:imgBorderAnim 6s linear infinite;
+}
+
+@keyframes imgBorderAnim{
+  0%{background-position:0% 50%;}
+  25%{background-position:50% 50%;}
+  50%{background-position:100% 50%;}
+  75%{background-position:50% 50%;}
+  100%{background-position:0% 50%;}
+}
+
+.img-wrapper img{
+  width:70px;
+  height:70px;
+  border-radius:50%;
+  object-fit:cover;
+  border:2px solid #111;
+}
+
+.card:hover .img-wrapper{
+  box-shadow:0 0 15px gold;
+  transform:scale(1.08);
 }
 
 /* NAME */
 .name{
-font-size:20px;
-font-weight:bold;
-color:#111;
-margin-bottom:6px;
+  font-size:15px;
+  font-weight:bold;
+  color:#111;
+  margin-top:5px;
 }
-
-/* GOLDEN LINE BELOW NAME */
 .name::after{
-content:"";
-display:block;
-width:40px;
-height:3px;
-background:gold;
-margin:6px auto 0;
-border-radius:10px;
+  content:"";
+  display:block;
+  width:35px;
+  height:2px;
+  background:gold;
+  margin:5px auto;
+  border-radius:10px;
 }
 
 /* SUBJECT */
 .subject{
-font-size:16px;
-color:#FF416C;
-font-weight:bold;
-margin-bottom:6px;
+  font-size:13px;
+  color:#FF416C;
+  font-weight:bold;
+  margin-bottom:5px;
 }
 
+/* INFO */
 .info{
-font-size:15px;
-color:#333;
-margin:4px 0;
+  font-size:12px;
+  margin:2px 0;
+  color:#333;
 }
 
 /* BUTTONS */
 .btn{
-display:inline-block;
-margin:6px 4px;
-padding:6px 10px;
-font-size:13px;
-border-radius:18px;
-text-decoration:none;
-color:white;
+  display:inline-block;
+  margin:3px 2px;
+  padding:4px 8px;
+  font-size:10px;
+  border-radius:15px;
+  text-decoration:none;
+  color:white;
+  font-weight:bold;
+  transition:0.3s;
 }
 
 .call{background:#1E90FF;}
 .whatsapp{background:#25D366;}
 .email{background:#FF416C;}
+.youtube{background:#FF0000;}
 
+.btn:hover{
+  opacity:0.85;
+  transform:scale(1.05);
+}
+
+/* AUTO SLIDE */
+@keyframes slide{
+  0%{transform:translateX(0);}
+  100%{transform:translateX(-50%);}
+}
+
+/* FLOATING MATH SYMBOLS */
+.symbol{
+  position:absolute;
+  font-weight:bold;
+  font-size:28px;
+  animation:float 20s linear infinite, colorChange 6s ease-in-out infinite;
+  opacity:0.2;
+  z-index:1;
+}
+
+@keyframes float{
+  0%{transform:translateX(-50px) rotate(0deg);}
+  100%{transform:translateX(110vw) rotate(360deg);}
+}
+
+@keyframes colorChange{
+  0%{color:#FFD700; text-shadow:0 0 10px #FFD700;}
+  25%{color:#FF416C; text-shadow:0 0 10px #FF416C;}
+  50%{color:#1E90FF; text-shadow:0 0 10px #1E90FF;}
+  75%{color:#25D366; text-shadow:0 0 10px #25D366;}
+  100%{color:#FFD700; text-shadow:0 0 10px #FFD700;}
+}
+
+.no-data{
+  color:white;
+  text-align:center;
+  font-size:14px;
+  padding:20px;
+}
 </style>
 </head>
-
 <body>
 
+<!-- FLOATING MATH SYMBOLS -->
+<div class="symbol" style="top:30%; left:5%;">+</div>
+<div class="symbol" style="top:40%; left:15%; animation-delay:3s;"></div>
+<div class="symbol" style="top:35%; left:25%; animation-delay:6s;">×</div>
+<div class="symbol" style="top:45%; left:35%; animation-delay:2s;">÷</div>
+<div class="symbol" style="top:38%; left:45%; animation-delay:4s;"></div>
+<div class="symbol" style="top:42%; left:55%; animation-delay:7s;"></div>
+<div class="symbol" style="top:36%; left:65%; animation-delay:5s;">%</div>
+<div class="symbol" style="top:40%; left:75%; animation-delay:1s;"></div>
+<div class="symbol" style="top:34%; left:85%; animation-delay:8s;"></div>
+<div class="symbol" style="top:37%; left:95%; animation-delay:9s;"></div>
+
 <div class="header">OUR PREMIUM TEACHERS</div>
-<div class="grid" id="teacherGrid"></div>
+
+<div id="allRows"></div>
 
 <script>
 let data = JSON.parse(localStorage.getItem("TEACHERS")) || [];
-let grid = document.getElementById("teacherGrid");
+let allRows = document.getElementById("allRows");
 
 if(data.length===0){
-grid.innerHTML="<p style='color:white;text-align:center;'>No Teacher Added Yet</p>";
+  allRows.innerHTML="<div class='no-data'>No Teacher Added Yet</div>";
 }
 
-data.forEach(t=>{
-grid.innerHTML+=`
-<div class="card">
-
-<img src="${t.photo || 'https://via.placeholder.com/100'}">
-
-<div class="name">${t.name || ''}</div>
-<div class="subject">${t.subject || ''}</div>
-
-<div class="info"> ${t.mobile || ''}</div>
-<div class="info"> ${t.email || ''}</div>
-
-<a href="tel:${t.mobile}" class="btn call">Call</a>
-<a href="https://wa.me/${t.whatsapp || t.mobile}" class="btn whatsapp">WhatsApp</a>
-<a href="mailto:${t.email}" class="btn email">Email</a>
-
-</div>
-`;
+// Create a slider row for each teacher
+data.forEach((t,index)=>{
+  let container = document.createElement('div');
+  container.className = 'slider-container';
+  
+  let slider = document.createElement('div');
+  slider.className = 'slider';
+  
+  // Alternate slide direction for each row
+  if(index % 2 === 1){
+    slider.classList.add('reverse');
+  }
+  
+  // Duplicate cards 5 times for smooth scroll
+  for(let i=0;i<5;i++){
+    let card = document.createElement('div');
+    card.className='card';
+    card.innerHTML=`
+      <div class="img-wrapper">
+        <img src="${t.photo || 'https://via.placeholder.com/100'}">
+      </div>
+      <div class="name">${t.name || ''}</div>
+      <div class="subject">${t.subject || ''}</div>
+      <div class="info"> ${t.mobile || ''}</div>
+      <div class="info"> ${t.email || ''}</div>
+      <a href="tel:${t.mobile}" class="btn call">Call</a>
+      <a href="https://wa.me/${t.whatsapp || t.mobile}" target="_blank" class="btn whatsapp">WhatsApp</a>
+      <a href="mailto:${t.email}" class="btn email">Email</a>
+      ${t.youtube ? `<a href="${t.youtube}" target="_blank" class="btn youtube">YouTube</a>` : ""}
+    `;
+    // Pause/resume on touch/click
+    card.addEventListener('click', ()=>{
+      slider.style.animationPlayState = slider.style.animationPlayState === 'paused' ? 'running' : 'paused';
+    });
+    slider.appendChild(card);
+  }
+  
+  container.appendChild(slider);
+  allRows.appendChild(container);
 });
 </script>
 

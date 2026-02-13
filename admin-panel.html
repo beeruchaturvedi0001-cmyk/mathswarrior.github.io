@@ -3,332 +3,346 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MATH'S WARRIOR ADMIN PANEL</title>
+<title>ADMIN PANEL | MATH'S WARRIOR</title>
 
 <style>
 body{
 margin:0;
-font-family:Arial;
+font-family:Poppins, sans-serif;
 background:linear-gradient(135deg,#000428,#004e92);
-color:white;
 }
 
 .header{
+background:#111;
+color:#FFD700;
+padding:18px;
 text-align:center;
-padding:15px;
 font-size:22px;
 font-weight:bold;
-background:#111;
-color:#FF416C;
 }
 
 .container{
-max-width:1100px;
-margin:auto;
-padding:15px;
-display:none;
-}
-
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-gap:15px;
+padding:20px;
 }
 
 .box{
-background:#111;
+background:white;
 padding:15px;
-border-radius:10px;
-}
-
-.box h3{
-text-align:center;
-color:#FF416C;
-font-size:18px;
+border-radius:12px;
+margin-bottom:20px;
 }
 
 input{
 width:100%;
-padding:6px;
-margin:4px 0;
-border:none;
-border-radius:5px;
-font-size:13px;
+padding:8px;
+margin:5px 0;
 }
 
 button{
-width:100%;
-padding:7px;
-margin-top:5px;
+padding:6px 10px;
 border:none;
-border-radius:5px;
-background:#FF416C;
-color:white;
-cursor:pointer;
-font-size:13px;
-}
-
-.item{
-background:#222;
-padding:6px;
-margin-top:6px;
 border-radius:6px;
-font-size:12px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-flex-wrap:wrap;
-}
-
-.delete-btn{
-background:red;
-padding:5px;
-font-size:11px;
-}
-
-.login-box{
-max-width:320px;
-margin:80px auto;
-background:#111;
-padding:20px;
-border-radius:10px;
-}
-
-img.preview{
-width:60px;
-height:60px;
-border-radius:50%;
-object-fit:cover;
+cursor:pointer;
 margin-top:5px;
 }
+
+.add-btn{background:#28a745;color:white;}
+.delete-btn{background:red;color:white;}
+.update-btn{background:#1E90FF;color:white;}
 </style>
 </head>
+
 <body>
 
-<div class="header">MATH'S WARRIOR ADMIN PANEL</div>
+<div class="header">ADMIN PANEL - MATH'S WARRIOR</div>
+
+<div class="container">
 
 <!-- LOGIN -->
-<div class="login-box" id="loginBox">
-<h3>ADMIN LOGIN</h3>
-<input type="text" id="adminId" placeholder="User ID">
+<div class="box" id="loginBox">
+<h3>Admin Login</h3>
+<input type="text" id="adminId" placeholder="Admin ID">
 <input type="password" id="adminPass" placeholder="Password">
-<button onclick="login()">LOGIN</button>
-<p id="msg"></p>
+<button onclick="login()" class="add-btn">Login</button>
 </div>
 
-<!-- ADMIN PANEL -->
-<div class="container" id="panel">
-<div class="grid">
+<div id="adminContent" style="display:none;">
 
-<!-- STUDENTS -->
+<!-- STUDENTS (AUTO FROM REGISTRATION) -->
 <div class="box">
-<h3>Registered Students</h3>
+<h3>Registered Students (Auto)</h3>
 <div id="studentList"></div>
 </div>
 
 <!-- TEACHER -->
 <div class="box">
-<h3>Add Teacher</h3>
-<form id="teacherForm">
-<input id="tName" placeholder="Name" required>
-<input id="tSubject" placeholder="Subject">
-<input id="tMobile" placeholder="Mobile">
-<input id="tWhatsapp" placeholder="WhatsApp">
-<input id="tEmail" placeholder="Email">
+<h3>Add / Update Teacher</h3>
+<input type="hidden" id="teacherIndex">
+<input type="text" id="tName" placeholder="Name">
+<input type="text" id="tSubject" placeholder="Subject">
+<input type="text" id="tMobile" placeholder="Mobile">
+<input type="text" id="tWhatsapp" placeholder="WhatsApp">
+<input type="email" id="tEmail" placeholder="Email">
+<input type="text" id="tYoutube" placeholder="YouTube Link">
 <input type="file" id="tPhoto">
-<img id="tPreview" class="preview">
-<button type="submit">Add Teacher</button>
-</form>
+<button onclick="saveTeacher()" class="add-btn">Save Teacher</button>
 <div id="teacherList"></div>
 </div>
 
 <!-- FOUNDER -->
 <div class="box">
-<h3>Add Founder</h3>
-<form id="founderForm">
-<input id="fName" placeholder="Name" required>
-<input id="fRole" placeholder="Role">
-<input id="fMobile" placeholder="Mobile">
-<input id="fWhatsapp" placeholder="WhatsApp">
-<input id="fEmail" placeholder="Email">
+<h3>Add / Update Founder</h3>
+<input type="hidden" id="founderIndex">
+<input type="text" id="fName" placeholder="Name">
+<input type="text" id="fSubject" placeholder="Responsibility">
+<input type="text" id="fMobile" placeholder="Mobile">
+<input type="text" id="fWhatsapp" placeholder="WhatsApp">
+<input type="email" id="fEmail" placeholder="Email">
+<input type="text" id="fYoutube" placeholder="YouTube Link">
 <input type="file" id="fPhoto">
-<img id="fPreview" class="preview">
-<button type="submit">Add Founder</button>
-</form>
+<button onclick="saveFounder()" class="add-btn">Save Founder</button>
 <div id="founderList"></div>
 </div>
 
 <!-- NOTES -->
 <div class="box">
-<h3>Upload Notes</h3>
-<form id="notesForm">
-<input id="nName" placeholder="File Name">
-<input type="file" id="nFile" required>
-<button type="submit">Upload</button>
-</form>
+<h3>Add Notes</h3>
+<input type="text" id="noteName" placeholder="Notes Name">
+<input type="text" id="noteTeacher" placeholder="Teacher Name">
+<input type="file" id="noteFile">
+<button onclick="addNotes()" class="add-btn">Add Notes</button>
 <div id="notesList"></div>
 </div>
 
 <!-- NOTIFICATION -->
 <div class="box">
 <h3>Add Notification</h3>
-<form id="notiForm">
-<input id="notiName" placeholder="Title">
-<input id="notiLink" placeholder="Paste Link">
-<button type="submit">Add</button>
-</form>
+<input type="text" id="notiName" placeholder="Notification Name">
+<input type="text" id="notiLink" placeholder="Paste Link">
+<button onclick="addNotification()" class="add-btn">Add Notification</button>
 <div id="notiList"></div>
-</div>
-
-<!-- BOOK STORE -->
-<div class="box">
-<h3>Book Store</h3>
-<form id="bookForm">
-<input id="bName" placeholder="Book Name">
-<input id="bPrice" placeholder="Price">
-<input id="bLink" placeholder="Book Link">
-<input type="file" id="bPhoto">
-<img id="bPreview" class="preview">
-<button type="submit">Add Book</button>
-</form>
-<div id="bookList"></div>
 </div>
 
 </div>
 </div>
 
 <script>
+
 const ADMIN_ID="ADMIN";
 const ADMIN_PASS="12345";
 
 function login(){
 if(adminId.value===ADMIN_ID && adminPass.value===ADMIN_PASS){
 loginBox.style.display="none";
-panel.style.display="block";
+adminContent.style.display="block";
 loadAll();
 }else{
-msg.innerText="Wrong ID or Password";
+alert("Wrong ID or Password");
 }
 }
 
-/* Preview */
-function previewImage(input,preview){
-input.onchange=function(){
-let file=input.files[0];
-if(file){
-let reader=new FileReader();
-reader.onload=function(){ preview.src=reader.result; }
-reader.readAsDataURL(file);
-}
-}
-}
-previewImage(tPhoto,tPreview);
-previewImage(fPhoto,fPreview);
-previewImage(bPhoto,bPreview);
-
-/* Teacher */
-teacherForm.onsubmit=function(e){
-e.preventDefault();
-let reader=new FileReader();
-let file=tPhoto.files[0];
-if(file){
-reader.onload=function(){
-saveData("TEACHERS",{name:tName.value,subject:tSubject.value,mobile:tMobile.value,whatsapp:tWhatsapp.value,email:tEmail.value,photo:reader.result});
-};
-reader.readAsDataURL(file);
-}else{
-saveData("TEACHERS",{name:tName.value,subject:tSubject.value,mobile:tMobile.value,whatsapp:tWhatsapp.value,email:tEmail.value,photo:""});
-}
-teacherForm.reset();
-tPreview.src="";
-};
-
-/* Founder */
-founderForm.onsubmit=function(e){
-e.preventDefault();
-let reader=new FileReader();
-let file=fPhoto.files[0];
-if(file){
-reader.onload=function(){
-saveData("FOUNDERS",{name:fName.value,role:fRole.value,mobile:fMobile.value,whatsapp:fWhatsapp.value,email:fEmail.value,photo:reader.result});
-};
-reader.readAsDataURL(file);
-}else{
-saveData("FOUNDERS",{name:fName.value,role:fRole.value,mobile:fMobile.value,whatsapp:fWhatsapp.value,email:fEmail.value,photo:""});
-}
-founderForm.reset();
-fPreview.src="";
-};
-
-/* Notes */
-notesForm.onsubmit=function(e){
-e.preventDefault();
-let file=nFile.files[0];
-let reader=new FileReader();
-reader.onload=function(){
-saveData("NOTES",{name:nName.value,file:reader.result,filename:file.name});
-};
-reader.readAsDataURL(file);
-notesForm.reset();
-};
-
-/* Notification */
-notiForm.onsubmit=function(e){
-e.preventDefault();
-saveData("NOTIFICATIONS",{name:notiName.value,link:notiLink.value});
-notiForm.reset();
-};
-
-/* Book */
-bookForm.onsubmit=function(e){
-e.preventDefault();
-let reader=new FileReader();
-let file=bPhoto.files[0];
-if(file){
-reader.onload=function(){
-saveData("BOOKS",{name:bName.value,price:bPrice.value,link:bLink.value,photo:reader.result});
-};
-reader.readAsDataURL(file);
-}
-bookForm.reset();
-bPreview.src="";
-};
-
-/* Save + Load */
-function saveData(key,obj){
-let data=JSON.parse(localStorage.getItem(key))||[];
-data.push(obj);
-localStorage.setItem(key,JSON.stringify(data));
-loadAll();
+/* LOAD ALL */
+function loadAll(){
+loadStudents();
+loadTeachers();
+loadFounders();
+loadNotes();
+loadNotifications();
 }
 
-function deleteItem(key,index){
-let data=JSON.parse(localStorage.getItem(key))||[];
-data.splice(index,1);
-localStorage.setItem(key,JSON.stringify(data));
-loadAll();
-}
-
-function loadList(key,container){
-let data=JSON.parse(localStorage.getItem(key))||[];
-container.innerHTML="";
-data.forEach((d,i)=>{
-container.innerHTML+=`
-<div class="item">
-${d.name || ""} ${d.price? "| ₹"+d.price:""}
-<button class="delete-btn" onclick="deleteItem('${key}',${i})">Delete</button>
+/* STUDENTS AUTO */
+function loadStudents(){
+let data=JSON.parse(localStorage.getItem("STUDENTS"))||[];
+let div=document.getElementById("studentList");
+div.innerHTML="";
+data.forEach((s,i)=>{
+div.innerHTML+=`
+<div>
+${s.name} (${s.mobile}) - ${s.course || ""}
+<button class="delete-btn" onclick="deleteItem('STUDENTS',${i})">Delete</button>
 </div>`;
 });
 }
 
-function loadAll(){
-loadList("TEACHERS",teacherList);
-loadList("FOUNDERS",founderList);
-loadList("NOTES",notesList);
-loadList("NOTIFICATIONS",notiList);
-loadList("BOOKS",bookList);
-loadList("STUDENTS",studentList);
+/* TEACHER SAVE/UPDATE */
+function saveTeacher(){
+let arr=JSON.parse(localStorage.getItem("TEACHERS"))||[];
+let index=document.getElementById("teacherIndex").value;
+let file=tPhoto.files[0];
+
+function save(photo){
+let data={
+name:tName.value,
+subject:tSubject.value,
+mobile:tMobile.value,
+whatsapp:tWhatsapp.value,
+email:tEmail.value,
+youtube:tYoutube.value,
+photo:photo
+};
+
+if(index===""){
+arr.push(data);
+}else{
+arr[index]=data;
 }
+localStorage.setItem("TEACHERS",JSON.stringify(arr));
+document.getElementById("teacherIndex").value="";
+loadTeachers();
+}
+
+if(file){
+let reader=new FileReader();
+reader.onload=function(){ save(reader.result); }
+reader.readAsDataURL(file);
+}else{
+save("");
+}
+}
+
+function loadTeachers(){
+let arr=JSON.parse(localStorage.getItem("TEACHERS"))||[];
+let div=document.getElementById("teacherList");
+div.innerHTML="";
+arr.forEach((t,i)=>{
+div.innerHTML+=`
+<div>
+${t.name} - ${t.subject}
+<button class="update-btn" onclick="editTeacher(${i})">Edit</button>
+<button class="delete-btn" onclick="deleteItem('TEACHERS',${i})">Delete</button>
+</div>`;
+});
+}
+
+function editTeacher(i){
+let arr=JSON.parse(localStorage.getItem("TEACHERS"));
+let t=arr[i];
+teacherIndex.value=i;
+tName.value=t.name;
+tSubject.value=t.subject;
+tMobile.value=t.mobile;
+tWhatsapp.value=t.whatsapp;
+tEmail.value=t.email;
+tYoutube.value=t.youtube;
+}
+
+/* FOUNDER */
+function saveFounder(){
+let arr=JSON.parse(localStorage.getItem("FOUNDERS"))||[];
+let index=document.getElementById("founderIndex").value;
+let file=fPhoto.files[0];
+
+function save(photo){
+let data={
+name:fName.value,
+subject:fSubject.value,
+mobile:fMobile.value,
+whatsapp:fWhatsapp.value,
+email:fEmail.value,
+youtube:fYoutube.value,
+photo:photo
+};
+
+if(index===""){
+arr.push(data);
+}else{
+arr[index]=data;
+}
+localStorage.setItem("FOUNDERS",JSON.stringify(arr));
+founderIndex.value="";
+loadFounders();
+}
+
+if(file){
+let reader=new FileReader();
+reader.onload=function(){ save(reader.result); }
+reader.readAsDataURL(file);
+}else{
+save("");
+}
+}
+
+function loadFounders(){
+let arr=JSON.parse(localStorage.getItem("FOUNDERS"))||[];
+let div=document.getElementById("founderList");
+div.innerHTML="";
+arr.forEach((f,i)=>{
+div.innerHTML+=`
+<div>
+${f.name} - ${f.subject}
+<button class="update-btn" onclick="editFounder(${i})">Edit</button>
+<button class="delete-btn" onclick="deleteItem('FOUNDERS',${i})">Delete</button>
+</div>`;
+});
+}
+
+function editFounder(i){
+let arr=JSON.parse(localStorage.getItem("FOUNDERS"));
+let f=arr[i];
+founderIndex.value=i;
+fName.value=f.name;
+fSubject.value=f.subject;
+fMobile.value=f.mobile;
+fWhatsapp.value=f.whatsapp;
+fEmail.value=f.email;
+fYoutube.value=f.youtube;
+}
+
+/* NOTES */
+function addNotes(){
+let file=noteFile.files[0];
+let reader=new FileReader();
+reader.onload=function(){
+let arr=JSON.parse(localStorage.getItem("NOTES"))||[];
+arr.push({name:noteName.value,teacher:noteTeacher.value,file:reader.result});
+localStorage.setItem("NOTES",JSON.stringify(arr));
+loadNotes();
+}
+if(file) reader.readAsDataURL(file);
+}
+
+function loadNotes(){
+let arr=JSON.parse(localStorage.getItem("NOTES"))||[];
+let div=document.getElementById("notesList");
+div.innerHTML="";
+arr.forEach((n,i)=>{
+div.innerHTML+=`
+<div>
+${n.name} - ${n.teacher}
+<button class="delete-btn" onclick="deleteItem('NOTES',${i})">Delete</button>
+</div>`;
+});
+}
+
+/* NOTIFICATION */
+function addNotification(){
+let arr=JSON.parse(localStorage.getItem("NOTIFICATIONS"))||[];
+arr.push({name:notiName.value,link:notiLink.value});
+localStorage.setItem("NOTIFICATIONS",JSON.stringify(arr));
+loadNotifications();
+}
+
+function loadNotifications(){
+let arr=JSON.parse(localStorage.getItem("NOTIFICATIONS"))||[];
+let div=document.getElementById("notiList");
+div.innerHTML="";
+arr.forEach((n,i)=>{
+div.innerHTML+=`
+<div>
+${n.name}
+<button class="delete-btn" onclick="deleteItem('NOTIFICATIONS',${i})">Delete</button>
+</div>`;
+});
+}
+
+/* DELETE */
+function deleteItem(key,i){
+let arr=JSON.parse(localStorage.getItem(key))||[];
+arr.splice(i,1);
+localStorage.setItem(key,JSON.stringify(arr));
+loadAll();
+}
+
 </script>
 
 </body>
