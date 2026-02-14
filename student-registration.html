@@ -10,30 +10,33 @@
 body {
   font-family: 'Poppins', sans-serif;
   background: linear-gradient(135deg, #ff4b2b, #001f7f);
-  padding: 20px;
+  margin: 0;
+  padding: 0;
   min-height: 100vh;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
 }
 
+/* Container */
 .container {
   width: 100%;
-  max-width: 750px;
-  background: #ffffff;
-  padding: 30px 40px;
+  max-width: 900px;
+  margin: 40px auto;
+  background: #fff;
   border-radius: 15px;
-  box-shadow: 0 15px 35px rgba(0,0,0,0.25);
-  color: #333;
+  padding: 40px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+  box-sizing: border-box;
 }
 
 /* Header */
 h2 {
   text-align: center;
-  margin-bottom: 25px;
+  margin-bottom: 30px;
   color: #ff416c;
   font-weight: 700;
   letter-spacing: 1px;
+  font-size: 28px;
 }
 
 /* Labels and Inputs */
@@ -43,40 +46,38 @@ label {
   margin-top: 12px;
   margin-bottom: 6px;
 }
-
 input, select {
   width: 100%;
-  padding: 12px 15px;
-  border-radius: 8px;
+  padding: 14px 16px;
+  border-radius: 10px;
   border: 1px solid #ccc;
   font-weight: 500;
   transition: 0.3s;
   outline: none;
+  box-sizing: border-box;
 }
-
 input:focus, select:focus {
   border-color: #ff416c;
-  box-shadow: 0 0 8px rgba(255,65,108,0.4);
+  box-shadow: 0 0 10px rgba(255,65,108,0.3);
 }
 
-/* Buttons */
+/* Button */
 button {
   width: 100%;
-  padding: 14px;
+  padding: 16px;
   margin-top: 20px;
   border: none;
-  border-radius: 8px;
+  border-radius: 12px;
   font-weight: 600;
   font-size: 16px;
   background: linear-gradient(45deg, #ff416c, #ff4b2b);
-  color: white;
+  color: #fff;
   cursor: pointer;
   transition: 0.3s, transform 0.2s;
 }
-
 button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(255,65,108,0.5);
+  box-shadow: 0 8px 25px rgba(255,65,108,0.5);
 }
 
 /* Status Message */
@@ -88,17 +89,21 @@ button:hover {
   color: green;
 }
 
-/* Scrollable selects for districts */
-select {
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
+/* Footer */
+footer {
+  text-align: center;
+  margin-top: auto;
+  padding: 20px;
+  color: #fff;
+  font-weight: 500;
+  background: rgba(0,0,0,0.1);
 }
 
 /* Responsive */
-@media (max-width: 500px) {
+@media(max-width: 600px){
   .container {
-    padding: 20px;
+    padding: 25px 20px;
+    margin: 20px;
   }
 }
 </style>
@@ -106,61 +111,65 @@ select {
 <body>
 
 <div class="container">
-<h2>STUDENT REGISTRATION FORM</h2>
+  <h2>STUDENT REGISTRATION FORM</h2>
 
-<label>FULL NAME</label>
-<input type="text" id="fullName" placeholder="Enter Full Name" required>
+  <label>FULL NAME</label>
+  <input type="text" id="fullName" placeholder="Enter Full Name" required>
 
-<label>FATHER'S NAME</label>
-<input type="text" id="fatherName" placeholder="Enter Father's Name" required>
+  <label>FATHER'S NAME</label>
+  <input type="text" id="fatherName" placeholder="Enter Father's Name" required>
 
-<label>MOTHER'S NAME</label>
-<input type="text" id="motherName" placeholder="Enter Mother's Name" required>
+  <label>MOTHER'S NAME</label>
+  <input type="text" id="motherName" placeholder="Enter Mother's Name" required>
 
-<label>MOBILE NUMBER</label>
-<input type="text" id="mobile" placeholder="Enter Mobile Number" maxlength="10">
+  <label>MOBILE NUMBER</label>
+  <input type="text" id="mobile" placeholder="Enter Mobile Number" maxlength="10">
 
-<label>EMAIL ID</label>
-<input type="email" id="email" placeholder="Enter Email ID">
+  <label>EMAIL ID</label>
+  <input type="email" id="email" placeholder="Enter Email ID">
 
-<label>WHATSAPP NUMBER</label>
-<input type="text" id="whatsapp" placeholder="Enter WhatsApp Number" maxlength="10">
+  <label>WHATSAPP NUMBER</label>
+  <input type="text" id="whatsapp" placeholder="Enter WhatsApp Number" maxlength="10">
 
-<label>AADHAAR NUMBER</label>
-<input type="text" id="aadhaar" placeholder="Enter Aadhaar Number" maxlength="12">
+  <label>AADHAAR NUMBER</label>
+  <input type="text" id="aadhaar" placeholder="Enter Aadhaar Number" maxlength="12">
 
-<label>SELECT COURSE</label>
-<select id="selectedCourse" onchange="updateFee()">
-  <option value="">Select Course</option>
-</select>
+  <label>SELECT COURSE</label>
+  <select id="selectedCourse" onchange="updateFee()">
+    <option value="">Select Course</option>
+  </select>
 
-<label>COURSE FEE</label>
-<input type="text" id="courseFee" placeholder="Fee Will Appear Here" readonly>
+  <label>COURSE FEE</label>
+  <input type="text" id="courseFee" placeholder="Fee Will Appear Here" readonly>
 
-<label>STATE</label>
-<select id="stateSelect">
-  <option value="">Select State</option>
-  <option value="UTTAR PRADESH">UTTAR PRADESH</option>
-  <option value="MAHARASHTRA">MAHARASHTRA</option>
-  <option value="BIHAR">BIHAR</option>
-  <option value="RAJASTHAN">RAJASTHAN</option>
-  <option value="KARNATAKA">KARNATAKA</option>
-</select>
+  <label>STATE</label>
+  <select id="stateSelect">
+    <option value="">Select State</option>
+    <option value="UTTAR PRADESH">UTTAR PRADESH</option>
+    <option value="MAHARASHTRA">MAHARASHTRA</option>
+    <option value="BIHAR">BIHAR</option>
+    <option value="RAJASTHAN">RAJASTHAN</option>
+    <option value="KARNATAKA">KARNATAKA</option>
+  </select>
 
-<label>DISTRICT</label>
-<select id="districtSelect">
-  <option value="">Select District</option>
-</select>
+  <label>DISTRICT</label>
+  <select id="districtSelect">
+    <option value="">Select District</option>
+  </select>
 
-<label>UPI ID FOR FEE PAYMENT</label>
-<input type="text" id="upiId" value="7705042892@axl" readonly>
+  <label>UPI ID FOR FEE PAYMENT</label>
+  <input type="text" id="upiId" value="7705042892@axl" readonly>
 
-<label>UTR NUMBER</label>
-<input type="text" id="utr" placeholder="Enter UTR Number after Payment">
+  <label>UTR NUMBER</label>
+  <input type="text" id="utr" placeholder="Enter UTR Number after Payment">
 
-<button onclick="submitForm()">SUBMIT REGISTRATION</button>
-<p id="status"></p>
+  <button onclick="submitForm()">SUBMIT REGISTRATION</button>
+  <p id="status"></p>
 </div>
+
+<footer>
+  &copy; 2026 MATH'S WARRIOR | All Rights Reserved
+</footer>
 
 <script>
 // States and districts
