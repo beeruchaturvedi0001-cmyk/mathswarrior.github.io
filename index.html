@@ -3,16 +3,35 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MATH'S WARRIOR</title>
-
+<title>MATH'S WARRIOR COURSES</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
-body{background: linear-gradient(135deg,#ff512f,#ffffff); min-height:100vh; overflow-x:hidden;}
+body{
+  background: linear-gradient(120deg,#a1c4fd,#c2e9fb);
+  min-height:100vh; 
+  overflow-x:hidden; 
+  position:relative;
+}
 
-/* App Bar */
+/* Floating Shapes */
+.fshape{
+  position:absolute;
+  font-size:30px;
+  font-weight:bold;
+  opacity:0.15;
+  animation:floatShape linear infinite;
+}
+@keyframes floatShape{
+  0%{transform:translateY(100vh) rotate(0deg);}
+  100%{transform:translateY(-100px) rotate(360deg);}
+}
+
+/* AppBar */
 .appbar{
-  height:60px; background:red; color:white; display:flex; align-items:center; padding:0 20px; 
-  font-size:20px; font-weight:bold; position:fixed; width:100%; top:0; z-index:1000; box-shadow:0 3px 10px rgba(0,0,0,0.3);
+  height:60px; background:#ff0000; color:white; display:flex; align-items:center; padding:0 20px; 
+  font-size:20px; font-weight:bold; position:fixed; width:100%; top:0; z-index:1000; 
+  box-shadow:0 3px 15px rgba(0,0,0,0.3); border-bottom:2px solid #ffffff44;
 }
 .menu-btn{font-size:28px; cursor:pointer; margin-right:15px; transition:0.3s;}
 .menu-btn:hover{transform:scale(1.2);}
@@ -23,40 +42,91 @@ body{background: linear-gradient(135deg,#ff512f,#ffffff); min-height:100vh; over
   box-shadow:3px 0 15px rgba(0,0,0,0.3); padding-top:70px; transition:0.4s; z-index:999;
 }
 .sidebar a{
-  display:block; padding:15px 25px; text-decoration:none; color:black; font-weight:500; border-bottom:1px solid #eee; transition:0.3s;
+  display:block; padding:15px 25px; text-decoration:none; color:black; font-weight:500; 
+  border-bottom:1px solid #eee; transition:0.3s;
 }
-.sidebar a:hover{background:red; color:white; padding-left:35px;}
+.sidebar a:hover{background:#ff0000; color:white; padding-left:35px;}
 
 /* Main Grid */
 .main{
   margin-top:80px;
   padding:20px;
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(350px,1fr));
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
   justify-content:center;
   gap:25px;
+  position:relative;
+  z-index:2;
 }
 
 /* Cards */
 .card{
   position:relative;
-  background: linear-gradient(145deg,#ffffff,#ffe6e6);
+  background: linear-gradient(145deg,#ffffff,#f0f8ff);
   border-radius:20px;
   padding:25px;
   box-shadow:0 8px 25px rgba(0,0,0,0.25);
   transition:0.4s;
   text-align:center;
+  overflow:hidden;
 }
 .card:hover{
   transform:translateY(-10px);
   box-shadow:0 15px 40px rgba(0,0,0,0.4);
 }
+
+/* Spark/confetti effect */
+.card .spark{
+  position:absolute;
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:gold;
+  pointer-events:none;
+  animation:sparkAnim 1s linear forwards;
+  opacity:0;
+}
+@keyframes sparkAnim{
+  0%{transform:translate(0,0) scale(1); opacity:1;}
+  100%{transform:translate(var(--x,0px), var(--y,0px)) scale(0.3); opacity:0;}
+}
+
+/* Card Titles */
 .card h3{
-  color:#ff416c; margin-bottom:10px; font-size:20px; font-weight:bold;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+  color:#ff416c; 
+  margin-bottom:12px; 
+  font-size:22px; 
+  font-weight:bold;
+  text-shadow:1px 1px 2px rgba(0,0,0,0.2);
+  background: linear-gradient(90deg,#ff416c,#ff4b2b);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
 }
 .card p{
-  margin-bottom:15px; color:#333; font-size:14px;
+  margin-bottom:18px; 
+  color:#333; 
+  font-size:15px; 
+  line-height:1.4;
+}
+
+/* Countdown Timer */
+.countdown{
+  font-weight:bold; 
+  font-size:16px;
+  margin-bottom:12px;
+  letter-spacing:1px;
+  background: linear-gradient(90deg,#ff416c,#ff4b2b,#ff758c,#ffc107);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow:0 0 10px rgba(0,0,0,0.2);
+  transition:0.4s;
+}
+.card:hover .countdown{
+  background: linear-gradient(90deg,#28a745,#20c997,#2ecc71,#1abc9c);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  text-shadow:0 0 15px rgba(0,0,0,0.3);
+  font-size:17px;
 }
 
 /* Button container */
@@ -67,16 +137,16 @@ body{background: linear-gradient(135deg,#ff512f,#ffffff); min-height:100vh; over
   box-shadow:0 5px 15px rgba(0,0,0,0.2);
   background-size:200% 200%;
 }
-
 .card button.register{
-  background: linear-gradient(45deg,#ff416c,#ff4b2b);
-  color:white; animation: gradientBG 3s ease infinite;
+  background: linear-gradient(45deg,#ff416c,#ff4b2b,#ff512f,#ff758c);
+  color:white; 
+  animation: gradientBG 4s ease infinite;
 }
 .card button.features{
-  background: linear-gradient(45deg,#28a745,#20c997);
-  color:white; animation: gradientBG 3s ease infinite;
+  background: linear-gradient(45deg,#28a745,#20c997,#2ecc71,#1abc9c);
+  color:white; 
+  animation: gradientBG 4s ease infinite;
 }
-
 @keyframes gradientBG{
   0%{background-position:0% 50%;}
   50%{background-position:100% 50%;}
@@ -85,11 +155,19 @@ body{background: linear-gradient(135deg,#ff512f,#ffffff); min-height:100vh; over
 
 /* Footer */
 .footer{
-  text-align:center; padding:15px; font-weight:bold; color:white; background:#222;
-  margin-top:20px; font-size:14px;
+  text-align:center; 
+  padding:20px; 
+  font-weight:bold; 
+  color:white; 
+  background:#222;
+  font-size:14px;
+  margin-top:40px;
+  box-shadow:0 -3px 10px rgba(0,0,0,0.2);
+  position:relative;
+  z-index:2;
 }
 
-/* Premium Bottom Scrolling Bar */
+/* Premium Scrolling Bar */
 .premium-scroll{
   width:100%;
   height:60px;
@@ -98,21 +176,19 @@ body{background: linear-gradient(135deg,#ff512f,#ffffff); min-height:100vh; over
   display:flex;
   align-items:center;
   position:relative;
+  z-index:2;
 }
-
 .scroll-text{
   white-space:nowrap;
   display:inline-block;
   padding-left:100%;
   font-weight:bold;
-  font-size:19px;
+  font-size:18px;
   color:#ffffff;
   animation:premiumScroll 25s linear infinite;
   letter-spacing:2px;
   text-shadow:0 0 10px #fff,0 0 20px #ff416c;
 }
-
-/* Shine Effect */
 .scroll-text::after{
   content:"";
   position:absolute;
@@ -123,12 +199,10 @@ body{background: linear-gradient(135deg,#ff512f,#ffffff); min-height:100vh; over
   background:linear-gradient(120deg,transparent,rgba(255,255,255,0.6),transparent);
   animation:shine 5s infinite;
 }
-
 @keyframes premiumScroll{
   0%{transform:translateX(0%);}
   100%{transform:translateX(-100%);}
 }
-
 @keyframes shine{
   0%{left:-100%;}
   100%{left:150%;}
@@ -140,9 +214,12 @@ body{background: linear-gradient(135deg,#ff512f,#ffffff); min-height:100vh; over
 </head>
 <body>
 
+<!-- Floating Shapes -->
+<div id="floatingShapes"></div>
+
 <div class="appbar">
 <span class="menu-btn" onclick="openMenu()">☰</span>
-MATH'S WARRIOR INSTITUTE 
+MATH'S WARRIOR INSTITUTE
 </div>
 
 <div class="sidebar" id="sidebar">
@@ -162,86 +239,119 @@ MATH'S WARRIOR INSTITUTE
 <a href="notification.html">💬 EXAM NOTIFICATION</a>
 <a href="gallery.html">🖼️ INSTITUTE GALLERY</a>
 <a href="book.html">📔BOOK STORE</a>
-
-
 </div>
 
-<div class="main">
+<div class="main" id="main"></div>
 
-<div class="card">
-<h3>LAKSYA FOUNDATION BATCH 🎖️🎖️</h3>
-<p>➡️ CLASS 9 | UP STATE BOARD & CBSE | FACULTY: ABHINAY PRATAP & TEAM</p>
-<div class="btn-container">
-<button class="register" onclick="registerCourse('LAKSYA FOUNDATION BATCH', 500)">REGISTER NOW</button>
-<button class="features" onclick="showFeatures('LAKSYA FOUNDATION BATCH')">FEATURES</button>
-</div>
-</div>
-
-<div class="card">
-<h3>PRATHAM TARGET BATCH 🎖️🎖️</h3>
-<p>➡️ CLASS 10 | UP STATE BOARD & CBSE | FACULTY: ABHINAY PRATAP & TEAM</p>
-<div class="btn-container">
-<button class="register" onclick="registerCourse('PRATHAM TARGET BATCH', 2499)">REGISTER NOW</button>
-<button class="features" onclick="showFeatures('PRATHAM TARGET BATCH')">FEATURES</button>
-</div>
-</div>
-
-<div class="card">
-<h3>MATH SPECIAL 2.0</h3>
-<p>✅ FOR ALL KVS/NVS ENTRANCE EXAMS | FACULTY: ABHINAY PRATAP</p>
-<div class="btn-container">
-<button class="register" onclick="registerCourse('MATH SPECIAL 2.0', 2099)">REGISTER NOW</button>
-<button class="features" onclick="showFeatures('MATH SPECIAL 2.0')">FEATURES</button>
-</div>
-</div>
-
-
-<div class="card">
-<h3>PHYSICS SPECIAL BATCH </h3>
-<p>✅ FOR CLASS 11TH AND 12 STUDENT | FACULTY: ABHINAY PRATAP</p>
-<div class="btn-container">
-<button class="register" onclick="registerCourse('MATH SPECIAL 2.0', 2099)">REGISTER NOW</button>
-<button class="features" onclick="showFeatures('MATH SPECIAL 2.0')">FEATURES</button>
-</div>
-</div>
-</div>
-
-
-
-<!-- Premium Scrolling Bar -->
 <div class="premium-scroll">
 <div class="scroll-text">
-🚀 WELCOME TO MATH'S WARRIOR INSTITUTE 🚀 |
-🎯 THE PATH OF SELECTION 🎯 |
-📚 DAILY PRACTICE • WEEKLY MOCK TEST • FREE PDF NOTES 📚 |
-🏆 RESULT ORIENTED TEACHING 🏆 |
-💪 KEEP LEARNING • KEEP PRACTICING • KEEP WINNING 💪 |
-▶️ SUBSCRIBE YOUTUBE CHANNEL ABHINAY_PRATAP_MATHS
-▶️🔗@abhinaypratapmaths
+🚀 WELCOME TO MATH'S WARRIOR INSTITUTE 🚀 | 🎯 THE PATH OF SELECTION 🎯 | 📚 DAILY PRACTICE • WEEKLY MOCK TEST • FREE PDF NOTES 📚 | 🏆 RESULT ORIENTED TEACHING 🏆
 </div>
+</div>
+
+<div class="footer">
+&copy; 2026 MATH'S WARRIOR INSTITUTE | All Rights Reserved | Designed by Abhinay Pratap
 </div>
 
 <script>
 function openMenu(){
-let sidebar = document.getElementById("sidebar");
-sidebar.style.left = (sidebar.style.left==="0px") ? "-260px" : "0px";
+  let sidebar = document.getElementById("sidebar");
+  sidebar.style.left = (sidebar.style.left==="0px") ? "-260px" : "0px";
 }
 
-function registerCourse(courseName, fee){
-localStorage.setItem('selectedCourse', courseName);
-localStorage.setItem('selectedFee', fee);
-window.location.href='student-registration.html';
+/* Floating shapes setup */
+const symbols=['+','−','×','÷','√','∫','%','π','∆','Σ'];
+const shapeContainer=document.getElementById('floatingShapes');
+
+for(let i=0;i<20;i++){
+  let s=document.createElement('div');
+  s.className='fshape';
+  s.style.left=Math.random()*100+'vw';
+  s.style.fontSize=(20+Math.random()*30)+'px';
+  s.style.animationDuration=(10+Math.random()*15)+'s';
+  s.innerText=symbols[Math.floor(Math.random()*symbols.length)];
+  shapeContainer.appendChild(s);
 }
 
-function showFeatures(courseName){
-let features = `✅ RESULT ORIENTED APPROACH
+/* Course Data */
+const courses=[
+  {name:"LAKSYA FOUNDATION BATCH", desc:"CLASS 9 | UP STATE BOARD & CBSE | FACULTY: ABHINAY PRATAP & TEAM", end:"2026-03-01T23:59:59", fee:500},
+  {name:"PRATHAM TARGET BATCH", desc:"CLASS 10 | UP STATE BOARD & CBSE | FACULTY: ABHINAY PRATAP & TEAM", end:"2026-03-15T23:59:59", fee:2499},
+  {name:"MATH SPECIAL 2.0", desc:"FOR ALL KVS/NVS ENTRANCE EXAMS | FACULTY: ABHINAY PRATAP", end:"2026-04-01T23:59:59", fee:2099},
+  {name:"PHYSICS SPECIAL BATCH", desc:"FOR CLASS 11TH AND 12 STUDENT | FACULTY: ABHINAY PRATAP", end:"2026-04-15T23:59:59", fee:1999}
+];
+
+const mainDiv=document.getElementById('main');
+
+courses.forEach(c=>{
+  const card=document.createElement('div');
+  card.className='card';
+  card.dataset.end=c.end;
+  card.innerHTML=`
+    <h3>${c.name}</h3>
+    <p>➡️ ${c.desc}</p>
+    <div class="countdown">Loading...</div>
+    <div class="btn-container">
+      <button class="register">REGISTER NOW</button>
+      <button class="features">FEATURES</button>
+    </div>
+  `;
+  mainDiv.appendChild(card);
+
+  // Register Button
+  card.querySelector('.register').addEventListener('click',()=>{
+    localStorage.setItem('selectedCourse',c.name);
+    localStorage.setItem('selectedFee',c.fee);
+    alert(c.name+" selected! Redirecting to registration...");
+    window.location.href='student-registration.html';
+  });
+
+  // Features Button
+  card.querySelector('.features').addEventListener('click',()=>{
+    let features = `✅ RESULT ORIENTED APPROACH
 ✅ BILINGUAL CLASSES AND NOTES
 ✅ FREE PRACTICE SHEET
 ✅ FREE E-BOOK
 ✅ COURSE DURATION 08 MONTHS
 🧑🏻‍🏫 FACULTIES ABHINAY SIR AND TEAM`;
-alert(courseName + " Features:\n\n" + features);
+    alert(c.name + " Features:\n\n" + features);
+  });
+
+  // Spark on hover
+  card.addEventListener('mouseenter', e=>{
+    for(let i=0;i<20;i++){
+      let spark=document.createElement('div');
+      spark.className='spark';
+      spark.style.left=Math.random()*card.offsetWidth+'px';
+      spark.style.top=Math.random()*card.offsetHeight+'px';
+      spark.style.setProperty('--x',(Math.random()*100-50)+'px');
+      spark.style.setProperty('--y',(Math.random()*-100)+'px');
+      card.appendChild(spark);
+      setTimeout(()=>{spark.remove()},1000);
+    }
+  });
+});
+
+/* Countdown Timer */
+function updateCountdowns(){
+  document.querySelectorAll('.card').forEach(card=>{
+    const endTime=new Date(card.dataset.end);
+    const now=new Date();
+    let diff=endTime-now;
+    if(diff<=0){
+      card.querySelector('.countdown').innerText="Course Ended";
+      card.querySelector('.countdown').style.color="red";
+    } else{
+      let d=Math.floor(diff/(1000*60*60*24));
+      let h=Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+      let m=Math.floor((diff%(1000*60*60))/(1000*60));
+      let s=Math.floor((diff%(1000*60))/1000);
+      card.querySelector('.countdown').innerText=`Ends in: ${d}d ${h}h ${m}m ${s}s`;
+    }
+  });
 }
+setInterval(updateCountdowns,1000);
+updateCountdowns();
 </script>
 
 </body>

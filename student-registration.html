@@ -4,66 +4,102 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Student Registration | MATH'S WARRIOR</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600;700&display=swap" rel="stylesheet">
 <style>
-body{
-  font-family:'Poppins',sans-serif;
-  background: linear-gradient(135deg,#ff0000,#001f7f);
-  padding:20px;
-  color:white;
-  min-height:100vh;
+/* General */
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #ff4b2b, #001f7f);
+  padding: 20px;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.container{
-  max-width:700px;
-  margin:auto;
-  background:white;
-  color:black;
-  padding:25px;
-  border-radius:15px;
-  box-shadow:0 8px 25px rgba(0,0,0,0.3);
+.container {
+  width: 100%;
+  max-width: 750px;
+  background: #ffffff;
+  padding: 30px 40px;
+  border-radius: 15px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+  color: #333;
 }
 
-h2{text-align:center; margin-bottom:20px; color:#001f7f;}
-
-input, select{
-  width:100%;
-  padding:12px;
-  margin:8px 0;
-  border-radius:10px;
-  border:1px solid #ccc;
-  text-transform:uppercase;
-  font-weight:bold;
+/* Header */
+h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #ff416c;
+  font-weight: 700;
+  letter-spacing: 1px;
 }
 
-input:focus, select:focus{
-  border-color:#ff4b2b;
-  outline:none;
+/* Labels and Inputs */
+label {
+  display: block;
+  font-weight: 600;
+  margin-top: 12px;
+  margin-bottom: 6px;
 }
 
-button{
-  width:100%;
-  padding:12px;
-  margin-top:15px;
-  border:none;
-  border-radius:10px;
-  background:#001f7f;
-  color:white;
-  font-weight:bold;
-  cursor:pointer;
-  font-size:16px;
-  transition:0.3s;
+input, select {
+  width: 100%;
+  padding: 12px 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-weight: 500;
+  transition: 0.3s;
+  outline: none;
 }
 
-button:hover{background:#000080;}
+input:focus, select:focus {
+  border-color: #ff416c;
+  box-shadow: 0 0 8px rgba(255,65,108,0.4);
+}
 
-label{font-weight:bold; margin-top:10px; display:block;}
+/* Buttons */
+button {
+  width: 100%;
+  padding: 14px;
+  margin-top: 20px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 16px;
+  background: linear-gradient(45deg, #ff416c, #ff4b2b);
+  color: white;
+  cursor: pointer;
+  transition: 0.3s, transform 0.2s;
+}
 
-#status{
-  margin-top:15px;
-  font-weight:bold;
-  color:green;
-  text-align:center;
-  font-size:16px;
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(255,65,108,0.5);
+}
+
+/* Status Message */
+#status {
+  margin-top: 15px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 16px;
+  color: green;
+}
+
+/* Scrollable selects for districts */
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+  .container {
+    padding: 20px;
+  }
 }
 </style>
 </head>
@@ -73,37 +109,37 @@ label{font-weight:bold; margin-top:10px; display:block;}
 <h2>STUDENT REGISTRATION FORM</h2>
 
 <label>FULL NAME</label>
-<input type="text" id="fullName" placeholder="ENTER FULL NAME" required>
+<input type="text" id="fullName" placeholder="Enter Full Name" required>
 
 <label>FATHER'S NAME</label>
-<input type="text" id="fatherName" placeholder="ENTER FATHER'S NAME" required>
+<input type="text" id="fatherName" placeholder="Enter Father's Name" required>
 
 <label>MOTHER'S NAME</label>
-<input type="text" id="motherName" placeholder="ENTER MOTHER'S NAME" required>
+<input type="text" id="motherName" placeholder="Enter Mother's Name" required>
 
 <label>MOBILE NUMBER</label>
-<input type="text" id="mobile" placeholder="ENTER MOBILE NUMBER" maxlength="10">
+<input type="text" id="mobile" placeholder="Enter Mobile Number" maxlength="10">
 
 <label>EMAIL ID</label>
-<input type="email" id="email" placeholder="ENTER EMAIL ID">
+<input type="email" id="email" placeholder="Enter Email ID">
 
 <label>WHATSAPP NUMBER</label>
-<input type="text" id="whatsapp" placeholder="ENTER WHATSAPP NUMBER" maxlength="10">
+<input type="text" id="whatsapp" placeholder="Enter WhatsApp Number" maxlength="10">
 
 <label>AADHAAR NUMBER</label>
-<input type="text" id="aadhaar" placeholder="ENTER AADHAAR NUMBER" maxlength="12">
+<input type="text" id="aadhaar" placeholder="Enter Aadhaar Number" maxlength="12">
 
 <label>SELECT COURSE</label>
 <select id="selectedCourse" onchange="updateFee()">
-  <option value="">SELECT COURSE</option>
+  <option value="">Select Course</option>
 </select>
 
 <label>COURSE FEE</label>
-<input type="text" id="courseFee" placeholder="FEE WILL APPEAR HERE" readonly>
+<input type="text" id="courseFee" placeholder="Fee Will Appear Here" readonly>
 
 <label>STATE</label>
 <select id="stateSelect">
-  <option value="">SELECT STATE</option>
+  <option value="">Select State</option>
   <option value="UTTAR PRADESH">UTTAR PRADESH</option>
   <option value="MAHARASHTRA">MAHARASHTRA</option>
   <option value="BIHAR">BIHAR</option>
@@ -113,21 +149,21 @@ label{font-weight:bold; margin-top:10px; display:block;}
 
 <label>DISTRICT</label>
 <select id="districtSelect">
-  <option value="">SELECT DISTRICT</option>
+  <option value="">Select District</option>
 </select>
 
 <label>UPI ID FOR FEE PAYMENT</label>
 <input type="text" id="upiId" value="7705042892@axl" readonly>
 
 <label>UTR NUMBER</label>
-<input type="text" id="utr" placeholder="ENTER UTR NUMBER AFTER PAYMENT">
+<input type="text" id="utr" placeholder="Enter UTR Number after Payment">
 
 <button onclick="submitForm()">SUBMIT REGISTRATION</button>
 <p id="status"></p>
 </div>
 
 <script>
-// States and limited districts
+// States and districts
 const states = {
   "UTTAR PRADESH":["AGRA","LUCKNOW","KANPUR NAGAR","GORAKHPUR","VARANASI"],
   "MAHARASHTRA":["MUMBAI","PUNE","NAGPUR","NASHIK","AURANGABAD"],
@@ -140,7 +176,7 @@ const stateSelect = document.getElementById('stateSelect');
 const districtSelect = document.getElementById('districtSelect');
 
 stateSelect.addEventListener('change', ()=>{
-  districtSelect.innerHTML = '<option value="">SELECT DISTRICT</option>';
+  districtSelect.innerHTML = '<option value="">Select District</option>';
   const state = stateSelect.value;
   if(states[state]){
     states[state].forEach(d=>{
@@ -152,10 +188,10 @@ stateSelect.addEventListener('change', ()=>{
   }
 });
 
-// Sample courses
+// Courses
 const courses = [
-  {name:"LAKSHAY FOUNDATION BATCH ", fee:2499},
-  {name:"BOARD EXAM PRATHAM BATCH ", fee:2199},
+  {name:"LAKSHAY FOUNDATION BATCH", fee:2499},
+  {name:"BOARD EXAM PRATHAM BATCH", fee:2199},
   {name:"MATHS SPECIAL 2.0", fee:2000}
 ];
 
@@ -187,7 +223,7 @@ function submitForm(){
   });
 
   if(!valid){
-    document.getElementById('status').innerText = "❌ FILL ALL REQUIRED FIELDS!";
+    document.getElementById('status').innerText = "❌ Fill All Required Fields!";
     return;
   }
 
@@ -207,19 +243,13 @@ function submitForm(){
     utr: document.getElementById('utr').value
   };
 
-  // Save in localStorage
   let registrations = JSON.parse(localStorage.getItem('registrations')) || [];
   registrations.push(registration);
   localStorage.setItem('registrations', JSON.stringify(registrations));
 
-  // Show success on all boxes
-  fields.forEach(f=>{
-    document.getElementById(f).value = "SUCCESSFUL REGISTRATION";
-  });
-  courseFee.value = "SUCCESSFUL REGISTRATION";
-
-  document.getElementById('status').innerText = "✅ REGISTRATION SUCCESSFUL!";
+  document.getElementById('status').innerText = "✅ Registration Successful!";
 }
 </script>
+
 </body>
 </html>
