@@ -3,347 +3,311 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ADMIN PANEL | MATH'S WARRIOR</title>
+<title>Admin Panel - Math's Warrior</title>
 
 <style>
 body{
 margin:0;
-font-family:Poppins, sans-serif;
-background:linear-gradient(135deg,#000428,#004e92);
+font-family:Poppins;
+background:#0f0f0f;
+color:white;
 }
 
-.header{
-background:#111;
-color:#FFD700;
-padding:18px;
-text-align:center;
-font-size:22px;
-font-weight:bold;
-}
+h2{text-align:center;color:#ff0000;}
 
 .container{
+max-width:1200px;
+margin:auto;
 padding:20px;
 }
 
 .box{
-background:white;
-padding:15px;
+background:#1a1a1a;
+border:2px solid #ff0000;
+padding:20px;
 border-radius:12px;
 margin-bottom:20px;
+box-shadow:0 0 20px rgba(255,0,0,0.4);
 }
 
 input{
 width:100%;
 padding:8px;
-margin:5px 0;
+margin:6px 0;
+border-radius:6px;
+border:1px solid #ff0000;
+background:#111;
+color:white;
 }
 
 button{
-padding:6px 10px;
+padding:6px 12px;
 border:none;
 border-radius:6px;
 cursor:pointer;
-margin-top:5px;
+font-weight:bold;
+margin:4px 2px;
 }
 
-.add-btn{background:#28a745;color:white;}
-.delete-btn{background:red;color:white;}
-.update-btn{background:#1E90FF;color:white;}
+.add{background:#ff0000;color:white;}
+.edit{background:orange;color:white;}
+.delete{background:#800000;color:white;}
+.logout{background:#ff416c;color:white;}
+
+.hidden{display:none;}
+
+.gallery-img{
+width:120px;
+border-radius:8px;
+margin:6px;
+}
+
+.login-box{
+max-width:400px;
+margin:120px auto;
+background:#1a1a1a;
+padding:20px;
+border-radius:12px;
+border:2px solid red;
+box-shadow:0 0 20px rgba(255,0,0,0.5);
+}
 </style>
 </head>
-
 <body>
 
-<div class="header">ADMIN PANEL - MATH'S WARRIOR</div>
-
-<div class="container">
-
-<!-- LOGIN -->
-<div class="box" id="loginBox">
-<h3>Admin Login</h3>
-<input type="text" id="adminId" placeholder="Admin ID">
-<input type="password" id="adminPass" placeholder="Password">
-<button onclick="login()" class="add-btn">Login</button>
+<!-- LOGIN SECTION -->
+<div id="loginSection" class="login-box">
+<h2>ADMIN LOGIN</h2>
+<input type="text" id="adminId" placeholder="Enter ID">
+<input type="password" id="adminPass" placeholder="Enter Password">
+<button class="add" onclick="login()">Login</button>
 </div>
 
-<div id="adminContent" style="display:none;">
+<!-- ADMIN PANEL -->
+<div id="adminPanel" class="container hidden">
 
-<!-- STUDENTS (AUTO FROM REGISTRATION) -->
+<h2>ADMIN DASHBOARD</h2>
+<button class="logout" onclick="logout()">Logout</button>
+
 <div class="box">
-<h3>Registered Students (Auto)</h3>
+<h3>Registered Students</h3>
 <div id="studentList"></div>
 </div>
 
-<!-- TEACHER -->
 <div class="box">
-<h3>Add / Update Teacher</h3>
-<input type="hidden" id="teacherIndex">
-<input type="text" id="tName" placeholder="Name">
-<input type="text" id="tSubject" placeholder="Subject">
-<input type="text" id="tMobile" placeholder="Mobile">
-<input type="text" id="tWhatsapp" placeholder="WhatsApp">
-<input type="email" id="tEmail" placeholder="Email">
-<input type="text" id="tYoutube" placeholder="YouTube Link">
+<h3>Add Teacher</h3>
+<input id="tName" placeholder="Name">
+<input id="tSubject" placeholder="Subject">
+<input id="tMobile" placeholder="Mobile">
+<input id="tWhatsapp" placeholder="WhatsApp">
+<input id="tEmail" placeholder="Email">
 <input type="file" id="tPhoto">
-<button onclick="saveTeacher()" class="add-btn">Save Teacher</button>
+<button class="add" onclick="addTeacher()">Add</button>
 <div id="teacherList"></div>
 </div>
 
-<!-- FOUNDER -->
 <div class="box">
-<h3>Add / Update Founder</h3>
-<input type="hidden" id="founderIndex">
-<input type="text" id="fName" placeholder="Name">
-<input type="text" id="fSubject" placeholder="Responsibility">
-<input type="text" id="fMobile" placeholder="Mobile">
-<input type="text" id="fWhatsapp" placeholder="WhatsApp">
-<input type="email" id="fEmail" placeholder="Email">
-<input type="text" id="fYoutube" placeholder="YouTube Link">
+<h3>Add Founder</h3>
+<input id="fName" placeholder="Name">
+<input id="fRole" placeholder="Role">
+<input id="fMobile" placeholder="Mobile">
+<input id="fWhatsapp" placeholder="WhatsApp">
+<input id="fEmail" placeholder="Email">
 <input type="file" id="fPhoto">
-<button onclick="saveFounder()" class="add-btn">Save Founder</button>
+<button class="add" onclick="addFounder()">Add</button>
 <div id="founderList"></div>
 </div>
 
-<!-- NOTES -->
 <div class="box">
 <h3>Add Notes</h3>
-<input type="text" id="noteName" placeholder="Notes Name">
-<input type="text" id="noteTeacher" placeholder="Teacher Name">
-<input type="file" id="noteFile">
-<button onclick="addNotes()" class="add-btn">Add Notes</button>
+<input id="nName" placeholder="Notes Name">
+<input type="file" id="nFile">
+<button class="add" onclick="addNotes()">Upload</button>
 <div id="notesList"></div>
 </div>
 
-<!-- NOTIFICATION -->
 <div class="box">
 <h3>Add Notification</h3>
-<input type="text" id="notiName" placeholder="Notification Name">
-<input type="text" id="notiLink" placeholder="Paste Link">
-<button onclick="addNotification()" class="add-btn">Add Notification</button>
-<div id="notiList"></div>
+<input id="notiName" placeholder="Notification Title">
+<input id="notiLink" placeholder="Paste Link">
+<button class="add" onclick="addNotification()">Add</button>
+<div id="notificationList"></div>
 </div>
 
+<div class="box">
+<h3>Gallery (Max 10MB)</h3>
+<input type="file" id="galleryInput" multiple>
+<button class="add" onclick="addGallery()">Upload</button>
+<div id="galleryList"></div>
 </div>
+
 </div>
 
 <script>
 
-const ADMIN_ID="ADMIN";
-const ADMIN_PASS="12345";
+/* ===== LOGIN SYSTEM ===== */
+
+if(sessionStorage.getItem("isAdmin")==="true"){
+showPanel();
+}
 
 function login(){
-if(adminId.value===ADMIN_ID && adminPass.value===ADMIN_PASS){
-loginBox.style.display="none";
-adminContent.style.display="block";
-loadAll();
+let id=document.getElementById("adminId").value;
+let pass=document.getElementById("adminPass").value;
+
+if(id==="admin" && pass==="1234"){
+sessionStorage.setItem("isAdmin","true");
+showPanel();
 }else{
 alert("Wrong ID or Password");
 }
 }
 
-/* LOAD ALL */
-function loadAll(){
-loadStudents();
-loadTeachers();
-loadFounders();
-loadNotes();
-loadNotifications();
+function logout(){
+sessionStorage.removeItem("isAdmin");
+location.reload();
 }
 
-/* STUDENTS AUTO */
-function loadStudents(){
-let data=JSON.parse(localStorage.getItem("STUDENTS"))||[];
-let div=document.getElementById("studentList");
-div.innerHTML="";
-data.forEach((s,i)=>{
-div.innerHTML+=`
-<div>
-${s.name} (${s.mobile}) - ${s.course || ""}
-<button class="delete-btn" onclick="deleteItem('STUDENTS',${i})">Delete</button>
-</div>`;
-});
-}
-
-/* TEACHER SAVE/UPDATE */
-function saveTeacher(){
-let arr=JSON.parse(localStorage.getItem("TEACHERS"))||[];
-let index=document.getElementById("teacherIndex").value;
-let file=tPhoto.files[0];
-
-function save(photo){
-let data={
-name:tName.value,
-subject:tSubject.value,
-mobile:tMobile.value,
-whatsapp:tWhatsapp.value,
-email:tEmail.value,
-youtube:tYoutube.value,
-photo:photo
-};
-
-if(index===""){
-arr.push(data);
-}else{
-arr[index]=data;
-}
-localStorage.setItem("TEACHERS",JSON.stringify(arr));
-document.getElementById("teacherIndex").value="";
-loadTeachers();
-}
-
-if(file){
-let reader=new FileReader();
-reader.onload=function(){ save(reader.result); }
-reader.readAsDataURL(file);
-}else{
-save("");
-}
-}
-
-function loadTeachers(){
-let arr=JSON.parse(localStorage.getItem("TEACHERS"))||[];
-let div=document.getElementById("teacherList");
-div.innerHTML="";
-arr.forEach((t,i)=>{
-div.innerHTML+=`
-<div>
-${t.name} - ${t.subject}
-<button class="update-btn" onclick="editTeacher(${i})">Edit</button>
-<button class="delete-btn" onclick="deleteItem('TEACHERS',${i})">Delete</button>
-</div>`;
-});
-}
-
-function editTeacher(i){
-let arr=JSON.parse(localStorage.getItem("TEACHERS"));
-let t=arr[i];
-teacherIndex.value=i;
-tName.value=t.name;
-tSubject.value=t.subject;
-tMobile.value=t.mobile;
-tWhatsapp.value=t.whatsapp;
-tEmail.value=t.email;
-tYoutube.value=t.youtube;
-}
-
-/* FOUNDER */
-function saveFounder(){
-let arr=JSON.parse(localStorage.getItem("FOUNDERS"))||[];
-let index=document.getElementById("founderIndex").value;
-let file=fPhoto.files[0];
-
-function save(photo){
-let data={
-name:fName.value,
-subject:fSubject.value,
-mobile:fMobile.value,
-whatsapp:fWhatsapp.value,
-email:fEmail.value,
-youtube:fYoutube.value,
-photo:photo
-};
-
-if(index===""){
-arr.push(data);
-}else{
-arr[index]=data;
-}
-localStorage.setItem("FOUNDERS",JSON.stringify(arr));
-founderIndex.value="";
-loadFounders();
-}
-
-if(file){
-let reader=new FileReader();
-reader.onload=function(){ save(reader.result); }
-reader.readAsDataURL(file);
-}else{
-save("");
-}
-}
-
-function loadFounders(){
-let arr=JSON.parse(localStorage.getItem("FOUNDERS"))||[];
-let div=document.getElementById("founderList");
-div.innerHTML="";
-arr.forEach((f,i)=>{
-div.innerHTML+=`
-<div>
-${f.name} - ${f.subject}
-<button class="update-btn" onclick="editFounder(${i})">Edit</button>
-<button class="delete-btn" onclick="deleteItem('FOUNDERS',${i})">Delete</button>
-</div>`;
-});
-}
-
-function editFounder(i){
-let arr=JSON.parse(localStorage.getItem("FOUNDERS"));
-let f=arr[i];
-founderIndex.value=i;
-fName.value=f.name;
-fSubject.value=f.subject;
-fMobile.value=f.mobile;
-fWhatsapp.value=f.whatsapp;
-fEmail.value=f.email;
-fYoutube.value=f.youtube;
-}
-
-/* NOTES */
-function addNotes(){
-let file=noteFile.files[0];
-let reader=new FileReader();
-reader.onload=function(){
-let arr=JSON.parse(localStorage.getItem("NOTES"))||[];
-arr.push({name:noteName.value,teacher:noteTeacher.value,file:reader.result});
-localStorage.setItem("NOTES",JSON.stringify(arr));
-loadNotes();
-}
-if(file) reader.readAsDataURL(file);
-}
-
-function loadNotes(){
-let arr=JSON.parse(localStorage.getItem("NOTES"))||[];
-let div=document.getElementById("notesList");
-div.innerHTML="";
-arr.forEach((n,i)=>{
-div.innerHTML+=`
-<div>
-${n.name} - ${n.teacher}
-<button class="delete-btn" onclick="deleteItem('NOTES',${i})">Delete</button>
-</div>`;
-});
-}
-
-/* NOTIFICATION */
-function addNotification(){
-let arr=JSON.parse(localStorage.getItem("NOTIFICATIONS"))||[];
-arr.push({name:notiName.value,link:notiLink.value});
-localStorage.setItem("NOTIFICATIONS",JSON.stringify(arr));
-loadNotifications();
-}
-
-function loadNotifications(){
-let arr=JSON.parse(localStorage.getItem("NOTIFICATIONS"))||[];
-let div=document.getElementById("notiList");
-div.innerHTML="";
-arr.forEach((n,i)=>{
-div.innerHTML+=`
-<div>
-${n.name}
-<button class="delete-btn" onclick="deleteItem('NOTIFICATIONS',${i})">Delete</button>
-</div>`;
-});
-}
-
-/* DELETE */
-function deleteItem(key,i){
-let arr=JSON.parse(localStorage.getItem(key))||[];
-arr.splice(i,1);
-localStorage.setItem(key,JSON.stringify(arr));
+function showPanel(){
+document.getElementById("loginSection").classList.add("hidden");
+document.getElementById("adminPanel").classList.remove("hidden");
 loadAll();
 }
 
-</script>
+/* ===== IMAGE VALIDATION ===== */
 
+function validateImage(file){
+if(file.size>10*1024*1024){
+alert("Image is bigger than 10MB");
+return false;
+}
+return true;
+}
+
+/* ===== ALL EXISTING FUNCTIONS SAME ===== */
+
+function addTeacher(){
+let name=tName.value,subject=tSubject.value,mobile=tMobile.value,whatsapp=tWhatsapp.value,email=tEmail.value,photo=tPhoto.files[0];
+if(!name||!subject||!mobile||!email||!photo){alert("Fill all fields");return;}
+if(!validateImage(photo))return;
+
+let reader=new FileReader();
+reader.onload=function(){
+let data=JSON.parse(localStorage.getItem("TEACHERS"))||[];
+data.push({name,subject,mobile,whatsapp,email,photo:this.result});
+localStorage.setItem("TEACHERS",JSON.stringify(data));
+alert("Teacher Added Successfully");
+loadAll();
+}
+reader.readAsDataURL(photo);
+}
+
+function addFounder(){
+let name=fName.value,role=fRole.value,mobile=fMobile.value,whatsapp=fWhatsapp.value,email=fEmail.value,photo=fPhoto.files[0];
+if(!name||!role||!mobile||!email||!photo){alert("Fill all fields");return;}
+if(!validateImage(photo))return;
+
+let reader=new FileReader();
+reader.onload=function(){
+let data=JSON.parse(localStorage.getItem("FOUNDERS"))||[];
+data.push({name,role,mobile,whatsapp,email,photo:this.result});
+localStorage.setItem("FOUNDERS",JSON.stringify(data));
+alert("Founder Added Successfully");
+loadAll();
+}
+reader.readAsDataURL(photo);
+}
+
+function addNotes(){
+let name=nName.value,file=nFile.files[0];
+if(!name||!file){alert("Fill all fields");return;}
+let reader=new FileReader();
+reader.onload=function(){
+let data=JSON.parse(localStorage.getItem("NOTES"))||[];
+data.push({name,file:this.result});
+localStorage.setItem("NOTES",JSON.stringify(data));
+alert("Notes Uploaded");
+loadAll();
+}
+reader.readAsDataURL(file);
+}
+
+function addNotification(){
+let name=notiName.value,link=notiLink.value;
+if(!name||!link){alert("Fill all fields");return;}
+let data=JSON.parse(localStorage.getItem("NOTIFICATIONS"))||[];
+data.push({name,link});
+localStorage.setItem("NOTIFICATIONS",JSON.stringify(data));
+alert("Notification Added");
+loadAll();
+}
+
+function addGallery(){
+let files=galleryInput.files;
+let data=JSON.parse(localStorage.getItem("GALLERY"))||[];
+
+for(let file of files){
+if(!validateImage(file))return;
+let reader=new FileReader();
+reader.onload=function(){
+data.push(this.result);
+localStorage.setItem("GALLERY",JSON.stringify(data));
+loadAll();
+}
+reader.readAsDataURL(file);
+}
+}
+
+function loadAll(){
+loadList("TEACHERS","teacherList");
+loadList("FOUNDERS","founderList");
+loadList("NOTES","notesList");
+loadList("NOTIFICATIONS","notificationList");
+loadGallery();
+}
+
+function loadList(key,id){
+let data=JSON.parse(localStorage.getItem(key))||[];
+let div=document.getElementById(id);
+div.innerHTML="";
+data.forEach((item,index)=>{
+div.innerHTML+=`
+<p>${item.name||item.role}
+<button class="edit" onclick="editItem('${key}',${index})">Edit</button>
+<button class="delete" onclick="deleteItem('${key}',${index})">Delete</button>
+</p>`;
+});
+}
+
+function loadGallery(){
+let data=JSON.parse(localStorage.getItem("GALLERY"))||[];
+galleryList.innerHTML="";
+data.forEach((img,index)=>{
+galleryList.innerHTML+=`
+<img src="${img}" class="gallery-img">
+<button class="delete" onclick="deleteItem('GALLERY',${index})">Delete</button>
+`;
+});
+}
+
+function deleteItem(key,index){
+let data=JSON.parse(localStorage.getItem(key))||[];
+data.splice(index,1);
+localStorage.setItem(key,JSON.stringify(data));
+loadAll();
+}
+
+function editItem(key,index){
+let data=JSON.parse(localStorage.getItem(key))||[];
+let newName=prompt("Enter New Name",data[index].name||data[index].role);
+if(newName){
+if(key==="FOUNDERS"){data[index].role=newName;}
+else{data[index].name=newName;}
+localStorage.setItem(key,JSON.stringify(data));
+loadAll();
+}
+}
+
+</script>
 </body>
 </html>

@@ -1,263 +1,149 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Student Registration | MATH'S WARRIOR</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600;700&display=swap" rel="stylesheet">
+<title>Full Registration Form</title>
+
 <style>
-/* General */
-body {
-  font-family: 'Poppins', sans-serif;
-  background: linear-gradient(135deg, #ff4b2b, #001f7f);
-  margin: 0;
-  padding: 0;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+body{
+margin:0;
+font-family:Arial;
+background:linear-gradient(135deg,#ff416c,#001f7f);
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
 }
 
-/* Container */
-.container {
-  width: 100%;
-  max-width: 900px;
-  margin: 40px auto;
-  background: #fff;
-  border-radius: 15px;
-  padding: 40px;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.25);
-  box-sizing: border-box;
+.container{
+background:#fff;
+padding:25px;
+border-radius:15px;
+width:95%;
+max-width:500px;
+box-shadow:0 15px 30px rgba(0,0,0,0.3);
 }
 
-/* Header */
-h2 {
-  text-align: center;
-  margin-bottom: 30px;
-  color: #ff416c;
-  font-weight: 700;
-  letter-spacing: 1px;
-  font-size: 28px;
+h2{
+text-align:center;
+color:#ff416c;
+margin-bottom:15px;
 }
 
-/* Labels and Inputs */
-label {
-  display: block;
-  font-weight: 600;
-  margin-top: 12px;
-  margin-bottom: 6px;
-}
-input, select {
-  width: 100%;
-  padding: 14px 16px;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-  font-weight: 500;
-  transition: 0.3s;
-  outline: none;
-  box-sizing: border-box;
-}
-input:focus, select:focus {
-  border-color: #ff416c;
-  box-shadow: 0 0 10px rgba(255,65,108,0.3);
+input,select,textarea{
+width:100%;
+padding:10px;
+margin:6px 0;
+border-radius:6px;
+border:1px solid #ccc;
+font-size:14px;
 }
 
-/* Button */
-button {
-  width: 100%;
-  padding: 16px;
-  margin-top: 20px;
-  border: none;
-  border-radius: 12px;
-  font-weight: 600;
-  font-size: 16px;
-  background: linear-gradient(45deg, #ff416c, #ff4b2b);
-  color: #fff;
-  cursor: pointer;
-  transition: 0.3s, transform 0.2s;
-}
-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(255,65,108,0.5);
+textarea{
+resize:none;
+height:60px;
 }
 
-/* Status Message */
-#status {
-  margin-top: 15px;
-  text-align: center;
-  font-weight: bold;
-  font-size: 16px;
-  color: green;
+button{
+width:100%;
+padding:12px;
+background:#ff416c;
+color:#fff;
+border:none;
+border-radius:6px;
+cursor:pointer;
+font-weight:bold;
+margin-top:10px;
 }
 
-/* Footer */
-footer {
-  text-align: center;
-  margin-top: auto;
-  padding: 20px;
-  color: #fff;
-  font-weight: 500;
-  background: rgba(0,0,0,0.1);
+button:hover{
+background:#ff4b2b;
 }
 
-/* Responsive */
-@media(max-width: 600px){
-  .container {
-    padding: 25px 20px;
-    margin: 20px;
-  }
+#message{
+margin-top:10px;
+text-align:center;
+font-weight:bold;
 }
 </style>
 </head>
+
 <body>
 
 <div class="container">
-  <h2>STUDENT REGISTRATION FORM</h2>
+<h2>Student Registration</h2>
 
-  <label>FULL NAME</label>
-  <input type="text" id="fullName" placeholder="Enter Full Name" required>
+<input type="text" id="name" placeholder="Full Name">
+<input type="text" id="father" placeholder="Father Name">
+<input type="text" id="mother" placeholder="Mother Name">
+<input type="text" id="mobile" placeholder="Mobile Number" maxlength="10">
+<textarea id="address" placeholder="Full Address"></textarea>
+<input type="text" id="aadhar" placeholder="Aadhar Card Number" maxlength="12">
+<input type="email" id="email" placeholder="Email ID">
 
-  <label>FATHER'S NAME</label>
-  <input type="text" id="fatherName" placeholder="Enter Father's Name" required>
+<select id="state">
+<option value="">Select State</option>
+<option>Uttar Pradesh</option>
+<option>Bihar</option>
+<option>Madhya Pradesh</option>
+<option>Delhi</option>
+<option>Rajasthan</option>
+<option>Other</option>
+</select>
 
-  <label>MOTHER'S NAME</label>
-  <input type="text" id="motherName" placeholder="Enter Mother's Name" required>
+<input type="text" id="upi" value="7705042892@axl" readonly>
+<input type="text" id="utr" placeholder="Enter UTR Number">
 
-  <label>MOBILE NUMBER</label>
-  <input type="text" id="mobile" placeholder="Enter Mobile Number" maxlength="10">
+<button id="submitBtn">Submit Registration</button>
 
-  <label>EMAIL ID</label>
-  <input type="email" id="email" placeholder="Enter Email ID">
-
-  <label>WHATSAPP NUMBER</label>
-  <input type="text" id="whatsapp" placeholder="Enter WhatsApp Number" maxlength="10">
-
-  <label>AADHAAR NUMBER</label>
-  <input type="text" id="aadhaar" placeholder="Enter Aadhaar Number" maxlength="12">
-
-  <label>SELECT COURSE</label>
-  <select id="selectedCourse" onchange="updateFee()">
-    <option value="">Select Course</option>
-  </select>
-
-  <label>COURSE FEE</label>
-  <input type="text" id="courseFee" placeholder="Fee Will Appear Here" readonly>
-
-  <label>STATE</label>
-  <select id="stateSelect">
-    <option value="">Select State</option>
-    <option value="UTTAR PRADESH">UTTAR PRADESH</option>
-    <option value="MAHARASHTRA">MAHARASHTRA</option>
-    <option value="BIHAR">BIHAR</option>
-    <option value="RAJASTHAN">RAJASTHAN</option>
-    <option value="KARNATAKA">KARNATAKA</option>
-  </select>
-
-  <label>DISTRICT</label>
-  <select id="districtSelect">
-    <option value="">Select District</option>
-  </select>
-
-  <label>UPI ID FOR FEE PAYMENT</label>
-  <input type="text" id="upiId" value="7705042892@axl" readonly>
-
-  <label>UTR NUMBER</label>
-  <input type="text" id="utr" placeholder="Enter UTR Number after Payment">
-
-  <button onclick="submitForm()">SUBMIT REGISTRATION</button>
-  <p id="status"></p>
+<div id="message"></div>
 </div>
 
-<footer>
-  &copy; 2026 MATH'S WARRIOR | All Rights Reserved
-</footer>
-
 <script>
-// States and districts
-const states = {
-  "UTTAR PRADESH":["AGRA","LUCKNOW","KANPUR NAGAR","GORAKHPUR","VARANASI"],
-  "MAHARASHTRA":["MUMBAI","PUNE","NAGPUR","NASHIK","AURANGABAD"],
-  "BIHAR":["PATNA","GAYA","MUZAFFARPUR","BHAGALPUR","PURNIA"],
-  "RAJASTHAN":["JAIPUR","UDAIPUR","AJMER","JAISALMER","KOTA"],
-  "KARNATAKA":["BENGALURU","MYSURU","MANGALURU","HUBLI","BELAGAVI"]
-};
 
-const stateSelect = document.getElementById('stateSelect');
-const districtSelect = document.getElementById('districtSelect');
+document.getElementById("submitBtn").addEventListener("click", function(){
 
-stateSelect.addEventListener('change', ()=>{
-  districtSelect.innerHTML = '<option value="">Select District</option>';
-  const state = stateSelect.value;
-  if(states[state]){
-    states[state].forEach(d=>{
-      const opt = document.createElement('option');
-      opt.value = d;
-      opt.textContent = d;
-      districtSelect.appendChild(opt);
-    });
-  }
-});
+let name=document.getElementById("name").value.trim();
+let father=document.getElementById("father").value.trim();
+let mother=document.getElementById("mother").value.trim();
+let mobile=document.getElementById("mobile").value.trim();
+let address=document.getElementById("address").value.trim();
+let aadhar=document.getElementById("aadhar").value.trim();
+let email=document.getElementById("email").value.trim();
+let state=document.getElementById("state").value;
+let utr=document.getElementById("utr").value.trim();
+let message=document.getElementById("message");
 
-// Courses
-const courses = [
-  {name:"LAKSHAY FOUNDATION BATCH", fee:2499},
-  {name:"BOARD EXAM PRATHAM BATCH", fee:2199},
-  {name:"MATHS SPECIAL 2.0", fee:2000}
-];
+if(name==="" || father==="" || mother==="" || mobile==="" || 
+   address==="" || aadhar==="" || email==="" || 
+   state==="" || utr===""){
 
-const courseSelect = document.getElementById('selectedCourse');
-const courseFee = document.getElementById('courseFee');
-
-courses.forEach(c=>{
-  const opt = document.createElement('option');
-  opt.value = c.name;
-  opt.textContent = c.name;
-  courseSelect.appendChild(opt);
-});
-
-function updateFee(){
-  const selected = courses.find(c=>c.name===courseSelect.value);
-  courseFee.value = selected ? selected.fee : "";
+message.style.color="red";
+message.innerHTML="Fill All Fields!";
+return;
 }
 
-// Submit Form
-function submitForm(){
-  const fields = ['fullName','fatherName','motherName','mobile','email','whatsapp','aadhaar','selectedCourse','stateSelect','districtSelect','utr'];
-  let valid = true;
-  fields.forEach(f=>{
-    const el = document.getElementById(f);
-    if(!el.value){
-      el.style.borderColor = 'red';
-      valid=false;
-    } else el.style.borderColor = '#ccc';
-  });
-
-  if(!valid){
-    document.getElementById('status').innerText = "❌ Fill All Required Fields!";
-    return;
-  }
-
-  const registration = {
-    fullName: document.getElementById('fullName').value,
-    fatherName: document.getElementById('fatherName').value,
-    motherName: document.getElementById('motherName').value,
-    mobile: document.getElementById('mobile').value,
-    email: document.getElementById('email').value,
-    whatsapp: document.getElementById('whatsapp').value,
-    aadhaar: document.getElementById('aadhaar').value,
-    selectedCourse: document.getElementById('selectedCourse').value,
-    courseFee: courseFee.value,
-    state: stateSelect.value,
-    district: districtSelect.value,
-    upiId: document.getElementById('upiId').value,
-    utr: document.getElementById('utr').value
-  };
-
-  let registrations = JSON.parse(localStorage.getItem('registrations')) || [];
-  registrations.push(registration);
-  localStorage.setItem('registrations', JSON.stringify(registrations));
-
-  document.getElementById('status').innerText = "✅ Registration Successful!";
+let counter=localStorage.getItem("regCounter");
+if(counter===null){
+counter=1;
+}else{
+counter=parseInt(counter)+1;
 }
+localStorage.setItem("regCounter",counter);
+
+let regNo="MW2026-"+String(counter).padStart(4,'0');
+
+message.style.color="green";
+message.innerHTML="Registration Successful! <br> Reg No: "+regNo;
+
+/* Reset Form */
+document.querySelectorAll("input:not(#upi)").forEach(input=>input.value="");
+document.getElementById("address").value="";
+document.getElementById("state").value="";
+
+});
+
 </script>
 
 </body>

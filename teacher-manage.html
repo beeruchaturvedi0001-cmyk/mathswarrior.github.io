@@ -10,155 +10,105 @@ body{
   margin:0;
   font-family:Poppins, sans-serif;
   background:linear-gradient(135deg,#000428,#004e92);
-  overflow:hidden;
   color:white;
+  overflow-x:hidden;
 }
 
 /* HEADER */
 .header{
   text-align:center;
-  padding:16px;
+  padding:15px;
   font-size:20px;
   font-weight:bold;
   background:#111;
   color:#FFD700;
   letter-spacing:1px;
-  text-shadow:0 0 8px rgba(255,215,0,0.6);
+  text-shadow:0 0 10px gold;
 }
 
 /* SLIDER CONTAINER */
 .slider-container{
   overflow:hidden;
   padding:20px 0;
-  position:relative;
 }
 
 /* SLIDER ROW */
 .slider{
   display:flex;
   gap:14px;
-  animation:slide 20s linear infinite;
+  width:max-content;
+  animation:slide 25s linear infinite;
 }
 
-/* SLIDER ROW REVERSE */
 .slider.reverse{
-  animation-direction: reverse;
+  animation-direction:reverse;
 }
 
-/* RECTANGULAR CARD */
+/* CARD */
 .card{
   background:white;
-  border-radius:8px;
-  padding:12px 10px;
+  color:black;
+  border-radius:10px;
+  padding:12px;
+  width:210px;
   text-align:center;
+  box-shadow:0 6px 18px rgba(0,0,0,0.3);
+  transition:0.4s;
   position:relative;
-  overflow:hidden;
-  transition:0.4s ease;
-  box-shadow:0 5px 15px rgba(0,0,0,0.3);
-  flex:0 0 200px; /* card width */
 }
 
-/* ANIMATED STRIP */
-.card::before{
-  content:"MATH'S WARRIOR INSTITUTE – THE PATH OF SELECTION";
-  position:absolute;
-  top:0;
-  left:0;
-  width:100%;
-  background:linear-gradient(90deg,#FFD700,#FF416C,#1E90FF,#25D366);
-  background-size:300% 300%;
-  animation:stripMove 5s linear infinite;
-  color:#111;
-  font-size:8px;
-  font-weight:bold;
-  padding:3px 0;
-}
-
-@keyframes stripMove{
-  0%{background-position:0% 50%;}
-  100%{background-position:100% 50%;}
-}
-
-/* HOVER EFFECT */
 .card:hover{
-  transform:translateY(-6px) scale(1.03);
-  box-shadow:0 12px 25px rgba(255,215,0,0.5);
+  transform:translateY(-6px);
+  box-shadow:0 10px 25px rgba(255,215,0,0.6);
 }
 
-/* IMAGE WRAPPER */
+/* IMAGE */
 .img-wrapper{
-  width:75px;
-  height:75px;
-  margin:20px auto 6px;
+  width:80px;
+  height:80px;
+  margin:10px auto;
   border-radius:50%;
   padding:3px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  transition:0.3s;
   background:linear-gradient(45deg,#FFD700,#FF416C,#1E90FF,#25D366);
-  background-size:400% 400%;
-  animation:imgBorderAnim 6s linear infinite;
+  background-size:300% 300%;
+  animation:borderAnim 6s linear infinite;
 }
 
-@keyframes imgBorderAnim{
+@keyframes borderAnim{
   0%{background-position:0% 50%;}
-  25%{background-position:50% 50%;}
   50%{background-position:100% 50%;}
-  75%{background-position:50% 50%;}
   100%{background-position:0% 50%;}
 }
 
 .img-wrapper img{
-  width:70px;
-  height:70px;
+  width:100%;
+  height:100%;
   border-radius:50%;
   object-fit:cover;
-  border:2px solid #111;
 }
 
-.card:hover .img-wrapper{
-  box-shadow:0 0 15px gold;
-  transform:scale(1.08);
-}
-
-/* NAME */
+/* TEXT */
 .name{
-  font-size:15px;
   font-weight:bold;
-  color:#111;
-  margin-top:5px;
-}
-.name::after{
-  content:"";
-  display:block;
-  width:35px;
-  height:2px;
-  background:gold;
-  margin:5px auto;
-  border-radius:10px;
+  font-size:15px;
 }
 
-/* SUBJECT */
 .subject{
   font-size:13px;
   color:#FF416C;
   font-weight:bold;
-  margin-bottom:5px;
 }
 
-/* INFO */
 .info{
   font-size:12px;
-  margin:2px 0;
   color:#333;
 }
 
 /* BUTTONS */
 .btn{
   display:inline-block;
-  margin:3px 2px;
-  padding:4px 8px;
+  margin:3px;
+  padding:5px 8px;
   font-size:10px;
   border-radius:15px;
   text-decoration:none;
@@ -177,58 +127,54 @@ body{
   transform:scale(1.05);
 }
 
-/* AUTO SLIDE */
+/* SLIDE ANIMATION */
 @keyframes slide{
   0%{transform:translateX(0);}
   100%{transform:translateX(-50%);}
 }
 
-/* FLOATING MATH SYMBOLS */
+/* FLOATING SYMBOLS */
 .symbol{
   position:absolute;
-  font-weight:bold;
-  font-size:28px;
-  animation:float 20s linear infinite, colorChange 6s ease-in-out infinite;
-  opacity:0.2;
-  z-index:1;
+  font-size:30px;
+  opacity:0.15;
+  animation:float 25s linear infinite, colorChange 6s ease-in-out infinite;
 }
 
 @keyframes float{
-  0%{transform:translateX(-50px) rotate(0deg);}
+  0%{transform:translateX(-10vw) rotate(0deg);}
   100%{transform:translateX(110vw) rotate(360deg);}
 }
 
 @keyframes colorChange{
-  0%{color:#FFD700; text-shadow:0 0 10px #FFD700;}
-  25%{color:#FF416C; text-shadow:0 0 10px #FF416C;}
-  50%{color:#1E90FF; text-shadow:0 0 10px #1E90FF;}
-  75%{color:#25D366; text-shadow:0 0 10px #25D366;}
-  100%{color:#FFD700; text-shadow:0 0 10px #FFD700;}
+  0%{color:#FFD700;}
+  25%{color:#FF416C;}
+  50%{color:#1E90FF;}
+  75%{color:#25D366;}
+  100%{color:#FFD700;}
 }
 
 .no-data{
-  color:white;
   text-align:center;
-  font-size:14px;
   padding:20px;
 }
 </style>
 </head>
 <body>
 
-<!-- FLOATING MATH SYMBOLS -->
-<div class="symbol" style="top:30%; left:5%;">+</div>
-<div class="symbol" style="top:40%; left:15%; animation-delay:3s;"></div>
-<div class="symbol" style="top:35%; left:25%; animation-delay:6s;">×</div>
-<div class="symbol" style="top:45%; left:35%; animation-delay:2s;">÷</div>
-<div class="symbol" style="top:38%; left:45%; animation-delay:4s;"></div>
-<div class="symbol" style="top:42%; left:55%; animation-delay:7s;"></div>
-<div class="symbol" style="top:36%; left:65%; animation-delay:5s;">%</div>
-<div class="symbol" style="top:40%; left:75%; animation-delay:1s;"></div>
-<div class="symbol" style="top:34%; left:85%; animation-delay:8s;"></div>
-<div class="symbol" style="top:37%; left:95%; animation-delay:9s;"></div>
-
 <div class="header">OUR PREMIUM TEACHERS</div>
+
+<!-- FLOATING SYMBOLS -->
+<div class="symbol" style="top:20%">+</div>
+<div class="symbol" style="top:30%;animation-delay:3s;"></div>
+<div class="symbol" style="top:40%;animation-delay:6s;">×</div>
+<div class="symbol" style="top:50%;animation-delay:9s;">÷</div>
+<div class="symbol" style="top:60%;animation-delay:4s;"></div>
+<div class="symbol" style="top:70%;animation-delay:7s;"></div>
+<div class="symbol" style="top:35%;animation-delay:2s;"></div>
+<div class="symbol" style="top:55%;animation-delay:5s;"></div>
+<div class="symbol" style="top:45%;animation-delay:8s;"></div>
+<div class="symbol" style="top:65%;animation-delay:10s;"></div>
 
 <div id="allRows"></div>
 
@@ -240,7 +186,6 @@ if(data.length===0){
   allRows.innerHTML="<div class='no-data'>No Teacher Added Yet</div>";
 }
 
-// Create a slider row for each teacher
 data.forEach((t,index)=>{
   let container = document.createElement('div');
   container.className = 'slider-container';
@@ -248,13 +193,11 @@ data.forEach((t,index)=>{
   let slider = document.createElement('div');
   slider.className = 'slider';
   
-  // Alternate slide direction for each row
   if(index % 2 === 1){
     slider.classList.add('reverse');
   }
-  
-  // Duplicate cards 5 times for smooth scroll
-  for(let i=0;i<5;i++){
+
+  for(let i=0;i<6;i++){
     let card = document.createElement('div');
     card.className='card';
     card.innerHTML=`
@@ -263,20 +206,25 @@ data.forEach((t,index)=>{
       </div>
       <div class="name">${t.name || ''}</div>
       <div class="subject">${t.subject || ''}</div>
-      <div class="info"> ${t.mobile || ''}</div>
-      <div class="info"> ${t.email || ''}</div>
+      <div class="info">${t.mobile || ''}</div>
+      <div class="info">${t.email || ''}</div>
       <a href="tel:${t.mobile}" class="btn call">Call</a>
       <a href="https://wa.me/${t.whatsapp || t.mobile}" target="_blank" class="btn whatsapp">WhatsApp</a>
       <a href="mailto:${t.email}" class="btn email">Email</a>
       ${t.youtube ? `<a href="${t.youtube}" target="_blank" class="btn youtube">YouTube</a>` : ""}
     `;
-    // Pause/resume on touch/click
-    card.addEventListener('click', ()=>{
-      slider.style.animationPlayState = slider.style.animationPlayState === 'paused' ? 'running' : 'paused';
+
+    card.addEventListener('mouseenter', ()=>{
+      slider.style.animationPlayState='paused';
     });
+
+    card.addEventListener('mouseleave', ()=>{
+      slider.style.animationPlayState='running';
+    });
+
     slider.appendChild(card);
   }
-  
+
   container.appendChild(slider);
   allRows.appendChild(container);
 });

@@ -1,357 +1,281 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MATH'S WARRIOR COURSES</title>
+<title>MATH'S WARRIOR INSTITUTE</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
-body{
-  background: linear-gradient(120deg,#a1c4fd,#c2e9fb);
-  min-height:100vh; 
-  overflow-x:hidden; 
-  position:relative;
-}
 
-/* Floating Shapes */
-.fshape{
-  position:absolute;
-  font-size:30px;
-  font-weight:bold;
-  opacity:0.15;
-  animation:floatShape linear infinite;
-}
-@keyframes floatShape{
-  0%{transform:translateY(100vh) rotate(0deg);}
-  100%{transform:translateY(-100px) rotate(360deg);}
-}
+body{background:#f4f6fb;transition:0.4s;}
+body.dark{background:#121212;color:white;}
+body.dark .card{background:#1e1e1e;color:white;}
+body.dark .sidebar{background:#1e1e1e;}
+body.dark .sidebar a{color:white;}
+body.dark .modal-content{background:#1e1e1e;color:white;}
+body.dark .badge{background:#333;color:white;}
 
-/* AppBar */
 .appbar{
-  height:60px; background:#ff0000; color:white; display:flex; align-items:center; padding:0 20px; 
-  font-size:20px; font-weight:bold; position:fixed; width:100%; top:0; z-index:1000; 
-  box-shadow:0 3px 15px rgba(0,0,0,0.3); border-bottom:2px solid #ffffff44;
+height:60px;background:#d60000;color:white;
+display:flex;align-items:center;padding:0 20px;
+font-size:20px;font-weight:600;
+position:fixed;width:100%;top:0;z-index:1000;
 }
-.menu-btn{font-size:28px; cursor:pointer; margin-right:15px; transition:0.3s;}
-.menu-btn:hover{transform:scale(1.2);}
 
-/* Sidebar */
+.menu-btn{font-size:26px;cursor:pointer;margin-right:15px;}
+
 .sidebar{
-  position:fixed; left:-260px; top:0; width:260px; height:100%; background:white; 
-  box-shadow:3px 0 15px rgba(0,0,0,0.3); padding-top:70px; transition:0.4s; z-index:999;
+position:fixed;left:-260px;top:0;width:260px;height:100%;
+background:white;box-shadow:3px 0 15px rgba(0,0,0,0.3);
+padding-top:70px;transition:0.4s;z-index:999;
+overflow-y:auto;
 }
+
 .sidebar a{
-  display:block; padding:15px 25px; text-decoration:none; color:black; font-weight:500; 
-  border-bottom:1px solid #eee; transition:0.3s;
+display:block;padding:15px 25px;text-decoration:none;
+color:black;font-weight:500;border-bottom:1px solid #eee;
+transition:0.3s;
 }
-.sidebar a:hover{background:#ff0000; color:white; padding-left:35px;}
+.sidebar a:hover{background:#d60000;color:white;}
 
-/* Main Grid */
 .main{
-  margin-top:80px;
-  padding:20px;
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-  justify-content:center;
-  gap:25px;
-  position:relative;
-  z-index:2;
+margin-top:90px;padding:25px;
+display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+gap:30px;
 }
 
-/* Cards */
 .card{
-  position:relative;
-  background: linear-gradient(145deg,#ffffff,#f0f8ff);
-  border-radius:20px;
-  padding:25px;
-  box-shadow:0 8px 25px rgba(0,0,0,0.25);
-  transition:0.4s;
-  text-align:center;
-  overflow:hidden;
+background:white;border-radius:20px;
+box-shadow:0 10px 25px rgba(0,0,0,0.08);
+overflow:hidden;position:relative;
+transition:0.3s;
 }
-.card:hover{
-  transform:translateY(-10px);
-  box-shadow:0 15px 40px rgba(0,0,0,0.4);
+.card:hover{transform:translateY(-8px);}
+
+.card img{width:100%;height:200px;object-fit:cover;}
+
+.view-top{
+position:absolute;top:15px;right:15px;
+background:rgba(0,0,0,0.8);color:white;
+padding:6px 14px;border-radius:20px;font-size:13px;
 }
 
-/* Spark/confetti effect */
-.card .spark{
-  position:absolute;
-  width:6px;
-  height:6px;
-  border-radius:50%;
-  background:gold;
-  pointer-events:none;
-  animation:sparkAnim 1s linear forwards;
-  opacity:0;
-}
-@keyframes sparkAnim{
-  0%{transform:translate(0,0) scale(1); opacity:1;}
-  100%{transform:translate(var(--x,0px), var(--y,0px)) scale(0.3); opacity:0;}
+.tag{
+position:absolute;top:15px;left:15px;
+padding:6px 15px;border-radius:20px;
+font-size:12px;font-weight:700;color:white;
 }
 
-/* Card Titles */
-.card h3{
-  color:#ff416c; 
-  margin-bottom:12px; 
-  font-size:22px; 
-  font-weight:bold;
-  text-shadow:1px 1px 2px rgba(0,0,0,0.2);
-  background: linear-gradient(90deg,#ff416c,#ff4b2b);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
-.card p{
-  margin-bottom:18px; 
-  color:#333; 
-  font-size:15px; 
-  line-height:1.4;
+.topper{background:linear-gradient(45deg,#ff0000,#ff6a00);}
+.premium{background:linear-gradient(45deg,#ffd700,#ff9800);color:black;}
+
+.card-content{padding:20px;}
+
+.card h3{margin-bottom:10px;color:#d60000;}
+
+.badge{
+display:inline-block;background:#f1f1f1;
+padding:6px 15px;border-radius:30px;font-size:13px;
+margin-bottom:10px;
 }
 
-/* Countdown Timer */
-.countdown{
-  font-weight:bold; 
-  font-size:16px;
-  margin-bottom:12px;
-  letter-spacing:1px;
-  background: linear-gradient(90deg,#ff416c,#ff4b2b,#ff758c,#ffc107);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow:0 0 10px rgba(0,0,0,0.2);
-  transition:0.4s;
-}
-.card:hover .countdown{
-  background: linear-gradient(90deg,#28a745,#20c997,#2ecc71,#1abc9c);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  text-shadow:0 0 15px rgba(0,0,0,0.3);
-  font-size:17px;
-}
+.countdown{font-weight:600;color:#ff6a00;margin-bottom:15px;}
 
-/* Button container */
-.btn-container{display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;}
+.btn-container{display:flex;gap:10px;}
 .card button{
-  flex:1; padding:12px; border:none; border-radius:30px; font-weight:bold; cursor:pointer; 
-  transition:0.4s, transform 0.3s;
-  box-shadow:0 5px 15px rgba(0,0,0,0.2);
-  background-size:200% 200%;
+flex:1;padding:10px;border:none;border-radius:25px;
+color:white;font-weight:600;cursor:pointer;
 }
-.card button.register{
-  background: linear-gradient(45deg,#ff416c,#ff4b2b,#ff512f,#ff758c);
-  color:white; 
-  animation: gradientBG 4s ease infinite;
-}
-.card button.features{
-  background: linear-gradient(45deg,#28a745,#20c997,#2ecc71,#1abc9c);
-  color:white; 
-  animation: gradientBG 4s ease infinite;
-}
-@keyframes gradientBG{
-  0%{background-position:0% 50%;}
-  50%{background-position:100% 50%;}
-  100%{background-position:0% 50%;}
-}
+.register{background:#d60000;}
+.details{background:#333;}
 
-/* Footer */
 .footer{
-  text-align:center; 
-  padding:20px; 
-  font-weight:bold; 
-  color:white; 
-  background:#222;
-  font-size:14px;
-  margin-top:40px;
-  box-shadow:0 -3px 10px rgba(0,0,0,0.2);
-  position:relative;
-  z-index:2;
+text-align:center;padding:20px;background:#111;
+color:white;margin-top:40px;
 }
 
-/* Premium Scrolling Bar */
-.premium-scroll{
-  width:100%;
-  height:60px;
-  overflow:hidden;
-  background:linear-gradient(90deg,#000428,#004e92,#ff416c,#ff4b2b);
-  display:flex;
-  align-items:center;
-  position:relative;
-  z-index:2;
-}
-.scroll-text{
-  white-space:nowrap;
-  display:inline-block;
-  padding-left:100%;
-  font-weight:bold;
-  font-size:18px;
-  color:#ffffff;
-  animation:premiumScroll 25s linear infinite;
-  letter-spacing:2px;
-  text-shadow:0 0 10px #fff,0 0 20px #ff416c;
-}
-.scroll-text::after{
-  content:"";
-  position:absolute;
-  top:0;
-  left:-100%;
-  width:50%;
-  height:100%;
-  background:linear-gradient(120deg,transparent,rgba(255,255,255,0.6),transparent);
-  animation:shine 5s infinite;
-}
-@keyframes premiumScroll{
-  0%{transform:translateX(0%);}
-  100%{transform:translateX(-100%);}
-}
-@keyframes shine{
-  0%{left:-100%;}
-  100%{left:150%;}
+/* WhatsApp Circle */
+.whatsapp-btn{
+position:fixed;bottom:20px;right:20px;
+background:#25D366;color:white;
+width:60px;height:60px;border-radius:50%;
+display:flex;align-items:center;justify-content:center;
+font-size:26px;text-decoration:none;
+box-shadow:0 5px 15px rgba(0,0,0,0.3);
 }
 
-/* Responsive */
-@media(max-width:450px){.main{grid-template-columns:1fr;}}
+/* Modal */
+.modal{
+display:none;position:fixed;left:0;top:0;width:100%;height:100%;
+background:rgba(0,0,0,0.6);
+justify-content:center;align-items:center;z-index:2000;
+}
+.modal-content{
+background:white;padding:25px;border-radius:15px;
+width:90%;max-width:400px;
+}
+.modal-content button{
+margin-top:15px;padding:8px 15px;border:none;
+background:#d60000;color:white;border-radius:20px;
+}
 </style>
 </head>
 <body>
 
-<!-- Floating Shapes -->
-<div id="floatingShapes"></div>
-
 <div class="appbar">
-<span class="menu-btn" onclick="openMenu()">☰</span>
+<span class="menu-btn" onclick="toggleMenu()">☰</span>
 MATH'S WARRIOR INSTITUTE
 </div>
 
 <div class="sidebar" id="sidebar">
-<a href="index.html">🏠 HOME</a>
-<a href="dashboard.html">📊 DASHBOARD</a>
-<a href="payment.html">💶 COURSE PAYMENT</a>
-<a href="student-registration.html">📝 STUDENT REGISTRATION</a>
-<a href="teacher-manage.html">👨‍🏫 TEACHER FACULTIES</a>
-<a href="my-course.html">📋 MY COURSE</a>
-<a href="notes.html">📚 CLASS NOTES SECTION</a>
-<a href="mock-test.html">⏳ MOCK TEST SECTION</a>
-<a href="contact.html">📞 CONTACT QUERIES</a>
-<a href="md.html">🏢RESPONSIBILITY SECTION</a>
-<a href="admin-panel.html">⚙ ADMIN PANEL</a>
-<a href="links.html">🔗 SOCIAL MEDIA LINKS</a>
-<a href="videos.html">▶️ YOUTUBE VIDEO LINKS</a>
-<a href="notification.html">💬 EXAM NOTIFICATION</a>
-<a href="gallery.html">🖼️ INSTITUTE GALLERY</a>
-<a href="book.html">📔BOOK STORE</a>
+<a href="index.html">🏠 Home</a>
+<a href="dashboard.html">📊 Dashboard</a>
+<a href="payment.html">💶 Course Payment</a>
+<a href="student-registration.html">📝 Student Registration</a>
+<a href="teacher-manage.html">👨‍🏫 Teacher Faculties</a>
+<a href="my-course.html">📋 My Course</a>
+<a href="notes.html">📚 Class Notes</a>
+<a href="mock-test.html">⏳ Mock Test</a>
+<a href="contact.html">📞 Contact</a>
+<a href="admin.html">⚙ Admin Panel</a>
+<a href="#" onclick="toggleDarkMode()">🌙 Dark Mode</a>
 </div>
 
 <div class="main" id="main"></div>
 
-<div class="premium-scroll">
-<div class="scroll-text">
-🚀 WELCOME TO MATH'S WARRIOR INSTITUTE 🚀 | 🎯 THE PATH OF SELECTION 🎯 | 📚 DAILY PRACTICE • WEEKLY MOCK TEST • FREE PDF NOTES 📚 | 🏆 RESULT ORIENTED TEACHING 🏆
-</div>
-</div>
+<div class="footer">© 2026 MATH'S WARRIOR INSTITUTE</div>
 
-<div class="footer">
-&copy; 2026 MATH'S WARRIOR INSTITUTE | All Rights Reserved | Designed by Abhinay Pratap
+<a href="https://wa.me/919670078465" target="_blank" class="whatsapp-btn">💬</a>
+
+<div class="modal" id="modal">
+<div class="modal-content" id="modalContent"></div>
 </div>
 
 <script>
-function openMenu(){
-  let sidebar = document.getElementById("sidebar");
-  sidebar.style.left = (sidebar.style.left==="0px") ? "-260px" : "0px";
+
+function toggleMenu(){
+const sidebar=document.getElementById("sidebar");
+sidebar.style.left=(sidebar.style.left==="0px")?"-260px":"0px";
 }
 
-/* Floating shapes setup */
-const symbols=['+','−','×','÷','√','∫','%','π','∆','Σ'];
-const shapeContainer=document.getElementById('floatingShapes');
-
-for(let i=0;i<20;i++){
-  let s=document.createElement('div');
-  s.className='fshape';
-  s.style.left=Math.random()*100+'vw';
-  s.style.fontSize=(20+Math.random()*30)+'px';
-  s.style.animationDuration=(10+Math.random()*15)+'s';
-  s.innerText=symbols[Math.floor(Math.random()*symbols.length)];
-  shapeContainer.appendChild(s);
+function toggleDarkMode(){
+document.body.classList.toggle("dark");
 }
 
-/* Course Data */
+function formatViews(num){
+if(num>=1000000) return (num/1000000).toFixed(1)+"M";
+if(num>=1000) return (num/1000).toFixed(1)+"K";
+return num;
+}
+
 const courses=[
-  {name:"LAKSYA FOUNDATION BATCH", desc:"CLASS 9 | UP STATE BOARD & CBSE | FACULTY: ABHINAY PRATAP & TEAM", end:"2026-03-01T23:59:59", fee:500},
-  {name:"PRATHAM TARGET BATCH", desc:"CLASS 10 | UP STATE BOARD & CBSE | FACULTY: ABHINAY PRATAP & TEAM", end:"2026-03-15T23:59:59", fee:2499},
-  {name:"MATH SPECIAL 2.0", desc:"FOR ALL KVS/NVS ENTRANCE EXAMS | FACULTY: ABHINAY PRATAP", end:"2026-04-01T23:59:59", fee:2099},
-  {name:"PHYSICS SPECIAL BATCH", desc:"FOR CLASS 11TH AND 12 STUDENT | FACULTY: ABHINAY PRATAP", end:"2026-04-15T23:59:59", fee:1999}
+
+{
+name:"LAKSHYA FOUNDATION BATCH",
+desc:"CLASS 9 | UP BOARD & CBSE",
+image:"https://images.unsplash.com/photo-1523240795612-9a054b0db644",
+views:1250000,
+end:"2026-03-01T23:59:59",
+tag:"topper",
+details:"Live Classes, Test Series, PDF Notes"
+},
+
+{
+name:"PRATHAM TARGET BATCH",
+desc:"CLASS 10 | UP BOARD & CBSE",
+image:"https://images.unsplash.com/photo-1588072432836-e10032774350",
+views:850000,
+end:"2026-03-15T23:59:59",
+tag:"topper",
+details:"Board Preparation, Mock Test"
+},
+
+{
+name:"MATH SPECIAL 2.0",
+desc:"KVS / NVS ENTRANCE",
+image:"https://images.unsplash.com/photo-1503676260728-1c00da094a0b",
+views:2100000,
+end:"2026-04-01T23:59:59",
+tag:"premium",
+details:"Premium Live Classes, Advanced Concepts"
+},
+
+{
+name:"PHYSICS SPECIAL BATCH",
+desc:"CLASS 11 & 12",
+image:"https://images.unsplash.com/photo-1532094349884-543bc11b234d",
+views:640000,
+end:"2026-04-10T23:59:59",
+details:"Concept Builder, Practice Sheets"
+},
+
 ];
 
-const mainDiv=document.getElementById('main');
+const main=document.getElementById("main");
 
 courses.forEach(c=>{
-  const card=document.createElement('div');
-  card.className='card';
-  card.dataset.end=c.end;
-  card.innerHTML=`
-    <h3>${c.name}</h3>
-    <p>➡️ ${c.desc}</p>
-    <div class="countdown">Loading...</div>
-    <div class="btn-container">
-      <button class="register">REGISTER NOW</button>
-      <button class="features">FEATURES</button>
-    </div>
-  `;
-  mainDiv.appendChild(card);
+const card=document.createElement("div");
+card.className="card";
+card.dataset.end=c.end;
 
-  // Register Button
-  card.querySelector('.register').addEventListener('click',()=>{
-    localStorage.setItem('selectedCourse',c.name);
-    localStorage.setItem('selectedFee',c.fee);
-    alert(c.name+" selected! Redirecting to registration...");
-    window.location.href='student-registration.html';
-  });
+let tagHTML="";
+if(c.tag==="topper") tagHTML='<div class="tag topper">TOPPER FIRST CHOICE</div>';
+if(c.tag==="premium") tagHTML='<div class="tag premium">⭐ PREMIUM BATCH</div>';
 
-  // Features Button
-  card.querySelector('.features').addEventListener('click',()=>{
-    let features = `✅ RESULT ORIENTED APPROACH
-✅ BILINGUAL CLASSES AND NOTES
-✅ FREE PRACTICE SHEET
-✅ FREE E-BOOK
-✅ COURSE DURATION 08 MONTHS
-🧑🏻‍🏫 FACULTIES ABHINAY SIR AND TEAM`;
-    alert(c.name + " Features:\n\n" + features);
-  });
+card.innerHTML=`
+${tagHTML}
+<div class="view-top">👁 ${formatViews(c.views)}</div>
+<img src="${c.image}">
+<div class="card-content">
+<h3>${c.name}</h3>
+<div class="badge">${c.desc}</div>
+<div class="countdown">Loading...</div>
+<div class="btn-container">
+<button class="register" onclick="window.location.href='student-registration.html'">REGISTER</button>
+<button class="details" onclick="openModal('${c.name}','${c.details}')">DETAILS</button>
+</div>
+</div>
+`;
 
-  // Spark on hover
-  card.addEventListener('mouseenter', e=>{
-    for(let i=0;i<20;i++){
-      let spark=document.createElement('div');
-      spark.className='spark';
-      spark.style.left=Math.random()*card.offsetWidth+'px';
-      spark.style.top=Math.random()*card.offsetHeight+'px';
-      spark.style.setProperty('--x',(Math.random()*100-50)+'px');
-      spark.style.setProperty('--y',(Math.random()*-100)+'px');
-      card.appendChild(spark);
-      setTimeout(()=>{spark.remove()},1000);
-    }
-  });
+main.appendChild(card);
 });
 
-/* Countdown Timer */
-function updateCountdowns(){
-  document.querySelectorAll('.card').forEach(card=>{
-    const endTime=new Date(card.dataset.end);
-    const now=new Date();
-    let diff=endTime-now;
-    if(diff<=0){
-      card.querySelector('.countdown').innerText="Course Ended";
-      card.querySelector('.countdown').style.color="red";
-    } else{
-      let d=Math.floor(diff/(1000*60*60*24));
-      let h=Math.floor((diff%(1000*60*60*24))/(1000*60*60));
-      let m=Math.floor((diff%(1000*60*60))/(1000*60));
-      let s=Math.floor((diff%(1000*60))/1000);
-      card.querySelector('.countdown').innerText=`Ends in: ${d}d ${h}h ${m}m ${s}s`;
-    }
-  });
+function openModal(name,details){
+document.getElementById("modal").style.display="flex";
+document.getElementById("modalContent").innerHTML=
+`<h3>${name}</h3>
+<p>${details}</p>
+<button onclick="closeModal()">Close</button>`;
 }
-setInterval(updateCountdowns,1000);
-updateCountdowns();
+
+function closeModal(){
+document.getElementById("modal").style.display="none";
+}
+
+function updateCountdown(){
+document.querySelectorAll(".card").forEach(card=>{
+const end=new Date(card.dataset.end);
+const now=new Date();
+let diff=end-now;
+
+if(diff<=0){
+card.querySelector(".countdown").innerText="Course Ended";
+}else{
+let d=Math.floor(diff/(1000*60*60*24));
+let h=Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+let m=Math.floor((diff%(1000*60*60))/(1000*60));
+let s=Math.floor((diff%(1000*60))/1000);
+card.querySelector(".countdown").innerText=
+`Ends in: ${d}d ${h}h ${m}m ${s}s`;
+}
+});
+}
+
+setInterval(updateCountdown,1000);
+updateCountdown();
+
 </script>
 
 </body>
