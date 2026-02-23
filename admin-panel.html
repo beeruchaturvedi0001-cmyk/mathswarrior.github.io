@@ -8,7 +8,7 @@
 <style>
 body{
 margin:0;
-font-family:Poppins;
+font-family:Poppins, sans-serif;
 background:#0f0f0f;
 color:white;
 }
@@ -75,7 +75,7 @@ box-shadow:0 0 20px rgba(255,0,0,0.5);
 </head>
 <body>
 
-<!-- LOGIN SECTION -->
+<!-- LOGIN -->
 <div id="loginSection" class="login-box">
 <h2>ADMIN LOGIN</h2>
 <input type="text" id="adminId" placeholder="Enter ID">
@@ -83,41 +83,43 @@ box-shadow:0 0 20px rgba(255,0,0,0.5);
 <button class="add" onclick="login()">Login</button>
 </div>
 
-<!-- ADMIN PANEL -->
+<!-- PANEL -->
 <div id="adminPanel" class="container hidden">
 
 <h2>ADMIN DASHBOARD</h2>
 <button class="logout" onclick="logout()">Logout</button>
 
+<!-- STUDENTS -->
 <div class="box">
 <h3>Registered Students</h3>
 <div id="studentList"></div>
 </div>
 
+<!-- TEACHER -->
 <div class="box">
 <h3>Add Teacher</h3>
 <input id="tName" placeholder="Name">
 <input id="tSubject" placeholder="Subject">
 <input id="tMobile" placeholder="Mobile">
-<input id="tWhatsapp" placeholder="WhatsApp">
 <input id="tEmail" placeholder="Email">
 <input type="file" id="tPhoto">
 <button class="add" onclick="addTeacher()">Add</button>
 <div id="teacherList"></div>
 </div>
 
+<!-- FOUNDER -->
 <div class="box">
 <h3>Add Founder</h3>
 <input id="fName" placeholder="Name">
 <input id="fRole" placeholder="Role">
 <input id="fMobile" placeholder="Mobile">
-<input id="fWhatsapp" placeholder="WhatsApp">
 <input id="fEmail" placeholder="Email">
 <input type="file" id="fPhoto">
 <button class="add" onclick="addFounder()">Add</button>
 <div id="founderList"></div>
 </div>
 
+<!-- NOTES -->
 <div class="box">
 <h3>Add Notes</h3>
 <input id="nName" placeholder="Notes Name">
@@ -126,14 +128,16 @@ box-shadow:0 0 20px rgba(255,0,0,0.5);
 <div id="notesList"></div>
 </div>
 
+<!-- NOTIFICATION -->
 <div class="box">
 <h3>Add Notification</h3>
-<input id="notiName" placeholder="Notification Title">
-<input id="notiLink" placeholder="Paste Link">
+<input id="notiName" placeholder="Title">
+<input id="notiLink" placeholder="Link">
 <button class="add" onclick="addNotification()">Add</button>
 <div id="notificationList"></div>
 </div>
 
+<!-- GALLERY -->
 <div class="box">
 <h3>Gallery (Max 10MB)</h3>
 <input type="file" id="galleryInput" multiple>
@@ -141,26 +145,47 @@ box-shadow:0 0 20px rgba(255,0,0,0.5);
 <div id="galleryList"></div>
 </div>
 
+<!-- BATCH SECTIONS -->
+<div class="box">
+<h3>Lakshay Batch</h3>
+<input type="file" id="lakshayInput">
+<button class="add" onclick="uploadBatch('LAKSHAY_BATCH','lakshayInput')">Upload</button>
+<div id="lakshayList"></div>
+</div>
+
+<div class="box">
+<h3>Pratham Batch</h3>
+<input type="file" id="prathamInput">
+<button class="add" onclick="uploadBatch('PRATHAM_BATCH','prathamInput')">Upload</button>
+<div id="prathamList"></div>
+</div>
+
+<div class="box">
+<h3>Maths Special (Premium)</h3>
+<input type="file" id="mathsInput">
+<button class="add" onclick="uploadBatch('MATHS_SPECIAL_BATCH','mathsInput')">Upload</button>
+<div id="mathsList"></div>
+</div>
+
+<div class="box">
+<h3>Physics Special</h3>
+<input type="file" id="physicsInput">
+<button class="add" onclick="uploadBatch('PHYSICS_SPECIAL_BATCH','physicsInput')">Upload</button>
+<div id="physicsList"></div>
+</div>
+
 </div>
 
 <script>
 
-/* ===== LOGIN SYSTEM ===== */
-
-if(sessionStorage.getItem("isAdmin")==="true"){
-showPanel();
-}
+/* LOGIN */
+if(sessionStorage.getItem("isAdmin")==="true"){showPanel();}
 
 function login(){
-let id=document.getElementById("adminId").value;
-let pass=document.getElementById("adminPass").value;
-
-if(id==="admin" && pass==="1234"){
+if(adminId.value==="admin" && adminPass.value==="1234"){
 sessionStorage.setItem("isAdmin","true");
 showPanel();
-}else{
-alert("Wrong ID or Password");
-}
+}else{alert("Wrong ID or Password");}
 }
 
 function logout(){
@@ -169,83 +194,73 @@ location.reload();
 }
 
 function showPanel(){
-document.getElementById("loginSection").classList.add("hidden");
-document.getElementById("adminPanel").classList.remove("hidden");
+loginSection.classList.add("hidden");
+adminPanel.classList.remove("hidden");
 loadAll();
 }
 
-/* ===== IMAGE VALIDATION ===== */
-
+/* VALIDATE */
 function validateImage(file){
-if(file.size>10*1024*1024){
-alert("Image is bigger than 10MB");
-return false;
-}
+if(file.size>10*1024*1024){alert("File bigger than 10MB");return false;}
 return true;
 }
 
-/* ===== ALL EXISTING FUNCTIONS SAME ===== */
-
+/* TEACHER */
 function addTeacher(){
-let name=tName.value,subject=tSubject.value,mobile=tMobile.value,whatsapp=tWhatsapp.value,email=tEmail.value,photo=tPhoto.files[0];
-if(!name||!subject||!mobile||!email||!photo){alert("Fill all fields");return;}
-if(!validateImage(photo))return;
-
+if(!tName.value||!tSubject.value||!tMobile.value||!tEmail.value||!tPhoto.files[0]){alert("Fill all fields");return;}
 let reader=new FileReader();
 reader.onload=function(){
 let data=JSON.parse(localStorage.getItem("TEACHERS"))||[];
-data.push({name,subject,mobile,whatsapp,email,photo:this.result});
+data.push({name:tName.value});
 localStorage.setItem("TEACHERS",JSON.stringify(data));
-alert("Teacher Added Successfully");
+alert("Teacher Added");
 loadAll();
 }
-reader.readAsDataURL(photo);
+reader.readAsDataURL(tPhoto.files[0]);
 }
 
+/* FOUNDER */
 function addFounder(){
-let name=fName.value,role=fRole.value,mobile=fMobile.value,whatsapp=fWhatsapp.value,email=fEmail.value,photo=fPhoto.files[0];
-if(!name||!role||!mobile||!email||!photo){alert("Fill all fields");return;}
-if(!validateImage(photo))return;
-
+if(!fName.value||!fRole.value||!fMobile.value||!fEmail.value||!fPhoto.files[0]){alert("Fill all fields");return;}
 let reader=new FileReader();
 reader.onload=function(){
 let data=JSON.parse(localStorage.getItem("FOUNDERS"))||[];
-data.push({name,role,mobile,whatsapp,email,photo:this.result});
+data.push({role:fRole.value});
 localStorage.setItem("FOUNDERS",JSON.stringify(data));
-alert("Founder Added Successfully");
+alert("Founder Added");
 loadAll();
 }
-reader.readAsDataURL(photo);
+reader.readAsDataURL(fPhoto.files[0]);
 }
 
+/* NOTES */
 function addNotes(){
-let name=nName.value,file=nFile.files[0];
-if(!name||!file){alert("Fill all fields");return;}
+if(!nName.value||!nFile.files[0]){alert("Fill all fields");return;}
 let reader=new FileReader();
 reader.onload=function(){
 let data=JSON.parse(localStorage.getItem("NOTES"))||[];
-data.push({name,file:this.result});
+data.push({name:nName.value});
 localStorage.setItem("NOTES",JSON.stringify(data));
 alert("Notes Uploaded");
 loadAll();
 }
-reader.readAsDataURL(file);
+reader.readAsDataURL(nFile.files[0]);
 }
 
+/* NOTIFICATION */
 function addNotification(){
-let name=notiName.value,link=notiLink.value;
-if(!name||!link){alert("Fill all fields");return;}
+if(!notiName.value||!notiLink.value){alert("Fill all fields");return;}
 let data=JSON.parse(localStorage.getItem("NOTIFICATIONS"))||[];
-data.push({name,link});
+data.push({name:notiName.value});
 localStorage.setItem("NOTIFICATIONS",JSON.stringify(data));
 alert("Notification Added");
 loadAll();
 }
 
+/* GALLERY */
 function addGallery(){
 let files=galleryInput.files;
 let data=JSON.parse(localStorage.getItem("GALLERY"))||[];
-
 for(let file of files){
 if(!validateImage(file))return;
 let reader=new FileReader();
@@ -258,12 +273,33 @@ reader.readAsDataURL(file);
 }
 }
 
+/* BATCH */
+function uploadBatch(key,inputId){
+let file=document.getElementById(inputId).files[0];
+if(!file){alert("Select File");return;}
+if(!validateImage(file))return;
+let reader=new FileReader();
+reader.onload=function(){
+let data=JSON.parse(localStorage.getItem(key))||[];
+data.push(this.result);
+localStorage.setItem(key,JSON.stringify(data));
+alert("Uploaded");
+loadAll();
+}
+reader.readAsDataURL(file);
+}
+
+/* LOAD */
 function loadAll(){
 loadList("TEACHERS","teacherList");
 loadList("FOUNDERS","founderList");
 loadList("NOTES","notesList");
 loadList("NOTIFICATIONS","notificationList");
 loadGallery();
+loadBatch("LAKSHAY_BATCH","lakshayList");
+loadBatch("PRATHAM_BATCH","prathamList");
+loadBatch("MATHS_SPECIAL_BATCH","mathsList");
+loadBatch("PHYSICS_SPECIAL_BATCH","physicsList");
 }
 
 function loadList(key,id){
@@ -273,7 +309,6 @@ div.innerHTML="";
 data.forEach((item,index)=>{
 div.innerHTML+=`
 <p>${item.name||item.role}
-<button class="edit" onclick="editItem('${key}',${index})">Edit</button>
 <button class="delete" onclick="deleteItem('${key}',${index})">Delete</button>
 </p>`;
 });
@@ -290,22 +325,23 @@ galleryList.innerHTML+=`
 });
 }
 
+function loadBatch(key,id){
+let data=JSON.parse(localStorage.getItem(key))||[];
+let div=document.getElementById(id);
+div.innerHTML="";
+data.forEach((img,index)=>{
+div.innerHTML+=`
+<img src="${img}" class="gallery-img">
+<button class="delete" onclick="deleteItem('${key}',${index})">Delete</button>
+`;
+});
+}
+
 function deleteItem(key,index){
 let data=JSON.parse(localStorage.getItem(key))||[];
 data.splice(index,1);
 localStorage.setItem(key,JSON.stringify(data));
 loadAll();
-}
-
-function editItem(key,index){
-let data=JSON.parse(localStorage.getItem(key))||[];
-let newName=prompt("Enter New Name",data[index].name||data[index].role);
-if(newName){
-if(key==="FOUNDERS"){data[index].role=newName;}
-else{data[index].name=newName;}
-localStorage.setItem(key,JSON.stringify(data));
-loadAll();
-}
 }
 
 </script>

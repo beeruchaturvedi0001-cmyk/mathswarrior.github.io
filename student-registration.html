@@ -3,147 +3,319 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Full Registration Form</title>
+<title>STUDENT REGISTRATION</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
 
 <style>
-body{
+*{
 margin:0;
-font-family:Arial;
-background:linear-gradient(135deg,#ff416c,#001f7f);
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+text-transform:uppercase;
+}
+
+body{
+background:linear-gradient(135deg,#e0ecff,#ffffff);
 display:flex;
 justify-content:center;
 align-items:center;
 min-height:100vh;
+padding:20px;
 }
 
 .container{
-background:#fff;
-padding:25px;
-border-radius:15px;
-width:95%;
-max-width:500px;
-box-shadow:0 15px 30px rgba(0,0,0,0.3);
+background:white;
+width:100%;
+max-width:700px;
+padding:35px;
+border:4px solid #1e3c72;
+box-shadow:0 12px 30px rgba(0,0,0,.12);
 }
 
 h2{
 text-align:center;
-color:#ff416c;
-margin-bottom:15px;
+color:#1e3c72;
+margin-bottom:25px;
+font-weight:800;
 }
 
-input,select,textarea{
+.input-group{
+margin-bottom:18px;
+}
+
+label{
+display:block;
+font-weight:600;
+margin-bottom:6px;
+color:#1e3c72;
+}
+
+input, select{
 width:100%;
-padding:10px;
-margin:6px 0;
-border-radius:6px;
-border:1px solid #ccc;
+padding:11px;
+border:2px solid black;
+outline:none;
 font-size:14px;
 }
 
-textarea{
-resize:none;
-height:60px;
+input:focus, select:focus{
+border:2px solid #1e3c72;
+}
+
+.upi-box{
+background:#f2f5ff;
+padding:10px;
+border:1px solid #1e3c72;
+font-weight:600;
+color:#1e3c72;
+}
+
+.fee-box, #discountInfo{
+background:#e6f0ff;
+padding:10px;
+border:2px solid black;
+font-weight:700;
+color:#1e3c72;
+margin-top:5px;
+display:none;
 }
 
 button{
 width:100%;
-padding:12px;
-background:#ff416c;
-color:#fff;
+padding:13px;
+background:#1e3c72;
+color:white;
 border:none;
-border-radius:6px;
+font-size:16px;
+font-weight:600;
 cursor:pointer;
-font-weight:bold;
 margin-top:10px;
 }
 
 button:hover{
-background:#ff4b2b;
+background:#142850;
 }
 
-#message{
-margin-top:10px;
+.message{
+margin-top:15px;
 text-align:center;
-font-weight:bold;
+font-weight:700;
 }
+
+.success{color:green;}
+.error{color:red;}
 </style>
 </head>
 
 <body>
 
 <div class="container">
-<h2>Student Registration</h2>
+<h2>STUDENT REGISTRATION</h2>
 
-<input type="text" id="name" placeholder="Full Name">
-<input type="text" id="father" placeholder="Father Name">
-<input type="text" id="mother" placeholder="Mother Name">
-<input type="text" id="mobile" placeholder="Mobile Number" maxlength="10">
-<textarea id="address" placeholder="Full Address"></textarea>
-<input type="text" id="aadhar" placeholder="Aadhar Card Number" maxlength="12">
-<input type="email" id="email" placeholder="Email ID">
+<form id="regForm">
 
-<select id="state">
-<option value="">Select State</option>
-<option>Uttar Pradesh</option>
-<option>Bihar</option>
-<option>Madhya Pradesh</option>
-<option>Delhi</option>
-<option>Rajasthan</option>
-<option>Other</option>
+<div class="input-group">
+<label>SELECT COURSE</label>
+<select id="course" onchange="showFee()">
+<option value="">-- SELECT COURSE --</option>
+<option value="4999">LAKSHYA FOUNDATION</option>
+<option value="3999">PRATHAM BATCH</option>
+<option value="2999">MATHS SPECIAL BATCH</option>
 </select>
+<div id="feeDisplay" class="fee-box"></div>
+</div>
 
-<input type="text" id="upi" value="7705042892@axl" readonly>
-<input type="text" id="utr" placeholder="Enter UTR Number">
+<div class="input-group">
+<label>COUPON CODE</label>
+<input type="text" id="coupon" placeholder="PLEASE ENTER COUPON CODE">
+<button type="button" onclick="applyCoupon()">APPLY COUPON</button>
+<div id="discountInfo"></div>
+</div>
 
-<button id="submitBtn">Submit Registration</button>
+<div class="input-group">
+<label>NAME</label>
+<input type="text" id="name">
+</div>
 
-<div id="message"></div>
+<div class="input-group">
+<label>FATHER NAME</label>
+<input type="text" id="father">
+</div>
+
+<div class="input-group">
+<label>MOTHER NAME</label>
+<input type="text" id="mother">
+</div>
+
+<div class="input-group">
+<label>DOB</label>
+<input type="date" id="dob">
+</div>
+
+<div class="input-group">
+<label>CATEGORY</label>
+<select id="category">
+<option value="">-- SELECT CATEGORY --</option>
+<option>GENERAL</option>
+<option>OBC</option>
+<option>SC</option>
+<option>ST</option>
+</select>
+</div>
+
+<div class="input-group">
+<label>ADDRESS</label>
+<input type="text" id="address">
+</div>
+
+<div class="input-group">
+<label>MOBILE</label>
+<input type="number" id="mobile">
+</div>
+
+<div class="input-group">
+<label>EMAIL</label>
+<input type="email" id="email" value="@gmail.com">
+</div>
+
+<div class="input-group">
+<label>WHATSAPP</label>
+<input type="number" id="whatsapp">
+</div>
+
+<div class="input-group">
+<label>PIN CODE</label>
+<input type="number" id="pincode">
+</div>
+
+<div class="input-group">
+<label>STATE</label>
+<select id="state">
+<option value="">-- SELECT STATE --</option>
+<option>UTTAR PRADESH</option>
+<option>BIHAR</option>
+<option>MADHYA PRADESH</option>
+<option>RAJASTHAN</option>
+<option>DELHI</option>
+<option>MAHARASHTRA</option>
+<option>GUJARAT</option>
+<option>WEST BENGAL</option>
+</select>
+</div>
+
+<div class="input-group">
+<label>AADHAR</label>
+<input type="number" id="aadhar">
+</div>
+
+<div class="input-group">
+<label>PAY ON UPI ID</label>
+<div class="upi-box">7705042892@axl</div>
+</div>
+
+<div class="input-group">
+<label>ENTER UTR (MW Mandatory)</label>
+<input type="text" id="utr" placeholder="XXXXXXXX">
+</div>
+
+<button type="button" onclick="register()">REGISTER NOW</button>
+
+<div id="message" class="message"></div>
+
+</form>
 </div>
 
 <script>
+let originalFee = 0;
+let discountedFee = 0;
 
-document.getElementById("submitBtn").addEventListener("click", function(){
-
-let name=document.getElementById("name").value.trim();
-let father=document.getElementById("father").value.trim();
-let mother=document.getElementById("mother").value.trim();
-let mobile=document.getElementById("mobile").value.trim();
-let address=document.getElementById("address").value.trim();
-let aadhar=document.getElementById("aadhar").value.trim();
-let email=document.getElementById("email").value.trim();
-let state=document.getElementById("state").value;
-let utr=document.getElementById("utr").value.trim();
-let message=document.getElementById("message");
-
-if(name==="" || father==="" || mother==="" || mobile==="" || 
-   address==="" || aadhar==="" || email==="" || 
-   state==="" || utr===""){
-
-message.style.color="red";
-message.innerHTML="Fill All Fields!";
-return;
+function showFee(){
+    let course = document.getElementById("course");
+    let feeBox = document.getElementById("feeDisplay");
+    if(course.value !== ""){
+        originalFee = parseInt(course.value);
+        discountedFee = originalFee;
+        feeBox.style.display = "block";
+        feeBox.innerHTML = "COURSE FEE: ₹ "+originalFee;
+        document.getElementById("discountInfo").style.display="none";
+    } else {
+        feeBox.style.display="none";
+        document.getElementById("discountInfo").style.display="none";
+        originalFee=0;
+        discountedFee=0;
+    }
 }
 
-let counter=localStorage.getItem("regCounter");
-if(counter===null){
-counter=1;
-}else{
-counter=parseInt(counter)+1;
+function applyCoupon(){
+    let coupon = document.getElementById("coupon").value.toUpperCase();
+    let discountBox = document.getElementById("discountInfo");
+
+    if(!originalFee){
+        alert("PLEASE SELECT COURSE FIRST");
+        return;
+    }
+
+    if(coupon.startsWith("MW") && coupon.length>2){
+        let percent = parseInt(coupon.slice(2));
+        if(!isNaN(percent) && percent>0 && percent<=100){
+            discountedFee = Math.round(originalFee*(1-percent/100));
+            discountBox.style.display="block";
+            discountBox.innerHTML = "DISCOUNTED FEE: ₹ "+discountedFee+" ("+percent+"% OFF)";
+            showMessage("COUPON APPLIED ✅","success");
+        } else {
+            showMessage("INVALID COUPON ❌","error");
+        }
+    } else {
+        showMessage("INVALID COUPON ❌","error");
+    }
 }
-localStorage.setItem("regCounter",counter);
 
-let regNo="MW2026-"+String(counter).padStart(4,'0');
+function register(){
+    let course = document.getElementById("course").value;
+    let name = document.getElementById("name").value.trim();
+    let father = document.getElementById("father").value.trim();
+    let mother = document.getElementById("mother").value.trim();
+    let dob = document.getElementById("dob").value.trim();
+    let category = document.getElementById("category").value.trim();
+    let address = document.getElementById("address").value.trim();
+    let mobile = document.getElementById("mobile").value.trim();
+    let email = document.getElementById("email").value.trim();
+    let whatsapp = document.getElementById("whatsapp").value.trim();
+    let pincode = document.getElementById("pincode").value.trim();
+    let state = document.getElementById("state").value.trim();
+    let aadhar = document.getElementById("aadhar").value.trim();
+    let utr = document.getElementById("utr").value.trim();
 
-message.style.color="green";
-message.innerHTML="Registration Successful! <br> Reg No: "+regNo;
+    if(course===""||name===""||father===""||mother===""||dob===""||category===""||
+       address===""||mobile===""||email===""||whatsapp===""||pincode===""||
+       state===""||aadhar===""||utr===""){
+        showMessage("PLEASE FILL ALL DETAILS ❌","error");
+        return;
+    }
 
-/* Reset Form */
-document.querySelectorAll("input:not(#upi)").forEach(input=>input.value="");
-document.getElementById("address").value="";
-document.getElementById("state").value="";
+    if(!utr.startsWith("MW")){
+        showMessage("UTR MUST START WITH MW ❌","error");
+        return;
+    }
 
-});
+    let studentId = "MWSTU"+Date.now(); // unique ID
 
+    showMessage("REGISTRATION SUCCESSFUL ✅ YOUR ID: "+studentId,"success");
+
+    // Reset form after 10 seconds
+    setTimeout(()=>{
+        document.getElementById("regForm").reset();
+        document.getElementById("feeDisplay").style.display="none";
+        document.getElementById("discountInfo").style.display="none";
+    },10000);
+}
+
+function showMessage(msg,type){
+    let box = document.getElementById("message");
+    box.innerHTML = msg;
+    box.className = "message "+type;
+}
 </script>
 
 </body>
