@@ -26,7 +26,26 @@ top:0;
 z-index:1000;
 }
 
-.menu-btn{position:absolute;left:20px;font-size:28px;cursor:pointer;}
+.menu-btn{
+position:absolute;
+left:20px;
+top:50%;
+transform:translateY(-50%);
+width:30px;
+height:22px;
+cursor:pointer;
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+}
+
+.menu-btn span{
+display:block;
+height:4px;
+background:white;
+border-radius:2px;
+}
+
 .title{font-size:24px;font-weight:900;letter-spacing:1px;white-space:nowrap;text-align:center;}
 
 .sidebar{
@@ -54,33 +73,46 @@ overflow:hidden;
 position:relative;
 transition:.3s;
 width:100%;
-border-radius:0;
+border-radius:10px;
 border:4px solid #1e3c72;
 }
 
 body.dark .card{background:#1e1e1e;border:4px solid #4da3ff;}
-.card:hover{transform:translateY(-4px);}
+.card:hover{transform:translateY(-6px);box-shadow:0 12px 25px rgba(0,0,0,.15);}
 
-.card img{width:100%;height:220px;object-fit:cover;}
+.card img{width:100%;height:220px;object-fit:cover;border-bottom:4px solid #1e3c72;}
+body.dark .card img{border-bottom:4px solid #4da3ff;}
 
 .premium{
 position:absolute;top:15px;left:15px;
-background:gold;color:black;padding:6px 14px;font-size:12px;font-weight:700;
+background:linear-gradient(45deg,#ffb347,#ffcc33);
+color:black;padding:8px 16px;font-size:13px;font-weight:900;
+border-radius:6px;
+box-shadow:0 2px 6px rgba(0,0,0,.3);
 }
 
 .card-content{padding:25px;}
-.card h3{color:#1e3c72;margin-bottom:10px;}
+.card h3{color:#1e3c72;margin-bottom:10px;font-size:22px;}
 body.dark .card h3{color:#4da3ff;}
 
 .info{font-size:15px;margin-bottom:6px;}
+.board-info{color:#007bff;font-weight:700;}
+.course-price{font-size:16px;font-weight:700;margin:10px 0;color:#1e3c72;}
+body.dark .course-price{color:#4da3ff;}
 
 .price{
-font-size:22px;font-weight:700;color:#28a745;margin:12px 0;
+display:inline-block;
+font-size:22px;font-weight:700;
+color:white;
+background:#28a745;
+padding:6px 14px;
+border-radius:6px;
+margin-bottom:12px;
+box-shadow:0 2px 6px rgba(0,0,0,.2);
 }
 
 .discount-msg{
-font-size:14px;
-font-weight:600;
+font-size:14px;font-weight:600;
 margin-bottom:10px;
 }
 
@@ -88,7 +120,7 @@ margin-bottom:10px;
 .error-msg{color:red;}
 
 .coupon-box{display:flex;gap:6px;margin-bottom:12px;}
-.coupon-box input{flex:1;padding:10px;border:1px solid #ccc;}
+.coupon-box input{flex:1;padding:10px;border:1px solid #ccc;border-radius:6px;}
 
 body.dark .coupon-box input{
 background:#333;color:white;border:1px solid #555;
@@ -97,15 +129,23 @@ background:#333;color:white;border:1px solid #555;
 .coupon-box button{
 padding:10px 18px;border:none;
 background:#1e3c72;color:white;cursor:pointer;
+border-radius:6px;
+transition:.3s;
 }
+.coupon-box button:hover{background:#2a5298;}
 
 .buttons{display:flex;gap:10px;}
 .buttons button{
 flex:1;padding:12px;border:none;font-weight:600;cursor:pointer;color:white;
+border-radius:6px;
+transition:.3s;
+box-shadow:0 2px 6px rgba(0,0,0,.2);
 }
 
 .feature-btn{background:#333;}
+.feature-btn:hover{background:#555;}
 .enroll-btn{background:#1e3c72;}
+.enroll-btn:hover{background:#2a5298;}
 
 .marquee-wrapper{
 position:relative;margin-top:50px;margin-bottom:10px;overflow:hidden;
@@ -140,70 +180,91 @@ padding:8px;font-size:13px;margin-top:20px;
 <body>
 
 <header>
-<span class="menu-btn" onclick="toggleMenu()">â˜°</span>
+<div class="menu-btn" onclick="toggleMenu()">
+  <span></span>
+  <span></span>
+  <span></span>
+</div>
 <div class="title">MATH'S WARRIOR INSTITUTE</div>
 </header>
 
 <div class="sidebar" id="sidebar">
-<a href="#">Home</a>
-<a href="#">Dashboard</a>
-<a href="student-registration.html">Registration</a>
-<a href="#">Course Payment</a>
-<a href="#">Teacher</a>
-<a href="#">Founder</a>
-<a href="md.html">Admin Panel</a>
-<a href="#">Book Store</a>
-<a href="#">Contact</a>
-<a href="#">Gallery</a>
-<a href="#" onclick="toggleDark()">ðŸŒ™ Dark Mode</a>
+<a href="#">Home</a>
+<a href="dashboard.html">DASHBOARD</a>
+<a href="student-registration.html">REGISTRATION</a>
+<a href="payment.html">COURSE PAYMENT</a>
+<a href="teacher-manage">TEACHER FACULTIES</a>
+<a href="md.html">INSTITUTE FACULTIES</a>
+<a href="admin-panel.html">ADMIN PANEL</a>
+<a href="my-course.html">MY COURSE</a>
+<a href="book.html">BOOK STORE</a>
+<a href="contact.html">HELPLINE </a>
+<a href="notes.html">NOTES AND PDF</a>
+<a href="links.html">SOCIAL MEDIA</a>
+<a href="notification.html">EXAM NOTIFICATION</a>
+<a href="mock-test.html">TEST SERIES</a>
+<a href="videos.html">VIDEO LINK</a>
+<a href="gallery.html">GALLERY</a>
+<a href="st.html">STUDENT DATA</a>
+<a href="#" onclick="toggleDark()">Dark Mode</a>
 </div>
 
 <div class="main" id="main"></div>
 
 <div class="marquee-wrapper">
 <div class="marquee-text">
-WELCOME TO MATH'S WARRIOR INSTITUTE
+WELCOME TO MATH'S WARRIOR INSTITUTE • THE PATH OF SELECTION • DAILY PRACTICE • TEST SERIES • DOUBTS SECTION • THANK YOU FOR VISITING MW INSTITUTE
 </div>
 </div>
 
 <div class="footer">
-Â© 2026 MATH'S WARRIOR INSTITUTE | All Rights Reserved
+© 2026 MATH'S WARRIOR INSTITUTE | All RIGHTS RESERVED | ABHINAY_PRATAP_MATHS
 </div>
 
 <script>
 function toggleMenu(){
-const sidebar=document.getElementById("sidebar");
-sidebar.style.left=(sidebar.style.left==="0px")?"-260px":"0px";
+  const sidebar=document.getElementById("sidebar");
+  if(sidebar.style.left === "0px"){
+    sidebar.style.left="-260px";
+  } else {
+    sidebar.style.left="0px";
+  }
 }
 
 function toggleDark(){
-document.body.classList.toggle("dark");
+  document.body.classList.toggle("dark");
 }
 
 const courses=[
 {
 name:"LAKSHYA FOUNDATION",
 image:"https://images.unsplash.com/photo-1523240795612-9a054b0db644",
-validity:"12 Months",
-faculties:"Raj Sir, Neha Ma'am",
-price:4999,
-features:"Live Classes, Test Series, PDF Notes"
+validity:"12 MONTHS",
+faculties:"ABHINAY PRATAP AND TEAM",
+price:"4999",
+features:"Live Classes, Test Series, PDF Notes",
+classFor:"CLASS 9TH",
+board:"UP BOARD"
 },
 {
-name:"PRATHAM BATCH",
+name:"PRATHAM FOUNDATION",
 image:"https://images.unsplash.com/photo-1503676260728-1c00da094a0b",
-validity:"10 Months",
-faculties:"Vivek Sir",
+validity:"10 MONTHS",
+faculties:"ABHINAY PRATAP AND TEAM",
 price:3999,
-features:"Daily Practice Sheet, Recorded Videos"
+features:"Daily Practice Sheet, Recorded Videos",
+classFor:"CLASS 10TH",
+board:"UP BOARD"
 },
 {
 name:"MATHS SPECIAL BATCH",
 image:"https://images.unsplash.com/photo-1509062522246-3755977927d7",
-validity:"8 Months",
-faculties:"Abhinay Sir",
+validity:"8 MONTHS",
+faculties:"ABHINAY PRATAP",
 price:2999,
-features:"Advanced Tricks, PYQ Practice, Doubt Session"
+features:"Advanced Tricks, PYQ Practice, Doubt Session",
+classFor:"CLASS 9TH AND 10TH",
+board:"UP + CBSE BOARD"
 }
 ];
 
@@ -216,9 +277,12 @@ main.innerHTML+=`
 <img src="${c.image}">
 <div class="card-content">
 <h3>${c.name}</h3>
+<div class="info"><b>Class:</b> ${c.classFor}</div>
+<div class="info board-info"><b>Board:</b> ${c.board}</div>
 <div class="info"><b>Validity:</b> ${c.validity}</div>
 <div class="info"><b>Faculties:</b> ${c.faculties}</div>
-<div class="price" id="price${i}">â‚¹ ${c.price}</div>
+<div class="course-price">COURSE PRICE</div>
+<div class="price" id="price${i}"> ${c.price}</div>
 
 <div id="discount${i}" class="discount-msg"></div>
 
@@ -243,7 +307,7 @@ let discountBox=document.getElementById("discount"+index);
 
 if(input==="WARRIOR50"){
 let newPrice=original/2;
-document.getElementById("price"+index).innerText="â‚¹ "+newPrice;
+document.getElementById("price"+index).innerText=" "+newPrice;
 discountBox.innerHTML="50% DISCOUNT APPLIED SUCCESSFULLY";
 discountBox.className="discount-msg success-msg";
 }else{
